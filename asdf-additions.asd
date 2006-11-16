@@ -1,6 +1,6 @@
 ;; -*- Mode: Lisp; Syntax: ANSI-Common-Lisp -*-
 
-(in-package #:common-lisp-user)
+(in-package #:cl-user)
 
 (defpackage #:asdf-additions-system
   (:use #:common-lisp #:asdf))
@@ -9,8 +9,7 @@
 
 (defsystem asdf-additions
   :description "A few new filetypes added to ASDF."
-  :author "Dan Barlow <dan@metacircles.com>, Stelian Ionescu <sionescu@common-lisp.net>"
+  :author "Christophe Rhodes <csr21@cantab.net>"
   :maintainer "Stelian Ionescu <sionescu@common-lisp.net>"
   :licence "MIT"
-  :components ((:file "unix-dso")
-               (:file "muffled-source-file")))
+  :components ((:file "unix-dso")))
