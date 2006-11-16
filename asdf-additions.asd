@@ -12,4 +12,5 @@
   :author "Christophe Rhodes <csr21@cantab.net>"
   :maintainer "Stelian Ionescu <sionescu@common-lisp.net>"
   :licence "MIT"
-  :components ((:file "unix-dso")))
+  :components ((:file "unix-dso")
+               (:file "muffled-source-file")))
