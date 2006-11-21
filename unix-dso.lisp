@@ -26,11 +26,14 @@
   (let ((dso-name (unix-name (car (output-files operation dso)))))
     (if (zerop
          (run-shell-command
-          "gcc ~A -o ~S ~{~S ~}"
+          (concatenate 'string
+                       (or (sb-ext:posix-getenv "CC")
+                           "gcc")
+                       " ~A -o ~S ~{~S ~}")
           (concatenate 'string
                        (sb-ext:posix-getenv "EXTRA_LDFLAGS")
                        " "
-                       (unix-dso-compiler-flags dso)
+                       (unix-dso-link-flags dso)
                        " "
                        #+sunos "-shared -lresolv -lsocket -lnsl"
                        #+darwin "-bundle"
@@ -49,9 +52,13 @@
   (list 
    (make-pathname :type "o" :defaults
 		  (component-pathname c))))
+
 (defmethod perform ((op compile-op) (c c-source-file))
   (unless
-      (= 0 (run-shell-command "gcc ~A -o ~S -c ~S"
+      (= 0 (run-shell-command (concatenate 'string
+                                           (or (sb-ext:posix-getenv "CC")
+                                               "gcc")
+                                           " ~A -o ~S -c ~S")
 			      (concatenate 'string
 					   (sb-ext:posix-getenv "EXTRA_CFLAGS")
 					   " -O3 -Wall -fPIC")
