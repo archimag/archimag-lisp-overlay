@@ -3,8 +3,9 @@
 ;;; we also have a shared library with some .o files in it
 
 (defclass unix-dso (module)
-  ((compiler-flags :initarg :compiler-flags :initform ""
-                   :reader unix-dso-compiler-flags)))
+  ((link-flags :initarg :link-flags :initform ""
+               :reader unix-dso-link-flags)))
+
 (defun unix-name (pathname)
   (namestring 
    (typecase pathname
