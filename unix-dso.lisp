@@ -2,6 +2,8 @@
 
 ;;; we also have a shared library with some .o files in it
 
+(cffi:defcfun getenv :string (name :string))
+
 (defclass unix-dso (module)
   ((link-flags :initarg :link-flags :initform ""
                :reader unix-dso-link-flags)))
@@ -28,11 +30,11 @@
     (if (zerop
          (run-shell-command
           (concatenate 'string
-                       (or (sb-ext:posix-getenv "CC")
+                       (or (getenv "CC")
                            "gcc")
                        " ~A -o ~S ~{~S ~}")
           (concatenate 'string
-                       (sb-ext:posix-getenv "EXTRA_LDFLAGS")
+                       (getenv "EXTRA_LDFLAGS")
                        " "
                        (unix-dso-link-flags dso)
                        " "
@@ -44,7 +46,7 @@
                   (mapcan (lambda (c)
                             (output-files operation c))
                           (module-components dso)))))
-        (sb-alien:load-shared-object dso-name)
+        (cffi:load-foreign-library dso-name)
       (error 'operation-error :operation operation :component dso))))
 
 ;;; if this goes into the standard asdf, it could reasonably be extended
@@ -57,11 +59,11 @@
 (defmethod perform ((op compile-op) (c c-source-file))
   (unless
       (= 0 (run-shell-command (concatenate 'string
-                                           (or (sb-ext:posix-getenv "CC")
+                                           (or (getenv "CC")
                                                "gcc")
                                            " ~A -o ~S -c ~S")
 			      (concatenate 'string
-					   (sb-ext:posix-getenv "EXTRA_CFLAGS")
+					   (getenv "EXTRA_CFLAGS")
 					   " -O3 -Wall -fPIC")
 			      (unix-name (car (output-files op c)))
 			      (unix-name (component-pathname c))))
@@ -73,4 +75,4 @@
 (defmethod perform ((o load-op) (c unix-dso))
   (let ((co (make-instance 'compile-op)))
     (let ((filename (car (output-files co c))))
-      (sb-alien:load-shared-object filename))))
+      (cffi:load-foreign-library filename))))
