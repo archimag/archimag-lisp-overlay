@@ -1,6 +1,6 @@
 ;; -*- Mode: Lisp; Syntax: ANSI-Common-Lisp -*-
 
-(in-package #:cl-user)
+(in-package #:common-lisp-user)
 
 (defpackage #:asdf-additions-system
   (:use #:common-lisp #:asdf))
@@ -9,7 +9,7 @@
 
 (defsystem asdf-additions
   :description "A few new filetypes added to ASDF."
-  :author "Christophe Rhodes <csr21@cantab.net>"
+  :author "Dan Barlow <dan@metacircles.com>, Stelian Ionescu <sionescu@common-lisp.net>"
   :maintainer "Stelian Ionescu <sionescu@common-lisp.net>"
   :licence "MIT"
   :depends-on (:cffi)
