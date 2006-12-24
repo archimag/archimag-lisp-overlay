@@ -11,7 +11,8 @@
       (call-next-method)))
   #+cmu
   (handler-bind ((kernel:simple-style-warning #'muffle-warning))
-    (let ((*compile-print* nil))
+    (let ((*compile-print* nil)
+          (ext:*gc-verbose* nil))
       (call-next-method)))
   #-(or sbcl cmu)
   (let ((*compile-print* nil))
