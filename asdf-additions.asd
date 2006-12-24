@@ -14,4 +14,4 @@
   :licence "MIT"
   :depends-on (:cffi)
   :components ((:file "unix-dso")
-               #+sbcl (:file "muffled-source-file")))
+               (:file "muffled-source-file")))
