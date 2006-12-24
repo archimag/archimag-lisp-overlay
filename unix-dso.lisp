@@ -49,14 +49,10 @@
                           (module-components dso)))))
       (error 'operation-error :operation operation :component dso))))
 
-(defclass c-source-file (source-file)
-  ((compile-flags :initarg :compile-flags :initform ""
-                  :reader c-file-compile-flags)))
-
 ;;; if this goes into the standard asdf, it could reasonably be extended
 ;;; to allow cflags to be set somehow
 (defmethod output-files ((op compile-op) (c c-source-file))
-  (list 
+  (list
    (make-pathname :type "o" :defaults
 		  (component-pathname c))))
 
@@ -68,10 +64,8 @@
                                            "gcc")
                                        " ~A -o ~S -c ~S")
                           (concatenate 'string
-                                       (c-file-compile-flags c)
-                                       " "
-                                       (getenv "EXTRA_CFLAGS")
-                                       " -O3 -Wall -fPIC")
+                                       " -O3 -Wall -fPIC"
+                                       (getenv "EXTRA_CFLAGS"))
                           (unix-name (car (output-files op c)))
                           (unix-name (component-pathname c))))
     (error 'operation-error :operation op :component c)))
