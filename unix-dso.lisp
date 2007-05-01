@@ -57,7 +57,7 @@ This is probably a programmer's error. Please contact the developers."))))
 		    :directory (butlast (pathname-directory dir))
 		    :defaults dir))))
 
-(defmethod perform :after ((operation compile-op) (dso unix-dso))
+(defmethod perform ((operation compile-op) (dso unix-dso))
   (let ((dso-name (unix-name (car (output-files operation dso)))))
     (unless
         (zerop
@@ -81,8 +81,8 @@ This is probably a programmer's error. Please contact the developers."))))
   (let ((co (make-instance 'compile-op)))
     (let ((filename (car (output-files co c))))
       (cffi:load-foreign-library filename)
-      (terpri)
-      (format t "~%>> Loaded ~A~%~%" filename))))
+      (terpri *debug-io*)
+      (format *debug-io* "~%>> Loaded ~A~%~%" filename))))
 
 
 ;;;;;;;;;;;;;;;;;;;;
