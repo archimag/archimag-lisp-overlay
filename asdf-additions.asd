@@ -11,6 +11,7 @@
   :description "A few new filetypes added to ASDF."
   :author "Dan Barlow <dan@metacircles.com>, Stelian Ionescu <sionescu@common-lisp.net>"
   :maintainer "Stelian Ionescu <sionescu@common-lisp.net>"
+  :version "0.5.1"
   :licence "MIT"
   :depends-on (:cffi)
   :components ((:file "unix-dso")
