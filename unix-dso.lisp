@@ -1,4 +1,4 @@
-(in-package :asdf)
+(in-package :asdf-additions)
 
 ;;;;;;;;;;;;;;;;
 ;;; UTILITIES ;;

@@ -14,5 +14,6 @@
   :version "0.5.1"
   :licence "MIT"
   :depends-on (:cffi)
-  :components ((:file "unix-dso")
-               (:file "muffled-source-file")))
+  :components ((:file "pkgdcl")
+               (:file "unix-dso" :depends-on ("pkgdcl"))
+               (:file "muffled-source-file" :depends-on ("pkgdcl"))))
