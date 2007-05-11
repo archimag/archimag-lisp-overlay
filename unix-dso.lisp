@@ -45,7 +45,7 @@ This is probably a programmer's error. Please contact the developers."))))
 ;;;;;;;;;;;;;;;
 
 ;;; we also have a shared library with some .o files in it
-(defclass unix-dso (module)
+(defclass unix-dso (asdf:module)
   ((link-flags :initarg :link-flags :initform ""
                :reader unix-dso-link-flags)))
 
@@ -55,22 +55,22 @@ This is probably a programmer's error. Please contact the developers."))))
      (logical-pathname (translate-logical-pathname pathname))
      (t pathname))))
 
-(defmethod input-files ((operation compile-op) (dso unix-dso))
-  (mapcar #'component-pathname (module-components dso)))
+(defmethod asdf:input-files ((operation asdf:compile-op) (dso unix-dso))
+  (mapcar #'asdf:component-pathname (asdf:module-components dso)))
 
-(defmethod output-files ((operation compile-op) (dso unix-dso))
-  (let ((dir (component-pathname dso)))
+(defmethod asdf:output-files ((operation asdf:compile-op) (dso unix-dso))
+  (let ((dir (asdf:component-pathname dso)))
     (list
      (make-pathname :type "so"
 		    :name (car (last (pathname-directory dir)))
 		    :directory (butlast (pathname-directory dir))
 		    :defaults dir))))
 
-(defmethod perform ((operation compile-op) (dso unix-dso))
-  (let ((dso-name (unix-name (car (output-files operation dso)))))
+(defmethod asdf:perform ((operation asdf:compile-op) (dso unix-dso))
+  (let ((dso-name (unix-name (car (asdf:output-files operation dso)))))
     (unless
         (zerop
-         (run-shell-command
+         (asdf:run-shell-command
           (space-join (or (getenv "CC") "gcc")
                       "~A -o ~S ~{~S ~}")
           (space-join (unix-dso-link-flags dso)
@@ -82,13 +82,13 @@ This is probably a programmer's error. Please contact the developers."))))
           dso-name
           (mapcar #'unix-name
                   (mapcan (lambda (c)
-                            (output-files operation c))
-                          (module-components dso)))))
-      (error 'operation-error :operation operation :component dso))))
+                            (asdf:output-files operation c))
+                          (asdf:module-components dso)))))
+      (error 'asdf:operation-error :operation operation :component dso))))
   
-(defmethod perform ((o load-op) (c unix-dso))
-  (let ((co (make-instance 'compile-op)))
-    (let ((filename (car (output-files co c))))
+(defmethod asdf:perform ((o asdf:load-op) (c unix-dso))
+  (let ((co (make-instance 'asdf:compile-op)))
+    (let ((filename (car (asdf:output-files co c))))
       (cffi:load-foreign-library filename)
       (terpri *debug-io*)
       (format *debug-io* "~%>> Loaded ~A~%~%" filename))))
@@ -100,22 +100,23 @@ This is probably a programmer's error. Please contact the developers."))))
 
 ;;; if this goes into the standard asdf, it could reasonably be extended
 ;;; to allow cflags to be set somehow
-(defmethod output-files ((op compile-op) (c c-source-file))
+(defmethod asdf:output-files ((op asdf:compile-op) (c asdf:c-source-file))
   (list
    (make-pathname :type "o" :defaults
-		  (component-pathname c))))
+		  (asdf:component-pathname c))))
 
-(defmethod perform ((op compile-op) (c c-source-file))
+(defmethod asdf:perform ((op asdf:compile-op) (c asdf:c-source-file))
   (unless
       (zerop
-       (run-shell-command (space-join (or (getenv "CC") "gcc")
-                                      "~A -o ~S -c ~S")
-                          (space-join "-O3 -Wall -fPIC"
-                                      (gcc-cpu-flags)
-                                      (getenv "EXTRA_CFLAGS"))
-                          (unix-name (car (output-files op c)))
-                          (unix-name (component-pathname c))))
+       (asdf:run-shell-command
+        (space-join (or (getenv "CC") "gcc")
+                    "~A -o ~S -c ~S")
+        (space-join "-O3 -Wall -fPIC"
+                    (gcc-cpu-flags)
+                    (getenv "EXTRA_CFLAGS"))
+        (unix-name (car (asdf:output-files op c)))
+        (unix-name (asdf:component-pathname c))))
     (error 'operation-error :operation op :component c)))
 
-(defmethod perform ((operation load-op) (c c-source-file))
+(defmethod asdf:perform ((operation asdf:load-op) (c asdf:c-source-file))
   t)

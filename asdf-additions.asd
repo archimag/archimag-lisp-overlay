@@ -3,11 +3,11 @@
 (in-package #:common-lisp-user)
 
 (defpackage #:asdf-additions-system
-  (:use #:common-lisp #:asdf))
+  (:use #:common-lisp))
 
 (in-package #:asdf-additions-system)
 
-(defsystem asdf-additions
+(asdf:defsystem asdf-additions
   :description "A few new filetypes added to ASDF."
   :author "Dan Barlow <dan@metacircles.com>, Stelian Ionescu <sionescu@common-lisp.net>"
   :maintainer "Stelian Ionescu <sionescu@common-lisp.net>"
