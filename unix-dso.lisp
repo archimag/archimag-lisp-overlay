@@ -8,11 +8,11 @@
   #+(or allegro clisp) (sys::getenv var)
   #+(or cmu scl) (cdr (assoc var ext:*environment-list* :test #'string-equal))
   #+(or ecl gcl) (si:getenv var)
-  #+lisworks (lw:environment-variable var)
+  #+lispworks (lw:environment-variable var)
   #+lucid (lcl:environment-variable var)
   #+mcl (ccl::getenv var)
   #+sbcl (sb-ext:posix-getenv var)
-  #-(or allegro clisp cmu scl ecl gcl lisworks lucid mcl sbcl)
+  #-(or allegro clisp cmu scl ecl gcl lispworks lucid mcl sbcl)
   (error "Your implementation is not supported"))
 
 (defun join (connector strings)
