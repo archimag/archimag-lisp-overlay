@@ -33,7 +33,7 @@
 ;; FIXME: I'm not sure that this is correct. Must find a reliable
 ;;        way to find out whether the compiler is 32-bit or 64-bit
 (defun gcc-cpu-flags ()
-  (case (cffi:foreign-type-size :int)
+  (case (cffi:foreign-type-size :pointer)
     (4 "-m32")
     (8 "-m64")
     (t (error "The size of INT on your platform is neither 32-bit nor 64-bit.
