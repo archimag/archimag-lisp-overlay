@@ -1,0 +1,8 @@
+DIST cl-berkeley-db-0.2.0.tar.gz 27313 RMD160 0ebf1c8288eeaccadedc6d1ba28dec7114c3a469 SHA1 c8ca105e59d15aaa490cf8a41d2ec5d26c87f972 SHA256 2103484678daeed5772a64c1bc97d2e336a2e1258072e3f3069f0c35f519cc94
+EBUILD cl-berkeley-db-0.2.0.ebuild 662 RMD160 216b0e6fccbbb2b9160f677cf5cdb48f11fcfa35 SHA1 72a9fb445ff8521a8fde04418bb4b483aa7e7fa2 SHA256 7627b935ad949356bd4f26e485058fcd695d284dd11dfb7e298a2bb4fa52e545
+MD5 0d1140e18142a8e91724846ee8b96dec cl-berkeley-db-0.2.0.ebuild 662
+RMD160 216b0e6fccbbb2b9160f677cf5cdb48f11fcfa35 cl-berkeley-db-0.2.0.ebuild 662
+SHA256 7627b935ad949356bd4f26e485058fcd695d284dd11dfb7e298a2bb4fa52e545 cl-berkeley-db-0.2.0.ebuild 662
+MD5 63ce4be1c907630d58404e412b72d6d8 files/digest-cl-berkeley-db-0.2.0 259
+RMD160 3b515ab27429a6170292c82b7a33ed6b0e16b38d files/digest-cl-berkeley-db-0.2.0 259
+SHA256 0680040d2187920f85e595d2b5b2ba1346c6d0c6e2d8bb708824077b00129014 files/digest-cl-berkeley-db-0.2.0 259
