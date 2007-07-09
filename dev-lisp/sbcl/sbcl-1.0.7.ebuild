@@ -168,7 +168,7 @@ EOF
 
 	if use source; then
 		# install the SBCL source
-		cp -pPR "${S}/sr"c "${D}/usr/$(get_libdir)/sbcl"
+		cp -pPR "${S}/src" "${D}/usr/$(get_libdir)/sbcl"
 		find "${D}/usr/$(get_libdir)/sbcl/src" -type f -name \*.fasl -print0 | xargs -0 rm -f
 	fi
 
