@@ -3,21 +3,28 @@
 
 inherit common-lisp-common-3 eutils flag-o-matic
 
-BV_X86=1.0
+#same order as http://www.sbcl.org/platform-table.html
+BV_X86=1.0.7
+BV_AMD64=1.0.7
 BV_PPC=1.0
-BV_SPARC=0.8.15
-BV_MIPS=0.7.10
-BV_AMD64=0.9.14
-BV_PPC_MACOS=0.9.11a
+BV_SPARC=0.9.17
+BV_ALPHA=0.9.12
+BV_MIPS=0.9.12
+BV_MIPSEL=0.9.12
+
+# BV_PPC_MACOS=0.9.11a
 
 DESCRIPTION="Steel Bank Common Lisp (SBCL) is an implementation of ANSI Common Lisp."
 HOMEPAGE="http://sbcl.sourceforge.net/"
 SRC_URI="mirror://sourceforge/sbcl/${P}-source.tar.bz2
+	amd64? ( mirror://sourceforge/sbcl/${PN}-${BV_AMD64}-x86-64-linux-binary.tar.bz2 )
 	x86? ( mirror://sourceforge/sbcl/${PN}-${BV_X86}-x86-linux-binary.tar.bz2 )
 	ppc? ( mirror://sourceforge/sbcl/${PN}-${BV_PPC}-powerpc-linux-binary.tar.bz2 )
 	sparc? ( mirror://sourceforge/sbcl/${PN}-${BV_SPARC}-sparc-linux-binary.tar.bz2 )
-	mips? ( mirror://sourceforge/sbcl/${PN}-${BV_MIPS}-mips-linux-binary.tar.gz )
-	amd64? ( mirror://sourceforge/sbcl/${PN}-${BV_AMD64}-x86-64-linux-binary.tar.bz2 )"
+	alpha? ( mirror://sourceforge/sbcl/${PN}-${BV_ALPHA}-alpha-linux-binary.tar.bz2 )
+	mips? ( !cobalt? ( mirror://sourceforge/sbcl/${PN}-${BV_MIPS}-mips-linux-binary.tar.bz2 ) )
+	mips? ( cobalt? ( mirror://sourceforge/sbcl/${PN}-${BV_MIPSEL}-mipsel-linux-binary.tar.bz2 ) )
+"
 
 LICENSE="MIT"
 SLOT="0"
