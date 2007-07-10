@@ -1,6 +1,5 @@
 # Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-lisp/cl-who/cl-who-0.6.1.ebuild,v 1.1 2006/07/29 05:41:23 mkennedy Exp $
 
 inherit common-lisp
 
@@ -20,6 +19,6 @@ CLPACKAGE=cl-who
 src_install() {
 	common-lisp-install *.lisp *.asd
 	common-lisp-system-symlink
-	dodoc CHANGELOG INSTALLATION
+	dodoc CHANGELOG
 	dohtml doc/*.html
 }
