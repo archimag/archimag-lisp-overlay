@@ -7,4 +7,3 @@ diff -ur sbcl-0.9.17.orig/contrib/vanilla-module.mk sbcl-0.9.17/contrib/vanilla-
  install:
 -	cp $(MODULE).fasl "$(BUILD_ROOT)$(INSTALL_DIR)"
 +	cp $(MODULE).fasl $(MODULE).lisp "$(BUILD_ROOT)$(INSTALL_DIR)"
-Only in sbcl-0.9.17/contrib: vanilla-module.mk.~1.6.~
