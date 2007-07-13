@@ -18,8 +18,8 @@ BV_MIPSEL=0.9.12
 DESCRIPTION="Steel Bank Common Lisp (SBCL) is an implementation of ANSI Common Lisp."
 HOMEPAGE="http://sbcl.sourceforge.net/"
 SRC_URI="mirror://sourceforge/sbcl/${P}-source.tar.bz2
-	amd64? ( mirror://sourceforge/sbcl/${PN}-${BV_AMD64}-x86-64-linux-binary.tar.bz2 )
 	x86? ( mirror://sourceforge/sbcl/${PN}-${BV_X86}-x86-linux-binary.tar.bz2 )
+	amd64? ( mirror://sourceforge/sbcl/${PN}-${BV_AMD64}-x86-64-linux-binary.tar.bz2 )
 	ppc? ( mirror://sourceforge/sbcl/${PN}-${BV_PPC}-powerpc-linux-binary.tar.bz2 )
 	sparc? ( mirror://sourceforge/sbcl/${PN}-${BV_SPARC}-sparc-linux-binary.tar.bz2 )
 	alpha? ( mirror://sourceforge/sbcl/${PN}-${BV_ALPHA}-alpha-linux-binary.tar.bz2 )
@@ -91,21 +91,12 @@ EOF
 }
 
 src_unpack() {
-	local a
-	# unpacking host compiler
-	if use ppc; then
-		a="${PN}-${BV_PPC}-powerpc-linux-binary.tar.bz2"
-	else
-		for a in ${A}; do [[ $a == *binary* ]] && break; done
-	fi
-	unpack $a
-	mv ${PN}* sbcl-binary || die
-
-	unpack ${P}-source.tar.bz2
+	unpack ${A}
+	mv sbcl-*-linux sbcl-binary
 
 	pushd "${S}"
-	epatch "${FILESDIR}/disable-tests-gentoo-${PV}.patch" || die
-	use source && epatch "${FILESDIR}/vanilla-module-install-source-gentoo.patch" || die
+	epatch "${FILESDIR}/disable-tests-gentoo.patch"
+	use source && epatch "${FILESDIR}/vanilla-module-install-source-gentoo.patch"
 	popd
 	sed -i "s,/lib,/$(get_libdir),g" "${S}/install.sh"
 	sed -i "s,/usr/local/lib,/usr/$(get_libdir),g" \
@@ -134,9 +125,9 @@ src_compile() {
 
 	if use doc; then
 		cd "${S}/doc/manual"
-		make info html || die
+		make info html || die "make info html failed"
 		cd "${S}/doc/internals"
-		make html || die
+		make html || die "make html failed"
 	fi
 }
 
@@ -153,11 +144,11 @@ src_install() {
 EOF
 	dodir /usr/share/man
 	dodir /usr/share/doc/${PF}
-	INSTALL_ROOT="${D}/usr" DOC_DIR="${D}/usr/share/doc/${PF}" sh install.sh || die
+	INSTALL_ROOT="${D}/usr" DOC_DIR="${D}/usr/share/doc/${PF}" sh install.sh || die "install.sh failed"
 
 	doman doc/sbcl-asdf-install.1
 
-	dodoc BUGS COPYING CREDITS INSTALL NEWS OPTIMIZATIONS PRINCIPLES README STYLE SUPPORT TLA TODO
+	dodoc BUGS CREDITS INSTALL NEWS OPTIMIZATIONS PRINCIPLES README STYLE SUPPORT TLA TODO
 
 	if use doc; then
 		dohtml doc/html/*
