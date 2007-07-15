@@ -45,7 +45,8 @@ pkg_setup() {
 		eerror "(the \"vanilla\" profile) and \"source /etc/profile\" before continuing."
 		die
 	fi
-	if ! built_with_use sys-libs/glibc nptl && (use x86 || use amd64); then
+	if (use x86 || use amd64) && has_version '<sys-libs/glibc-2.6' \
+		&& ! built_with_use sys-libs/glibc nptl; then
 		eerror "Building SBCL without NPTL support on at least x86 and amd64"
 		eerror "architectures is not a supported configuration in Gentoo.  Please"
 		eerror "refer to Bug #119016 for more information."
@@ -115,13 +116,10 @@ src_compile() {
 
 	filter-ldflags -Wl,--as-needed --as-needed # see Bug #132992
 
-	PATH="${bindir}/src/runtime:${PATH}" SBCL_HOME="${bindir}/output" GNUMAKE=make \
-		./make.sh "sbcl
-			--sysinit /dev/null
-			--userinit /dev/null
-			--disable-debugger
-			--core ${bindir}/output/sbcl.core" \
-				|| die
+	# clear the environment to get rid of non-ASCII strings, see bug 174702
+	env - PATH="${bindir}/src/runtime:${PATH}" SBCL_HOME="${bindir}/output" GNUMAKE=make ./make.sh \
+		"sbcl --sysinit /dev/null --userinit /dev/null	--disable-debugger --core ${bindir}/output/sbcl.core" \
+		|| die "make failed"
 
 	if use doc; then
 		cd "${S}/doc/manual"
