@@ -117,7 +117,8 @@ src_compile() {
 	filter-ldflags -Wl,--as-needed --as-needed # see Bug #132992
 
 	# clear the environment to get rid of non-ASCII strings, see bug 174702
-	env - PATH="${bindir}/src/runtime:${PATH}" SBCL_HOME="${bindir}/output" GNUMAKE=make ./make.sh \
+	env - PATH="${bindir}/src/runtime:${PATH}" SBCL_HOME="${bindir}/output" \
+		HOME="${WORKDIR}" GNUMAKE=make ./make.sh \
 		"sbcl --sysinit /dev/null --userinit /dev/null	--disable-debugger --core ${bindir}/output/sbcl.core" \
 		|| die "make failed"
 
