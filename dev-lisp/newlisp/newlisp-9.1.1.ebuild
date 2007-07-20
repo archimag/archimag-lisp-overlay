@@ -39,45 +39,17 @@ src_install() {
     doins init.lsp.example
 
 	insinto /usr/share/newlisp/examples
-	for example in examples/httpd-conf.lsp \
-		examples/link.lsp \
-		examples/syntax.cgi ; do
-		doins ${example}
-	done
+	doins examples/{httpd-conf.lsp,link.lsp,syntax.cgi}
 
 	insinto /usr/share/newlisp/modules
-	for module in modules/sqlite3.lsp \
-		modules/postscript.lsp \
-		modules/unix.lsp \
-		modules/pop3.lsp \
-		modules/mysql5.lsp \
-		modules/crypto.lsp \
-		modules/ftp.lsp \
-		modules/gmp.lsp \
-		modules/stat.lsp \
-		modules/zlib.lsp \
-		modules/mysql.lsp \
-		modules/odbc.lsp \
-		modules/xmlrpc-client.lsp \
-		modules/infix.lsp \
-		modules/smtp.lsp \
-		modules/cgi.lsp ; do
-		doins ${module}
-	done
+	doins modules/*.lsp
 
+	dodoc doc/{COPYING,CREDITS}
+	dohtml doc/{newlisp_manual.html,newlisp_index.html}
+	dohtml doc/{manual_frame.html,CodePatterns.html}
+	dohtml doc/{newLISPdoc.html,newLISP-9.1-Release.html}
 
-    dodoc doc/COPYING
-    dodoc doc/CREDITS
-    dohtml doc/newlisp_manual.html
-    dohtml doc/newlisp_index.html
-    dohtml doc/manual_frame.html
-    dohtml doc/CodePatterns.html
-    dohtml doc/newLISPdoc.html
-    dohtml doc/newLISP-9.1-Release.html
-
-
-    doman doc/newlisp.1
-    doman doc/newlispdoc.1
+	doman doc/{newlisp.1,newlispdoc.1}
 
 	if use tcltk ; then
 		newbin newlisp-tk/newlisp-tk.tcl newlisp-tk
@@ -96,8 +68,8 @@ src_install() {
 }
 
 src_test() {
-    ./newlisp qa-dot
-    ./newlisp qa-xml
+	./newlisp qa-dot
+	./newlisp qa-xml
     ./newlisp qa-setsig
 
 	#This one fails because it does "kill -9" on its on pid.  When
