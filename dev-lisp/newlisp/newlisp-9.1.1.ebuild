@@ -14,33 +14,23 @@ IUSE="unicode readline tcltk"
 DEPEND="readline? ( sys-libs/readline )
         tcltk? ( dev-lang/tk )"
 
-src_unpack() {
-	unpack ${A}
-	cd ${S}
-}
-
 src_compile() {
-	if use unicode ; then
-	  if use readline ; then
-	  	make linux_utf8_readline
-	  else
-	    make linux_utf8
-	  fi
-	  make linux_lib_utf8
-	else
-	  if use readline ; then
-	    make linux_readline
-	  else
-	    make linux
-	  fi
-	  make linux_lib
-	fi
+	use unicode && UTF8="_utf8" || UTF8=""
+	use readline && READLINE="_readline" || READLINE=""
+	emake linux${UTF8}${READLINE}
+	emake linux_lib${UTF8}
 }
 
 src_install() {
 	# newlisp has got an installation system that seems to break the
-	# standard filesystem hierarchy, so we do our own install procedure
-	# here.
+	# standard filesystem hierarchy, so we do our own install
+	# procedure here.  newlisp, by default, installs into the
+	# following directories:
+	#   datadir=$(DESTDIR)/usr/share
+	#   bindir=$(DESTDIR)/usr/bin
+	#   mandir=$(DESTDIR)/usr/share/man
+	#
+
     dobin newlisp
 	dolib.so newlisp.so
     dobin examples/newlispdoc
