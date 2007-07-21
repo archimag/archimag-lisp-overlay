@@ -17,54 +17,36 @@ DEPEND="readline? ( sys-libs/readline )
 src_compile() {
 	use unicode && UTF8="_utf8" || UTF8=""
 	use readline && READLINE="_readline" || READLINE=""
-	emake linux${UTF8}${READLINE}
-	emake linux_lib${UTF8}
+	emake -j1 linux${UTF8}${READLINE} || die "emake failed"
+	emake -j1 linux_lib${UTF8} || die "emake failed"
 }
 
 src_install() {
-	# newlisp has got an installation system that seems to break the
-	# standard filesystem hierarchy, so we do our own install
-	# procedure here.  newlisp, by default, installs into the
-	# following directories:
-	#   datadir=$(DESTDIR)/usr/share
-	#   bindir=$(DESTDIR)/usr/bin
-	#   mandir=$(DESTDIR)/usr/share/man
-	#
+	# patch Makefile to fix some directory paths
+	sed -i -e '/-install .*html$/s:/doc/newlisp/:/doc/newlisp/html/:g' ${S}/Makefile
+	sed -i -e '/-install .* modules/s:(datadir)/newlisp:(datadir)/newlisp/modules:g' ${S}/Makefile
+	sed -i -e '/-install .* examples/s:(datadir)/newlisp:(datadir)/newlisp/examples:g' ${S}/Makefile
+	sed -i -e 's:/doc/newlisp:/doc/$P:g' ${S}/Makefile
 
-    dobin newlisp
-	dolib.so newlisp.so
-    dobin examples/newlispdoc
+	# patch Makefile to fix typo 
+	sed -i -e 's/crypt/crypto/g' ${S}/Makefile
 	
-	insinto /usr/share/newlisp
-    doins init.lsp.example
+	# Makefile assumes these directories are present
+	mkdir -p ${D}/usr/bin
+	mkdir -p ${D}/usr/share/man/man1
+	mkdir -p ${D}/usr/share/doc/${P}/html
+	mkdir -p ${D}/usr/share/newlisp/{modules,examples}
 
-	insinto /usr/share/newlisp/examples
-	doins examples/{httpd-conf.lsp,link.lsp,syntax.cgi}
-
+	emake DESTDIR=${D} install || die "einstall failed"
+	
+	# install some stuff the Makefile doesn't do
+	dobin examples/newlispdoc
+	dolib.so newlisp.so
 	insinto /usr/share/newlisp/modules
-	doins modules/*.lsp
+	doins modules/xmlrpc-client.lsp
 
-	dodoc doc/{COPYING,CREDITS}
-	dohtml doc/{newlisp_manual.html,newlisp_index.html}
-	dohtml doc/{manual_frame.html,CodePatterns.html}
-	dohtml doc/{newLISPdoc.html,newLISP-9.1-Release.html}
-
-	doman doc/{newlisp.1,newlispdoc.1}
-
-	if use tcltk ; then
-		newbin newlisp-tk/newlisp-tk.tcl newlisp-tk
-		doman doc/newlisp-tk.1
-		dohtml newlisp-tk/newlisp-tk.html
-
-		insinto /usr/share/newlisp/examples
-		doins examples/tcltk.lsp
-
-		insinto /usr/share/newlisp/newlisp-tk
-		doins newlisp-tk/*.lsp
-
-		insinto /usr/share/newlisp/newlisp-tk/images
-		doins newlisp-tk/images/*
-	fi
+	# bzip docs
+	ecompress ${D}/usr/share/doc/${P}/{COPYING,CREDITS}
 }
 
 src_test() {
