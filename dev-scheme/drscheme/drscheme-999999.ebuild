@@ -11,7 +11,7 @@ HOMEPAGE="http://www.plt-scheme.org/software/drscheme/"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-KEYWORDS="~amd64 ~ppc ~x86"
+KEYWORDS=""
 IUSE="cgc backtrace cairo doc llvm opengl profile X xft xrender"
 
 RDEPEND="X? ( x11-libs/libICE
@@ -36,8 +36,6 @@ src_unpack() {
 
 src_compile() {
 	cd src
-	# -O3 seems to cause some miscompiles, this should fix #141925 and #133888
-	replace-flags -O? -O2
 
 # according to vapier, we should use the bundled libtool
 # such that we don't preclude cross-compile. Thus don't use
@@ -54,7 +52,7 @@ src_compile() {
 		$(use_enable xrender) \
 		|| die "econf failed"
 
-	emake || die "emake failed"
+	emake -j1 || die "emake failed"
 
 	if use cgc; then
 		emake cgc || die "emake cgc failed"
@@ -79,7 +77,7 @@ src_install() {
 	dosym "/usr/share/doc/${PF}" "/usr/share/plt/doc"
 
 	if use X; then
-		newicon collects/icons/PLT-206.png drscheme.png
+		newicon ../collects/icons/PLT-206.png drscheme.png
 		make_desktop_entry drscheme "DrScheme" drscheme.png "Development"
 	fi
 }
