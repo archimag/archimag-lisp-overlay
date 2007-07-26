@@ -4,15 +4,14 @@
 
 ESVN_REPO_URI="http://svn.plt-scheme.org/plt/trunk/"
 
-inherit eutils multilib flag-o-matic libtool subversion
+inherit eutils subversion
 
 DESCRIPTION="DrScheme programming environment. Includes mzscheme."
 HOMEPAGE="http://www.plt-scheme.org/software/drscheme/"
-
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS=""
-IUSE="cgc backtrace cairo doc llvm opengl profile X xft xrender"
+IUSE="backtrace cairo cgc llvm opengl profile X xft xrender"
 
 RDEPEND="X? ( x11-libs/libICE
 			  x11-libs/libSM
@@ -32,6 +31,7 @@ src_unpack() {
 	subversion_src_unpack
 	#remove non-Unix stuff
 	rm -rf src/{a-list,mac,mysterx,mzcom,srpersist,worksp,wxmac,wxwindow}
+	sed "s,docdir=\"\${datadir}/plt/doc,docdir=\"\${datadir}/doc/${PF}," -i src/configure
 }
 
 src_compile() {
@@ -68,13 +68,6 @@ src_install() {
 	if use cgc; then
 		emake DESTDIR="${D}" install-cgc || die "make install-cgc failed"
 	fi
-
-	use doc && mv -f "${D}"/usr/share/plt/doc/* "${D}/usr/share/doc/${PF}/"
-	rm -rf "${D}/usr/share/plt/doc"
-
-	# needed so online help works
-	keepdir /usr/share/plt
-	dosym "/usr/share/doc/${PF}" "/usr/share/plt/doc"
 
 	if use X; then
 		newicon ../collects/icons/PLT-206.png drscheme.png
