@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit eutils common-lisp-common-3
+inherit common-lisp-common-3
 
 MY_PV=${PV##*_pre}
 
