@@ -1,0 +1,1 @@
+run -N /usr/bin/drscheme -ZmvqL- drscheme.ss drscheme

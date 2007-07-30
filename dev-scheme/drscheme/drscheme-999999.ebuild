@@ -52,10 +52,10 @@ src_compile() {
 		$(use_enable xrender) \
 		|| die "econf failed"
 
-	emake -j1 || die "emake failed"
-
 	if use cgc; then
-		emake cgc || die "emake cgc failed"
+		emake -j1 both || die "emake both failed"
+	else
+		emake -j1 || die "emake failed"
 	fi
 }
 
@@ -63,10 +63,10 @@ src_install() {
 	cd src
 	export MZSCHEME_DYNEXT_LINKER_FLAGS=$(raw-ldflags)
 
-	emake DESTDIR="${D}" install || die "make install failed"
-
 	if use cgc; then
-		emake DESTDIR="${D}" install-cgc || die "make install-cgc failed"
+		emake DESTDIR="${D}" install-both || die "emake install-both failed"
+	else
+		emake DESTDIR="${D}" install || die "emake install failed"
 	fi
 
 	if use X; then
