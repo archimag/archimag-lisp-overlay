@@ -12,7 +12,7 @@ SRC_URI="amd64? ( ftp://clozure.com/pub/testing/${PN}-linuxx8664-snapshot-${MY_P
 		 ppc?   ( ftp://clozure.com/pub/testing/${PN}-linuxppc-snapshot-${MY_PV}.tar.gz )"
 LICENSE="LLGPL-2.1"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="-* ~amd64 ~ppc ~ppc64"
 IUSE=""
 
 DEPEND=""
