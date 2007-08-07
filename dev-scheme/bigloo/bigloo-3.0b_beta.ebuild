@@ -4,16 +4,16 @@
 
 inherit elisp-common multilib
 
-MY_P=${PN}${PV/_beta/-}
+MY_P=${PN}${PV/_beta/-beta}
 
 DESCRIPTION="Bigloo is a Scheme implementation."
 HOMEPAGE="http://www-sop.inria.fr/mimosa/fp/Bigloo/bigloo.html"
 tmp_date="05Aug07"
-SRC_URI="ftp://ftp-sop.inria.fr/mimosa/fp/Bigloo/bigloo3.0b-beta$tmp_date.tar.gz"
+SRC_URI="ftp://ftp-sop.inria.fr/mimosa/fp/Bigloo/${MY_P}${tmp_date}.tar.gz"
 
 SLOT="0"
 LICENSE="GPL-2"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~ppc ~x86"
 
 DEPEND="emacs? ( virtual/emacs )"
 
