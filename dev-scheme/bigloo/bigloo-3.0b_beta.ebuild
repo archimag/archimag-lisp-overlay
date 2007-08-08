@@ -60,7 +60,8 @@ src_install () {
 
 	# make the links created not point to DESTDIR, since that is only a temporary home
 	sed 's/ln -s $(DESTDIR)/ln -s /' -i Makefile.misc
-	emake DESTDIR=${D} install || die "install failed"
+	# parallel build is broken
+	emake -j1 DESTDIR=${D} install || die "install failed"
 
 	if use emacs; then
 		elisp-install ${PN} etc/*.el
