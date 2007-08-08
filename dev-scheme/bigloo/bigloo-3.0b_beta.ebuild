@@ -8,8 +8,8 @@ MY_P=${PN}${PV/_beta/-beta}
 
 DESCRIPTION="Bigloo is a Scheme implementation."
 HOMEPAGE="http://www-sop.inria.fr/mimosa/fp/Bigloo/bigloo.html"
-tmp_date="05Aug07"
-SRC_URI="ftp://ftp-sop.inria.fr/mimosa/fp/Bigloo/${MY_P}${tmp_date}.tar.gz"
+DATE="08Aug07"
+SRC_URI="ftp://ftp-sop.inria.fr/mimosa/fp/Bigloo/${MY_P}${DATE}.tar.gz"
 
 SLOT="0"
 LICENSE="GPL-2"
