@@ -29,11 +29,19 @@ DEPEND="app-arch/unzip
 		>=dev-scheme/slib-3.1.4-r2"
 
 src_unpack() {
-	unpack ${A}
-	use wb || epatch ${FILESDIR}/scm-nowb.patch
+	unpack ${A}; cd "${S}"
+
+#	cp Makefile Makefile.old
+
+#	use wb || epatch ${FILESDIR}/scm-nowb.patch
+	use wb || sed "s#.*../wb/rwb-isam.scm.*##" -i Makefile
+
+#	epatch ${FILESDIR}/scm-installprefix.patch
+	sed "s#local/##" -i Makefile
+
+#	diff -u Makefile.old Makefile
 
 	epatch ${FILESDIR}/scm-fixinstall.patch
-	epatch ${FILESDIR}/scm-installprefix.patch
 }
 
 src_compile() {
