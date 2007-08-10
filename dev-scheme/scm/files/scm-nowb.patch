@@ -1,0 +1,13 @@
+--- scm-old/Makefile	2006-10-25 03:47:17.000000000 +0200
++++ scm/Makefile	2007-08-10 14:09:21.000000000 +0200
+@@ -274,8 +274,8 @@
+ 	if [ -f /usr/lib/libreadline.so ]; \
+ 		then $(BUILD) -t dll -f dlls.opt -F edit-line; fi
+ 
+-rwb-isam.scm wbtab.scm: ../wb/rwb-isam.scm ../wb/wbtab.scm
+-	cp ../wb/rwb-isam.scm ../wb/wbtab.scm ./
++#rwb-isam.scm wbtab.scm: ../wb/rwb-isam.scm ../wb/wbtab.scm
++#	cp ../wb/rwb-isam.scm ../wb/wbtab.scm ./
+ db.so: dlls.opt rwb-isam.scm wbtab.scm
+ 	if [ -f ../wb/blink.c ]; then \
+ 		$(BUILD) -t dll -f dlls.opt -F wb; fi
