@@ -29,10 +29,8 @@ DEPEND="app-arch/unzip
 		>=dev-scheme/slib-3.1.4-r2"
 
 src_unpack() {
-	unpack ${MY_P}.zip
-	if ! use wb; then
-		epatch ${FILESDIR}/scm-nowb.patch;
-	fi
+	unpack ${A}
+	use wb || epatch ${FILESDIR}/scm-nowb.patch;
 
 	epatch ${FILESDIR}/scm-fixinstall.patch;
 	epatch ${FILESDIR}/scm-installprefix.patch;
