@@ -14,7 +14,7 @@ DESCRIPTION="Scheme implementation from author of slib"
 
 WB_V="1c3"
 SRC_URI="http://swiss.csail.mit.edu/ftpdir/scm/${MY_P}.zip
-	wb? (http://swiss.csail.mit.edu/ftpdir/scm/wb${WB_V}.zip)"
+	wb? ( http://swiss.csail.mit.edu/ftpdir/scm/wb${WB_V}.zip )"
 
 HOMEPAGE="http://swiss.csail.mit.edu/~jaffer/SCM"
 
@@ -30,17 +30,17 @@ DEPEND="app-arch/unzip
 
 src_unpack() {
 	unpack ${A}
-	use wb || epatch ${FILESDIR}/scm-nowb.patch;
+	use wb || epatch ${FILESDIR}/scm-nowb.patch
 
-	epatch ${FILESDIR}/scm-fixinstall.patch;
-	epatch ${FILESDIR}/scm-installprefix.patch;
+	epatch ${FILESDIR}/scm-fixinstall.patch
+	epatch ${FILESDIR}/scm-installprefix.patch
 }
 
 src_compile() {
 	if use wb; then
 		einfo "Making WB"
 
-		pushd ../wb;
+		pushd ../wb
 		emake all
 		popd
 	fi
@@ -55,11 +55,7 @@ src_compile() {
 }
 
 src_install() {
-	emake DESTDIR=${D} install || die
-#	insinto /usr/share/scm/
-#	doins *.scm
-#	dodoc ANNOUNCE QUICKREF README
-#	dobin scm
+	emake DESTDIR=${D} install || die "emake install failed"
 }
 
 pkg_postinst() {
