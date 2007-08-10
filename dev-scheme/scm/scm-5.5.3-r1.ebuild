@@ -40,9 +40,9 @@ src_compile() {
 	if use wb; then
 		einfo "Making WB"
 
-		cd ../wb;
+		pushd ../wb;
 		emake all
-		cd ${S};
+		popd
 	fi
 
 	einfo "Making scmlit"
