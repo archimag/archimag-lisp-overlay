@@ -31,16 +31,20 @@ IUSE="debug fastcgi gtk mysql odbc pcre sqlite3 test xml"
 S="${WORKDIR}/${MY_P}"
 
 src_compile() {
-	pwd
 	econf $(use_with pcre) $(use_with fastcgi fcgi) $(use_with xml) $(use_with mysql) $(use_with sqlite3) $(use_with odbc) $(use_with gtk gtk2)
 
 	if use debug; then
-		emake || die "make debug failed"
+		emake -j1 || die "make debug failed"
 	else
-		emake unsafe || die "make failed"
+		emake -j1 unsafe || die "make failed"
 	fi
 }
 
+src_test() {
+	LD_LIBRARY_PATH="../libs/" emake -j1 test || die "standalone tests failed"
+	LD_LIBRARY_PATH="../libs/" emake -j1 check || die "Zend PHP comparison failed"
+}
+
 src_install() {
-	emake install || die "make install failed"
+	emake -j1 DESTDIR=${D} install || die "make install failed"
 }
