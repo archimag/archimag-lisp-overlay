@@ -1,9 +1,8 @@
-DIST pcc-test-2.9.1.tar.bz2 9602 RMD160 5408bad24eac83d170cf7ad0b3f5267aceccf413 SHA1 38e5ef85a8756a630ece4b0e3fbaaa0dcbd13392 SHA256 e4f68655fafb2d6faa430aad5872d84c1be50a0e358f2cf2310d17bfab5ef556
 DIST roadsend-php-2.9.1-r3.tar.bz2 2786946 RMD160 e1119a446414efafd17518b91c15b1e8d0274be3 SHA1 942d47db5065fb84536549e8621f04b1cfa2e90c SHA256 e388cfd3737b354ad4c7ab8f2982c05dfa79c574c7074a7f14db434226c1bbba
-EBUILD roadsend-php-2.9.1_p3.ebuild 1626 RMD160 2718fa8dbc4ce1e160ac4f359065f3e59a5124f5 SHA1 ddf48f334b2fccab931047d8ef7ab06be38f735e SHA256 91c5bd99df4182efdb407d24eaa4e43ea5baf39c21f14a81d26de573726d6815
-MD5 6baa84f037603f304415b389742c1228 roadsend-php-2.9.1_p3.ebuild 1626
-RMD160 2718fa8dbc4ce1e160ac4f359065f3e59a5124f5 roadsend-php-2.9.1_p3.ebuild 1626
-SHA256 91c5bd99df4182efdb407d24eaa4e43ea5baf39c21f14a81d26de573726d6815 roadsend-php-2.9.1_p3.ebuild 1626
-MD5 baf89c3417ce5efc0dc21d94e4daedbf files/digest-roadsend-php-2.9.1_p3 512
-RMD160 a0eac15ea871be3ca5f769bbb399e71d14df414c files/digest-roadsend-php-2.9.1_p3 512
-SHA256 020ebc42c753bd471b3f3269fa775677e51fe4a5ad9fd5cec6e272b258be605a files/digest-roadsend-php-2.9.1_p3 512
+EBUILD roadsend-php-2.9.1_p3.ebuild 1518 RMD160 8b5d264fe46b618764a2e1af2883ff7620e726b6 SHA1 0cd2082645421cb539d24d62529756d61cc9c350 SHA256 e0a4d23eec0ee723608ab283e437ae99e27a9befadb8d5fcde9c3d57279f0438
+MD5 cbd264f3cdbdec7f4de1dd5523742060 roadsend-php-2.9.1_p3.ebuild 1518
+RMD160 8b5d264fe46b618764a2e1af2883ff7620e726b6 roadsend-php-2.9.1_p3.ebuild 1518
+SHA256 e0a4d23eec0ee723608ab283e437ae99e27a9befadb8d5fcde9c3d57279f0438 roadsend-php-2.9.1_p3.ebuild 1518
+MD5 f25b2d9703e3f848f472bc95680bf9dd files/digest-roadsend-php-2.9.1_p3 271
+RMD160 1064be7b90d6c3ec596b40c7357222ab274de24e files/digest-roadsend-php-2.9.1_p3 271
+SHA256 da7a39ed6474d6de6413f91524ded4edcb695c4d662035495ec9f7c89cdb82d2 files/digest-roadsend-php-2.9.1_p3 271

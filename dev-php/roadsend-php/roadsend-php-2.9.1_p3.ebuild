@@ -9,8 +9,7 @@ MY_P=${PN}-${MY_PV}
 
 DESCRIPTION="Roadsend PHP compiler"
 HOMEPAGE="http://code.roadsend.com/pcc"
-SRC_URI="http://code.roadsend.com/snaps/${MY_PL}.tar.bz2
-		 test? ( http://code.roadsend.com/snaps/pcc-test-${MY_PV}.tar.bz2 )"
+SRC_URI="http://code.roadsend.com/snaps/${MY_PL}.tar.bz2"
 
 KEYWORDS="~x86 ~amd64"
 
@@ -21,12 +20,11 @@ DEPEND="dev-scheme/bigloo
 		pcre? ( >=dev-libs/libpcre-6.6 )
 		xml? ( dev-libs/libxml2 )
 		odbc? ( dev-db/unixODBC )
-		fastcgi? ( dev-libs/fcgi )
-		gtk? ( >=x11-libs/gtk+-2.6.10 )"
+		fastcgi? ( dev-libs/fcgi )"
 
 RDEPEND="${DEPEND}"
 
-IUSE="debug fastcgi gtk mysql odbc pcre sqlite3 test xml"
+IUSE="debug fastcgi mysql odbc pcre sqlite3 test xml"
 
 S="${WORKDIR}/${MY_P}"
 
