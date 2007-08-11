@@ -32,9 +32,10 @@ S="${WORKDIR}/${MY_P}"
 
 src_unpack(){
 	unpack ${A};cd "${S}"
-	pwd; ls
 	cp Makefile.in Makefile.in.old
 	sed "s#\$(sysconfdir)#\$(DESTDIR)/\$(sysconfdir)#" -i Makefile.in
+	sed "s#\$(bindir)#\$(DESTDIR)/\$(bindir)#" -i Makefile.in
+	sed "s#\$(libdir)#\$(DESTDIR)/\$(libdir)#" -i Makefile.in
 	diff -u Makefile.in.old Makefile.in
 }
 
