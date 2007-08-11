@@ -12,7 +12,7 @@ HOMEPAGE="http://code.roadsend.com/pcc"
 SRC_URI="http://code.roadsend.com/snaps/${MY_PL}.tar.bz2
 		 test? ( http://code.roadsend.com/snaps/pcc-test-${MY_PV}.tar.bz2 )"
 
-IUSE="debug fastcgi gtk mysql odbc pcre sqlite3 test xml"
+KEYWORDS="~x86 ~amd64"
 
 DEPEND="dev-scheme/bigloo
 		>=net-misc/curl-7.15.1-r1
@@ -25,6 +25,8 @@ DEPEND="dev-scheme/bigloo
 		gtk? ( >=x11-libs/gtk+-2.6.10 )"
 
 RDEPEND="${DEPEND}"
+
+IUSE="debug fastcgi gtk mysql odbc pcre sqlite3 test xml"
 
 S="${WORKDIR}/${MY_P}"
 
