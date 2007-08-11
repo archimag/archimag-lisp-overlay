@@ -30,8 +30,15 @@ IUSE="debug fastcgi gtk mysql odbc pcre sqlite3 test xml"
 
 S="${WORKDIR}/${MY_P}"
 
+src_unpack(){
+	unpack ${A};cd "${S}"
+	pwd; ls
+	cp Makefile.in Makefile.in.old
+	sed "s#\$(sysconfdir)#\$(DESTDIR)/\$(sysconfdir)#" -i Makefile.in
+	diff -u Makefile.in.old Makefile.in
+}
+
 src_compile() {
-	 sed "s#install -m 644 -b ./doc/pcc.conf \$(sysconfdir)/pcc.conf#install -m 644 -b ./doc/pcc.conf \$(DESTDIR)/pcc.conf#" -i Makefile
 	econf $(use_with pcre) $(use_with fastcgi fcgi) $(use_with xml) $(use_with mysql) $(use_with sqlite3) $(use_with odbc) $(use_with gtk gtk2)
 
 	if use debug; then
