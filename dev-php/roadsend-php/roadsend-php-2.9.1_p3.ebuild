@@ -38,7 +38,7 @@ src_unpack(){
 }
 
 src_compile() {
-	econf $(use_with pcre) $(use_with fastcgi fcgi) $(use_with xml) $(use_with mysql) $(use_with sqlite3) $(use_with odbc) $(use_with gtk gtk2)
+	econf $(use_with pcre) $(use_with fastcgi fcgi) $(use_with xml) $(use_with mysql) $(use_with sqlite3) $(use_with odbc) 
 
 	if use debug; then
 		emake -j1 || die "make debug failed"
