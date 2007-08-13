@@ -49,7 +49,6 @@ src_compile() {
 
 src_test() {
 	LD_LIBRARY_PATH="../libs/" emake -j1 test || die "standalone tests failed"
-	LD_LIBRARY_PATH="../libs/" emake -j1 check || die "Zend PHP comparison failed"
 }
 
 src_install() {
