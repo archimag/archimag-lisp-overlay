@@ -10,6 +10,7 @@ MY_P=${PN}-${MY_PV}
 DESCRIPTION="Roadsend PHP compiler"
 HOMEPAGE="http://code.roadsend.com/pcc"
 SRC_URI="http://code.roadsend.com/snaps/${MY_PL}.tar.bz2"
+LICENSE="GPL-2"
 
 KEYWORDS="~x86 ~amd64"
 
@@ -23,6 +24,7 @@ DEPEND="dev-scheme/bigloo
 		fastcgi? ( dev-libs/fcgi )"
 
 RDEPEND="${DEPEND}"
+SLOT="0"
 
 IUSE="debug fastcgi mysql odbc pcre sqlite3 test xml"
 
