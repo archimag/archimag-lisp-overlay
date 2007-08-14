@@ -10,7 +10,7 @@ MY_P=${PN}-${MY_PV}
 DESCRIPTION="Roadsend PHP compiler"
 HOMEPAGE="http://code.roadsend.com/pcc"
 SRC_URI="http://code.roadsend.com/snaps/${MY_PL}.tar.bz2"
-LICENSE="GPL-2"
+LICENSE="GPL-2 LGPL-2.1"
 
 KEYWORDS="~x86 ~amd64"
 
