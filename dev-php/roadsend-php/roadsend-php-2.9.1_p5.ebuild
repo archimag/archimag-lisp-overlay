@@ -26,7 +26,7 @@ DEPEND="dev-scheme/bigloo
 RDEPEND="${DEPEND}"
 SLOT="0"
 
-IUSE="debug fastcgi mysql odbc pcre sqlite3 test xml"
+IUSE="debug fastcgi mysql odbc pcre sqlite3 xml"
 
 S="${WORKDIR}/${MY_P}"
 
