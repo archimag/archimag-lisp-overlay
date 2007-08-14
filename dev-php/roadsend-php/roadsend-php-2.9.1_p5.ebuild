@@ -28,15 +28,6 @@ IUSE="debug fastcgi mysql odbc pcre sqlite3 test xml"
 
 S="${WORKDIR}/${MY_P}"
 
-_src_unpack(){
-	unpack ${A};cd "${S}"
-	cp Makefile.in Makefile.in.old
-	sed "s#\$(sysconfdir)#\$(DESTDIR)/\$(sysconfdir)#" -i Makefile.in
-	sed "s#\$(bindir)#\$(DESTDIR)/\$(bindir)#" -i Makefile.in
-	sed "s#\$(libdir)#\$(DESTDIR)/\$(libdir)#" -i Makefile.in
-	diff -u Makefile.in.old Makefile.in
-}
-
 src_compile() {
 	econf $(use_with pcre) $(use_with fastcgi fcgi) $(use_with xml) $(use_with mysql) $(use_with sqlite3) $(use_with odbc)
 
@@ -48,7 +39,7 @@ src_compile() {
 }
 
 src_test() {
-	LD_LIBRARY_PATH="../libs/" emake -j1 test || die "standalone tests failed"
+	LD_LIBRARY_PATH="${S}/libs/" emake -j1 test || die "standalone tests failed"
 }
 
 src_install() {
