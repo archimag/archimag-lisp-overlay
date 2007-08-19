@@ -16,9 +16,9 @@ DESCRIPTION="Scheme interpreter"
 HOMEPAGE="http://www.gnu.org/software/guile/"
 
 LICENSE="GPL-2"
-KEYWORDS="-*"
+KEYWORDS=""
 
-DEPEND=">=dev-libs/gmp-4.1 >=sys-devel/libtool-1.5.6 sys-devel/gettext"
+DEPEND=">=dev-libs/gmp-4.1 >=sys-devel/libtool-1.5.6 sys-devel/gettext dev-libs/gnulib"
 
 # Guile seems to contain some slotting support, /usr/share/guile/ is slotted,
 # but there are lots of collisions. Most in /usr/share/libguile. Therefore
@@ -29,7 +29,7 @@ MAJOR="1.8"
 IUSE="networking regex discouraged deprecated elisp nls debug-freelist debug-malloc debug threads"
 
 src_compile() {
-	./autogen.sh
+	sh -x ./autogen.sh
 
 #will fail for me if posix is disabled or without modules -- hkBst
 	econf \
