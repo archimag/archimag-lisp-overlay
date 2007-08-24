@@ -6,7 +6,7 @@ inherit common-lisp
 
 DESCRIPTION="Drakma is a Common Lisp HTTP client."
 HOMEPAGE="http://weitz.de/drakma/"
-SRC_URI="http://common-lisp.net/project/portage-overlay/distfiles/drakma_${PV}.orig.tar.gz"
+SRC_URI="http://common-lisp.net/~sionescu/ediware/${PN/cl-}_${PV}.orig.tar.gz"
 LICENSE="BSD"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""

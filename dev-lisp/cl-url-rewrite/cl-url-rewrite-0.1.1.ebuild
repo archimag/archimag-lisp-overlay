@@ -6,7 +6,7 @@ inherit common-lisp
 
 DESCRIPTION="Rewrite (X)HTML attributes with Common Lisp."
 HOMEPAGE="http://www.weitz.de/url-rewrite/"
-SRC_URI="mirror://gentoo/url-rewrite_${PV}.orig.tar.gz"
+SRC_URI="http://common-lisp.net/~sionescu/ediware/${PN/cl-}_${PV}.orig.tar.gz"
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64 ppc ~sparc x86"

@@ -6,7 +6,7 @@ inherit common-lisp
 
 DESCRIPTION="Hunchentoot is a web server written in Common Lisp and at the same time a toolkit for building dynamic websites with Common Lisp."
 HOMEPAGE="http://weitz.de/hunchentoot/"
-SRC_URI="mirror://gentoo/hunchentoot_${PV}.orig.tar.gz"
+SRC_URI="http://common-lisp.net/~sionescu/ediware/${PN/cl-}_${PV}.orig.tar.gz"
 LICENSE="BSD"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""

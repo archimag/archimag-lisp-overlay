@@ -6,7 +6,7 @@ inherit common-lisp
 
 DESCRIPTION="Portable chunked streams for Common Lisp"
 HOMEPAGE="http://weitz.de/chunga/"
-SRC_URI="http://common-lisp.net/project/portage-overlay/distfiles/${PN/cl-}_${PV}.orig.tar.gz"
+SRC_URI="http://common-lisp.net/~sionescu/ediware/${PN/cl-}_${PV}.orig.tar.gz"
 LICENSE="BSD"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""

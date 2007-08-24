@@ -7,7 +7,7 @@ inherit common-lisp
 DESCRIPTION="HTML-TEMPLATE is a portable templating library for Common Lisp"
 HOMEPAGE="http://weitz.de/html-template/
 	http://www.cliki.net/html-template"
-SRC_URI="mirror://gentoo/${PN/cl-/}_${PV}.orig.tar.gz"
+SRC_URI="http://common-lisp.net/~sionescu/ediware/${PN/cl-/}_${PV}.orig.tar.gz"
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"

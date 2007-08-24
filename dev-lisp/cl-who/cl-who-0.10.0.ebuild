@@ -6,7 +6,7 @@ inherit common-lisp
 DESCRIPTION='CL-WHO (is yet another Lisp Markup Language).'
 HOMEPAGE="http://weitz.de/cl-who/
 	http://www.cliki.net/cl-who"
-SRC_URI="mirror://gentoo/${PN}_${PV}.orig.tar.gz"
+SRC_URI="http://common-lisp.net/~sionescu/ediware/${PN}_${PV}.orig.tar.gz"
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"

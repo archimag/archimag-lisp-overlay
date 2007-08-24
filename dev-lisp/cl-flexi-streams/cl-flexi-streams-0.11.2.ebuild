@@ -7,7 +7,7 @@ inherit common-lisp
 DESCRIPTION="FLEXI-STREAMS implements \"virtual\" bivalent streams that can be layered atop real binary or bivalent streams."
 HOMEPAGE="http://weitz.de/flexi-streams/
 	http://www.cliki.net/flexi-streams"
-SRC_URI="http://common-lisp.net/project/portage-overlay/distfiles/flexi-streams_${PV}.orig.tar.gz"
+SRC_URI="http://common-lisp.net/~sionescu/ediware/${PN/cl-}_${PV}.orig.tar.gz"
 LICENSE="BSD"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""

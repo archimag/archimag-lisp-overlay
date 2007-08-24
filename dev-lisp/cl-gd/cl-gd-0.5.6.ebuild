@@ -6,7 +6,7 @@ inherit common-lisp
 
 DESCRIPTION="CL-GD is a library for Common Lisp which interfaces ti the GD Graphics Library"
 HOMEPAGE="http://weitz.de/cl-gd http://www.cliki.net/cl-gd"
-SRC_URI="mirror://gentoo/${PN}_${PV}.orig.tar.gz"
+SRC_URI="http://common-lisp.net/~sionescu/ediware/${PN}_${PV}.orig.tar.gz"
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"

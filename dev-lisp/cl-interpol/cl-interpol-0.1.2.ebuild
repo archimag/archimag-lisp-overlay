@@ -7,7 +7,7 @@ inherit common-lisp
 DESCRIPTION="String interpolation for Common Lisp similar to Perl or Unix shell scripts."
 HOMEPAGE="http://weitz.de/cl-interpol/
 	http://www.cliki.net/cl-interpol"
-SRC_URI="mirror://gentoo/${PN}_${PV}.orig.tar.gz"
+SRC_URI="http://common-lisp.net/~sionescu/ediware/${PN}_${PV}.orig.tar.gz"
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc x86"
