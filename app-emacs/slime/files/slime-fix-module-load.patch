@@ -1,0 +1,32 @@
+diff -ur slime.old/swank.lisp slime/swank.lisp
+--- slime.old/swank.lisp	2007-08-24 20:15:35.000000000 +0200
++++ slime/swank.lisp	2007-08-24 23:30:16.000000000 +0200
+@@ -3399,10 +3399,15 @@
+ 
+ (defslimefun swank-require (module &optional filename)
+   "Load the module MODULE."
+-  (require module (or filename (module-filename module)))
++  (let ((*compile-print* nil)
++        (*compile-verbose* nil)
++        #+cmu (ext:*gc-verbose* nil))
++    (handler-bind ((style-warning #'muffle-warning)
++                   #+sbcl (sb-ext:compiler-note #'muffle-warning))
++      (require module (or filename (module-filename module)))))
+   nil)
+ 
+-(defvar *find-module* 'find-module
++(defvar *find-module* 'find-module-gentoo
+   "Pluggable function to locate modules.
+ The function receives a module name as argument and should return
+ the filename of the module (or nil if the file doesn't exist).")
+@@ -3435,6 +3440,10 @@
+     (some (lambda (dir) (some #'probe-file (module-canditates name dir)))
+           *load-path*)))
+ 
++(defun find-module-gentoo (module)
++  (or (let ((*load-path* (list (pathname "@CONTRIBDIR@"))))
++        (find-module module))
++      (find-module module)))
+ 
+ ;;;; Macroexpansion
+ 

@@ -7,7 +7,7 @@ diff -Naur slime.old/swank.lisp slime/swank.lisp
  
 -(defvar *swank-wire-protocol-version* nil
 +(defvar *swank-wire-protocol-version*
-+  "$SWANK-WIRE-PROTOCOL-VERSION$"
++  "@SWANK-WIRE-PROTOCOL-VERSION@"
    "The version of the swank/slime communication protocol.")
  
  (defslimefun connection-info ()

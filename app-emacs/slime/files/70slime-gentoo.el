@@ -2,6 +2,8 @@
 ;;; site-lisp configuration for slime-cvs
 
 (add-to-list 'load-path "@SITELISP@")
+(add-to-list 'load-path "@SITELISP@/contrib")
+(autoload 'slime-highlight-edits-mode "slime-highlight-edits")
 (require 'slime)
 (slime-setup)
 
