@@ -1,28 +1,29 @@
 # Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
+# $Header: $
 
 inherit common-lisp elisp
 
 DESCRIPTION="SLIME, the Superior Lisp Interaction Mode (Extended)"
 HOMEPAGE="http://common-lisp.net/project/slime/"
-SRC_URI="http://common-lisp.net/~sionescu/files/${P}.tar.bz2"
-LICENSE="GPL-2"
+#SRC_URI="http://common-lisp.net/~sionescu/files/${P}.tar.bz2"
+SRC_URI="mirror://gentoo/${P}.tar.bz2"
+
+LICENSE="GPL-2 xref.lisp"
 SLOT="0"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE="doc"
 
-DEPEND="virtual/emacs
-	virtual/commonlisp
+DEPEND="virtual/commonlisp
 	doc? ( virtual/tetex sys-apps/texinfo )"
-
-#S="${WORKDIR}/slime"
 
 CLPACKAGE=swank
 SWANK_VERSION="2007-08-22"
+SITEFILE=70${PN}-gentoo.el
 
 src_unpack() {
 	unpack ${A}
-	cd ${S}
+	cd "${S}"
 	epatch "${FILESDIR}"/slime-set-swank-wire-protocol-version.patch
 	sed -i "s:@SWANK-WIRE-PROTOCOL-VERSION@:${SWANK_VERSION}:" swank.lisp
 }
@@ -33,22 +34,19 @@ src_compile() {
 }
 
 src_install() {
-	elisp-install ${PN} *.el{,c} ChangeLog ${FILESDIR}/swank-loader.lisp \
+	elisp-install ${PN} *.el{,c} ChangeLog "${FILESDIR}"/swank-loader.lisp \
 		|| die "Cannot install SLIME core"
-	elisp-site-file-install ${FILESDIR}/70slime-gentoo.el \
-		|| die "Cannot install site file"
+	elisp-site-file-install "${FILESDIR}/${SITEFILE}"
 	insinto "${CLSOURCEROOT}"/swank
-	doins *.lisp ${FILESDIR}/swank.asd
+	doins *.lisp "${FILESDIR}"/swank.asd
 	dodir "${CLSYSTEMROOT}"
-	dosym "${CLSOURCEROOT}"/swank/swank.asd \
-		"${CLSYSTEMROOT}"
-	dosym /usr/share/emacs/site-lisp/${PN}/swank-version.el \
-		"${CLSOURCEROOT}"/swank
+	dosym "${CLSOURCEROOT}"/swank/swank.asd "${CLSYSTEMROOT}"
+	dosym "${SITELISP}"/${PN}/swank-version.el "${CLSOURCEROOT}"/swank
 
 	# install docs
-	dodoc README* ChangeLog HACKING NEWS PROBLEMS
+	dodoc README* ChangeLog HACKING NEWS PROBLEMS || die "dodoc failed"
 	if use doc; then
-		dodoc doc/slime.{ps,pdf}
+		dodoc doc/slime.{ps,pdf} || die "dodoc failed"
 		doinfo doc/slime.info
 	fi
 }
