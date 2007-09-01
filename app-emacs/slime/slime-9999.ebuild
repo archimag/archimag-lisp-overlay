@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-#ECVS_SERVER="common-lisp.net:/project/slime/cvsroot"
+ECVS_SERVER="common-lisp.net:/project/slime/cvsroot"
 ECVS_BRANCH="HEAD"
 ECVS_MODULE="slime"
 ECVS_USER="anonymous"
@@ -37,19 +37,24 @@ src_unpack() {
 	sed -i "s:@CONTRIBDIR@:${CLSOURCEROOT}/${CLPACKAGE}/contrib/:" swank.lisp
 }
 
-fix_elisp-comp() {
-	for f in "$@" ; do
-		local name=$(basename ${f})
-		local dir=$(dirname ${f})
-		mv ${name/%el/elc} ${dir}
-	done
+rel_elisp-comp() {
+	test $# -gt 0 || return 1
+
+	if test -z "${EMACS}" || test "${EMACS}" = "t"; then
+		# Value of "t" means we are running in a shell under Emacs.
+		# Just assume Emacs is called "emacs".
+		EMACS=/usr/bin/emacs
+	fi
+	einfo "Compiling GNU Emacs Elisp files ..."
+
+	"${EMACS}" -batch -q --no-site-file --no-init-file \
+		-L ./ -L ../ -f batch-byte-compile "$@"
+	return $?
 }
 
 src_compile() {
-	elisp-comp *.el contrib/*.el || die "Cannot compile Elisp files"
-	# since elisp-comp disregards the files' complete path
-	# we must move ourselves the compiled files to contrib/
-	fix_elisp-comp contrib/*.el
+	elisp-comp *.el || die "Cannot compile core Elisp files"
+	rel_elisp-comp contrib/*.el || die "Cannot compile contrib Elisp files"
 	use doc && make -C doc all slime.pdf
 }
 
