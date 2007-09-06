@@ -48,7 +48,7 @@ rel_elisp-comp() {
 	einfo "Compiling GNU Emacs Elisp files ..."
 
 	"${EMACS}" -batch -q --no-site-file --no-init-file \
-		-L ./ -L ../ -f batch-byte-compile "$@"
+		-L ./ -L ../ --eval "(require 'slime)" -f batch-byte-compile "$@"
 	return $?
 }
 
