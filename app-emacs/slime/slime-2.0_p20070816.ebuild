@@ -6,8 +6,7 @@ inherit common-lisp elisp
 
 DESCRIPTION="SLIME, the Superior Lisp Interaction Mode (Extended)"
 HOMEPAGE="http://common-lisp.net/project/slime/"
-#SRC_URI="http://common-lisp.net/~sionescu/files/${P}.tar.bz2"
-SRC_URI="mirror://gentoo/${P}.tar.bz2"
+SRC_URI="http://common-lisp.net/~sionescu/files/${P}.tar.bz2"
 
 LICENSE="GPL-2 xref.lisp"
 SLOT="0"
@@ -18,14 +17,15 @@ DEPEND="virtual/commonlisp
 	doc? ( virtual/tetex sys-apps/texinfo )"
 
 CLPACKAGE=swank
-SWANK_VERSION="2007-08-22"
+SWANK_VERSION="2007-08-16"
 SITEFILE=70${PN}-gentoo.el
 
 src_unpack() {
 	unpack ${A}
 	cd "${S}"
-	epatch "${FILESDIR}"/slime-set-swank-wire-protocol-version.patch
+	epatch "${FILESDIR}"/${PN}-set-swank-wire-protocol-version.patch
 	sed -i "s:@SWANK-WIRE-PROTOCOL-VERSION@:${SWANK_VERSION}:" swank.lisp
+	epatch "${FILESDIR}"/${P}-fix-slime-edit-definition.patch
 }
 
 src_compile() {
