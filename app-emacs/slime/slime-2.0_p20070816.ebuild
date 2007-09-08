@@ -2,11 +2,11 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit common-lisp elisp
+inherit versionator common-lisp elisp
 
 DESCRIPTION="SLIME, the Superior Lisp Interaction Mode (Extended)"
 HOMEPAGE="http://common-lisp.net/project/slime/"
-SRC_URI="http://common-lisp.net/~sionescu/files/${P}.tar.bz2"
+SRC_URI="mirror://gentoo/${P}.tar.bz2"
 
 LICENSE="GPL-2 xref.lisp"
 SLOT="0"
@@ -17,7 +17,9 @@ DEPEND="virtual/commonlisp
 	doc? ( virtual/tetex sys-apps/texinfo )"
 
 CLPACKAGE=swank
-SWANK_VERSION="2007-08-16"
+components=$(get_version_components)
+last_comp=${components##* p}
+SWANK_VERSION=${last_comp:0:4}-${last_comp:4:2}-${last_comp:6:2}
 SITEFILE=70${PN}-gentoo.el
 
 src_unpack() {
