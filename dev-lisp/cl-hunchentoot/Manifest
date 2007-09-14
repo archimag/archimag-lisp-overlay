@@ -1,8 +1,8 @@
-DIST hunchentoot_0.12.1.orig.tar.gz 125959 RMD160 b24db91f95393a3fd62ce4e02f6e701e6ae66ade SHA1 5509319bfcb2113b7635fcfc4640c0d7137aeb54 SHA256 16d401e68feea86fd048cbe23737e3ddeada5aa897c31e584d52cd5a7e76898d
-EBUILD cl-hunchentoot-0.12.1.ebuild 1082 RMD160 e70a2b041ec147cfda36297a0bc204fd172b932f SHA1 f0bd4d7b84675a27acba9b4e3604acd071c87de9 SHA256 c8687ff1f6264db0d014bae26dad9a1019dfaa08a70f6b8ceaa6d243a25fba4c
-MD5 b2cde4be7489b70a97fb64f9fbba81cf cl-hunchentoot-0.12.1.ebuild 1082
-RMD160 e70a2b041ec147cfda36297a0bc204fd172b932f cl-hunchentoot-0.12.1.ebuild 1082
-SHA256 c8687ff1f6264db0d014bae26dad9a1019dfaa08a70f6b8ceaa6d243a25fba4c cl-hunchentoot-0.12.1.ebuild 1082
-MD5 4eba63fbc529e0ecfa4303232c0ba8b3 files/digest-cl-hunchentoot-0.12.1 271
-RMD160 72d3211df36f28fffe15ddf93c69265480451b15 files/digest-cl-hunchentoot-0.12.1 271
-SHA256 a3db9e8bebb51ad02f961eebd99c2307225577602d4d8b7c37d7f24ac3b56bc7 files/digest-cl-hunchentoot-0.12.1 271
+DIST hunchentoot_0.13.0.orig.tar.gz 126198 RMD160 e37208f1e210db4b1f4afbd8443a3095d09b3140 SHA1 58cef0bea61bf2193182ebf29d2159ce9f39be5c SHA256 222c283a3ee13cfb5796398c753b11726ec8abd421bdf3b4f4069c11162367b1
+EBUILD cl-hunchentoot-0.13.0.ebuild 1082 RMD160 e70a2b041ec147cfda36297a0bc204fd172b932f SHA1 f0bd4d7b84675a27acba9b4e3604acd071c87de9 SHA256 c8687ff1f6264db0d014bae26dad9a1019dfaa08a70f6b8ceaa6d243a25fba4c
+MD5 b2cde4be7489b70a97fb64f9fbba81cf cl-hunchentoot-0.13.0.ebuild 1082
+RMD160 e70a2b041ec147cfda36297a0bc204fd172b932f cl-hunchentoot-0.13.0.ebuild 1082
+SHA256 c8687ff1f6264db0d014bae26dad9a1019dfaa08a70f6b8ceaa6d243a25fba4c cl-hunchentoot-0.13.0.ebuild 1082
+MD5 bf3ad38a549b6943af9b2e2c5a4decfe files/digest-cl-hunchentoot-0.13.0 271
+RMD160 b45e1fd4354a4c619d773fcb45c6787d88afbabc files/digest-cl-hunchentoot-0.13.0 271
+SHA256 54812659a824f1f567e04e6bf9cfc3a361702608f2504122bdfbfca6cde54ad3 files/digest-cl-hunchentoot-0.13.0 271
