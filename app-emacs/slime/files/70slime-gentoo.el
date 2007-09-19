@@ -1,5 +1,4 @@
-
-;;; site-lisp configuration for slime-cvs
+;;; site-lisp configuration for slime
 
 (add-to-list 'load-path "@SITELISP@")
 (add-to-list 'load-path "@SITELISP@/contrib")
