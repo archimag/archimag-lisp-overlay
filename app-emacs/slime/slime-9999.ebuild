@@ -56,7 +56,7 @@ rel_elisp-comp() {
 src_compile() {
 	elisp-comp *.el || die "Cannot compile core Elisp files"
 	rel_elisp-comp contrib/*.el || die "Cannot compile contrib Elisp files"
-	use doc && make -C doc all slime.pdf
+	use doc && make -C doc all slime.ps
 }
 
 src_install() {
