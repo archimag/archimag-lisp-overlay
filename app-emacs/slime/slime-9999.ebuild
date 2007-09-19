@@ -12,7 +12,7 @@ ECVS_CVS_OPTIONS="-dP"
 inherit common-lisp elisp cvs
 
 DESCRIPTION="SLIME, the Superior Lisp Interaction Mode (Extended)"
-HOMEPAGE="http://common-lisp.net/project/slime/"
+HOMEPAGE="http://common-lisp.net/project/${PN}/"
 SRC_URI=""
 LICENSE="GPL-2 xref.lisp"
 SLOT="0"
@@ -22,7 +22,7 @@ IUSE="doc"
 DEPEND="virtual/commonlisp
 	doc? ( virtual/tetex sys-apps/texinfo )"
 
-S="${WORKDIR}/slime"
+S="${WORKDIR}/${PN}"
 
 CLPACKAGE=swank
 SITEFILE=70${PN}-gentoo.el
@@ -30,11 +30,12 @@ SITEFILE=70${PN}-gentoo.el
 src_unpack() {
 	cvs_src_unpack
 	cd "${S}"
-	epatch "${FILESDIR}"/slime-set-swank-wire-protocol-version.patch
+	epatch "${FILESDIR}"/${PN}-set-swank-wire-protocol-version.patch
 	SWANK_VERSION=$(head -n 1 ChangeLog | awk '{print $1}')
 	sed -i "s:@SWANK-WIRE-PROTOCOL-VERSION@:${SWANK_VERSION}:" swank.lisp
-	epatch "${FILESDIR}"/slime-fix-module-load.patch
+	epatch "${FILESDIR}"/${PN}-fix-module-load.patch
 	sed -i "s:@CONTRIBDIR@:${CLSOURCEROOT}/${CLPACKAGE}/contrib/:" swank.lisp
+	epatch "${FILESDIR}"/${PN}-inspect-presentations.patch
 }
 
 rel_elisp-comp() {

@@ -1,0 +1,48 @@
+Index: slime.el
+===================================================================
+RCS file: /project/slime/cvsroot/slime/slime.el,v
+retrieving revision 1.864
+diff -u -u -r1.864 slime.el
+--- slime.el	15 Sep 2007 15:15:25 -0000	1.864
++++ slime.el	16 Sep 2007 19:13:51 -0000
+@@ -7585,11 +7585,15 @@
+ (defvar slime-inspector-mark-stack '())
+ (defvar slime-saved-window-config)
+ 
++(defvar slime-inspector-value-provider nil)
++
+ (defun slime-inspect (string)
+   "Eval an expression and inspect the result."
+   (interactive 
+-   (list (slime-read-from-minibuffer "Inspect value (evaluated): "
+-				     (slime-sexp-at-point))))
++   (list (or (and slime-inspector-value-provider
++                  (funcall slime-inspector-value-provider))
++             (slime-read-from-minibuffer "Inspect value (evaluated): "
++                                         (slime-sexp-at-point)))))
+   (slime-eval-async `(swank:init-inspector ,string) 'slime-open-inspector))
+ 
+ (define-derived-mode slime-inspector-mode fundamental-mode "Slime-Inspector"
+Index: contrib/slime-presentations.el
+===================================================================
+RCS file: /project/slime/cvsroot/slime/contrib/slime-presentations.el,v
+retrieving revision 1.7
+diff -u -u -r1.7 slime-presentations.el
+--- contrib/slime-presentations.el	6 Sep 2007 21:22:26 -0000	1.7
++++ contrib/slime-presentations.el	16 Sep 2007 19:13:53 -0000
+@@ -44,6 +44,15 @@
+ (make-variable-buffer-local
+  (defvar slime-presentation-start-to-point (make-hash-table)))
+ 
++(setq slime-inspector-value-provider
++      (lambda ()
++        (multiple-value-bind (presentation start end)
++            (slime-presentation-around-point (point))
++          (when presentation
++            ;; Point is within a presentation, so don't prompt, just 
++            ;; inspect the presented object; don't play DWIM.
++            (slime-presentation-expression presentation)))))
++
+ (defun slime-mark-presentation-start (id &optional target)
+   "Mark the beginning of a presentation with the given ID.
+ TARGET can be nil (regular process output) or :repl-result."
