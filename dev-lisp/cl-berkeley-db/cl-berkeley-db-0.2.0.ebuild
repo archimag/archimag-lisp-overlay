@@ -14,14 +14,14 @@ IUSE=""
 DEPEND="virtual/commonlisp
 		=sys-libs/db-4.5*
 		dev-lisp/cffi
-		dev-lisp/cl-trivial-garbage"
+		dev-lisp/trivial-garbage"
 
 SLOT="0"
 
 CLPACKAGE=${PN}
 
 src_install() {
-	common-lisp-install src/*.lisp src/*.asd
+	common-lisp-install src/*.{lisp,asd}
 	common-lisp-system-symlink
 	dohtml -r doc/*
 }

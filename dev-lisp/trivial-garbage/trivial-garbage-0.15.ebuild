@@ -6,20 +6,20 @@ inherit common-lisp
 
 DESCRIPTION="trivial-garbage is a simple library that provides a portable API to
 finalizers, weak hash-tables and weak pointers."
-HOMEPAGE="http://www.cliki.net/trivial-garbage"
-SRC_URI="http://common-lisp.net/~loliveira/tarballs/trivial-garbage_${PV}.tar.gz"
+HOMEPAGE="http://www.cliki.net/${PN}"
+SRC_URI="http://common-lisp.net/~loliveira/tarballs/${PN}/${PN}_${PV}.tar.gz"
 LICENSE="public-domain"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
-DEPEND=""
+DEPEND="!dev-lisp/cl-${PN}"
 
-S=${WORKDIR}/trivial-garbage_${PV}
+S=${WORKDIR}/${PN}_${PV}
 
-CLPACKAGE=trivial-garbage
+CLPACKAGE=${PN}
 
 src_install() {
-	common-lisp-install *.lisp *.asd
+	common-lisp-install *.{lisp,asd}
 	common-lisp-system-symlink
-	dodoc README 
+	dodoc README
 }

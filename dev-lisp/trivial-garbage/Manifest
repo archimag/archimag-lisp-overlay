@@ -1,0 +1,8 @@
+DIST trivial-garbage_0.15.tar.gz 4972 RMD160 2d7aa8eae8e7a6e1b8d16101f55bd4922847c479 SHA1 4776a35174e1a88b84ef241c3baa7eba857d543f SHA256 3650dc8a8b61f382d07c244f5788ed87fe6c37f8ff3c7d317017fe71dd8d4623
+EBUILD trivial-garbage-0.15.ebuild 630 RMD160 2b812d3d611b9dcd8dc6919edfede043c739ca5d SHA1 b48bd29621c91cb079379b964ceb3b266d93230c SHA256 737568e515470937c624ce6c1c4e41b42479ab272340f8da36c9bc60c5effad0
+MD5 2724e60f5a3dd89d0b5797f348236915 trivial-garbage-0.15.ebuild 630
+RMD160 2b812d3d611b9dcd8dc6919edfede043c739ca5d trivial-garbage-0.15.ebuild 630
+SHA256 737568e515470937c624ce6c1c4e41b42479ab272340f8da36c9bc60c5effad0 trivial-garbage-0.15.ebuild 630
+MD5 77f53d79401c6bd8becd65b4b9f0fdde files/digest-trivial-garbage-0.15 256
+RMD160 329758b9628546afe5af4ca5dfedf5ed9a50a1af files/digest-trivial-garbage-0.15 256
+SHA256 8998f6582c749883893eb6e16ea291c425e52f2e5ef8970159893fdc6e18b4e8 files/digest-trivial-garbage-0.15 256
