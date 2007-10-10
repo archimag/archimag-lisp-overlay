@@ -17,7 +17,7 @@ DEPEND="dev-lisp/cl-md5
 	dev-lisp/cl-plus-ssl
 	dev-lisp/chunga
 	dev-lisp/cl-ppcre
-	dev-lisp/cl-url-rewrite
+	dev-lisp/url-rewrite
 	dev-lisp/cl-who"
 SLOT="0"
 

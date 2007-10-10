@@ -1,8 +1,0 @@
-DIST url-rewrite_0.1.1.orig.tar.gz 13123 RMD160 652b8cee878df6aee96f80acfb1c7a8736d3506c SHA1 014b191aaa92f5d3bedf354cf79b49bbe7b62ac6 SHA256 184e517c1258894b32eeb6448027d4c9d6d4dfe404cc6cd280fa64e6f8b20a15
-EBUILD cl-url-rewrite-0.1.1.ebuild 745 RMD160 f96dff1be4d85efbf94cd771b4a4d74aaae84027 SHA1 451b5106066ff6e0cf9ac301183412b194d8d567 SHA256 f95e701fe5be6104139faa0a32160da0256e61a2a3cc33df1c9405cd094c464d
-MD5 7555ba329b58ff3731f01b44ac5d44bd cl-url-rewrite-0.1.1.ebuild 745
-RMD160 f96dff1be4d85efbf94cd771b4a4d74aaae84027 cl-url-rewrite-0.1.1.ebuild 745
-SHA256 f95e701fe5be6104139faa0a32160da0256e61a2a3cc33df1c9405cd094c464d cl-url-rewrite-0.1.1.ebuild 745
-MD5 4e579bfc46ad1e415bed6a14e7dba817 files/digest-cl-url-rewrite-0.1.1 265
-RMD160 f2b97ecae76e337c5eb3654b2c76e1a63c3f66d2 files/digest-cl-url-rewrite-0.1.1 265
-SHA256 284d634700350d8111f75b8e2539c37665997a6af445c070e030c01a862d9210 files/digest-cl-url-rewrite-0.1.1 265
