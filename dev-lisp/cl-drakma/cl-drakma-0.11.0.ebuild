@@ -11,7 +11,7 @@ LICENSE="BSD"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 SLOT="0"
-DEPEND="dev-lisp/cl-chunga
+DEPEND="dev-lisp/chunga
 	dev-lisp/cl-puri
 	>=dev-lisp/cl-base64-3.3.2
 	dev-lisp/cl-usocket

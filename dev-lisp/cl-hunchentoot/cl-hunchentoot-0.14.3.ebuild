@@ -15,7 +15,7 @@ DEPEND="dev-lisp/cl-md5
 	dev-lisp/cl-base64
 	dev-lisp/cl-rfc2388
 	dev-lisp/cl-plus-ssl
-	dev-lisp/cl-chunga
+	dev-lisp/chunga
 	dev-lisp/cl-ppcre
 	dev-lisp/cl-url-rewrite
 	dev-lisp/cl-who"
