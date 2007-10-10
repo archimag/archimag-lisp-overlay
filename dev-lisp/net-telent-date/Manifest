@@ -1,0 +1,8 @@
+DIST cl-net-telent-date_0.4.1.orig.tar.gz 10681 RMD160 e388fd589cfa516dee3261d51841953744dee82a SHA1 ff09e8a41a0b37e5a5edf6832d040c513e02c29e SHA256 51e32d31af56bd16838d1f6089049c9239d0d195fe3dc7a308f237c3a7534aaf
+EBUILD net-telent-date-0.4.1.ebuild 631 RMD160 bfa18e73d4b63cdb45b31519e074561eb28ee053 SHA1 0daf5512a552ea71827b11e9d93d65126e4c568a SHA256 c9bba09b9401694f46fbdba75cbdd4b5f48c0f51f4212813617dd186dedb5e07
+MD5 d12a1aa7a9c35fe188c14275ebd51757 net-telent-date-0.4.1.ebuild 631
+RMD160 bfa18e73d4b63cdb45b31519e074561eb28ee053 net-telent-date-0.4.1.ebuild 631
+SHA256 c9bba09b9401694f46fbdba75cbdd4b5f48c0f51f4212813617dd186dedb5e07 net-telent-date-0.4.1.ebuild 631
+MD5 92889bba1d8b158845c2b475f5dc15d1 files/digest-net-telent-date-0.4.1 286
+RMD160 30bd200a3a876ad86a9d1b5887ae5bdf396dffce files/digest-net-telent-date-0.4.1 286
+SHA256 5e56d9af75f5b55421ed8afbd5ad13019e1d494dd2f95a5bb026c00a581f3af1 files/digest-net-telent-date-0.4.1 286
