@@ -10,7 +10,7 @@ SRC_URI="http://common-lisp.net/~sionescu/ediware/${PN/cl-}_${PV}.orig.tar.gz"
 LICENSE="BSD"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
-DEPEND="dev-lisp/cl-flexi-streams"
+DEPEND="dev-lisp/flexi-streams"
 SLOT="0"
 
 S=${WORKDIR}/${P/cl-}

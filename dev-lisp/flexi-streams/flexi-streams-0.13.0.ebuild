@@ -1,22 +1,21 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-lisp/cl-flexi-streams/cl-flexi-streams-0.8.0.ebuild,v 1.1 2006/11/15 02:30:51 mkennedy Exp $
+# $Header: $
 
 inherit common-lisp
 
 DESCRIPTION="FLEXI-STREAMS implements \"virtual\" bivalent streams that can be layered atop real binary or bivalent streams."
-HOMEPAGE="http://weitz.de/flexi-streams/
-	http://www.cliki.net/flexi-streams"
-SRC_URI="http://common-lisp.net/~sionescu/ediware/${PN/cl-}_${PV}.orig.tar.gz"
+HOMEPAGE="http://weitz.de/${PN}/
+	http://www.cliki.net/${PN}"
+SRC_URI="http://common-lisp.net/~sionescu/ediware/${PN}_${PV}.orig.tar.gz"
 LICENSE="BSD"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
-DEPEND=">=dev-lisp/cl-trivial-gray-streams-20060925"
+DEPEND=">=dev-lisp/trivial-gray-streams-20060925
+		!dev-lisp/cl-${PN}"
 SLOT="0"
 
-S=${WORKDIR}/${P/cl-}
-
-CLPACKAGE=flexi-streams
+CLPACKAGE=${PN}
 
 src_install() {
 	common-lisp-install *.{lisp,asd}
