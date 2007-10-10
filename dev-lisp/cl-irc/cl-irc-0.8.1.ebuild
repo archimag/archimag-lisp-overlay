@@ -25,7 +25,7 @@ src_unpack() {
 src_install() {
 	common-lisp-install *.{lisp,asd}
 	common-lisp-system-symlink
-	dodoc CREDITS ChangeLog LICENSE README TODO
+	dodoc CREDITS ChangeLog LICENSE README
 	docinto doc
 	dodoc doc/*.txt
 	docinto example
