@@ -12,7 +12,7 @@ LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
-DEPEND="dev-lisp/cl-rt"
+DEPEND="dev-lisp/rt"
 
 CLPACKAGE=kmrcl
 

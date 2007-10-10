@@ -11,7 +11,7 @@ LICENSE="MIT"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 SLOT="0"
-DEPEND="dev-lisp/cl-split-sequence dev-lisp/cl-rt"
+DEPEND="dev-lisp/cl-split-sequence dev-lisp/rt"
 
 S=${WORKDIR}/${P/cl-}
 
@@ -26,7 +26,7 @@ src_install() {
 	doins *.{lisp,asd} *.sh
 
 	insinto /usr/share/common-lisp/source/usocket/backend
-	doins backend/*.lisp 
+	doins backend/*.lisp
 
 	insinto /usr/share/common-lisp/source/usocket/test
 	doins `ls test/*.{in,lisp,asd} | grep -v usocket.asd`
