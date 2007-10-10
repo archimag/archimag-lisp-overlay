@@ -15,7 +15,7 @@ DEPEND="!dev-lisp/cl-${PN}
 	dev-lisp/chunga
 	dev-lisp/puri
 	>=dev-lisp/cl-base64-3.3.2
-	dev-lisp/cl-usocket
+	dev-lisp/usocket
 	dev-lisp/cl-plus-ssl"
 
 CLPACKAGE=${PN}
