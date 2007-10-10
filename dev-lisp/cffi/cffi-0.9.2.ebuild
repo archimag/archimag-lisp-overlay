@@ -14,7 +14,8 @@ IUSE="doc"
 
 S=${WORKDIR}/${PN}_${PV}
 
-DEPEND="doc? ( dev-lisp/sbcl virtual/tetex sys-apps/texinfo )"
+DEPEND="!dev-lisp/cl-${PN}
+	doc? ( dev-lisp/sbcl virtual/tetex sys-apps/texinfo )"
 
 CLPACKAGE=${PN}
 
