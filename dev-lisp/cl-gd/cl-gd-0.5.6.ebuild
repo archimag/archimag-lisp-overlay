@@ -13,7 +13,7 @@ KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
 DEPEND=">=dev-lisp/cl-uffi-1.3.4
-	dev-lisp/cl-cffi
+	dev-lisp/cffi
 	media-libs/libpng
 	media-libs/jpeg
 	media-libs/freetype
