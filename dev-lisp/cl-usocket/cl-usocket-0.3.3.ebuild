@@ -11,7 +11,7 @@ LICENSE="MIT"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 SLOT="0"
-DEPEND="dev-lisp/cl-split-sequence dev-lisp/rt"
+DEPEND="dev-lisp/xsplit-sequence dev-lisp/rt"
 
 S=${WORKDIR}/${P/cl-}
 
