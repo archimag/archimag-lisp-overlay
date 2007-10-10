@@ -16,6 +16,11 @@ S=${WORKDIR}/uffi-${PV}
 
 CLPACKAGE=uffi
 
+src_unpack() {
+	unpack ${A}
+	rm "${S}"/Makefile
+}
+
 src_install() {
 	dodir "${CLSYSTEMROOT}"
 	dodir "${CLSOURCEROOT}"

@@ -16,7 +16,7 @@ IUSE="postgres mysql sqlite sqlite3 odbc"
 DEPEND="dev-lisp/common-lisp-controller
 	virtual/commonlisp
 	dev-lisp/cl-md5
-	>=dev-lisp/cl-uffi-1.5.7
+	>=dev-lisp/uffi-1.5.7
 	postgres? ( dev-db/libpq )
 	mysql? ( virtual/mysql )
 	sqlite? ( =dev-db/sqlite-2* )
