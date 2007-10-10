@@ -14,7 +14,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
-DEPEND="dev-lisp/cl-puri"
+DEPEND="dev-lisp/puri"
 
 CLPACKAGE='cxml cxml-contrib runes'
 

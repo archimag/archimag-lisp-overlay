@@ -1,21 +1,20 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-lisp/cl-puri/cl-puri-1.5.ebuild,v 1.1 2006/11/19 17:52:52 mkennedy Exp $
+# $Header: $
 
 inherit common-lisp
 
 DESCRIPTION="Portable URI library for Common Lisp based on the Franz, Inc. :net.uri module."
-HOMEPAGE="http://puri.b9.com/"
-SRC_URI="http://files.b9.com/puri/puri-${PV}.tar.gz"
-LICENSE="BSD"
+HOMEPAGE="http://${PN}.b9.com/"
+SRC_URI="http://files.b9.com/${PN}/${P}.tar.gz"
+LICENSE="LLGPL"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
-DEPEND="dev-lisp/cl-ptester"
+DEPEND="!dev-lisp/cl-${PN}
+	dev-lisp/cl-ptester"
 
-CLPACKAGE=puri
-
-S=${WORKDIR}/puri-${PV}
+CLPACKAGE=${PN}
 
 src_install() {
 	common-lisp-install *.lisp *.asd
