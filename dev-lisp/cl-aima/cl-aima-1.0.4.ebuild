@@ -1,6 +1,6 @@
 # Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-lisp/cl-aima/cl-aima-1.0.4.ebuild,v 1.5 2007/02/03 17:31:46 flameeyes Exp $
+# $Header: $
 
 inherit common-lisp eutils
 

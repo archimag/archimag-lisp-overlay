@@ -1,6 +1,6 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-lisp/cl-sql/cl-sql-3.7.7.ebuild,v 1.2 2006/11/23 19:37:20 vivo Exp $
+# $Header: $
 
 inherit common-lisp eutils multilib
 
