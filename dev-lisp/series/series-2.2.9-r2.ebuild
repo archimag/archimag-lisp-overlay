@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit common-lisp eutils
+inherit common-lisp-2 eutils
 
 DESCRIPTION="Common Lisp extension for general iteration"
 HOMEPAGE="http://${PN}.sf.net"
@@ -12,8 +12,6 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 DEPEND="!dev-lisp/cl-${PN}"
-
-CLPACKAGE=${PN}
 
 src_unpack() {
 	unpack ${A}
