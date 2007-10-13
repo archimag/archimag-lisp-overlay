@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit common-lisp eutils
+inherit common-lisp-2 eutils
 
 DESCRIPTION="Linedit is a readline-style library written in Common Lisp that provides customizable line-editing features."
 HOMEPAGE="http://www.common-lisp.net/project/${PN}/"
@@ -14,13 +14,11 @@ KEYWORDS="~amd64 ~ppc ~sparc x86"
 IUSE=""
 
 DEPEND="!dev-lisp/cl-${PN}
-	dev-lisp/terminfo
-	dev-lisp/uffi
-	dev-lisp/osicat"
+		dev-lisp/terminfo
+		dev-lisp/uffi
+		dev-lisp/osicat"
 
-CLPACKAGE=${PN}
-
-S=${WORKDIR}/${PN}_${PV}
+S="${WORKDIR}/${PN}_${PV}"
 
 src_unpack() {
 	unpack ${A}
