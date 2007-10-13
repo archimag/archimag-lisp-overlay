@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit common-lisp
+inherit common-lisp-2
 
 DESCRIPTION="Portable chunked streams for Common Lisp"
 HOMEPAGE="http://weitz.de/${PN}/"
@@ -13,8 +13,6 @@ IUSE=""
 DEPEND="dev-lisp/flexi-streams
 		!dev-lisp/cl-${PN}"
 SLOT="0"
-
-CLPACKAGE=${PN}
 
 src_install() {
 	common-lisp-install *.{lisp,asd}
