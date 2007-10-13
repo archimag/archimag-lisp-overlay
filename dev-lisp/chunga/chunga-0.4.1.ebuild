@@ -6,13 +6,13 @@ inherit common-lisp-2
 
 DESCRIPTION="Portable chunked streams for Common Lisp"
 HOMEPAGE="http://weitz.de/${PN}/"
-SRC_URI="http://common-lisp.net/~sionescu/ediware/${PN}_${PV}.orig.tar.gz"
+SRC_URI="http://common-lisp.net/~sionescu/ediware/${P}.tar.gz"
 LICENSE="BSD"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
-IUSE=""
-DEPEND="dev-lisp/flexi-streams
-		!dev-lisp/cl-${PN}"
 SLOT="0"
+IUSE=""
+DEPEND="!dev-lisp/cl-${PN}
+		dev-lisp/flexi-streams"
 
 src_install() {
 	common-lisp-install *.{lisp,asd}
