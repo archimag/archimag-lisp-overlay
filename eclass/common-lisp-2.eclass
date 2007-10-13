@@ -43,7 +43,7 @@ common-lisp-install() {
         if path-absolute-p "${thing}" ; then
             common-lisp-install-relatively "${thing}"
         else
-		    common-lisp-install-relatively "$(basename "${thing}")" "$(dirname "${thing}")"
+		    common-lisp-install-relatively "${thing}" "$(dirname "${thing}")"
         fi
 	done
 }
