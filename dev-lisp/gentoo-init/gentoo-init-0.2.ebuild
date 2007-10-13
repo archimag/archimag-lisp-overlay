@@ -11,11 +11,11 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
-S=${WORKDIR}
+S="${WORKDIR}"
 
 DEPEND=">=dev-lisp/asdf-binary-locations-0.2.3"
 
 src_install() {
 	insinto /etc
-	doins ${FILESDIR}/gentoo-init.lisp
+	doins "${FILESDIR}"/gentoo-init.lisp
 }
