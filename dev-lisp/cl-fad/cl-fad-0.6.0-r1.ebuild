@@ -2,19 +2,16 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit common-lisp
+inherit common-lisp-2
 
 DESCRIPTION='CL-FAD is a thin portability layer atop the Common Lisp standard pathname functions.'
-HOMEPAGE="http://weitz.de/cl-fad/"
+HOMEPAGE="http://weitz.de/${PN}/"
 SRC_URI="http://common-lisp.net/~sionescu/ediware/${PN}_${PV}.orig.tar.gz"
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
-DEPEND="dev-lisp/common-lisp-controller
-	virtual/commonlisp"
-
-CLPACKAGE=cl-fad
+DEPEND=""
 
 src_install() {
 	common-lisp-install *.{asd,lisp}
