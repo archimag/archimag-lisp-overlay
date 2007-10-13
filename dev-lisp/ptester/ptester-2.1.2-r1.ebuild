@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit common-lisp
+inherit common-lisp-2
 
 DESCRIPTION="A Common Lisp test harness based on the Franz, Inc. tester module."
 HOMEPAGE="http://www.b9.com"
@@ -13,10 +13,8 @@ KEYWORDS="~amd64 ~ppc ~sparc x86"
 IUSE=""
 DEPEND="!dev-lisp/cl-${PN}"
 
-CLPACKAGE=${PN}
-
 src_install() {
-	common-lisp-install *.lisp *.asd
+	common-lisp-install *.{lisp,asd}
 	common-lisp-system-symlink
 	dohtml tester.html
 }
