@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit common-lisp
+inherit common-lisp-2
 
 DESCRIPTION="Ironclad is a Common Lisp library similar to OpenSSL, GNU TLS or Crypto++"
 HOMEPAGE="http://www.cliki.net/${PN}"
@@ -13,14 +13,10 @@ KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 DEPEND="!dev-lisp/cl-${PN}"
 
-CLPACKAGE=${PN}
-
-S=${WORKDIR}/${PN}_${PV}
+S="${WORKDIR}/${PN}_${PV}"
 
 src_install() {
-	common-lisp-install *.{lisp,asd}
+	common-lisp-install *.{lisp,asd} test-vectors/*.lisp
 	common-lisp-system-symlink
-	insinto "${CLSOURCEROOT}"/${PN}/test-vectors
-	doins test-vectors/*.lisp
 	dodoc README TODO NEWS LICENSE
 }
