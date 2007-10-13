@@ -23,7 +23,6 @@ S="${WORKDIR}/cl+ssl-${MY_PV}"
 
 src_unpack() {
 	unpack ${A}
-	epatch ${FILESDIR}/20051204-cffi-null-pointer-gentoo.patch
 	rm "${S}"/Makefile
 	sed -i "s,/usr/lib,/usr/$(get_libdir),g" ${S}/cl+ssl.asd
 }
