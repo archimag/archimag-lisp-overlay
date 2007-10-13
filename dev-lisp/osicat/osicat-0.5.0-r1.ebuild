@@ -2,21 +2,21 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: Exp $
 
-inherit common-lisp eutils
+inherit common-lisp-2 eutils
+
+PKG="${PN}_${PV}"
 
 DESCRIPTION="${PN} is a lightweight operating system interface for Common Lisp on Unix-platforms."
 HOMEPAGE="http://www.common-lisp.net/project/${PN}/"
-SRC_URI="http://common-lisp.net/project/${PN}/files/${PN}_${PV}.tar.gz"
+SRC_URI="http://common-lisp.net/project/${PN}/files/${PKG}.tar.gz"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 DEPEND="!dev-lisp/cl-${PN}
-	dev-lisp/uffi"
+		dev-lisp/uffi"
 
-CLPACKAGE=${PN}
-
-S=${WORKDIR}/${PN}_${PV}
+S="${WORKDIR}/${PKG}"
 
 src_unpack() {
 	unpack ${A}
