@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit common-lisp
+inherit common-lisp-2
 
 DESCRIPTION="trivial-garbage is a simple library that provides a portable API to
 finalizers, weak hash-tables and weak pointers."
@@ -14,12 +14,4 @@ KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 DEPEND="!dev-lisp/cl-${PN}"
 
-S=${WORKDIR}/${PN}_${PV}
-
-CLPACKAGE=${PN}
-
-src_install() {
-	common-lisp-install *.{lisp,asd}
-	common-lisp-system-symlink
-	dodoc README
-}
+S="${WORKDIR}/${PN}_${PV}"
