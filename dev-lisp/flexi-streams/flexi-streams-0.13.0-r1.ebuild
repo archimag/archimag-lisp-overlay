@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit common-lisp
+inherit common-lisp-2
 
 DESCRIPTION="FLEXI-STREAMS implements \"virtual\" bivalent streams that can be layered atop real binary or bivalent streams."
 HOMEPAGE="http://weitz.de/${PN}/
@@ -10,18 +10,16 @@ HOMEPAGE="http://weitz.de/${PN}/
 SRC_URI="http://common-lisp.net/~sionescu/ediware/${PN}_${PV}.orig.tar.gz"
 LICENSE="BSD"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
-IUSE=""
-DEPEND=">=dev-lisp/trivial-gray-streams-20060925
-		!dev-lisp/cl-${PN}"
 SLOT="0"
-
-CLPACKAGE=${PN}
+IUSE=""
+DEPEND="!dev-lisp/cl-${PN}
+		>=dev-lisp/trivial-gray-streams-20060925"
 
 src_install() {
 	common-lisp-install *.{lisp,asd}
 	common-lisp-system-symlink
 	dodoc CHANGELOG
 	dohtml doc/index.html
-	insinto /usr/share/doc/${PF}/html
-	doins doc/foo.txt
+	docinto html
+	dodoc doc/foo.txt
 }
