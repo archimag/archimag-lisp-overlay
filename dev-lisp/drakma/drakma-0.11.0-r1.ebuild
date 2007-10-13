@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit common-lisp
+inherit common-lisp-2
 
 DESCRIPTION="Drakma is a Common Lisp HTTP client."
 HOMEPAGE="http://weitz.de/${PN}/"
@@ -12,13 +12,11 @@ KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 SLOT="0"
 DEPEND="!dev-lisp/cl-${PN}
-	dev-lisp/chunga
-	dev-lisp/puri
-	>=dev-lisp/cl-base64-3.3.2
-	dev-lisp/usocket
-	dev-lisp/cl-plus-ssl"
-
-CLPACKAGE=${PN}
+		dev-lisp/chunga
+		dev-lisp/puri
+		>=dev-lisp/cl-base64-3.3.2
+		dev-lisp/usocket
+		dev-lisp/cl-plus-ssl"
 
 src_install() {
 	common-lisp-install *.{lisp,asd}
