@@ -2,24 +2,22 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit common-lisp eutils
+inherit common-lisp-2 eutils
 
 DEB_PV=1
 
 DESCRIPTION="Common Lisp source code from Peter Norvig's Artificial Intelligence: A Modern Approach"
-HOMEPAGE="http://aima.cs.berkeley.edu/ http://www.norvig.com/ http://packages.debian.org/unstable/devel/cl-aima.html"
-SRC_URI="mirror://gentoo/cl-aima_${PV}.orig.tar.gz
-	mirror://gentoo/cl-aima_${PV}-${DEB_PV}.diff.gz"
+HOMEPAGE="http://aima.cs.berkeley.edu/ http://www.norvig.com/ http://packages.debian.org/unstable/devel/${PN}.html"
+SRC_URI="mirror://gentoo/${PN}_${PV}.orig.tar.gz
+	mirror://gentoo/${PN}_${PV}-${DEB_PV}.diff.gz"
 LICENSE="Norvig"
 SLOT="0"
 KEYWORDS="~amd64 ~sparc x86"
 IUSE=""
-DEPEND="dev-lisp/common-lisp-controller
-	virtual/commonlisp"
+DEPEND=""
 
-S="${WORKDIR}"/cl-aima-${PV}
-
-CLPACKAGE=aima
+CLPACKAGE="aima"
+CLSYSTEMS="aima"
 
 src_unpack() {
 	unpack ${A}
@@ -28,13 +26,10 @@ src_unpack() {
 }
 
 src_install() {
-	insinto /usr/share/common-lisp/source/aima/
-	doins aima.asd aima.lisp
+	common-lisp-install aima.{asd,lisp}
 	for module in agents language learning logic search uncertainty utilities; do
 		find ${module} -type f -name \*.lisp -print | while read lisp; do \
-			local dir="${D}"/usr/share/common-lisp/source/aima/$(dirname "${lisp}")
-			mkdir -p "${dir}" &>/dev/null
-			cp "${lisp}" "${dir}"
+			common-lisp-install "${lisp}"
 		done
 		mv ${module}/README.html README-${module}.html && dohtml README-${module}.html
 	done
