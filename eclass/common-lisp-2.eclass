@@ -85,7 +85,7 @@ common-lisp-2_src_install() {
 do-debian-credits() {
 	docinto debian
 	for i in copyright README.Debian changelog; do
-		[ -f $i ] && dodoc "${S}"/debian/${i}
+		[ -f "${S}"/debian/${i} ] && dodoc "${S}"/debian/${i}
 	done
 	docinto .
 }
