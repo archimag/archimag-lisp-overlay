@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit common-lisp
+inherit common-lisp-2
 
 MY_PV=${PV:0:4}-${PV:4:2}-${PV:6:2}
 MY_P=${PN}-${MY_PV}
@@ -16,17 +16,9 @@ KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 DEPEND="!dev-lisp/cl-${PN}"
 
-CLPACKAGE=${PN}
-
-S=${WORKDIR}/${PN}
+S="${WORKDIR}/${PN}"
 
 src_unpack() {
 	unpack ${A}
 	rm ${S}/Makefile
-}
-
-src_install() {
-	common-lisp-install *.{lisp,asd}
-	common-lisp-system-symlink
-	dodoc README COPYING
 }
