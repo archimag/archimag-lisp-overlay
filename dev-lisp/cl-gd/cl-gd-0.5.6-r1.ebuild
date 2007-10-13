@@ -29,7 +29,6 @@ src_compile() {
 }
 
 src_install() {
-	insinto /usr/lib
 	dolib.so ${PN}-glue.so
 
 	common-lisp-install *.{lisp,asd} test
