@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit common-lisp
+inherit common-lisp-2
 
 DESCRIPTION="A Common Lisp IRC client library"
 HOMEPAGE="http://common-lisp.net/project/${PN}/"
@@ -12,10 +12,8 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc x86"
 IUSE=""
 DEPEND="dev-lisp/split-sequence
-	dev-lisp/usocket
-	dev-lisp/flexi-streams"
-
-CLPACKAGE=${PN}
+		dev-lisp/usocket
+		dev-lisp/flexi-streams"
 
 src_unpack() {
 	unpack ${A}
@@ -26,9 +24,7 @@ src_install() {
 	common-lisp-install *.{lisp,asd}
 	common-lisp-system-symlink
 	dodoc CREDITS ChangeLog LICENSE README
-	docinto doc
-	dodoc doc/*.txt
-	docinto example
-	dodoc example/*
+	docinto doc && dodoc doc/*.txt
+	docinto example && dodoc example/*
 	do-debian-credits
 }
