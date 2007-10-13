@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit common-lisp
+inherit common-lisp-2
 
 DEB_PV=2
 
@@ -17,14 +17,12 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 DEPEND="!dev-lisp/cl-${PN}
-	dev-lisp/uffi"
+		dev-lisp/uffi"
 
-CLPACKAGE=${PN}
-
-S=${WORKDIR}/cl-${PN}-${PV}
+S="${WORKDIR}/cl-${P}"
 
 src_unpack() {
-	unpack $A
+	unpack ${A}
 	epatch cl-${PN}_${PV}-${DEB_PV}.diff
 	epatch "${FILESDIR}"/libz-path-gentoo.patch
 }
