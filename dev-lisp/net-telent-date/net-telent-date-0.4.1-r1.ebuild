@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit common-lisp eutils
+inherit common-lisp-2 eutils
 
 DESCRIPTION="Common Lisp utilities for printing and parsing date"
 HOMEPAGE="http://packages.debian.org/unstable/devel/cl-${PN}
@@ -16,12 +16,4 @@ IUSE=""
 
 DEPEND="!dev-lisp/cl-${PN}"
 
-CLPACKAGE=${PN}
-
-S=${WORKDIR}/cl-${P}
-
-src_install() {
-	common-lisp-install *.{lisp,asd}
-	common-lisp-system-symlink
-	dodoc README
-}
+S="${WORKDIR}/cl-${P}"
