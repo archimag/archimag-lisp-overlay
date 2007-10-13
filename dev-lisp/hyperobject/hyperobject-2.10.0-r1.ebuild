@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit common-lisp
+inherit common-lisp-2
 
 DESCRIPTION="Hyperobject is a Common Lisp library for representing objects."
 HOMEPAGE="http://${PN}.b9.com/
@@ -13,11 +13,9 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 DEPEND="!dev-lisp/cl-${PN}
-	dev-lisp/kmrcl
-	dev-lisp/rt
-	dev-lisp/cl-sql"
-
-CLPACKAGE=${PN}
+		dev-lisp/kmrcl
+		dev-lisp/rt
+		dev-lisp/cl-sql"
 
 src_unpack() {
 	unpack ${A}
@@ -25,10 +23,10 @@ src_unpack() {
 }
 
 src_install() {
-	common-lisp-install *.{lisp,asd}
+	common-lisp-install *.{lisp,asd} examples
 	common-lisp-system-symlink
 	dodoc COPYING README
 	dodoc doc/*.pdf
-	doins -r examples
-	tar xfz doc/html.tar.gz -C ${D}/usr/share/doc/${PF}/
+	tar xfz doc/html.tar.gz -C "${T}"
+	dohtml "${T}"/html/*
 }
