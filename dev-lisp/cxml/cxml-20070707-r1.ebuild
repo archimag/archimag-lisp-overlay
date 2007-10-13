@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit common-lisp
+inherit common-lisp-2
 
 MY_PV=${PV:0:4}-${PV:4:2}-${PV:6:2}
 
@@ -15,33 +15,27 @@ KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
 DEPEND="!dev-lisp/cl-${PN}
-	dev-lisp/puri"
+		dev-lisp/puri"
 
-CLPACKAGE='cxml cxml-contrib runes'
+CLSYSTEMS="${PN} ${PN}-contrib runes"
 
 S="${WORKDIR}"/${PN}-${MY_PV}
 
 src_unpack() {
 	unpack ${A}
 	rm "${S}"/GNUmakefile
+	cp "${FILESDIR}/${PN}-contrib.asd" "${S}"
 }
 
 src_install() {
 	# install ASD files
-	insinto "${CLSOURCEROOT}"/${PN}
-	doins *.{dtd,asd} "${FILESDIR}"/${PN}-contrib.asd
+	common-lisp-install *.{dtd,asd}
 
 	# install sources
-	for dir in runes xml xml/sax-tests test contrib dom; do
-		insinto "${CLSOURCEROOT}"/${PN}/${dir}
-		doins ${dir}/*.lisp
-	done
+	common-lisp-install {runes,xml,xml/sax-tests,test,contrib,dom}/*.lisp
 
 	# symlink ASD files into the central registry
-	dodir "${CLSYSTEMROOT}"
-	for pack in ${CLPACKAGE}; do
-		dosym "${CLSOURCEROOT}"/${PN}/${pack}.asd "${CLSYSTEMROOT}"
-	done
+	common-lisp-system-symlink
 
 	dodoc OLDNEWS TIMES
 	dohtml *.{html,css}
