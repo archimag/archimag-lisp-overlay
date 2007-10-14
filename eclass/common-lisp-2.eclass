@@ -22,7 +22,7 @@ path-absolute-p() {
 	if [ $# -eq 0 ]; then
 		die "path-absolute-p must receive at least one argument"
 	fi
-    local path=$1
+    local path="${1}"
     [ "${path:0:1}" == / ]
 }
 
@@ -30,7 +30,7 @@ common-lisp-install-relatively() {
 	if [ $# -lt 1 ] || [ $# -gt 2 ] ; then
 		die "common-lisp-install-relatively must receive one or two arguments"
 	fi
-    local thing="$1" ; local dir="$2"
+    local thing="${1}" ; local dir="${2}"
     insinto "${CLSOURCEROOT}/${CLPACKAGE}/${dir}"
     doins -r "${thing}"
 }
@@ -52,9 +52,9 @@ common-lisp-install-single-system() {
 	if [ $# -ne 1 ]; then
 		die "common-lisp-install-single-system must receive exactly one argument"
 	fi
-    [ ! -f "${S}/$1".asd ] && die "ASDF file $1 does not exist"
-	dosym "${CLSOURCEROOT}/${CLPACKAGE}/$1.asd" \
-		"${CLSYSTEMROOT}/$(basename $1).asd"
+    [ ! -f "${CLSOURCEROOT}/${CLPACKAGE}/${1}.asd" ] && die "ASDF file ${1} does not exist"
+	dosym "${CLSOURCEROOT}/${CLPACKAGE}/${1}.asd" \
+		"${CLSYSTEMROOT}/$(basename ${1}).asd"
 }
 
 common-lisp-system-symlink() {
