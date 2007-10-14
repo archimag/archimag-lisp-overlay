@@ -19,8 +19,8 @@ DEPEND="virtual/commonlisp"
 EXPORT_FUNCTIONS src_install
 
 path-absolute-p() {
-	if [ $# -eq 0 ]; then
-		die "path-absolute-p must receive at least one argument"
+	if [ $# -ne 1 ]; then
+		die "path-absolute-p must receive exactly one argument"
 	fi
     local path="${1}"
     [ "${path:0:1}" == / ]
