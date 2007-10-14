@@ -39,6 +39,8 @@ common-lisp-install() {
 	if [ $# -eq 0 ]; then
 		die "common-lisp-install must receive at least one argument"
 	fi
+    local _oldclpackage="${CLPACKAGE}"
+    [ "${1}" == "-p" ] && { CLPACKAGE="${2}" ; shift ; shift ; }
 	for thing in "$@"; do
         if path-absolute-p "${thing}" ; then
             common-lisp-install-relatively "${thing}"
@@ -46,13 +48,16 @@ common-lisp-install() {
 		    common-lisp-install-relatively "${thing}" "$(dirname "${thing}")"
         fi
 	done
+    CLPACKAGE="${_oldclpackage}"
 }
 
 common-lisp-install-single-system() {
 	if [ $# -ne 1 ]; then
 		die "common-lisp-install-single-system must receive exactly one argument"
 	fi
-    [ ! -f "${CLSOURCEROOT}/${CLPACKAGE}/${1}.asd" ] && die "ASDF file ${1} does not exist"
+    if [ ! -f "${D}/${CLSOURCEROOT}/${CLPACKAGE}/${1}.asd" ]; then
+        die "${D}/${CLSOURCEROOT}/${CLPACKAGE}/${1}.asd does not exist"
+    fi
 	dosym "${CLSOURCEROOT}/${CLPACKAGE}/${1}.asd" \
 		"${CLSYSTEMROOT}/$(basename ${1}).asd"
 }
@@ -66,9 +71,13 @@ common-lisp-system-symlink() {
 			common-lisp-install-single-system "${package}"
 		done
 	else
+        local _oldclpackage="${CLPACKAGE}"
+        [ "${1}" == "-p" ] && { CLPACKAGE="${2}" ; shift ; shift ; }
+        [ $# -eq 0 ] && die "common-lisp-system-symlink needs more arguments"
 		for package in "$@" ; do
 			common-lisp-install-single-system "${package}"
 		done
+        CLPACKAGE="${_oldclpackage}"
 	fi
 }
 
