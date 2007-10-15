@@ -15,7 +15,7 @@ IUSE=""
 DEPEND="!dev-lisp/cl-${PN}
 		dev-lisp/kmrcl
 		dev-lisp/rt
-		dev-lisp/cl-sql"
+		dev-lisp/clsql"
 
 src_unpack() {
 	unpack ${A}
