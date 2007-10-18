@@ -2,7 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 #
-# Author Matthew Kennedy <mkennedy@gentoo.org>
+# Maintained by the Gentoo Common Lisp project
+# herd: <common-lisp@gentoo.org>, list: <gentoo-lisp@gentoo.org>
 #
 # This eclass supports the installation of Common Lisp libraries
 #
@@ -37,42 +38,41 @@ inherit eutils
 CLSOURCEROOT="${ROOT}"/usr/share/common-lisp/source/
 CLSYSTEMROOT="${ROOT}"/usr/share/common-lisp/systems/
 
-# The subdirectory of ${CLSOURCEROOT} where sources will be installed.
-# If you need to override, set it in the ebuild after calling "inherit"
-CLPACKAGE="${PN}"
+# Sources will be installed into ${CLSOURCEROOT}/${CLPACKAGE}/
+# Any asdf files will be symlinked in ${CLSYSTEMROOT}/${CLSYSTEM} as they may be
+# in an arbitrarily deeply nested directory under ${CLSOURCEROOT}/${CLPACKAGE}/
 
-# A list of ASDF systems(as relative paths into $CLSOURCEROOT/$CLPACKAGE/)
-# installed by the package which will be symlinked into $CLSYSTEMROOT.
-# Example:
-# CLSYSTEMS="src/foo" will symlink $CLSOURCEROOT/$CLPACKAGE/src/foo.asd
-# to $CLSYSTEMROOT/foo.asd
-# If you need to override, set it in the ebuild after calling "inherit"
+# To override, set these after inheriting this eclass
+CLPACKAGE="${PN}"
 CLSYSTEMS="${PN}"
 
 DEPEND="virtual/commonlisp"
 
 EXPORT_FUNCTIONS src_install
 
+# check whether all arguments are absolute paths
+# absolute-path-p() {
+#	for path in "$@" ; do
+#		[[ $path = /* ]] || return 1
+#	done
+#	return 0
+#}
+
 absolute-path-p() {
-	[ $# -eq 0 ] && die "absolute-path-p must receive at least one argument"
-	local absolute=TRUE
-	for path in "$@" ; do
-		[ "${path:0:1}" == / ] || absolute=FALSE
-	done
-	[ ${absolute} == TRUE ]
+	[[ $# = 1 ]] || die "${FUNCNAME[0]} must receive one argument"
+	return [[ $1 = /* ]]
 }
 
 common-lisp-install-relatively() {
-	if [ $# -lt 1 ] || [ $# -gt 2 ] ; then
-		die "common-lisp-install-relatively must receive one or two arguments"
-	fi
+	[[ $# = [12] ]] || die "${FUNCNAME[0]} must receive one or two arguments"
+
 	local thing="${1}" ; local dir="${2}"
 	insinto "${CLSOURCEROOT}/${CLPACKAGE}/${dir}"
 	doins -r "${thing}" || die "Cannot install ${dir}/${thing}"
 }
 
 common-lisp-install() {
-	[ $# -eq 0 ] && die "common-lisp-install must receive at least one argument"
+	[[ $# = 0 ]] && die "${FUNCNAME[0]} must receive at least one argument"
 	for thing in "$@"; do
 		if absolute-path-p "${thing}" ; then
 			common-lisp-install-relatively "${thing}"
@@ -83,7 +83,7 @@ common-lisp-install() {
 }
 
 common-lisp-install-single-system() {
-	[ $# -ne 1 ] && die "common-lisp-install-single-system must receive exactly one argument"
+	[[ $# != 1 ]] && die "${FUNCNAME[0]} must receive exactly one argument"
 	if [ ! -f "${D}/${CLSOURCEROOT}/${CLPACKAGE}/${1}.asd" ]; then
 		die "${D}/${CLSOURCEROOT}/${CLPACKAGE}/${1}.asd does not exist"
 	fi
@@ -93,9 +93,8 @@ common-lisp-install-single-system() {
 
 common-lisp-system-symlink() {
 	dodir "${CLSYSTEMROOT}"
-	# if no arguments received, default to
-	# the contents of ${CLSYSTEMS}
-	if [ $# -eq 0 ]; then
+	# if no arguments received, default to the contents of ${CLSYSTEMS}
+	if [[ $# = 0 ]]; then
 		for package in ${CLSYSTEMS} ; do
 			common-lisp-install-single-system "${package}"
 		done
@@ -104,6 +103,17 @@ common-lisp-system-symlink() {
 			common-lisp-install-single-system "${package}"
 		done
 	fi
+}
+
+# Stelian, please test this replacement -- Marijn
+
+# if no arguments received, default to the contents of ${CLSYSTEMS}
+_common-lisp-system-symlink() {
+	dodir "${CLSYSTEMROOT}"
+
+	for package in $([[ $# = 0 ]] && echo ${CLSYSTEMS} || echo "$@") ; do
+		common-lisp-install-single-system "${package}"
+	done
 }
 
 common-lisp-2_src_install() {
