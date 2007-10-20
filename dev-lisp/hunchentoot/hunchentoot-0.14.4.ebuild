@@ -6,7 +6,7 @@ inherit common-lisp-2
 
 DESCRIPTION="${PN} is a web server written in Common Lisp and at the same time a toolkit for building dynamic websites with Common Lisp."
 HOMEPAGE="http://weitz.de/${PN}/"
-SRC_URI="http://common-lisp.net/~sionescu/ediware/${PN}_${PV}.orig.tar.gz"
+SRC_URI="http://common-lisp.net/~sionescu/ediware/${P}.tar.gz"
 LICENSE="BSD"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 SLOT="0"
