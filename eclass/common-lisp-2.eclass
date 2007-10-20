@@ -60,7 +60,7 @@ EXPORT_FUNCTIONS src_install
 
 absolute-path-p() {
 	[[ $# = 1 ]] || die "${FUNCNAME[0]} must receive one argument"
-	return [[ $1 = /* ]]
+	[[ $1 = /* ]]
 }
 
 common-lisp-install-relatively() {
