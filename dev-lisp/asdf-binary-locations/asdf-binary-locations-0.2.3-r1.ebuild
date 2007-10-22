@@ -18,5 +18,5 @@ S="${WORKDIR}/${PN}"
 
 src_install() {
 	common-lisp-install *.asd dev/*.lisp
-	common-lisp-system-symlink
+	common-lisp-symlink-asdf
 }

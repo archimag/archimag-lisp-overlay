@@ -25,7 +25,7 @@ src_compile() {
 
 src_install() {
 	common-lisp-install tests src uffi-compat examples *.asd
-	common-lisp-system-symlink
+	common-lisp-symlink-asdf
 	dodoc README COPYRIGHT HEADER TODO doc/*.txt
 	if use doc; then
 		doinfo doc/*.info

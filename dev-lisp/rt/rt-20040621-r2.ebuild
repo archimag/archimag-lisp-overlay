@@ -30,6 +30,6 @@ src_unpack() {
 
 src_install() {
 	common-lisp-install ${PN}.{lisp,asd}
-	common-lisp-system-symlink
+	common-lisp-symlink-asdf
 	dodoc rt-doc.txt rt-test.lisp || die "Cannot install tests"
 }

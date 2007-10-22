@@ -37,7 +37,7 @@ src_compile() {
 
 install_clsql_pkg() {
 	common-lisp-install -p ${PN}-${1} db-${1}/*.lisp ${PN}-${1}.asd
-	common-lisp-system-symlink -p ${PN}-${1} ${PN}-${1}
+	common-lisp-symlink-asdf -p ${PN}-${1} ${PN}-${1}
 	if [ -f db-${1}/${PN}_${1}.so ]; then
 		exeinto /usr/$(get_libdir)/${PN} ; doexe db-${1}/${PN}_${1}.so
 	fi
@@ -45,10 +45,10 @@ install_clsql_pkg() {
 
 src_install() {
 	common-lisp-install ${PN}.asd sql/*.lisp ${PN}-tests.asd tests
-	common-lisp-system-symlink ${PN} ${PN}-tests
+	common-lisp-symlink-asdf ${PN} ${PN}-tests
 
 	common-lisp-install -p ${PN}-uffi uffi/*.lisp ${PN}-uffi.asd
-	common-lisp-system-symlink -p ${PN}-uffi ${PN}-uffi
+	common-lisp-symlink-asdf -p ${PN}-uffi ${PN}-uffi
 	exeinto /usr/$(get_libdir)/${PN} ; doexe uffi/${PN}_uffi.so
 
 	install_clsql_pkg postgresql-socket

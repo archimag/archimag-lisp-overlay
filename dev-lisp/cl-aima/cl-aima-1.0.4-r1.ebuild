@@ -33,7 +33,7 @@ src_install() {
 		done
 		mv ${module}/README.html README-${module}.html && dohtml README-${module}.html
 	done
-	common-lisp-system-symlink
+	common-lisp-symlink-asdf
 	dohtml doc/*
 	find "${D}" -type f -exec chmod 644 '{}' \;
 }

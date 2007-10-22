@@ -25,7 +25,7 @@ CLSYSTEMS="${PN} ${PN}-test"
 
 src_install() {
 	common-lisp-install *.{lisp,asd} test/*
-	common-lisp-system-symlink
+	common-lisp-symlink-asdf
 
 	dodoc CHANGELOG* README
 	dohtml -r doc/*

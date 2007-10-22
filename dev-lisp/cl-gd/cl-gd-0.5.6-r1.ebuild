@@ -32,7 +32,7 @@ src_install() {
 	dolib.so ${PN}-glue.so
 
 	common-lisp-install *.{lisp,asd} test
-	common-lisp-system-symlink
+	common-lisp-symlink-asdf
 
 	dodoc CHANGELOG README
 	dohtml doc/*

@@ -24,7 +24,7 @@ S="${WORKDIR}/${PKG}"
 src_install() {
 	common-lisp-install *.{asd,lisp} NEWS
 	common-lisp-install utility obsolete ${PN}-repl compat
-	common-lisp-system-symlink
+	common-lisp-symlink-asdf
 
 	dohtml doc/*.{html,css,lisp} doc/PLAN
 	dosym /usr/share/doc/${PF}/html "${CLSOURCEROOT}"/${PN}/doc

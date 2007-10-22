@@ -17,6 +17,6 @@ CLSYSTEMS="src/${PN}"
 
 src_install() {
 	common-lisp-install src/*.{lisp,asd}
-	common-lisp-system-symlink
+	common-lisp-symlink-asdf
 	dohtml -r docs/*
 }

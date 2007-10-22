@@ -16,7 +16,7 @@ DEPEND=""
 
 src_install() {
 	common-lisp-install *.{asd,lisp}
-	common-lisp-system-symlink
+	common-lisp-symlink-asdf
 	dodoc CHANGELOG README
 	dohtml doc/index.html
 }

@@ -33,7 +33,7 @@ src_compile() {
 
 src_install() {
 	common-lisp-install *.{lisp,asd} version.lisp-expr
-	common-lisp-system-symlink
+	common-lisp-symlink-asdf
 	dodoc LICENSE
 	exeinto /usr/lib/${PN}
 	doexe *.so

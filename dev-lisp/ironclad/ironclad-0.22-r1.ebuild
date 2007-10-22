@@ -17,6 +17,6 @@ S="${WORKDIR}/${PN}_${PV}"
 
 src_install() {
 	common-lisp-install *.{lisp,asd} test-vectors/*.lisp
-	common-lisp-system-symlink
+	common-lisp-symlink-asdf
 	dodoc README TODO NEWS LICENSE
 }

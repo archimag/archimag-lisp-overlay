@@ -35,7 +35,7 @@ src_install() {
 	common-lisp-install {runes,xml,xml/sax-tests,test,contrib,dom}/*.lisp
 
 	# symlink ASD files into the central registry
-	common-lisp-system-symlink
+	common-lisp-symlink-asdf
 
 	dodoc OLDNEWS TIMES
 	dohtml *.{html,css}

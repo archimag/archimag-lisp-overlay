@@ -25,6 +25,6 @@ src_unpack() {
 
 src_install() {
 	common-lisp-install *.{lisp,asd} *.c version.txt
-	common-lisp-system-symlink
+	common-lisp-symlink-asdf
 	dodoc README LICENSE
 }

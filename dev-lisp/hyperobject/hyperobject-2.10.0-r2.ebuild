@@ -24,7 +24,7 @@ src_unpack() {
 
 src_install() {
 	common-lisp-install *.{lisp,asd} examples
-	common-lisp-system-symlink
+	common-lisp-symlink-asdf
 	dodoc README
 	dodoc doc/*.pdf
 	tar xfz doc/html.tar.gz -C "${T}"

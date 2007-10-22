@@ -29,7 +29,7 @@ src_unpack() {
 
 src_install() {
 	common-lisp-install *.{lisp,asd}
-	common-lisp-system-symlink
+	common-lisp-symlink-asdf
 	dodoc LICENSE
 	dohtml index.{css,html}
 }

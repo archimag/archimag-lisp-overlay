@@ -22,7 +22,7 @@ src_unpack() {
 
 src_install() {
 	common-lisp-install *.{lisp,asd}
-	common-lisp-system-symlink
+	common-lisp-symlink-asdf
 	dodoc CREDITS ChangeLog README
 	docinto doc && dodoc doc/*.txt
 	docinto example && dodoc example/*

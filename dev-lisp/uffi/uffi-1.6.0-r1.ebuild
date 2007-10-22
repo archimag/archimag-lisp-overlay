@@ -25,7 +25,7 @@ src_unpack() {
 
 src_install() {
 	common-lisp-install *.asd src/*.lisp
-	common-lisp-system-symlink
+	common-lisp-symlink-asdf
 
 	dodoc AUTHORS ChangeLog INSTALL NEWS README \
 		TODO doc/uffi.pdf

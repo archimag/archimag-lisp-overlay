@@ -25,6 +25,6 @@ src_unpack() {
 src_install() {
 	common-lisp-install *.{lisp,asd} *.sh
 	common-lisp-install backend/*.lisp test/*.{in,lisp,asd}
-	common-lisp-system-symlink
+	common-lisp-symlink-asdf
 	dodoc LICENSE TODO README doc/*.txt notes/*.txt
 }
