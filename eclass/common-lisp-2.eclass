@@ -32,21 +32,13 @@ DEPEND="virtual/commonlisp"
 
 EXPORT_FUNCTIONS src_install
 
-# check whether all arguments are absolute paths
-# absolute-path-p() {
-#	for path in "$@" ; do
-#		[[ $path = /* ]] || return 1
-#	done
-#	return 0
-#}
-
 absolute-path-p() {
 	[[ $# = 1 ]] || die "${FUNCNAME[0]} must receive one argument"
 	[[ ${1} = /* ]]
 }
 
 common-lisp-install-source() {
-	[[ $# = [12] ]] || die "${FUNCNAME[0]} must receive one or two arguments"
+	[[ $# = 2 ]] || die "${FUNCNAME[0]} must receive exactly two arguments"
 
 	local source="${1}"
 	local target="${CLSOURCEROOT}/${CLPACKAGE}/${2}"
@@ -58,10 +50,9 @@ common-lisp-install() {
 	[[ $# = 0 ]] && die "${FUNCNAME[0]} must receive at least one argument"
 	for path in "$@"; do
 		if absolute-path-p "${path}" ; then
-			common-lisp-install-source "${path}"
-		else
-			common-lisp-install-source "${path}" "$(dirname "${path}")"
+			die "Cannot install files with absolute path: ${path}"
 		fi
+		common-lisp-install-source "${path}" "$(dirname "${path}")"
 	done
 }
 
