@@ -91,27 +91,12 @@ common-lisp-install-single-system() {
 		"${CLSYSTEMROOT}/$(basename ${1}).asd"
 }
 
+# if no arguments received, default to the contents of ${CLSYSTEMS}
 common-lisp-system-symlink() {
 	dodir "${CLSYSTEMROOT}"
-	# if no arguments received, default to the contents of ${CLSYSTEMS}
-	if [[ $# = 0 ]]; then
-		for package in ${CLSYSTEMS} ; do
-			common-lisp-install-single-system "${package}"
-		done
-	else
-		for package in "$@" ; do
-			common-lisp-install-single-system "${package}"
-		done
-	fi
-}
-
-# Stelian, please test this replacement -- Marijn
-
-# if no arguments received, default to the contents of ${CLSYSTEMS}
-_common-lisp-system-symlink() {
-	dodir "${CLSYSTEMROOT}"
-
-	for package in $([[ $# = 0 ]] && echo ${CLSYSTEMS} || echo "$@") ; do
+	# replaces $@ with the contents of ${CLSYSTEMS}
+	[[ $# = 0 ]] && set - ${CLSYSTEMS}
+	for package in "$@" ; do
 		common-lisp-install-single-system "${package}"
 	done
 }
