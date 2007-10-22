@@ -17,8 +17,8 @@
 
 inherit eutils
 
-CLSOURCEROOT="${ROOT}"/usr/share/common-lisp/source/
-CLSYSTEMROOT="${ROOT}"/usr/share/common-lisp/systems/
+CLSOURCEROOT="${ROOT%/}"/usr/share/common-lisp/source/
+CLSYSTEMROOT="${ROOT%/}"/usr/share/common-lisp/systems/
 
 # Sources will be installed into ${CLSOURCEROOT}/${CLPACKAGE}/
 # Any asdf files will be symlinked in ${CLSYSTEMROOT}/${CLSYSTEM} as they may be
@@ -42,7 +42,7 @@ EXPORT_FUNCTIONS src_install
 
 absolute-path-p() {
 	[[ $# = 1 ]] || die "${FUNCNAME[0]} must receive one argument"
-	[[ $1 = /* ]]
+	[[ ${1} = /* ]]
 }
 
 common-lisp-install-source() {
@@ -58,9 +58,9 @@ common-lisp-install() {
 	[[ $# = 0 ]] && die "${FUNCNAME[0]} must receive at least one argument"
 	for path in "$@"; do
 		if absolute-path-p "${path}" ; then
-			common-lisp-install-relatively "${path}"
+			common-lisp-install-source "${path}"
 		else
-			common-lisp-install-relatively "${path}" "$(dirname "${path}")"
+			common-lisp-install-source "${path}" "$(dirname "${path}")"
 		fi
 	done
 }
@@ -68,9 +68,9 @@ common-lisp-install() {
 common-lisp-install-single-system() {
 	[[ $# != 1 ]] && die "${FUNCNAME[0]} must receive exactly one argument"
 
-	local file="${D}/${CLSOURCEROOT}/${CLPACKAGE}/${1}.asd"
-	[[ -f $file ]] || die "${file} does not exist"
-	dosym "${file}" "${CLSYSTEMROOT}/$(basename ${1}).asd"
+	local file="${CLSOURCEROOT%/}/${CLPACKAGE}/${1}.asd"
+	[[ -f ${D}/${file} ]] || die "${D}/${file} does not exist"
+	dosym "${file}" "${CLSYSTEMROOT%/}/$(basename ${file})"
 }
 
 # Symlink asdf files
