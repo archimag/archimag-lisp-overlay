@@ -27,8 +27,8 @@ src_install() {
 	common-lisp-install *.asd src/*.lisp
 	common-lisp-system-symlink
 
-	dodoc AUTHORS ChangeLog INSTALL LICENSE NEWS README \
-		TODO doc/uffi.pdf doc/COPYING.GFDL
+	dodoc AUTHORS ChangeLog INSTALL NEWS README \
+		TODO doc/uffi.pdf
 
 	tar xfz doc/html.tar.gz -C "${T}"
 	dohtml "${T}"/html/*

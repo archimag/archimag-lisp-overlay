@@ -22,9 +22,3 @@ src_unpack() {
 	unpack ${A}
 	epatch cl-${PN}_${PV}-${DEB_PV}.diff
 }
-
-src_install() {
-	common-lisp-install ${PN}.{asd,lisp}
-	common-lisp-system-symlink
-	do-debian-credits
-}

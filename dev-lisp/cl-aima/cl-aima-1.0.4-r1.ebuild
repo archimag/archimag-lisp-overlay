@@ -35,6 +35,5 @@ src_install() {
 	done
 	common-lisp-system-symlink
 	dohtml doc/*
-	do-debian-credits
 	find "${D}" -type f -exec chmod 644 '{}' \;
 }

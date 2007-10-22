@@ -60,7 +60,7 @@ src_install() {
 	install_clsql_pkg db2
 	install_clsql_pkg oracle
 
-	dodoc BUGS CONTRIBUTORS COPYING* ChangeLog INSTALL LATEST-TEST-RESULTS NEWS README TODO
+	dodoc BUGS CONTRIBUTORS ChangeLog INSTALL LATEST-TEST-RESULTS NEWS README TODO
 	dodoc doc/clsql.pdf
 	tar xfz doc/html.tar.gz -C "${T}" && dohtml "${T}"/html/*
 	docinto examples && dodoc examples/*

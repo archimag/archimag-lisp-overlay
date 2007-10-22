@@ -28,6 +28,6 @@ src_compile() {
 src_install() {
 	common-lisp-install parenscript.asd src t
 	common-lisp-system-symlink
-	dodoc COPYING contributors docs/*.lisp
+	dodoc contributors docs/*.lisp
 	use doc && dodoc docs/*.pdf
 }

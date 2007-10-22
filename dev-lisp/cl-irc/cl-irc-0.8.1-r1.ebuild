@@ -23,8 +23,7 @@ src_unpack() {
 src_install() {
 	common-lisp-install *.{lisp,asd}
 	common-lisp-system-symlink
-	dodoc CREDITS ChangeLog LICENSE README
+	dodoc CREDITS ChangeLog README
 	docinto doc && dodoc doc/*.txt
 	docinto example && dodoc example/*
-	do-debian-credits
 }

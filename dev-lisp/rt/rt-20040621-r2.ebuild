@@ -32,5 +32,4 @@ src_install() {
 	common-lisp-install ${PN}.{lisp,asd}
 	common-lisp-system-symlink
 	dodoc rt-doc.txt rt-test.lisp || die "Cannot install tests"
-	do-debian-credits
 }
