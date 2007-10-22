@@ -9,7 +9,7 @@ ECVS_USER="anonymous"
 ECVS_PASS="anonymous"
 ECVS_CVS_OPTIONS="-dP"
 
-inherit common-lisp elisp cvs
+inherit common-lisp-2 elisp cvs
 
 DESCRIPTION="SLIME, the Superior Lisp Interaction Mode (Extended)"
 HOMEPAGE="http://common-lisp.net/project/${PN}/"
@@ -25,6 +25,7 @@ DEPEND="virtual/commonlisp
 S="${WORKDIR}/${PN}"
 
 CLPACKAGE=swank
+CLSYSTEMS=swank
 SITEFILE=70${PN}-gentoo.el
 
 src_unpack() {
@@ -64,10 +65,9 @@ src_install() {
 	elisp-install ${PN} *.el{,c} ChangeLog "${FILESDIR}"/swank-loader.lisp \
 		|| die "Cannot install SLIME core"
 	elisp-site-file-install "${FILESDIR}/${SITEFILE}"
-	insinto "${CLSOURCEROOT}"/swank
-	doins *.lisp "${FILESDIR}"/swank.asd
-	dodir "${CLSYSTEMROOT}"
-	dosym "${CLSOURCEROOT}"/swank/swank.asd "${CLSYSTEMROOT}"
+	cp "${FILESDIR}"/swank.asd "${S}"
+	common-lisp-install *.{lisp,asd} 
+	common-lisp-symlink-asdf
 	dosym "${SITELISP}"/${PN}/swank-version.el "${CLSOURCEROOT}"/swank
 
 	# install contribs

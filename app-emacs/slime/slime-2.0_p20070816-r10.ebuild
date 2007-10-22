@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit versionator common-lisp elisp
+inherit versionator common-lisp-2 elisp
 
 DESCRIPTION="SLIME, the Superior Lisp Interaction Mode (Extended)"
 HOMEPAGE="http://common-lisp.net/project/slime/"
@@ -17,6 +17,7 @@ DEPEND="virtual/commonlisp
 	doc? ( virtual/tetex sys-apps/texinfo )"
 
 CLPACKAGE=swank
+CLSYSTEMS=swank
 components=$(get_version_components)
 last_comp=${components##* p}
 SWANK_VERSION=${last_comp:0:4}-${last_comp:4:2}-${last_comp:6:2}
@@ -39,10 +40,9 @@ src_install() {
 	elisp-install ${PN} *.el{,c} ChangeLog "${FILESDIR}"/swank-loader.lisp \
 		|| die "Cannot install SLIME core"
 	elisp-site-file-install "${FILESDIR}/${SITEFILE}"
-	insinto "${CLSOURCEROOT}"/swank
-	doins *.lisp "${FILESDIR}"/swank.asd
-	dodir "${CLSYSTEMROOT}"
-	dosym "${CLSOURCEROOT}"/swank/swank.asd "${CLSYSTEMROOT}"
+	cp "${FILESDIR}"/swank.asd "${S}"
+	common-lisp-install *.{lisp,asd} 
+	common-lisp-symlink-asdf
 	dosym "${SITELISP}"/${PN}/swank-version.el "${CLSOURCEROOT}"/swank
 
 	# install docs
