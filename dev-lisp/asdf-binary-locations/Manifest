@@ -1,8 +1,8 @@
 DIST asdf-binary-locations_0.2.3.tar.gz 7884 RMD160 23d4dd24c947cb6dcbba25d7ccac0967b1a5bdb3 SHA1 fd9885d0e52c972f15e71f7c563ebe25986502dd SHA256 bed91039f956c18e163aaf511be2b96608a1f5de46ae7f4d724fad29ed85dbe8
-EBUILD asdf-binary-locations-0.2.3-r1.ebuild 591 RMD160 b3ef110d538693cbec3a7f2cd2576a09db48f4de SHA1 300cfc9648347d6aa21efcaae8a3ef7b8e40c2fa SHA256 bcfd06fd6bd20412cbad386c6b03d144c1f42d3796408a0d7507800e7ebd5271
-MD5 3cf3fec79e1256e577e7a2d9df693989 asdf-binary-locations-0.2.3-r1.ebuild 591
-RMD160 b3ef110d538693cbec3a7f2cd2576a09db48f4de asdf-binary-locations-0.2.3-r1.ebuild 591
-SHA256 bcfd06fd6bd20412cbad386c6b03d144c1f42d3796408a0d7507800e7ebd5271 asdf-binary-locations-0.2.3-r1.ebuild 591
-MD5 8ab6c3568517e547ef759b50c2fed836 files/digest-asdf-binary-locations-0.2.3-r1 277
-RMD160 321cc369fe2465b529a5b8cf780aed316d650983 files/digest-asdf-binary-locations-0.2.3-r1 277
-SHA256 a8463f02d64ad55d26319665ed5d6590cb8f096fc372a044078aa99643fe0104 files/digest-asdf-binary-locations-0.2.3-r1 277
+EBUILD asdf-binary-locations-0.2.3-r2.ebuild 588 RMD160 c8654f1e74d25ecec2815126314f8f535cbd9760 SHA1 98176a9c5bf234a699793c954cc34114fe0e5a4b SHA256 396c257219384e9c24009aec40ae614f1fb0d1e6a5c030268613f95d497ded02
+MD5 41d3acfd259862277f67d5b44b63f3c5 asdf-binary-locations-0.2.3-r2.ebuild 588
+RMD160 c8654f1e74d25ecec2815126314f8f535cbd9760 asdf-binary-locations-0.2.3-r2.ebuild 588
+SHA256 396c257219384e9c24009aec40ae614f1fb0d1e6a5c030268613f95d497ded02 asdf-binary-locations-0.2.3-r2.ebuild 588
+MD5 8ab6c3568517e547ef759b50c2fed836 files/digest-asdf-binary-locations-0.2.3-r2 277
+RMD160 321cc369fe2465b529a5b8cf780aed316d650983 files/digest-asdf-binary-locations-0.2.3-r2 277
+SHA256 a8463f02d64ad55d26319665ed5d6590cb8f096fc372a044078aa99643fe0104 files/digest-asdf-binary-locations-0.2.3-r2 277

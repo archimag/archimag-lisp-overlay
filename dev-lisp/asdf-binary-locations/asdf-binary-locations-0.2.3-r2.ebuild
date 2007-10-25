@@ -12,7 +12,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
-DEPEND="dev-lisp/cl-asdf"
+DEPEND="dev-lisp/asdf"
 
 S="${WORKDIR}/${PN}"
 
