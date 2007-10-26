@@ -36,8 +36,9 @@ src_compile() {
 }
 
 install_clsql_pkg() {
-	common-lisp-install -p ${PN}-${1} db-${1}/*.lisp ${PN}-${1}.asd
-	common-lisp-symlink-asdf -p ${PN}-${1} ${PN}-${1}
+	cd "${S}"
+	common-lisp-install db-${1}/*.lisp ${PN}-${1}.asd
+	common-lisp-symlink-asdf ${PN}-${1}
 	if [ -f db-${1}/${PN}_${1}.so ]; then
 		exeinto /usr/$(get_libdir)/${PN} ; doexe db-${1}/${PN}_${1}.so
 	fi
@@ -47,12 +48,13 @@ src_install() {
 	common-lisp-install ${PN}.asd sql/*.lisp ${PN}-tests.asd tests
 	common-lisp-symlink-asdf ${PN} ${PN}-tests
 
-	common-lisp-install -p ${PN}-uffi uffi/*.lisp ${PN}-uffi.asd
-	common-lisp-symlink-asdf -p ${PN}-uffi ${PN}-uffi
+	common-lisp-install uffi/*.lisp ${PN}-uffi.asd
+	common-lisp-symlink-asdf ${PN}-uffi
 	exeinto /usr/$(get_libdir)/${PN} ; doexe uffi/${PN}_uffi.so
 
 	install_clsql_pkg postgresql-socket
-	for dbtype in postgres mysql odbc sqlite sqlite3; do
+	use postgres && install_clsql_pkg postgresql
+	for dbtype in mysql odbc sqlite sqlite3; do
 		use ${dbtype} && install_clsql_pkg ${dbtype}
 	done
 	# TODO: figure out the dependencies
