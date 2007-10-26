@@ -1,0 +1,19 @@
+diff -u mcclim-0.9.5.old/mcclim.asd mcclim-0.9.5/mcclim.asd
+--- mcclim-0.9.5_p20071026.old/mcclim.asd	2007-09-02 19:53:24.000000000 +0200
++++ mcclim-0.9.5_p20071026/mcclim.asd	2007-10-26 12:43:08.000000000 +0200
+@@ -54,14 +54,7 @@
+ ;;; Legacy CMUCL support stuff
+ #+cmu
+ (progn
+-  (unless (fboundp 'ext:stream-read-char)
+-    (unless (ignore-errors (ext:search-list "gray-streams:"))
+-      (setf (ext:search-list "gray-streams:")
+-	'("target:pcl/" "library:subsystems/")))
+-    (if (fboundp 'extensions:without-package-locks)
+-	(extensions:without-package-locks
+-	 (load "gray-streams:gray-streams-library"))
+-      (load "gray-streams:gray-streams-library")))
++  (require :gray-streams)
+   #-(or clx gtkairo clim-graphic-forms)
+   (require :clx)
+   #+mp (when (eq mp::*initial-process* mp::*current-process*)
