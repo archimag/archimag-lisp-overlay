@@ -19,10 +19,9 @@ SLOT="0"
 KEYWORDS=""
 IUSE="doc"
 
-DEPEND="virtual/commonlisp
-	doc? ( virtual/tetex sys-apps/texinfo )"
+DEPEND="doc? ( virtual/tetex sys-apps/texinfo )"
 
-S="${WORKDIR}/${PN}"
+S="${WORKDIR}"/${PN}
 
 CLPACKAGE=swank
 CLSYSTEMS=swank
@@ -57,7 +56,7 @@ rel_elisp-comp() {
 src_compile() {
 	elisp-comp *.el || die "Cannot compile core Elisp files"
 	rel_elisp-comp contrib/*.el || die "Cannot compile contrib Elisp files"
-	use doc && make -C doc all slime.ps
+	use doc && make -C doc slime.{ps,pdf,info} || die "Cannot build docs"
 }
 
 src_install() {
@@ -66,7 +65,7 @@ src_install() {
 		|| die "Cannot install SLIME core"
 	elisp-site-file-install "${FILESDIR}/${SITEFILE}"
 	cp "${FILESDIR}"/swank.asd "${S}"
-	common-lisp-install *.{lisp,asd} 
+	common-lisp-install *.{lisp,asd}
 	common-lisp-symlink-asdf
 	dosym "${SITELISP}"/${PN}/swank-version.el "${CLSOURCEROOT}"/swank
 
@@ -77,9 +76,9 @@ src_install() {
 	doins contrib/*.lisp
 
 	# install docs
-	dodoc README* ChangeLog HACKING NEWS PROBLEMS || die "dodoc failed"
+	dodoc README* ChangeLog HACKING NEWS PROBLEMS
 	if use doc; then
 		dodoc doc/slime.{ps,pdf} || die "dodoc failed"
-		doinfo doc/slime.info
+		doinfo doc/slime.info || die "dodoc failed"
 	fi
 }
