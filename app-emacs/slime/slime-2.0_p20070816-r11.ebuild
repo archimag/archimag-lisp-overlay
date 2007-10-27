@@ -46,9 +46,9 @@ src_install() {
 	dosym "${SITELISP}"/${PN}/swank-version.el "${CLSOURCEROOT}"/swank
 
 	# install docs
-	dodoc README* ChangeLog HACKING NEWS PROBLEMS || die "dodoc failed"
+	dodoc README* ChangeLog HACKING NEWS PROBLEMS 
 	if use doc; then
-		dodoc doc/slime.{ps,pdf} || die "dodoc failed"
+		dodoc doc/slime.ps 
 		doinfo doc/slime.info
 	fi
 }
