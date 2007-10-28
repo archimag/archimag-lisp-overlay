@@ -15,9 +15,11 @@ KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
 DEPEND="!dev-lisp/cl-${PN}
-		dev-lisp/puri"
+		dev-lisp/closure-common
+		dev-lisp/puri
+		dev-lisp/trivial-gray-streams"
 
-CLSYSTEMS="${PN} ${PN}-contrib runes"
+CLSYSTEMS="${PN} ${PN}-contrib"
 
 S="${WORKDIR}"/${PN}-${MY_PV}
 
@@ -28,16 +30,10 @@ src_unpack() {
 }
 
 src_install() {
-	# install ASD files
 	common-lisp-install *.{dtd,asd}
-
-	# install sources
-	common-lisp-install {runes,xml,xml/sax-tests,test,contrib,dom}/*.lisp
-
-	# symlink ASD files into the central registry
+	common-lisp-install {contrib,dom,klacks,test,xml,xml/sax-tests}/*.lisp
 	common-lisp-symlink-asdf
 
-	dodoc OLDNEWS TIMES
-	dohtml *.{html,css}
-	dohtml -r doc
+	dodoc README OLDNEWS TIMES
+	dohtml doc/*.{html,css,png}
 }
