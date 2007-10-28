@@ -3,11 +3,8 @@
 # $Header: $
 
 ECVS_SERVER="common-lisp.net:/project/slime/cvsroot"
-ECVS_BRANCH="HEAD"
 ECVS_MODULE="slime"
-ECVS_USER="anonymous"
 ECVS_PASS="anonymous"
-ECVS_CVS_OPTIONS="-dP"
 
 inherit common-lisp-2 elisp cvs
 
@@ -30,12 +27,12 @@ SITEFILE=70${PN}-gentoo.el
 src_unpack() {
 	cvs_src_unpack
 	cd "${S}"
-	epatch "${FILESDIR}"/${PN}-set-swank-wire-protocol-version.patch
+	epatch "${FILESDIR}"/set-swank-wire-protocol-version.patch
 	SWANK_VERSION=$(head -n 1 ChangeLog | awk '{print $1}')
 	sed -i "s:@SWANK-WIRE-PROTOCOL-VERSION@:${SWANK_VERSION}:" swank.lisp
-	epatch "${FILESDIR}"/${PN}-fix-module-load.patch
+	epatch "${FILESDIR}"/fix-module-load.patch
 	sed -i "s:@CONTRIBDIR@:${CLSOURCEROOT}/${CLPACKAGE}/contrib/:" swank.lisp
-	epatch "${FILESDIR}"/${PN}-inspect-presentations.patch
+	epatch "${FILESDIR}"/inspect-presentations.patch
 }
 
 rel_elisp-comp() {
@@ -56,7 +53,7 @@ rel_elisp-comp() {
 src_compile() {
 	elisp-comp *.el || die "Cannot compile core Elisp files"
 	rel_elisp-comp contrib/*.el || die "Cannot compile contrib Elisp files"
-	use doc && make -C doc slime.{ps,pdf,info} || die "Cannot build docs"
+	if use doc; then make -C doc slime.{ps,pdf,info} || die "Cannot build docs"; fi
 }
 
 src_install() {
