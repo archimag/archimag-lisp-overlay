@@ -25,14 +25,13 @@ SITEFILE=70${PN}-gentoo.el
 src_unpack() {
 	unpack ${A}
 	cd "${S}"
-	epatch "${FILESDIR}"/${PN}-set-swank-wire-protocol-version.patch
+	epatch "${FILESDIR}"/set-swank-wire-protocol-version.patch
 	sed -i "s:@SWANK-WIRE-PROTOCOL-VERSION@:${SWANK_VERSION}:" swank.lisp
-	epatch "${FILESDIR}"/${P}-fix-slime-edit-definition.patch
 }
 
 src_compile() {
 	elisp-comp *.el || die "Cannot compile Elisp files"
-	use doc && make -C doc slime.{ps,pdf,info}
+	if use doc; then make -C doc slime.{ps,pdf,info} || die; fi
 }
 
 src_install() {
