@@ -2,10 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit versionator common-lisp-2 elisp
+inherit common-lisp-2 elisp
 
 DESCRIPTION="SLIME, the Superior Lisp Interaction Mode (Extended)"
-HOMEPAGE="http://common-lisp.net/project/slime/"
+HOMEPAGE="http://common-lisp.net/project/${PN}/"
 SRC_URI="mirror://gentoo/${P}.tar.bz2"
 
 LICENSE="GPL-2 xref.lisp"
@@ -17,16 +17,19 @@ DEPEND="doc? ( virtual/tetex sys-apps/texinfo )"
 
 CLPACKAGE=swank
 CLSYSTEMS=swank
-components=$(get_version_components)
-last_comp=${components##* p}
-SWANK_VERSION=${last_comp:0:4}-${last_comp:4:2}-${last_comp:6:2}
 SITEFILE=70${PN}-gentoo.el
 
 src_unpack() {
 	unpack ${A}
 	cd "${S}"
-	epatch "${FILESDIR}"/set-swank-wire-protocol-version.patch
-	sed -i "s:@SWANK-WIRE-PROTOCOL-VERSION@:${SWANK_VERSION}:" swank.lisp
+
+#	cp swank.lisp swank.lisp.old
+
+	SWANK_VERSION=$(head -n 1 ChangeLog | awk '{print $1}')
+	sed "s:(defvar \*swank-wire-protocol-version\* nil:(defvar \*swank-wire-protocol-version\* ${SWANK_VERSION}:" -i swank.lisp
+
+#	diff -u swank.lisp.old swank.lisp
+
 	epatch "${FILESDIR}"/move-6000-lines-and-fix-slime-edit-definition.patch
 }
 

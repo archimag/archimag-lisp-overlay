@@ -11,6 +11,7 @@ inherit common-lisp-2 elisp cvs
 DESCRIPTION="SLIME, the Superior Lisp Interaction Mode (Extended)"
 HOMEPAGE="http://common-lisp.net/project/${PN}/"
 SRC_URI=""
+
 LICENSE="GPL-2 xref.lisp"
 SLOT="0"
 KEYWORDS=""
@@ -27,9 +28,14 @@ SITEFILE=70${PN}-gentoo.el
 src_unpack() {
 	cvs_src_unpack
 	cd "${S}"
-	epatch "${FILESDIR}"/set-swank-wire-protocol-version.patch
+
+#	cp swank.lisp swank.lisp.old
+
 	SWANK_VERSION=$(head -n 1 ChangeLog | awk '{print $1}')
-	sed -i "s:@SWANK-WIRE-PROTOCOL-VERSION@:${SWANK_VERSION}:" swank.lisp
+	sed "s:(defvar \*swank-wire-protocol-version\* nil:(defvar \*swank-wire-protocol-version\* ${SWANK_VERSION}:" -i swank.lisp
+
+#	diff -u swank.lisp.old swank.lisp
+
 	epatch "${FILESDIR}"/fix-module-load.patch
 	sed -i "s:@CONTRIBDIR@:${CLSOURCEROOT}/${CLPACKAGE}/contrib/:" swank.lisp
 	epatch "${FILESDIR}"/inspect-presentations.patch
