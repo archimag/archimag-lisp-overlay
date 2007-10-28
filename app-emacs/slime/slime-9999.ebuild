@@ -17,7 +17,7 @@ SLOT="0"
 KEYWORDS=""
 IUSE="doc"
 
-DEPEND="doc? ( virtual/tetex sys-apps/texinfo )"
+DEPEND="doc? ( virtual/latex-base )"
 
 S="${WORKDIR}"/${PN}
 
@@ -27,17 +27,12 @@ SITEFILE=70${PN}-gentoo.el
 
 src_unpack() {
 	cvs_src_unpack
-	cd "${S}"
 
-#	cp swank.lisp swank.lisp.old
-
-	SWANK_VERSION=$(head -n 1 ChangeLog | awk '{print $1}')
-	sed "s:(defvar \*swank-wire-protocol-version\* nil:(defvar \*swank-wire-protocol-version\* ${SWANK_VERSION}:" -i swank.lisp
-
-#	diff -u swank.lisp.old swank.lisp
+	SWANK_VERSION=$(head -n 1 "${S}"/ChangeLog | awk '{print $1}')
+	sed "s:(defvar \*swank-wire-protocol-version\* nil:(defvar \*swank-wire-protocol-version\* \"${SWANK_VERSION}\":" -i "${S}"/swank.lisp
 
 	epatch "${FILESDIR}"/fix-module-load.patch
-	sed -i "s:@CONTRIBDIR@:${CLSOURCEROOT}/${CLPACKAGE}/contrib/:" swank.lisp
+	sed -i "s:@CONTRIBDIR@:${CLSOURCEROOT}/${CLPACKAGE}/contrib/:" "${S}"/swank.lisp
 	epatch "${FILESDIR}"/inspect-presentations.patch
 }
 
@@ -59,7 +54,8 @@ rel_elisp-comp() {
 src_compile() {
 	elisp-comp *.el || die "Cannot compile core Elisp files"
 	rel_elisp-comp contrib/*.el || die "Cannot compile contrib Elisp files"
-	if use doc; then make -C doc slime.{ps,pdf,info} || die "Cannot build docs"; fi
+	emake -j1 -C doc ${PN}.info || die "Cannot build info docs"
+	if use doc; then emake -j1 -C doc ${PN}.{ps,pdf} || die "Cannot build docs"; fi
 }
 
 src_install() {
@@ -79,8 +75,6 @@ src_install() {
 
 	# install docs
 	dodoc README* ChangeLog HACKING NEWS PROBLEMS
-	if use doc; then
-		dodoc doc/slime.{ps,pdf}
-		doinfo doc/slime.info
-	fi
+	doinfo doc/${PN}.info
+	use doc && dodoc doc/${PN}.{ps,pdf}
 }
