@@ -27,6 +27,7 @@ src_unpack() {
 	cd "${S}"
 	epatch "${FILESDIR}"/set-swank-wire-protocol-version.patch
 	sed -i "s:@SWANK-WIRE-PROTOCOL-VERSION@:${SWANK_VERSION}:" swank.lisp
+	epatch "${FILESDIR}"/move-6000-lines-and-fix-slime-edit-definition.patch
 }
 
 src_compile() {
