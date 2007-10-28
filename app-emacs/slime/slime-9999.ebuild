@@ -58,8 +58,7 @@ src_compile() {
 
 src_install() {
 	# install core
-	elisp-install ${PN} *.el{,c} ChangeLog "${FILESDIR}"/swank-loader.lisp \
-		|| die "Cannot install SLIME core"
+	elisp-install ${PN} *.el{,c} ChangeLog "${FILESDIR}"/swank-loader.lisp || die "Cannot install SLIME core"
 	elisp-site-file-install "${FILESDIR}/${SITEFILE}"
 	cp "${FILESDIR}"/swank.asd "${S}"
 	common-lisp-install *.{lisp,asd}
@@ -75,7 +74,7 @@ src_install() {
 	# install docs
 	dodoc README* ChangeLog HACKING NEWS PROBLEMS
 	if use doc; then
-		dodoc doc/slime.{ps,pdf} || die "dodoc failed"
-		doinfo doc/slime.info || die "dodoc failed"
+		dodoc doc/slime.{ps,pdf}
+		doinfo doc/slime.info
 	fi
 }

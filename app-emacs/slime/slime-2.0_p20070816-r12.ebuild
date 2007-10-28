@@ -31,8 +31,8 @@ src_unpack() {
 }
 
 src_compile() {
-	elisp-comp *.el || die "Cannot compile Elisp files"
-	if use doc; then make -C doc slime.{ps,pdf,info} || die; fi
+	elisp-comp *.el || die "Cannot compile core Elisp files"
+	if use doc; then make -C doc slime.{ps,pdf,info} || die "Cannot build docs"; fi
 }
 
 src_install() {
