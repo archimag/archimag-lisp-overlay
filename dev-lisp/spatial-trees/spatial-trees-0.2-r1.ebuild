@@ -13,3 +13,9 @@ KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
 DEPEND="!dev-lisp/cl-${PN}"
+
+src_install() {
+	common-lisp-install *.{lisp,asd} LICENCE TODO
+	common-lisp-symlink-asdf
+	dodoc BUGS TODO
+}
