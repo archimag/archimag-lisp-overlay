@@ -1,8 +1,8 @@
-DIST asdf-binary-locations_0.2.3.tar.gz 7884 RMD160 23d4dd24c947cb6dcbba25d7ccac0967b1a5bdb3 SHA1 fd9885d0e52c972f15e71f7c563ebe25986502dd SHA256 bed91039f956c18e163aaf511be2b96608a1f5de46ae7f4d724fad29ed85dbe8
-EBUILD asdf-binary-locations-0.2.3-r2.ebuild 588 RMD160 c8654f1e74d25ecec2815126314f8f535cbd9760 SHA1 98176a9c5bf234a699793c954cc34114fe0e5a4b SHA256 396c257219384e9c24009aec40ae614f1fb0d1e6a5c030268613f95d497ded02
-MD5 41d3acfd259862277f67d5b44b63f3c5 asdf-binary-locations-0.2.3-r2.ebuild 588
-RMD160 c8654f1e74d25ecec2815126314f8f535cbd9760 asdf-binary-locations-0.2.3-r2.ebuild 588
-SHA256 396c257219384e9c24009aec40ae614f1fb0d1e6a5c030268613f95d497ded02 asdf-binary-locations-0.2.3-r2.ebuild 588
-MD5 8ab6c3568517e547ef759b50c2fed836 files/digest-asdf-binary-locations-0.2.3-r2 277
-RMD160 321cc369fe2465b529a5b8cf780aed316d650983 files/digest-asdf-binary-locations-0.2.3-r2 277
-SHA256 a8463f02d64ad55d26319665ed5d6590cb8f096fc372a044078aa99643fe0104 files/digest-asdf-binary-locations-0.2.3-r2 277
+DIST asdf-binary-locations-0.2.4.tar.bz2 7552 RMD160 4cc695d5ef47ed41171a5aed51839c94edc9d1a0 SHA1 774f4a7a3493cffa5fb5d687eedbb5fc9946a8db SHA256 f67311811f144967727da896bc39799776221b162b13948974bfb8185a8a01fb
+EBUILD asdf-binary-locations-0.2.4.ebuild 560 RMD160 7e98694fc9f0da81e7a90fcfd8a9b62218ad1171 SHA1 9da9e61c12a9b61941ef581beb93f9835f83b840 SHA256 02af61cdcf2644fe7aff45858d663be7c575b6058df5fd43e07e601b97070e2d
+MD5 5b960e0049182263fdf14bb57dece765 asdf-binary-locations-0.2.4.ebuild 560
+RMD160 7e98694fc9f0da81e7a90fcfd8a9b62218ad1171 asdf-binary-locations-0.2.4.ebuild 560
+SHA256 02af61cdcf2644fe7aff45858d663be7c575b6058df5fd43e07e601b97070e2d asdf-binary-locations-0.2.4.ebuild 560
+MD5 33ce776ff7be108b839e016f1d14a609 files/digest-asdf-binary-locations-0.2.4 280
+RMD160 1bd70bc105dc68f251ab15565b91b9f407fe4338 files/digest-asdf-binary-locations-0.2.4 280
+SHA256 9f407240bc55b9179991846ecd90cd445c880838f52de16d6e6e1151dd33df5a files/digest-asdf-binary-locations-0.2.4 280
