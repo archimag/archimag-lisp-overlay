@@ -6,7 +6,7 @@ inherit elisp-common multilib
 
 #MY_P=${PN}${PV/_alpha/-alpha}
 MY_P=${PN}${PV/_beta/-beta}
-DATE="08Nov07"
+DATE="14Nov07"
 
 DESCRIPTION="Bigloo is a Scheme implementation."
 HOMEPAGE="http://www-sop.inria.fr/mimosa/fp/Bigloo/bigloo.html"
