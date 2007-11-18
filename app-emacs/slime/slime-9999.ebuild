@@ -65,7 +65,6 @@ src_install() {
 	cp "${FILESDIR}"/swank.asd "${S}"
 	common-lisp-install *.{lisp,asd}
 	common-lisp-symlink-asdf
-	dosym "${SITELISP}"/${PN}/swank-version.el "${CLSOURCEROOT}"/swank
 
 	# install contribs
 	elisp-install ${PN}/contrib/ contrib/*.el{,c} \
