@@ -59,20 +59,22 @@ src_compile() {
 }
 
 src_install() {
-	# install core
+	## install core
 	elisp-install ${PN} *.el{,c} ChangeLog "${FILESDIR}"/swank-loader.lisp || die "Cannot install SLIME core"
 	elisp-site-file-install "${FILESDIR}/${SITEFILE}"
 	cp "${FILESDIR}"/swank.asd "${S}"
+	# remove upstream swank-loader, since it will be unused
+	rm "${S}"/swank-loader.lisp
 	common-lisp-install *.{lisp,asd}
 	common-lisp-symlink-asdf
 
-	# install contribs
+	## install contribs
 	elisp-install ${PN}/contrib/ contrib/*.el{,c} \
 		contrib/{README,ChangeLog} || die "Cannot install contribs"
 	insinto "${CLSOURCEROOT}"/swank/contrib
 	doins contrib/*.lisp
 
-	# install docs
+	## install docs
 	dodoc README* ChangeLog HACKING NEWS PROBLEMS
 	doinfo doc/${PN}.info
 	use doc && dodoc doc/${PN}.{ps,pdf}
