@@ -1,10 +1,10 @@
 diff -Naur slime.old/swank.lisp slime/swank.lisp
---- slime.old/swank.lisp	2007-11-23 08:41:34.000000000 +0100
-+++ slime/swank.lisp	2007-11-23 08:57:44.000000000 +0100
+--- slime.old/swank.lisp	2007-11-23 09:59:12.000000000 +0100
++++ slime/swank.lisp	2007-11-23 10:01:29.000000000 +0100
 @@ -2283,10 +2283,15 @@
  (defslimefun swank-require (module &optional filename)
    "Load the module MODULE."
-   (unless (member (string module) *modules* :key #'string=)
+   (unless (member (string module) *modules* :test #'string=)
 -    (require module (or filename (module-filename module))))
 +    (let ((*compile-print* nil)
 +          (*compile-verbose* nil)
