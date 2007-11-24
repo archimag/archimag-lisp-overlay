@@ -5,7 +5,7 @@
 inherit common-lisp-2
 
 DESCRIPTION="R. Scott McIntire's Common Lisp Modular Arithmetic Library"
-HOMEPAGE="http://packages.debian.org/unstable/devel/cl-rsm-mod.html"
+HOMEPAGE="http://packages.debian.org/unstable/devel/cl-rsm-mod"
 SRC_URI="http://ftp.debian.org/debian/pool/main/c/cl-${PN}/cl-${PN}_${PV}.tar.gz"
 LICENSE="BSD"
 SLOT="0"

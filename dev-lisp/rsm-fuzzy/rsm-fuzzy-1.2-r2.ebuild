@@ -5,7 +5,7 @@
 inherit common-lisp-2
 
 DESCRIPTION="R. Scott McIntire's Common Lisp Fuzzy Logic Library"
-HOMEPAGE="http://packages.debian.org/unstable/devel/cl-rsm-fuzzy.html"
+HOMEPAGE="http://packages.debian.org/unstable/devel/cl-rsm-fuzzy"
 SRC_URI="http://ftp.debian.org/debian/pool/main/c/cl-${PN}/cl-${PN}_${PV}.tar.gz"
 LICENSE="BSD"
 SLOT="0"

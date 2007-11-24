@@ -5,7 +5,7 @@
 inherit common-lisp-2 eutils
 
 DESCRIPTION="McIntire's Common Lisp Bit Compression Library"
-HOMEPAGE="http://packages.debian.org/unstable/devel/cl-rsm-bitcomp.html"
+HOMEPAGE="http://packages.debian.org/unstable/devel/cl-rsm-bitcomp"
 SRC_URI="http://ftp.debian.org/debian/pool/main/c/cl-${PN}/cl-${PN}_${PV}.tar.gz"
 LICENSE="BSD"
 SLOT="0"
