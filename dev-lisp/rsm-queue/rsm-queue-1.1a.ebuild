@@ -11,7 +11,7 @@ LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~ppc ~sparc ~x86"
 IUSE=""
-DEPEND=""
+DEPEND="!dev-lisp/cl-${PN}"
 
 S="${WORKDIR}"/cl-${P}
 
