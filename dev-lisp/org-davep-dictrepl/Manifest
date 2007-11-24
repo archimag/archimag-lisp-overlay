@@ -1,0 +1,8 @@
+DIST org-davep-dictrepl-2.2.tar.gz 2725 RMD160 cd8e3ce7520d2b306597a439b53dde7ffe085bd5 SHA1 1e3db6814177c4eae90477d4f780744a600917f1 SHA256 7ee2dbbbfb556bd511e519758caf7ae45f3c0823e3158f7416cc757c6fdfbac4
+EBUILD org-davep-dictrepl-2.2.ebuild 408 RMD160 3fa91b7e472c9b87dd1adbde77a42d6e26192641 SHA1 bedff75dcb4348482905b9a8b22b24a9cbd12235 SHA256 24b4cdf6898402d330b57bf7c3725bec7124ae74c8a30b445a612adb626c61f4
+MD5 076d873161de790cdfea7d49031c5e05 org-davep-dictrepl-2.2.ebuild 408
+RMD160 3fa91b7e472c9b87dd1adbde77a42d6e26192641 org-davep-dictrepl-2.2.ebuild 408
+SHA256 24b4cdf6898402d330b57bf7c3725bec7124ae74c8a30b445a612adb626c61f4 org-davep-dictrepl-2.2.ebuild 408
+MD5 46b0e802f40129a8e022699f783a894d files/digest-org-davep-dictrepl-2.2 262
+RMD160 de64979880a86573b3f1441a6fa253c136e886be files/digest-org-davep-dictrepl-2.2 262
+SHA256 d12bfff0bfbb853a51a7438b553294dbcd1b041f61854d4d63124382220c8d7e files/digest-org-davep-dictrepl-2.2 262
