@@ -11,7 +11,7 @@ LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc x86"
 IUSE=""
-DEPEND=""
+DEPEND="!dev-lisp/cl-${PN}"
 
 src_install() {
 	common-lisp-install *.{lisp,asd}
