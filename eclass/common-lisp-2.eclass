@@ -75,6 +75,10 @@ common-lisp-symlink-asdf() {
 	done
 }
 
+common-lisp-system-symlink() {
+	die "common-lisp-system-symlink() has been renamed to common-lisp-symlink-asdf()"
+}
+
 common-lisp-2_src_install() {
 	common-lisp-install *.{lisp,asd}
 	common-lisp-symlink-asdf
