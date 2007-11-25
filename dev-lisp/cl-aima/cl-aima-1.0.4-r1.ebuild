@@ -12,7 +12,7 @@ SRC_URI="mirror://gentoo/${PN}_${PV}.orig.tar.gz
 	mirror://gentoo/${PN}_${PV}-${DEB_PV}.diff.gz"
 LICENSE="Norvig"
 SLOT="0"
-KEYWORDS="~amd64 ~sparc x86"
+KEYWORDS="~amd64 ~sparc ~x86"
 IUSE=""
 DEPEND=""
 

@@ -11,7 +11,7 @@ HOMEPAGE="http://www.mapcar.org/~mrd/utilities/
 SRC_URI="http://ftp.debian.org/debian/pool/main/c/cl-${PN}/cl-${PN}_1.0.orig.tar.gz"
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="~amd64 ~ppc ~ppc-macos ~sparc x86"
+KEYWORDS="~amd64 ~ppc ~ppc-macos ~sparc ~x86"
 IUSE=""
 DEPEND="!dev-lisp/cl-${PN}"
 
