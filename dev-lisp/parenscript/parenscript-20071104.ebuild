@@ -2,24 +2,19 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EDARCS_REPOSITORY="http://common-lisp.net/project/parenscript/repository/parenscript/"
-
-inherit eutils multilib darcs common-lisp-2
+inherit eutils common-lisp-2
 
 DESCRIPTION="${PN} is a small lispy language that can be compiled to JavaScript."
 HOMEPAGE="http://common-lisp.net/project/parenscript/"
-SRC_URI=""
+SRC_URI="http://common-lisp.net/project/${PN}/release/${P}.tar.gz"
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~x86"
 IUSE="doc"
 DEPEND="!dev-lisp/cl-${PN}
-		!dev-lisp/cl-parenscript
-		!dev-lisp/parenscript
+		!dev-lisp/cl-${PN}-darcs
+		!dev-lisp/${PN}-darcs
 		doc? ( virtual/tetex dev-tex/latex2html )"
-
-CLPACKAGE="parenscript"
-CLSYSTEMS="parenscript"
 
 src_compile() {
 	use doc && { cd docs ; sh build.sh ; }
