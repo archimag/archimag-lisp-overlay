@@ -8,7 +8,7 @@ DESCRIPTION="General Utilities for Common Lisp Programs from Kevin Rosenberg"
 HOMEPAGE="http://packages.debian.org/sid/cl-${PN}
 	http://b9.com/debian.html"
 SRC_URI="http://files.b9.com/${PN}/${P}.tar.gz"
-LICENSE="LLGPL"
+LICENSE="LLGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
