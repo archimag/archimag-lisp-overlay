@@ -67,5 +67,5 @@ EOF
 	insinto /usr/$(get_libdir)/abcl
 	doins src/org/armedbear/lisp/libabcl.so
 	java-pkg_dojar abcl.jar
-	dodoc README COPYING
+	dodoc README
 }
