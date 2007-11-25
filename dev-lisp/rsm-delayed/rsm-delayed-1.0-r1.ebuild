@@ -9,7 +9,7 @@ HOMEPAGE="http://packages.debian.org/unstable/devel/cl-rsm-delayed"
 SRC_URI="http://ftp.debian.org/debian/pool/main/c/cl-${PN}/cl-${PN}_${PV}.tar.gz"
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="~ppc ~sparc ~x86"
+KEYWORDS="~sparc ~x86"
 IUSE=""
 DEPEND="!dev-lisp/cl-${PN}
 		dev-lisp/rsm-queue
