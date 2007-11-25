@@ -46,7 +46,7 @@ src_compile() {
 }
 
 src_install() {
-	emake DESTDIR=${D} install || die "einstall failed"
+	emake DESTDIR="${D}" install || die "einstall failed"
 
 	# install newlisp.so
 	dolib.so newlisp.so

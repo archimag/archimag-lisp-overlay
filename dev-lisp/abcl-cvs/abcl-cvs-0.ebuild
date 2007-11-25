@@ -26,7 +26,7 @@ DEPEND="virtual/jdk"
 S=${WORKDIR}/${ECVS_MODULE}
 
 src_compile() {
-	chmod +x ${S}/{configure,mkinstalldirs}
+	chmod +x "${S}"/{configure,mkinstalldirs}
 	econf --with-jdk=`java-config -O` \
 		`use_enable debug debug` \
 		`use_enable libabcl libabcl` \
@@ -36,12 +36,12 @@ src_compile() {
 }
 
 src_install() {
-	find ${S} -type d -name CVS -exec rm -rf '{}' \;
+	find "${S}" -type d -name CVS -exec rm -rf '{}' \;
 	java-pkg_dojar j.jar
 	dohtml doc/*
 	insinto /usr/share/j
 	doins -r themes
-	dobin ${FILESDIR}/{abcl,j}
+	dobin "${FILESDIR}"/{abcl,j}
 	if use jpty; then
 		dobin src/jpty/jpty
 	fi
