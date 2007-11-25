@@ -26,5 +26,5 @@ src_install() {
 	common-lisp-install *.{lisp,asd} *.sh
 	common-lisp-install backend/*.lisp test/*.{in,lisp,asd}
 	common-lisp-symlink-asdf
-	dodoc LICENSE TODO README doc/*.txt notes/*.txt
+	dodoc TODO README doc/*.txt notes/*.txt
 }

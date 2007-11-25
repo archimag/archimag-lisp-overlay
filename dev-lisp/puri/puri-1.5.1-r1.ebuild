@@ -18,5 +18,5 @@ src_install() {
 	common-lisp-install *.{lisp,asd}
 	common-lisp-symlink-asdf
 	dohtml uri.html
-	dodoc README LICENSE
+	dodoc README
 }

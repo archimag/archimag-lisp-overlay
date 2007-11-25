@@ -15,7 +15,7 @@ DEPEND="!dev-lisp/cl-${PN}"
 
 src_unpack() {
 	unpack ${A}
-	rm ${S}/Makefile
+	rm "${S}"/Makefile
 }
 
 src_install() {

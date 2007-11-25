@@ -19,7 +19,7 @@ src_unpack() {
 	unpack ${A}
 	epatch "${FILESDIR}"/${PV}-package-lock-gentoo.patch
 	epatch "${FILESDIR}"/${PV}-gentoo.patch
-	cd ${S}
+	cd "${S}"
 	epatch "${FILESDIR}"/clisp-tests-gentoo.patch
 }
 

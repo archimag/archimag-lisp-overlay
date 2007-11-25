@@ -15,8 +15,8 @@ DEPEND="!dev-lisp/cl-${PN}"
 
 src_unpack() {
 	unpack ${A}
-	cd ${S}
-	epatch ${FILESDIR}/${PN}-subseries.patch
+	cd "${S}"
+	epatch "${FILESDIR}"/${PN}-subseries.patch
 }
 
 src_install() {

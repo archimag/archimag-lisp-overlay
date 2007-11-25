@@ -17,7 +17,7 @@ DEPEND="dev-lisp/split-sequence
 
 src_unpack() {
 	unpack ${A}
-	rm ${S}/Makefile
+	rm "${S}"/Makefile
 }
 
 src_install() {

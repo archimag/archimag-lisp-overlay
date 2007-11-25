@@ -24,12 +24,11 @@ S="${WORKDIR}/cl+ssl-${MY_PV}"
 src_unpack() {
 	unpack ${A}
 	rm "${S}"/Makefile
-	sed -i "s,/usr/lib,/usr/$(get_libdir),g" ${S}/cl+ssl.asd
+	sed -i "s,/usr/lib,/usr/$(get_libdir),g" "${S}"/cl+ssl.asd
 }
 
 src_install() {
 	common-lisp-install *.{lisp,asd}
 	common-lisp-symlink-asdf
-	dodoc LICENSE
 	dohtml index.{css,html}
 }
