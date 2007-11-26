@@ -9,7 +9,7 @@ HOMEPAGE="http://common-lisp.net/project/parenscript/"
 SRC_URI="http://common-lisp.net/project/${PN}/release/${P}.tar.gz"
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE="doc"
 DEPEND="!dev-lisp/cl-${PN}
 		!dev-lisp/cl-${PN}-darcs
