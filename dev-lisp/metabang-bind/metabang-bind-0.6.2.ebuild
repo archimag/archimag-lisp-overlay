@@ -5,7 +5,8 @@
 inherit common-lisp-2 eutils
 
 DESCRIPTION="BIND combines LET*, DESTRUCTURING-BIND and MULTIPLE-VALUE-BIND into a single form."
-HOMEPAGE="http://www.cliki.net/bind http://common-lisp.net/project/cl-containers/${PN}/"
+HOMEPAGE="http://www.cliki.net/bind
+		http://common-lisp.net/project/cl-containers/metabang-bind"
 SRC_URI="http://common-lisp.net/~sionescu/files/${P}.tar.bz2"
 LICENSE="MIT"
 SLOT="0"
@@ -18,6 +19,6 @@ DEPEND="!dev-lisp/cl-bind
 CLSYSTEMS="${PN} ${PN}-test"
 
 src_install() {
-	common-lisp-install *.asd {unit-tests,dev}/*.lisp
+	common-lisp-install *.asd {unit-tests,dev}/*.lisp *.config
 	common-lisp-symlink-asdf
 }
