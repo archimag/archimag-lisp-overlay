@@ -10,7 +10,7 @@ SRC_URI="http://ftp.debian.org/debian/pool/main/c/cl-${PN}/cl-${PN}_${PV}.tar.gz
 LICENSE="BSD"
 SLOT="0"
 # Contains several erroneous type declarations
-KEYWORDS="-*"
+KEYWORDS=""
 IUSE=""
 DEPEND="!dev-lisp/cl-${PN}"
 
