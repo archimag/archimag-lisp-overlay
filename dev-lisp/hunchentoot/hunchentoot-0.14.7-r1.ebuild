@@ -12,7 +12,7 @@ KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 SLOT="0"
 IUSE=""
 
-DEPEND="dev-lisp/cl-md5
+DEPEND="dev-lisp/md5
 		dev-lisp/cl-base64
 		dev-lisp/cl-rfc2388
 		dev-lisp/cl-plus-ssl

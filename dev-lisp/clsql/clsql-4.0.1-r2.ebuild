@@ -14,7 +14,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE="postgres mysql sqlite sqlite3 odbc"
 DEPEND="!dev-lisp/cl-sql
-		dev-lisp/cl-md5
+		dev-lisp/md5
 		>=dev-lisp/uffi-1.5.7
 		postgres? ( dev-db/libpq )
 		mysql? ( virtual/mysql )
