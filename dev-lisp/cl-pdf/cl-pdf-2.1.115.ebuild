@@ -1,6 +1,6 @@
-# Copyright 1999-2005 Gentoo Foundation
+# Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-lisp/cl-pdf/cl-pdf-110.ebuild,v 1.1 2005/12/31 08:14:27 mkennedy Exp $
+# $Header: $
 
 inherit common-lisp-2 eutils
 
