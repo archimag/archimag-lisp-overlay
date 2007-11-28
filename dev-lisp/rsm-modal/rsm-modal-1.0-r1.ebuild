@@ -18,7 +18,7 @@ S="${WORKDIR}"/cl-${P}
 
 src_unpack() {
 	unpack ${A}
-	epatch ${FILESDIR}/${PV}-defconstant-gentoo.patch || die
+	epatch "${FILESDIR}"/${PV}-defconstant-gentoo.patch
 }
 
 src_install() {

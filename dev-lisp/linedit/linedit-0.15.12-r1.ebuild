@@ -10,7 +10,7 @@ SRC_URI="http://common-lisp.net/project/${PN}/files/${PN}_${PV}.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~ppc ~sparc x86"
+KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
 DEPEND="!dev-lisp/cl-${PN}
@@ -24,7 +24,7 @@ src_unpack() {
 	unpack ${A}
 	# adds uffi-loader.lisp, removes building .so files
 	epatch "${FILESDIR}"/${PV}-${PN}.asd-uffi-glue-gentoo.patch
-	cp "${FILESDIR}"/${PV}-Makefile ${S}/Makefile
+	cp "${FILESDIR}"/${PV}-Makefile "${S}"/Makefile
 }
 
 src_compile() {
@@ -34,7 +34,6 @@ src_compile() {
 src_install() {
 	common-lisp-install *.{lisp,asd} version.lisp-expr
 	common-lisp-symlink-asdf
-	dodoc LICENSE
 	exeinto /usr/lib/${PN}
 	doexe *.so
 }

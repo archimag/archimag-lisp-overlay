@@ -1,0 +1,86 @@
+diff -Naur irc-logger-0.9.4.old/irc-logger.asd irc-logger-0.9.4/irc-logger.asd
+--- irc-logger-0.9.4.old/irc-logger.asd	2007-09-04 08:28:58.000000000 +0200
++++ irc-logger-0.9.4/irc-logger.asd	2007-11-27 13:28:29.000000000 +0100
+@@ -2,14 +2,14 @@
+ ;;;; ASDF definition for irc-logger
+ ;;;; $Id: irc-logger.asd,v 1.1 2003/12/14 16:10:29 krosenberg Exp $
+ 
+-(in-package cl-user)
+-(defpackage irc-logger-system (:use :cl :asdf))
+-(in-package irc-logger-system)
++(in-package :cl-user)
++(defpackage :irc-logger-system (:use :cl :asdf))
++(in-package :irc-logger-system)
+ 
+-(defsystem irc-logger
+-    :depends-on (cl-irc cl-ppcre)
++(defsystem :irc-logger
++    :depends-on (:cl-irc :cl-ppcre :acl-compat)
+     :components ((:file "package")
+-		 (:file "logger" :depends-on ("package"))))
++                 (:file "logger" :depends-on ("package"))))
+ 
+ 
+ 
+diff -Naur irc-logger-0.9.4.old/logger.lisp irc-logger-0.9.4/logger.lisp
+--- irc-logger-0.9.4.old/logger.lisp	2007-11-14 23:12:20.000000000 +0100
++++ irc-logger-0.9.4/logger.lisp	2007-11-27 13:30:43.000000000 +0100
+@@ -649,9 +649,7 @@
+   (add-private-log-entry nil "Calling create-logger [add-logger].~%")
+   (let ((logger
+          (do ((new-logger
+-               (#+allegro mp:with-timeout #+allegro (*timeout* nil)
+-                          #+sbcl sb-ext:with-timeout #+sbcl *timeout*
+-                          #+lispworks progn
++               (with-timeout (*timeout* nil)
+                  (create-logger nick server :port port :channels channels :output output
+                                 :logging-stream logging-stream :password password
+                                 :realname realname :username username
+@@ -659,9 +657,7 @@
+                                 :unknown-log unknown-log
+                                 :formats formats
+                                 :async async))
+-               (#+allegro mp:with-timeout #+allegro (*timeout* nil)
+-                          #+sbcl sb-ext:with-timeout #+sbcl *timeout*
+-                          #+lispworks progn
++               (with-timeout (*timeout* nil)
+                  (create-logger nick server :port port :channels channels :output output
+                                 :logging-stream logging-stream :password password
+                                 :realname realname :username username
+@@ -758,20 +754,13 @@
+ (defun log-reconnection (logger)
+   (log-daemon-message logger "Connection restablished."))
+ 
+-#+ignore
+ (defun is-connected (logger)
+-  (%is-connected logger))
+-
+-
+-(defun is-connected (logger)
+-  #-allegro (%is-connected logger)
+-  #+allegro (mp:with-timeout (*timeout* nil)
+-              (%is-connected logger)))
++  (with-timeout (*timeout* nil)
++    (%is-connected logger)))
+ 
+ (defun quit-with-timeout (connection msg)
+-  #-allegro (quit connection msg)
+-  #+allegro (mp:with-timeout (*timeout* nil)
+-              (quit connection msg)))
++  (with-timeout (*timeout* nil)
++    (quit connection msg)))
+ 
+ (defun %is-connected (logger)
+   (when (ignore-errors (ping (connection logger) (server logger)))
+diff -Naur irc-logger-0.9.4.old/package.lisp irc-logger-0.9.4/package.lisp
+--- irc-logger-0.9.4.old/package.lisp	2007-09-04 08:28:58.000000000 +0200
++++ irc-logger-0.9.4/package.lisp	2007-11-27 13:32:00.000000000 +0100
+@@ -5,7 +5,7 @@
+ (in-package #:cl-user)
+ 
+ (defpackage #:irc-logger
+-  (:use #:common-lisp #:irc #:cl-ppcre)
++  (:use #:common-lisp #:irc #:cl-ppcre #:acl-compat.mp)
+   (:export #:add-logger
+            #:remove-logger
+            #:add-channel-logger

@@ -9,7 +9,7 @@ HOMEPAGE="http://www.cliki.net/KR"
 SRC_URI="mirror://gentoo/${PN}_${PV}.tar.gz"
 LICENSE="public-domain"
 SLOT="0"
-KEYWORDS="~amd64 ~ppc ~sparc x86"
+KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 DEPEND="!dev-lisp/cl-${xPN}"
 

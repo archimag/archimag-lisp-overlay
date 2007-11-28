@@ -10,6 +10,7 @@ LICENSE="GPL-2"
 # please keep sorted
 KEYWORDS="~amd64 ~x86"
 IUSE="unicode readline tcltk"
+SLOT="0"
 
 DEPEND="readline? ( sys-libs/readline )
 		tcltk? ( dev-lang/tk )"
@@ -53,7 +54,7 @@ src_compile() {
 }
 
 src_install() {
-	emake DESTDIR=${D} install || die "einstall failed"
+	emake DESTDIR="${D}" install || die "einstall failed"
 
 	# install some stuff the Makefile doesn't do
 	dobin examples/newlispdoc

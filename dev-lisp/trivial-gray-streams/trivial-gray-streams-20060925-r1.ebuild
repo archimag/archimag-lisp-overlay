@@ -20,5 +20,5 @@ S="${WORKDIR}/${PN}"
 
 src_unpack() {
 	unpack ${A}
-	rm ${S}/Makefile
+	rm "${S}"/Makefile
 }

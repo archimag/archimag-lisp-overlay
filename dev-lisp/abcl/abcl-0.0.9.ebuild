@@ -27,7 +27,7 @@ src_unpack() {
 	unpack ${A}
 	local java_compiler="javac"
 	use jikes && java_compiler="jikes"
-	cat >${S}/customizations.lisp <<EOF
+	cat > "${S}"/customizations.lisp <<EOF
 (in-package #:build-abcl)
 (setf
 *javac-options* "-g"
@@ -37,8 +37,8 @@ src_unpack() {
 *jar* "jar")
 EOF
 	einfo "Building with the following customizations.lisp:"
-	cat ${S}/customizations.lisp
-	cat >${S}/build.lisp <<'EOF'
+	cat "${S}"/customizations.lisp
+	cat > "${S}"/build.lisp <<'EOF'
 (progn (load "build-abcl") (funcall (intern "BUILD-ABCL" "BUILD-ABCL") :clean t :full t) #+sbcl (sb-ext:quit) #+clisp (ext:quit) #+cmu (extensions:quit))
 EOF
 }
@@ -67,5 +67,5 @@ EOF
 	insinto /usr/$(get_libdir)/abcl
 	doins src/org/armedbear/lisp/libabcl.so
 	java-pkg_dojar abcl.jar
-	dodoc README COPYING
+	dodoc README
 }
