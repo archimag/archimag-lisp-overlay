@@ -11,7 +11,7 @@ HOMEPAGE="http://www.call-with-current-continuation.org/"
 
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~x86"
 IUSE="emacs debug static performance doc"
 
 DEPEND="emacs? ( virtual/emacs )"
