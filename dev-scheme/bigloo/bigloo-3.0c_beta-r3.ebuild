@@ -6,7 +6,7 @@ inherit elisp-common multilib
 
 #MY_P=${PN}${PV/_alpha/-alpha}
 MY_P=${PN}${PV/_beta/-beta}
-DATE="17Nov07"
+DATE="29Nov07"
 
 DESCRIPTION="Bigloo is a Scheme implementation."
 HOMEPAGE="http://www-sop.inria.fr/mimosa/fp/Bigloo/bigloo.html"
@@ -31,12 +31,10 @@ src_compile() {
 
 	# Bigloo doesn't use autoconf and consequently a lot of options used by econf give errors
 	# Manuel Serrano says: "Please, dont talk to me about autoconf. I simply dont want to hear about it..."
-
-#hack manpage dir
 	./configure \
 		$(use java && echo "--jvm=yes --java=$(java-config --java) --javac=$(java-config --javac)") \
 		--prefix=/usr \
-		--mandir=/usr/share/man/man1 \
+		--mandir=/usr/share/man/ \
 		--infodir=/usr/share/info \
 		--libdir=/usr/$(get_libdir) \
 		--docdir=/usr/share/doc/${PF} \
