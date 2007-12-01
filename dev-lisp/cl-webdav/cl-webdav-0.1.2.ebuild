@@ -7,9 +7,13 @@ inherit common-lisp-2
 DESCRIPTION="A WebDAV server written in Common Lisp."
 HOMEPAGE="http://weitz.de/cl-webdav"
 SRC_URI="http://common-lisp.net/~sionescu/ediware/${P}.tar.gz"
-LICENSE="BSD"
+LICENSE="BSD-2"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
+
+DEPEND="dev-lisp/hunchentoot
+		dev-lisp/cxml
+		dev-lisp/cl-fad"
 
 src_install() {
 	common-lisp-install *.{lisp,asd}
