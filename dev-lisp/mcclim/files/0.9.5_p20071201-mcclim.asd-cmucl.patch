@@ -1,6 +1,6 @@
 diff -u mcclim-0.9.5.old/mcclim.asd mcclim-0.9.5/mcclim.asd
---- mcclim-0.9.5_p20071026.old/mcclim.asd	2007-09-02 19:53:24.000000000 +0200
-+++ mcclim-0.9.5_p20071026/mcclim.asd	2007-10-26 12:43:08.000000000 +0200
+--- mcclim-0.9.5_p20071201.old/mcclim.asd	2007-09-02 19:53:24.000000000 +0200
++++ mcclim-0.9.5_p20071201/mcclim.asd	2007-10-26 12:43:08.000000000 +0200
 @@ -54,14 +54,7 @@
  ;;; Legacy CMUCL support stuff
  #+cmu

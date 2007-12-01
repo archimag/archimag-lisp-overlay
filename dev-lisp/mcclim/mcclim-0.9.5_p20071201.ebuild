@@ -17,7 +17,8 @@ DEPEND="!dev-lisp/cl-${PN}
 		dev-lisp/spatial-trees
 		dev-lisp/flexichain
 		dev-lisp/clx
-		emacs? ( virtual/emacs )"
+		emacs? ( virtual/emacs )
+		doc? ( virtual/tetex sys-apps/texinfo )"
 
 CLSYSTEMS="Apps/Functional-Geometry/functional-geometry
 		Apps/Scigraph/scigraph
@@ -43,6 +44,10 @@ src_compile() {
 		rm -rf "${S}"/Tools/Emacs
 		elisp-comp *.el
 	fi
+	if use doc ; then
+		cd Spec/src
+		texi2pdf clim.tex || die "Cannot build PDF docs"
+	fi
 }
 
 src_install() {
@@ -50,9 +55,10 @@ src_install() {
 		ESA Examples Experimental Extensions Goatee \
 		Images Lisp-Dep Looks Tests Tools
 	common-lisp-symlink-asdf
-	dodoc INSTALL* README TODO ReleaseNotes/* Webpage/clim-paper.pdf
 	if use emacs; then
 		elisp-install ${PN} *.el{,c}
 		elisp-site-file-install ${SITEFILE}
 	fi
+	dodoc INSTALL* README TODO ReleaseNotes/*
+	use doc && dodoc Webpage/clim-paper.pdf Spec/src/clim.pdf
 }
