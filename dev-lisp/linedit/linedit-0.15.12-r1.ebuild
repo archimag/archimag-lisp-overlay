@@ -34,6 +34,6 @@ src_compile() {
 src_install() {
 	common-lisp-install *.{lisp,asd} version.lisp-expr
 	common-lisp-symlink-asdf
-	exeinto /usr/lib/${PN}
+	exeinto /usr/$(get_libdir)/${PN}
 	doexe *.so
 }
