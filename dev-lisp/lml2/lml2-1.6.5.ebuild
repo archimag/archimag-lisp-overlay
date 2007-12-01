@@ -11,9 +11,10 @@ SRC_URI="http://files.b9.com/${PN}/${P}.tar.gz"
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
-IUSE=""
 
 DEPEND="!dev-lisp/cl-${PN}"
+
+CLSYSTEMS="${PN} ${PN}-tests"
 
 src_install() {
 	common-lisp-install *.{lisp,asd}
