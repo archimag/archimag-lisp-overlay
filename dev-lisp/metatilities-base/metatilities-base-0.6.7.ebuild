@@ -21,8 +21,13 @@ CLSYSTEMS="${PN} ${PN}-test"
 
 S="${WORKDIR}"/${MY_P}
 
+src_unpack() {
+	unpack ${A}
+	rm dev/dynamic-class.lisp
+}
+
 src_install() {
 	common-lisp-install ${PN}.asd ${PN}-test.asd
-	common-lisp-install dev/*.lisp dev/utilities unit-tests
+	common-lisp-install dev/*.lisp dev/utilities/copy-file.lisp unit-tests
 	common-lisp-symlink-asdf
 }
