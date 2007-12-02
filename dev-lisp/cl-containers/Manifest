@@ -1,0 +1,8 @@
+DIST cl-containers-0.9.10.tar.bz2 206740 RMD160 75f35f60660cbd3ef9786c0f3ba2cca87a7d74b4 SHA1 bd4d080774aea4555cb07fa5deae10d210b7ab44 SHA256 1632fafa7d058c86b22d836fff71d906b8b95df58c6d0051c9413f74bfcc15e0
+EBUILD cl-containers-0.9.10.ebuild 677 RMD160 a8fd8bfd4e55bf1c8f8e87f18ea3746cf73ddbbd SHA1 2049db08afa0ddd3ee1aefb7b2081a6b005c5c1c SHA256 2eb9be252ec5b8b8211fb461ac13ea623ce0d9e261db98eb430ff59cf6616cf9
+MD5 acec1c0e59931dffd205fae32d7fb750 cl-containers-0.9.10.ebuild 677
+RMD160 a8fd8bfd4e55bf1c8f8e87f18ea3746cf73ddbbd cl-containers-0.9.10.ebuild 677
+SHA256 2eb9be252ec5b8b8211fb461ac13ea623ce0d9e261db98eb430ff59cf6616cf9 cl-containers-0.9.10.ebuild 677
+MD5 bce6f89955e670adcb6562493415c1af files/digest-cl-containers-0.9.10 265
+RMD160 9993f8977dfa091683e25eaf585fb1a16c8afbf0 files/digest-cl-containers-0.9.10 265
+SHA256 7215488c3197e59cb1d9dd129e930f9a073447fcb29592b3cc1af56b3fae192d files/digest-cl-containers-0.9.10 265
