@@ -1,0 +1,8 @@
+DIST trivial-shell-0.1.5.tar.bz2 8056 RMD160 1f18f97aaf4921f71fabb7ceda9ee801a40a053b SHA1 1cd0208b2b7b87b09e5edc47e60ce01cb9b28383 SHA256 61fc7a098cc80f59988a2ca1553c42d164f0c27633496a1a7a83ff551c5ad2a7
+EBUILD trivial-shell-0.1.5.ebuild 516 RMD160 bbb657e9e1deccb27aac65ff163e26dad9a904be SHA1 b58a9ac5a125f209fe67c866da1708a726fb7571 SHA256 ac14c7935f0b4da5726b24686b30147f190800ed4fcdf3faaf563b51651bbff4
+MD5 516fbc6cc8f5183a6190f19c824154ac trivial-shell-0.1.5.ebuild 516
+RMD160 bbb657e9e1deccb27aac65ff163e26dad9a904be trivial-shell-0.1.5.ebuild 516
+SHA256 ac14c7935f0b4da5726b24686b30147f190800ed4fcdf3faaf563b51651bbff4 trivial-shell-0.1.5.ebuild 516
+MD5 b3ffeb68ea1964905098bbeb1f712abe files/digest-trivial-shell-0.1.5 256
+RMD160 fa244ba7fa79321553b38dbd00cb532d377e659b files/digest-trivial-shell-0.1.5 256
+SHA256 811fd9660bde7d1364f2e28e04a44ef34923cc26517dcb29ad6d309e64bdeea9 files/digest-trivial-shell-0.1.5 256
