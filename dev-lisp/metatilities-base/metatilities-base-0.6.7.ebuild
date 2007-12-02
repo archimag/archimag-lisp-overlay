@@ -23,7 +23,7 @@ S="${WORKDIR}"/${MY_P}
 
 src_unpack() {
 	unpack ${A}
-	rm dev/dynamic-class.lisp
+	rm "${S}"/dev/dynamic-class.lisp
 }
 
 src_install() {
