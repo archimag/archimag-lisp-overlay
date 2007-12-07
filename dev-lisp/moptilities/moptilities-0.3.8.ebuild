@@ -18,6 +18,6 @@ DEPEND="dev-lisp/closer-mop
 CLSYSTEMS="${PN} ${PN}-test"
 
 src_install() {
-	common-lisp-install *.asd dev test website
+	common-lisp-install *.asd dev tests website
 	common-lisp-symlink-asdf
 }
