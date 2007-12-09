@@ -15,6 +15,11 @@ DEPEND=""
 
 CLSYSTEMS="${PN} ${PN}-test"
 
+src_unpack() {
+	unpack ${A}
+	epatch "${FILESDIR}"/${PV}-fix-asd.patch
+}
+
 src_install() {
 	common-lisp-install *.asd {dev,test}/*.lisp
 	common-lisp-install dev/notes.text
