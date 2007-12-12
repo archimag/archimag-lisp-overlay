@@ -37,6 +37,7 @@ src_compile() {
 
 src_install() {
 	cd src
-	sed 's:INSTALL_DIR=/usr:INSTALL_DIR=$(DESTDIR)/usr:' -i Makefile
+	sed 's:^INSTALL_DIR=/usr:INSTALL_DIR=$(DESTDIR)/usr:' -i Makefile
+#	grep INSTALL_DIR Makefile
 	emake -j1 DESTDIR="${D}" all || die
 }
