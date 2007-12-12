@@ -15,10 +15,17 @@ DEPEND=""
 
 CLSYSTEMS="${PN} ${PN}-test"
 
+src_unpack() {
+	unpack ${A}
+	epatch "${FILESDIR}"/${PV}-fix-asd.patch
+}
+
 src_install() {
-	common-lisp-install *.asd {dev,test}/*.lisp ${PN}-standard.config
+	common-lisp-install *.asd {dev,test}/*.lisp
+	common-lisp-install dev/notes.text
 	common-lisp-symlink-asdf
 	for i in compare data examples ; do
 		docinto ${i} && dodoc ${i}/*
 	done
+	dodoc ${PN}-standard.config
 }

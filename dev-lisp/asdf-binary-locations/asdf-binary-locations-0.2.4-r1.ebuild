@@ -15,6 +15,6 @@ IUSE=""
 DEPEND="dev-lisp/asdf"
 
 src_install() {
-	common-lisp-install *.asd dev/*.lisp
+	common-lisp-install *.asd dev/*.lisp dev/notes.text
 	common-lisp-symlink-asdf
 }
