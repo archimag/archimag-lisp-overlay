@@ -1,0 +1,24 @@
+diff -Naur asdf-binary-locations-0.2.5.old/asdf-binary-locations.asd asdf-binary-locations-0.2.5/asdf-binary-locations.asd
+--- asdf-binary-locations-0.2.5.old/asdf-binary-locations.asd	2007-12-14 01:10:17.000000000 +0100
++++ asdf-binary-locations-0.2.5/asdf-binary-locations.asd	2007-12-14 09:27:55.000000000 +0100
+@@ -28,16 +28,7 @@
+   :maintainer "Gary Warren King <gwking@metabang.com>"
+   :licence "MIT Style License"
+   :description "Put compiled Lisp files in their places."
+-  
+-  :components ((:module 
+-                "dev"
+-                :components
+-		((:load-only-cl-source-file "main")
+-		 
+-		 (:static-file "notes.text")))
+-               
+-               (:module
+-                "website"
+-                :components
+-		((:module "source"
+-			  :components ((:static-file "index.lml")))))))
++  :components
++  ((:module "dev"
++    :components
++    ((:load-only-cl-source-file "main")))))

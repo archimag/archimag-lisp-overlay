@@ -1,8 +1,12 @@
-DIST asdf-binary-locations-0.2.4.tar.bz2 7552 RMD160 4cc695d5ef47ed41171a5aed51839c94edc9d1a0 SHA1 774f4a7a3493cffa5fb5d687eedbb5fc9946a8db SHA256 f67311811f144967727da896bc39799776221b162b13948974bfb8185a8a01fb
-EBUILD asdf-binary-locations-0.2.4-r1.ebuild 575 RMD160 409e76d77d016049d0562cdf02e4d457c25a0c4b SHA1 10903c7429d5c7e4195387747a4cd0dd9765665e SHA256 a46468808b7e6a38ee46227c5cd18e5a8ad854b36b36008207a489fd3b6a7ff5
-MD5 f3f71dce2977e63bdec344de4a45fcc9 asdf-binary-locations-0.2.4-r1.ebuild 575
-RMD160 409e76d77d016049d0562cdf02e4d457c25a0c4b asdf-binary-locations-0.2.4-r1.ebuild 575
-SHA256 a46468808b7e6a38ee46227c5cd18e5a8ad854b36b36008207a489fd3b6a7ff5 asdf-binary-locations-0.2.4-r1.ebuild 575
-MD5 33ce776ff7be108b839e016f1d14a609 files/digest-asdf-binary-locations-0.2.4-r1 280
-RMD160 1bd70bc105dc68f251ab15565b91b9f407fe4338 files/digest-asdf-binary-locations-0.2.4-r1 280
-SHA256 9f407240bc55b9179991846ecd90cd445c880838f52de16d6e6e1151dd33df5a files/digest-asdf-binary-locations-0.2.4-r1 280
+AUX 0.2.5-fix-asd.patch 909 RMD160 2bd0b75f5226f7819e465c1c039091cc7f16a264 SHA1 bc21e74005ff8009264faa5b742376891c827037 SHA256 1e0b7080f7b5e1a9afee1e9d703fa4b9115c85b729a415135745ea31e94145a3
+MD5 74894f648821e0fa608dd181e2ea43c0 files/0.2.5-fix-asd.patch 909
+RMD160 2bd0b75f5226f7819e465c1c039091cc7f16a264 files/0.2.5-fix-asd.patch 909
+SHA256 1e0b7080f7b5e1a9afee1e9d703fa4b9115c85b729a415135745ea31e94145a3 files/0.2.5-fix-asd.patch 909
+DIST asdf-binary-locations-0.2.5.tar.bz2 10875 RMD160 20cd84fdefe2c8a215c41f42cd367e435a123378 SHA1 b001af9e281c64342e4f86d06dc0f2cce85eb73f SHA256 8ae690c520e468313052a2f628b5e6b768301d3bbe1b606483e3edd736ff94ac
+EBUILD asdf-binary-locations-0.2.5.ebuild 683 RMD160 6e5c583aa7ecf2708b71d6deee8bdbaf9adb3b42 SHA1 480ba89e853fa810d695b3aa57ca1c0a44ea9f26 SHA256 c80c30e120f253cce2dbe3caa8c10c2b79d2673a8b8d0d69013a8df64655e47f
+MD5 9061a4a9ba94e0f835e6de76abe3f6c6 asdf-binary-locations-0.2.5.ebuild 683
+RMD160 6e5c583aa7ecf2708b71d6deee8bdbaf9adb3b42 asdf-binary-locations-0.2.5.ebuild 683
+SHA256 c80c30e120f253cce2dbe3caa8c10c2b79d2673a8b8d0d69013a8df64655e47f asdf-binary-locations-0.2.5.ebuild 683
+MD5 9b9fcaba2ca046c3ffb52c5409cce56a files/digest-asdf-binary-locations-0.2.5 283
+RMD160 32c9dd9e626d6cd3b7f3f0836f54f953a4ef2501 files/digest-asdf-binary-locations-0.2.5 283
+SHA256 44114ad4bd7a9a8310e30c9cac8983769fce260c9968ab8f0ce07d0e7ef11f1f files/digest-asdf-binary-locations-0.2.5 283
