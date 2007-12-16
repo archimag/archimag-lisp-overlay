@@ -1,8 +1,8 @@
-DIST bordeaux-threads_0.2.2.tar.gz 12357 RMD160 3b767ebfa0d96ec4f12f66f9eac09ec282e776cc SHA1 ef575785d31482b8addf1a20b46d23c4224fb511 SHA256 3ba8b0338b453285547e8d79ffea4d718245f961c813d7e113618a8b83fe0a0f
-EBUILD bordeaux-threads-0.2.2.ebuild 747 RMD160 bdb87f3865e97e9c03d893e496d3073da8e5da93 SHA1 e43a1357babdd64afc50f4c4e0a712729deccd3e SHA256 f8582aac0effd46936458ea58a270cadb929019d8f3f3bdba1ac19ff04e3adc4
-MD5 cb76a8f76f805d09523941a8987a0a69 bordeaux-threads-0.2.2.ebuild 747
-RMD160 bdb87f3865e97e9c03d893e496d3073da8e5da93 bordeaux-threads-0.2.2.ebuild 747
-SHA256 f8582aac0effd46936458ea58a270cadb929019d8f3f3bdba1ac19ff04e3adc4 bordeaux-threads-0.2.2.ebuild 747
-MD5 17c01b009e07e15bb59e976d35cc2b1e files/digest-bordeaux-threads-0.2.2 265
-RMD160 33ae5a2c0af788786a0c2331959ae454432c42ea files/digest-bordeaux-threads-0.2.2 265
-SHA256 0be11b05b4d6e8c7280bdd9e10590fbcca33440790791183664ca6c1d0ddb96d files/digest-bordeaux-threads-0.2.2 265
+DIST bordeaux-threads_0.4.0.tar.gz 12740 RMD160 120e02cd9f5e9b75ff180c93754d7e643efca0f1 SHA1 90ee684b0f88551577f68fa7282b380fec783e0f SHA256 3411a7a76d06935074ef7d3799f58c0a8dc993fa1be28c3c939afb304059ae26
+EBUILD bordeaux-threads-0.4.0.ebuild 747 RMD160 bdb87f3865e97e9c03d893e496d3073da8e5da93 SHA1 e43a1357babdd64afc50f4c4e0a712729deccd3e SHA256 f8582aac0effd46936458ea58a270cadb929019d8f3f3bdba1ac19ff04e3adc4
+MD5 cb76a8f76f805d09523941a8987a0a69 bordeaux-threads-0.4.0.ebuild 747
+RMD160 bdb87f3865e97e9c03d893e496d3073da8e5da93 bordeaux-threads-0.4.0.ebuild 747
+SHA256 f8582aac0effd46936458ea58a270cadb929019d8f3f3bdba1ac19ff04e3adc4 bordeaux-threads-0.4.0.ebuild 747
+MD5 def5c09e8c6e07800d2dde5066364376 files/digest-bordeaux-threads-0.4.0 265
+RMD160 2db9895a714fdf9156093ff3f548c93564a162c9 files/digest-bordeaux-threads-0.4.0 265
+SHA256 b561585f889b22815c002058378d35d1c472490bb71684fff72218e1d20fe5bc files/digest-bordeaux-threads-0.4.0 265
