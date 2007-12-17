@@ -31,7 +31,7 @@ src_unpack() {
 src_compile() {
 	make -C uffi || die
 	if use mysql; then
-		make -C db-mysql || die
+		make -C db-mysql || die "Cannot build foreign glue to libmysql"
 	fi
 }
 
