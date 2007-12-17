@@ -8,7 +8,7 @@ DESCRIPTION="A Common Lisp package for generating HTML and XHTML documents"
 HOMEPAGE="http://lml2.b9.com/"
 SRC_URI="http://files.b9.com/${PN}/${P}.tar.gz"
 
-LICENSE="BSD"
+LICENSE="LLGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 
