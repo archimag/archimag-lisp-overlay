@@ -22,9 +22,9 @@ SLOT="0"
 
 KEYWORDS="~amd64"
 
-IUSE=""
+IUSE="readline"
 
-DEPEND=""
+DEPEND="readline? ( sys-libs/readline )"
 RDEPEND="${DEPEND}"
 
 S=${WORKDIR}/${MY_P}
@@ -32,7 +32,7 @@ S=${WORKDIR}/${MY_P}
 src_compile() {
 	emake -j1 stage1 || die
 	cd src
-	econf || die "econf failed"
+	econf $(use_enable readline) || die "econf failed"
 }
 
 src_install() {
