@@ -2,11 +2,13 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+DATE="20Dec07"
+
 inherit elisp-common multilib
 
-#MY_P=${PN}${PV/_alpha/-alpha}
-MY_P=${PN}${PV/_beta/-beta}
-DATE="29Nov07"
+MY_P=${PN}${PV/_p/-}
+MY_P=${MY_P/_alpha/-alpha}
+MY_P=${MY_P/_beta/-beta}
 
 DESCRIPTION="Bigloo is a Scheme implementation."
 HOMEPAGE="http://www-sop.inria.fr/mimosa/fp/Bigloo/bigloo.html"
@@ -34,7 +36,7 @@ src_compile() {
 	./configure \
 		$(use java && echo "--jvm=yes --java=$(java-config --java) --javac=$(java-config --javac)") \
 		--prefix=/usr \
-		--mandir=/usr/share/man/ \
+		--mandir=/usr/share/man \
 		--infodir=/usr/share/info \
 		--libdir=/usr/$(get_libdir) \
 		--docdir=/usr/share/doc/${PF} \
