@@ -3,7 +3,7 @@
 # $Header: $
 
 
-DESCRIPTION="This is a sample skeleton ebuild file"
+DESCRIPTION="Qi is an award-winning Lisp-based functional programming language that offers the best of Common Lisp with the advantages of pattern matching, l calculus consistency, and optional static type checking. It uses sequent calculus notation to define types, and has the most powerful type system of any existing functional language, including ML and Haskell."
 
 HOMEPAGE="http://www.lambdassociates.org/"
 
