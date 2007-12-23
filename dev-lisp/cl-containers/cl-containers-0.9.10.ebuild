@@ -4,7 +4,7 @@
 
 inherit common-lisp-2 eutils
 
-DESCRIPTION="LIFT is an SUnit variant and much much more."
+DESCRIPTION="CL-containers adds binary search trees, red-black trees, sparse arrays, and other useful containers to CommonLisp."
 HOMEPAGE="http://common-lisp.net/project/${PN}/"
 SRC_URI="http://common-lisp.net/~sionescu/files/${P}.tar.bz2"
 LICENSE="MIT"
