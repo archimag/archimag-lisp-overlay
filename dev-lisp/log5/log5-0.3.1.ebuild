@@ -15,7 +15,7 @@ DEPENS="dev-lisp/lift"
 CLSYSTEMS="${PN} ${PN}-test"
 
 src_install() {
-	common-lisp-install *.asd dev unit-tests website
+	common-lisp-install *.asd dev unit-tests
 	common-lisp-symlink-asdf
 	dodoc todo.text
 }
