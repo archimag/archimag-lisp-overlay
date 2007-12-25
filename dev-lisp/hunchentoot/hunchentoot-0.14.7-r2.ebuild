@@ -14,7 +14,7 @@ IUSE=""
 
 DEPEND="dev-lisp/md5
 		dev-lisp/cl-base64
-		dev-lisp/cl-rfc2388
+		dev-lisp/rfc2388
 		dev-lisp/cl-plus-ssl
 		dev-lisp/chunga
 		dev-lisp/cl-ppcre
