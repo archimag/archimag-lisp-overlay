@@ -5,12 +5,11 @@
 inherit common-lisp-2
 
 DESCRIPTION="${PN} is a web server written in Common Lisp and at the same time a toolkit for building dynamic websites with Common Lisp."
-HOMEPAGE="http://weitz.de/${PN}/"
-SRC_URI="http://common-lisp.net/~sionescu/ediware/${P}.tar.gz"
+HOMEPAGE="http://weitz.de/hunchentoot/"
+SRC_URI="http://common-lisp.net/~sionescu/files/ediware/${P}.tar.bz2"
 LICENSE="BSD"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 SLOT="0"
-IUSE=""
 
 DEPEND="dev-lisp/md5
 		dev-lisp/cl-base64
@@ -26,7 +25,6 @@ CLSYSTEMS="${PN} ${PN}-test"
 src_install() {
 	common-lisp-install *.{lisp,asd} test/*
 	common-lisp-symlink-asdf
-
 	dodoc CHANGELOG* README
 	dohtml -r doc/*
 }
