@@ -5,12 +5,12 @@
 inherit common-lisp-2
 
 DESCRIPTION="Rewrite (X)HTML attributes with Common Lisp."
-HOMEPAGE="http://www.weitz.de/${PN}/"
+HOMEPAGE="http://www.weitz.de/url-rewrite/"
 SRC_URI="http://common-lisp.net/~sionescu/ediware/${PN}_${PV}.orig.tar.gz"
-LICENSE="BSD"
+LICENSE="BSD-2"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
-IUSE=""
+
 DEPEND="!dev-lisp/cl-${PN}"
 
 src_install() {

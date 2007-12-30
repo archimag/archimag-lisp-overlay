@@ -1,8 +1,8 @@
 DIST html-template-0.9.1.tar.gz 32448 RMD160 7f0596ddb4ac4044564e4e46cb40851f6b67913b SHA1 4798afb7c3e8aa85975d185633a91d7abd4dbf8b SHA256 d18b64bfb60660f327710c9d9aa0937d086ecb767cc32330cf46dbedb81c0ac8
-EBUILD html-template-0.9.1.ebuild 560 RMD160 9185f5a9ca75261cd5f08cee050d1b6cdc3e3d78 SHA1 d62c9979a9635c1566b77f79c314dda8d547072a SHA256 08ae2847d78ce3d47775adfa0051863c7136a5ce63eda113cfa7f8f6237a288a
-MD5 4ddd2d229c0498c40ffd2aa143ce06a9 html-template-0.9.1.ebuild 560
-RMD160 9185f5a9ca75261cd5f08cee050d1b6cdc3e3d78 html-template-0.9.1.ebuild 560
-SHA256 08ae2847d78ce3d47775adfa0051863c7136a5ce63eda113cfa7f8f6237a288a html-template-0.9.1.ebuild 560
+EBUILD html-template-0.9.1.ebuild 573 RMD160 e4c021d586eb7184574914f0aed7b2c1534a6ddb SHA1 484a80a73ad62fe4ab628031f1cd9e05bf7c6518 SHA256 7df7b503fc87d9eb7e2a34253f2af1dd67b5a733d1b3f29c11b826282d15b4ca
+MD5 c60ded88a54ad48eade34c3d94d4c495 html-template-0.9.1.ebuild 573
+RMD160 e4c021d586eb7184574914f0aed7b2c1534a6ddb html-template-0.9.1.ebuild 573
+SHA256 7df7b503fc87d9eb7e2a34253f2af1dd67b5a733d1b3f29c11b826282d15b4ca html-template-0.9.1.ebuild 573
 MD5 4817f3f6f2b2a903c7deb65d8b9ce5d1 files/digest-html-template-0.9.1 256
 RMD160 41e96848b3ce7a3882389181724789282a38ee4c files/digest-html-template-0.9.1 256
 SHA256 7d2ba9bc9dec7f285d516e1c9146befc032391a457d8db95ededf5729e3ae6c1 files/digest-html-template-0.9.1 256

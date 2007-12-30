@@ -4,10 +4,10 @@
 
 inherit common-lisp-2
 
-DESCRIPTION="${PN} is a web server written in Common Lisp and at the same time a toolkit for building dynamic websites with Common Lisp."
+DESCRIPTION="Hunchentoot is a web server written in Common Lisp and at the same time a toolkit for building dynamic websites with Common Lisp."
 HOMEPAGE="http://weitz.de/hunchentoot/"
 SRC_URI="http://common-lisp.net/~sionescu/files/ediware/${P}.tar.bz2"
-LICENSE="BSD"
+LICENSE="BSD-2"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 SLOT="0"
 

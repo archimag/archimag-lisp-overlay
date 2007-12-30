@@ -5,14 +5,12 @@
 inherit common-lisp-2
 
 DESCRIPTION="String interpolation for Common Lisp similar to Perl or Unix shell scripts."
-HOMEPAGE="http://weitz.de/${PN}/
-	http://www.cliki.net/${PN}"
+HOMEPAGE="http://weitz.de/cl-interpol/
+		http://www.cliki.net/cl-interpol"
 SRC_URI="http://common-lisp.net/~sionescu/ediware/${PN}_${PV}.orig.tar.gz"
-LICENSE="BSD"
+LICENSE="BSD-2"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
-IUSE=""
-DEPEND=""
 
 src_install() {
 	common-lisp-install *.{asd,lisp}
