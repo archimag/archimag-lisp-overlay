@@ -5,13 +5,13 @@
 inherit common-lisp-2
 
 DESCRIPTION='FLEXI-STREAMS implements "virtual" bivalent streams that can be layered atop real binary or bivalent streams.'
-HOMEPAGE="http://weitz.de/${PN}/
-	http://www.cliki.net/${PN}"
-SRC_URI="http://common-lisp.net/~sionescu/ediware/${P}.tar.gz"
-LICENSE="BSD"
+HOMEPAGE="http://weitz.de/flexi-streams/
+		http://www.cliki.net/flexi-streams/"
+SRC_URI="http://common-lisp.net/~sionescu/files/ediware/${P}.tar.bz2"
+LICENSE="BSD-2"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 SLOT="0"
-IUSE=""
+
 DEPEND="!dev-lisp/cl-${PN}
 		>=dev-lisp/trivial-gray-streams-20060925"
 
