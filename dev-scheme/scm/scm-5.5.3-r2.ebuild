@@ -29,6 +29,7 @@ DEPEND="app-arch/unzip
 src_unpack() {
 	unpack ${A}; cd "${S}"
 
+	sed "s#.*../wb/rwb-isam.scm.*##" -i Makefile
 	sed "s#local/##" -i Makefile
 	epatch ${FILESDIR}/scm-fixinstall.patch
 }
