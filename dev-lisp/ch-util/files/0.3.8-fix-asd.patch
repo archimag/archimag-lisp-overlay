@@ -1,0 +1,43 @@
+diff -ur ch-util_0.3.8.old/ch-util.asd ch-util_0.3.8/ch-util.asd
+--- ch-util_0.3.8.old/ch-util.asd	2007-09-12 09:21:53.000000000 +0200
++++ ch-util_0.3.8/ch-util.asd	2008-01-01 17:15:18.000000000 +0100
+@@ -26,8 +26,5 @@
+    (:cl-source-file "parser" :depends-on ("defpackage"))
+    (:cl-source-file "debug" :depends-on ("defpackage"))
+    (:cl-source-file "ch-asdf" :depends-on ("defpackage" "filesystem"))
+-   (:static-file "bootstrap" :pathname #p"bootstrap.lisp")
+-   (:static-file "COPYRIGHT")
+-   (:static-file "README")
+-   (:static-file "make-dist" :pathname #.(make-pathname :name "make-dist" :type "sh"))))
++   (:static-file "bootstrap" :pathname #p"bootstrap.lisp")))
+ 
+diff -ur ch-util_0.3.8.old/ch-util-test.asd ch-util_0.3.8/ch-util-test.asd
+--- ch-util_0.3.8.old/ch-util-test.asd	2006-04-08 00:25:08.000000000 +0200
++++ ch-util_0.3.8/ch-util-test.asd	2008-01-01 17:18:18.000000000 +0100
+@@ -2,26 +2,10 @@
+ (defpackage #:ch-util-test-system (:use #:asdf #:cl))
+ (in-package #:ch-util-test-system)
+ 
+-;;;;
+-;;;; The following section customizes asdf to work with filenames
+-;;;; with a .cl extension and to put fasl files in a separate
+-;;;; directory.
+-;;;;
+-;;;; To enable this behvior, use asdf component type
+-;;;;  :ch-util-test-cl-source-file
+-;;;;
+ (defclass ch-util-test-cl-source-file (cl-source-file) ())
+ 
+-(defparameter *fasl-directory*
+-  (make-pathname :directory '(:relative #+sbcl "sbcl-fasl"
+-			      #+openmcl "openmcl-fasl"
+-			      #-(or sbcl openmcl) "fasl")))
+-
+ (defmethod source-file-type ((c ch-util-test-cl-source-file) (s module)) "cl")
+ 
+-(defmethod asdf::output-files :around ((operation compile-op) (c ch-util-test-cl-source-file))
+-  (list (merge-pathnames *fasl-directory* (compile-file-pathname (component-pathname c)))))
+-
+ (defsystem #:ch-util-test
+   :name "ch-util-test"
+   :author "Cyrus Harmon <ch-lisp@bobobeach.com>"
