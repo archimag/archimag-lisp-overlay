@@ -26,3 +26,10 @@ src_unpack() {
 	epatch cl-${PN}_${PV}-${DEB_PV}.diff
 	epatch "${FILESDIR}"/libz-path-gentoo.patch
 }
+
+src_install() {
+	common-lisp-install *.{cl,asd}
+	common-lisp-symlink-asdf
+	dodoc AUTHORS BUGS NEWS README
+	dohtml doc/index.html
+}
