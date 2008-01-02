@@ -32,6 +32,7 @@ src_unpack() {
 	sed "s#.*../wb/rwb-isam.scm.*##" -i Makefile
 	sed "s#local/##" -i Makefile
 	epatch ${FILESDIR}/scm-fixinstall.patch
+	epatch ${FILESDIR}/findexec.diff
 }
 
 src_compile() {
@@ -39,14 +40,14 @@ src_compile() {
 	einfo "Making scmlit"
 	#parallel make fails sometimes
 	emake -j1 scmlit
+	make clean
 	einfo "Building"
 	echo "srcdir=/usr/share/scm/" > srcdir.mk
 	#stdout to temp.sh to execute...
 	./build --compiler-options="${CFLAGS}" --linker-options="${LDFLAGS}" \
 	-F macro inexact &>temp.sh
 	chmod +x temp.sh
-	./temp.sh
-	emake -j1 
+	./temp.sh || die "Compilation failed"
 }
 
 src_install() {

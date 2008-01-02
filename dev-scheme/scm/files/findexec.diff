@@ -1,0 +1,10 @@
+--- findexec.c	2008-01-02 15:52:05.000000000 +0200
++++ new/findexec.c	2008-01-02 15:51:56.000000000 +0200
+@@ -43,6 +43,7 @@
+ #  include <sys/param.h>
+ # endif
+ # ifdef linux
++#  include <string.h>
+ #  include <stdlib.h>
+ #  include <sys/stat.h>
+ #  include <unistd.h>     /* for X_OK define */
