@@ -1,4 +1,4 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -11,6 +11,12 @@ LICENSE="LLGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 
-DEPEND="dev-lisp/salza
+DEPEND="dev-lisp/salza2
 		dev-lisp/flexi-streams
 		dev-lisp/trivial-gray-streams"
+
+src_install() {
+	common-lisp-install *.{lisp,asd}
+	common-lisp-symlink-asdf
+	dohtml README.html
+}
