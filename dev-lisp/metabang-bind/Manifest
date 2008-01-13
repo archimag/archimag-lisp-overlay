@@ -1,8 +1,8 @@
-DIST metabang-bind-0.6.3.tar.bz2 15897 RMD160 c0262bcffcc39b1edcb0266bfb0dc7bf0b175a4f SHA1 30bc63df6cbe4ace766dc0b2981e06a5b2d16fc2 SHA256 2f915352f97021d299a3a3a579a223960638662d841e453ac5a2456e67504e1e
-EBUILD metabang-bind-0.6.3.ebuild 653 RMD160 3b9cbcf49bb00fbbf4ac1d8582867b4b062c1077 SHA1 d6a8fc5baf91b35c353d9cf670be54468293b77e SHA256 148d731a1b98facfb22b840999ac7513dfad4e127cbb496c3f9d3772e627e94e
-MD5 bbc32a765bf8ce2e00bd347d493a71ad metabang-bind-0.6.3.ebuild 653
-RMD160 3b9cbcf49bb00fbbf4ac1d8582867b4b062c1077 metabang-bind-0.6.3.ebuild 653
-SHA256 148d731a1b98facfb22b840999ac7513dfad4e127cbb496c3f9d3772e627e94e metabang-bind-0.6.3.ebuild 653
-MD5 056e148f1f3588f8446cd08f4a091136 files/digest-metabang-bind-0.6.3 259
-RMD160 29fa2a433d9990b029de66a91099b70bfe6ca800 files/digest-metabang-bind-0.6.3 259
-SHA256 a8d51bc1c6334e236995397cfbe4a61bdb2a9559e567822dd0f6b0535615e012 files/digest-metabang-bind-0.6.3 259
+DIST metabang-bind-0.6.4.tar.bz2 8277 RMD160 a0c5155e0c5dd35181c08919a1b24f7249a1baa4 SHA1 58eee543aa18199efe8b3f0a5bfd60ccedd8cf51 SHA256 e322d0aeeca5a12f25d3beff7ef03536989fb880cd7f8e82ff84d45225473212
+EBUILD metabang-bind-0.6.4.ebuild 631 RMD160 716a35c7a46110cad9355da9460c20d7a3edd43e SHA1 399277f4c0cc52c017179f5e7fb2bbc8a60952d8 SHA256 d7ab7c69eb39b322cae04335ac5030232407d27d875b7f9bd8dfebd36000bc6f
+MD5 13cc96802a07053e9b00658797caa92b metabang-bind-0.6.4.ebuild 631
+RMD160 716a35c7a46110cad9355da9460c20d7a3edd43e metabang-bind-0.6.4.ebuild 631
+SHA256 d7ab7c69eb39b322cae04335ac5030232407d27d875b7f9bd8dfebd36000bc6f metabang-bind-0.6.4.ebuild 631
+MD5 d589509bd931525b682cefbf6a911062 files/digest-metabang-bind-0.6.4 256
+RMD160 e263ca34ce4d6a5579d6f5751260fd69fccaaa51 files/digest-metabang-bind-0.6.4 256
+SHA256 23fd3fbdac1a4bd56df1d02dbc8dbf43e8689602bb933a6eb99d946887d390b0 files/digest-metabang-bind-0.6.4 256
