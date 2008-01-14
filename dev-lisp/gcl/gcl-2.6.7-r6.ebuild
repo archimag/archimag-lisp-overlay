@@ -15,8 +15,11 @@ SRC_URI="mirror://debian/pool/main/g/gcl/gcl_${PV}.orig.tar.gz
 
 LICENSE="GPL-2"
 SLOT="0"
+#Tested on ~x86 and ~amd64 only, left untouched the old KEYWORDS
 KEYWORDS="~amd64 ppc ~sparc ~x86"
 IUSE="emacs readline debug X tk doc ansi"
+
+#if the files get striped gcl breaks
 RESTRICT="strip"
 
 RDEPEND="emacs? ( virtual/emacs )
@@ -37,14 +40,12 @@ src_unpack() {
 }
 
 src_compile() {
-#	export SANDBOX_ON=0
 	local myconfig=""
 	if use tk; then
 		myconfig="${myconfig} \
 		--enable-tkconfig=/usr/lib \
 		--enable-tclconfig=/usr/lib"
 	fi
-	#myconfig="--enable-japi=no --enable-xdr=no --enable-xgcl=no"
 	myconfig="${myconfig} \
 	$(use_enable readline readline) \
 	$(use_with X x) \
@@ -54,7 +55,6 @@ src_compile() {
 	--enable-emacsdir=/usr/share/emacs/site-lisp/gcl" 
 
 	einfo "Configuring with the following:${myconfig}"
-	#econf --prefix=/usr ${myconfig}
 	econf ${myconfig} || die "Configure failed"
 	make || die "make failed"
 	sed -e 's,@EXT@,,g' debian/in.gcl.1 >gcl.1
@@ -68,9 +68,6 @@ src_test() {
 
 		( make clean && make test-unixport ) \
 		|| die "make ansi-tests failed!"
-
-		#echo "(load \"gclload.lsp\")" | ../unixport/saved_ansi_gcl | tee
-		#test.out
 
 		cat "${FILESDIR}/bootstrap-gcl" \
 		| ../unixport/saved_ansi_gcl  
@@ -109,10 +106,7 @@ src_test() {
 
 
 src_install() {
-	#export SANDBOX_ON=0
 	make DESTDIR="${D}" install || die "make install failed"
-	#export SANDBOX_ON=1
-	#rm -Rv ${D}/usr/lib/${P}/info
 	mv -v ${D}/default.el elisp/
 
 	if use emacs; then
@@ -142,7 +136,6 @@ src_install() {
 
 	dosed /usr/lib/${PN}-${MY_PV}/gcl-tk/gcltksrv
 	fperms 0755 /usr/lib/${PN}-${MY_PV}/gcl-tk/gcltksrv
-	dosym ../lib/${PN}-${MY_PV}/unixport/saved_gcl /usr/bin/gcl.exe
 
 	rm -Rv doc/CVS
 	dodoc readme* RELEASE* ChangeLog* doc/*
@@ -154,9 +147,6 @@ src_install() {
 	doman gcl.1
 	doinfo info/*.info*
 	find ${D}/usr/lib/gcl-${MY_PV}/ -type f \( -perm 640 -o -perm 750 \) -exec chmod -v 0644 '{}' \;
-	#make DESTDIR="${D}" install 
-	#cd ${D} 
-	#rm -R usr/share &>/dev/null 
 }
 
 pkg_postinst() {
