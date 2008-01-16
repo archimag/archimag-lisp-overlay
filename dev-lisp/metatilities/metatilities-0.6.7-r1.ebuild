@@ -1,4 +1,4 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -23,6 +23,7 @@ DEPEND="dev-lisp/asdf-system-connections
 src_unpack() {
 	unpack ${A}
 	rm "${S}"/dev/utilities/copy-file.lisp
+	epatch "${FILESDIR}"/${PV}-fix-asd.patch
 }
 
 src_install() {

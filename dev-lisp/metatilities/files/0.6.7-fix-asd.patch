@@ -1,0 +1,18 @@
+diff -ur metatilities-0.6.7.orig/metatilities.asd metatilities-0.6.7/metatilities.asd
+--- metatilities-0.6.7.orig/metatilities.asd	2007-06-26 19:11:49.000000000 +0200
++++ metatilities-0.6.7/metatilities.asd	2008-01-16 19:32:15.000000000 +0100
+@@ -77,13 +77,7 @@
+ 		:components ((:file "generic-lisp")
+ 			     #+DIGITOOL (:file "pop-up-menu")
+ 			     (:file "generic-interface-support" 
+-				    :depends-on ("generic-lisp" #+DIGITOOL "pop-up-menu"))))
+-               
+-               (:module 
+-		"website"
+-		:components
+-		((:module "source"
+-			  :components ((:static-file "index.lml"))))))
++				    :depends-on ("generic-lisp" #+DIGITOOL "pop-up-menu")))))
+   
+     :depends-on (:metatilities-base 
+                  :moptilities
