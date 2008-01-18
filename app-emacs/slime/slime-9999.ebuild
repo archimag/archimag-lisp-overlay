@@ -1,4 +1,4 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -34,6 +34,7 @@ src_unpack() {
 	epatch "${FILESDIR}"/module-load-gentoo.patch
 	sed -i "s:@CONTRIBDIR@:${CLSOURCEROOT}/${CLPACKAGE}/contrib/:" "${S}"/swank.lisp
 	epatch "${FILESDIR}"/inspect-presentations.patch
+	epatch "${FILESDIR}"/${PV}-fix-ecl.patch
 }
 
 rel_elisp-comp() {
