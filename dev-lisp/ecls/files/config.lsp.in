@@ -1,0 +1,93 @@
+;; @configure_input@
+;;
+;; Configuration file for ECL
+;;
+(in-package "LISP")
+;;
+;; * Short and long site names
+;;
+;; Edit these with the name of your site:
+;;
+(defun short-site-name ()
+  "Args: ()
+Returns, as a string, the location of the machine on which ECL runs."
+  "@SHORT_SITE_NAME@")
+
+(defun long-site-name () 
+  "Args: ()
+Returns, as a string, the location of the machine on which ECL runs."
+  "@LONG_SITE_NAME@")
+
+;;
+;; * ECL version, architecture, etc
+;;
+(defun lisp-implementation-version ()
+  "Args:()
+Returns the version of your ECL as a string."
+  "@PACKAGE_VERSION@-@GENTOODATE@")
+
+(defun machine-type ()
+  "Args: ()
+Returns, as a string, the type of the machine on which ECL runs."
+  "@ARCHITECTURE@")
+
+;; obtained from uname(2) where available
+(defun machine-instance ()
+  "Args: ()
+Returns, as a string, the identifier of the machine on which ECL runs. Obtained
+from uname(2) where available."
+  "@MACHINE_INSTANCE@")
+
+(defun machine-version ()
+  "Args: ()
+Returns, as a string, the version of the machine on which ECL runs. Obtained from
+uname(2) where available."
+  "@MACHINE_VERSION@")
+
+(push :@thehost@ *features*)
+
+(defun software-type ()
+  "Args: ()
+Returns, as a string, the type of the software under which ECL runs."
+  "@SOFTWARE_TYPE@")
+
+(defun software-version ()
+  "Args: ()
+Returns, as a string, the version of the software under which ECL runs."
+  "@SOFTWARE_VERSION@")
+
+;;
+;; * Set up some room
+;;
+#-boehm-gc
+(progn
+  (sys::allocate 'CONS 200)
+  (sys::allocate 'STRING 40))
+
+;;
+;; * Set configuration pathnames. Notice the trailing slash!
+;;   Otherwise it would not be a directory.
+;;
+#-ecl-min
+(progn
+  #-(and mingw32 msvc)
+  (si::pathname-translations "SYS" '(("**;*.*" "@ecldir\@/**/*.*")))
+  #+(or mingw32 msvc)
+  (si::pathname-translations "SYS"
+			     `(("**;*.*" ,(merge-pathnames "**/*.*" (si::get-library-pathname)))))
+);#-eclmin
+#-msvc
+(si::pathname-translations "HOME" '(("**;*.*" "~/**/*.*")))
+#+msvc
+(si::pathname-translations "HOME"
+  `(("**;*.*" ,(merge-pathnames "**/*.*" (user-homedir-pathname)))))
+(let (x)
+  (cond ((and (setf x (ext:getenv "TMPDIR"))
+	      (probe-file x)))
+	((and (setf x (ext:getenv "TEMP"))
+	      (probe-file x)))
+	((and (setf x (ext:getenv "TMP"))
+	      (probe-file x)))
+	(t (setf x "./")))
+  (si::pathname-translations "TMP"
+     `(("**;*.*" ,(format nil "~A/**/*.*" x)))))
