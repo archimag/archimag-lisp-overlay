@@ -1,4 +1,4 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -14,7 +14,12 @@ KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 
 CLSYSTEMS="${PN} ${PN}-test"
 
+src_unpack() {
+	unpack ${A}
+	epatch "${FILESDIR}"/${PV}-fix-asd.patch
+}
+
 src_install() {
-	common-lisp-install *.asd dev tests website *.config
+	common-lisp-install *.asd dev/{*.lisp,mcl} tests *.config
 	common-lisp-symlink-asdf
 }
