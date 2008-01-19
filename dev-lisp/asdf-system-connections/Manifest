@@ -1,8 +1,12 @@
+AUX 0.8.3-fix-asd.patch 633 RMD160 54e8f5728af2abc8a97cf68893993c68e02f3086 SHA1 8e59f2362613db71a3f5621dc83a9d4af6e74224 SHA256 35ce074e5fa878142c5f41c68e66e227cab7e33a1d445586a0c627e611597934
+MD5 54efd376b744991cb546a42f3cd12e47 files/0.8.3-fix-asd.patch 633
+RMD160 54e8f5728af2abc8a97cf68893993c68e02f3086 files/0.8.3-fix-asd.patch 633
+SHA256 35ce074e5fa878142c5f41c68e66e227cab7e33a1d445586a0c627e611597934 files/0.8.3-fix-asd.patch 633
 DIST asdf-system-connections-0.8.3.tar.bz2 3370 RMD160 12f2d004b360506d922c0303f61e93117f3273ff SHA1 03a391105ccf2b6df44b7f15c252361703062caf SHA256 0b1f0051dd1103bab43d38f4f9726b4e3ffa86bce53080f15e16a77423bbb27a
-EBUILD asdf-system-connections-0.8.3.ebuild 633 RMD160 f7b45ba7f18eec66f93e529c0c08c2cdffc6151b SHA1 e63e9c5e2ba50fc74f7ceb6364192ed6794b6907 SHA256 200ef22e2e846701ba8b85c7a2db88c959c5a8b6b6ebc1e3af783a17a21181ed
-MD5 7b9ab25ed4c53684b1571dca06e1f8b8 asdf-system-connections-0.8.3.ebuild 633
-RMD160 f7b45ba7f18eec66f93e529c0c08c2cdffc6151b asdf-system-connections-0.8.3.ebuild 633
-SHA256 200ef22e2e846701ba8b85c7a2db88c959c5a8b6b6ebc1e3af783a17a21181ed asdf-system-connections-0.8.3.ebuild 633
-MD5 a6691cdd45c900407ce7e0c934de62cf files/digest-asdf-system-connections-0.8.3 286
-RMD160 09a99881a4a1de985d85242b0583100f81d1380c files/digest-asdf-system-connections-0.8.3 286
-SHA256 d1b51907f2e0abccd8db8bcc8ebbdbea4e5b12db33f6ee6a0911cdbfd12fbfee files/digest-asdf-system-connections-0.8.3 286
+EBUILD asdf-system-connections-0.8.3-r1.ebuild 677 RMD160 aeb18d7024dc60b5329516bbeb1ab43b2d9a2a67 SHA1 4c9a47b1c8b546d0de81238fa9fa3cfe1f0eb9d7 SHA256 f05b24605589dce71197a3c7a0047c5c7bc6eafdbe2f31dcf81d968e5ec9ba14
+MD5 1e932a9b88afa95cce1ed5d28d559cea asdf-system-connections-0.8.3-r1.ebuild 677
+RMD160 aeb18d7024dc60b5329516bbeb1ab43b2d9a2a67 asdf-system-connections-0.8.3-r1.ebuild 677
+SHA256 f05b24605589dce71197a3c7a0047c5c7bc6eafdbe2f31dcf81d968e5ec9ba14 asdf-system-connections-0.8.3-r1.ebuild 677
+MD5 a6691cdd45c900407ce7e0c934de62cf files/digest-asdf-system-connections-0.8.3-r1 286
+RMD160 09a99881a4a1de985d85242b0583100f81d1380c files/digest-asdf-system-connections-0.8.3-r1 286
+SHA256 d1b51907f2e0abccd8db8bcc8ebbdbea4e5b12db33f6ee6a0911cdbfd12fbfee files/digest-asdf-system-connections-0.8.3-r1 286
