@@ -1,7 +1,14 @@
 diff -ur metacopy-0.2.orig/metacopy.asd metacopy-0.2/metacopy.asd
 --- metacopy-0.2.orig/metacopy.asd	2006-10-06 05:09:07.000000000 +0200
-+++ metacopy-0.2/metacopy.asd	2008-01-19 01:18:24.000000000 +0100
-@@ -15,11 +15,7 @@
++++ metacopy-0.2/metacopy.asd	2008-01-19 01:54:22.000000000 +0100
+@@ -9,17 +9,11 @@
+   :licence "MIT Style License"
+   :description "Flexible Common Lisp shallow/deep copy mechanism."
+   :components ((:module "dev"
+-		        :components ((:static-file "notes.text")
+-				     
+-                                     (:file "package")
++		        :components (        (:file "package")
                                       (:file "api"
                                              :depends-on ("package"))
                                       (:file "copy"
@@ -14,7 +21,7 @@ diff -ur metacopy-0.2.orig/metacopy.asd metacopy-0.2/metacopy.asd
    :in-order-to ((test-op (load-op metacopy-test)))
    :perform (test-op :after (op c)
                      (describe
-@@ -33,4 +29,4 @@
+@@ -33,4 +27,4 @@
  (defmethod operation-done-p 
             ((o test-op)
              (c (eql (find-system 'metacopy))))
@@ -23,7 +30,7 @@ diff -ur metacopy-0.2.orig/metacopy.asd metacopy-0.2/metacopy.asd
 +  (values nil))
 diff -ur metacopy-0.2.orig/metacopy-test.asd metacopy-0.2/metacopy-test.asd
 --- metacopy-0.2.orig/metacopy-test.asd	2006-10-06 05:09:07.000000000 +0200
-+++ metacopy-0.2/metacopy-test.asd	2008-01-19 01:18:42.000000000 +0100
++++ metacopy-0.2/metacopy-test.asd	2008-01-19 01:54:07.000000000 +0100
 @@ -11,10 +11,7 @@
  
    :components ((:module "unit-tests"
