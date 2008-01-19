@@ -1,0 +1,27 @@
+diff -ur cl-markdown-0.9.2.orig/cl-markdown.asd cl-markdown-0.9.2/cl-markdown.asd
+--- cl-markdown-0.9.2.orig/cl-markdown.asd	2007-11-25 18:04:36.000000000 +0100
++++ cl-markdown-0.9.2/cl-markdown.asd	2008-01-19 01:33:44.000000000 +0100
+@@ -35,8 +35,7 @@
+ 	     (:file "multiple-documents"
+ 		    :depends-on ("definitions"))
+ 	     (:file "epilogue"
+-		    :depends-on ("markdown"))
+-	     (:static-file "notes.text")))
++		    :depends-on ("markdown"))))
+                
+    (:module "extensions"
+ 	    :pathname #.(make-pathname :directory '(:relative "dev"))
+@@ -45,12 +44,7 @@
+ 	     (:file "extensions" :depends-on ("extension-mechanisms"))
+ 	     (:file "footnotes" :depends-on ("extension-mechanisms"))
+ 	     (:file "docs" :depends-on ("extension-mechanisms")))
+-	    :depends-on ("dev"))
+-               
+-   (:module "website"
+-	    :components
+-	    ((:module "source"
+-		      :components ((:static-file "index.lml"))))))
++	    :depends-on ("dev")))
+   :in-order-to ((test-op (load-op cl-markdown-test)))
+   :perform (test-op :after (op c)
+ 		    (funcall
