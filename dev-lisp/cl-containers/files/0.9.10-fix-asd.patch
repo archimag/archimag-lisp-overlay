@@ -1,0 +1,28 @@
+diff -ur cl-containers-0.9.10.orig/cl-containers.asd cl-containers-0.9.10/cl-containers.asd
+--- cl-containers-0.9.10.orig/cl-containers.asd	2007-10-24 18:04:54.000000000 +0200
++++ cl-containers-0.9.10/cl-containers.asd	2008-01-19 01:22:00.000000000 +0100
+@@ -76,10 +76,7 @@
+ 	    :depends-on ("iterators"))
+      #+(or digitool openmcl)
+      (:file "containers-readtable"
+-	    :depends-on ("containers"))))
+-   (:module "website"
+-	    :components ((:module "source"
+-				  :components ((:static-file "index.lml"))))))
++	    :depends-on ("containers")))))
+   :in-order-to ((test-op (load-op cl-containers-test)))
+   :perform (test-op :after (op c)
+                     (describe 
+diff -ur cl-containers-0.9.10.orig/cl-containers-test.asd cl-containers-0.9.10/cl-containers-test.asd
+--- cl-containers-0.9.10.orig/cl-containers-test.asd	2007-10-24 18:04:54.000000000 +0200
++++ cl-containers-0.9.10/cl-containers-test.asd	2008-01-19 01:22:12.000000000 +0100
+@@ -16,8 +16,7 @@
+ 				      :depends-on ("package"))))
+ 	       (:module "tests"
+ 			:components 
+-			((static-file "notes.text")
+-			 (:file "priority-queues")
++			((:file "priority-queues")
+ 			 (:file "misc")
+ 			 (:file "trees"))))
+   :depends-on (:cl-containers :lift))
