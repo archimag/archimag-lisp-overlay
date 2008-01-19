@@ -1,0 +1,45 @@
+diff -ur metacopy-0.2.orig/metacopy.asd metacopy-0.2/metacopy.asd
+--- metacopy-0.2.orig/metacopy.asd	2006-10-06 05:09:07.000000000 +0200
++++ metacopy-0.2/metacopy.asd	2008-01-19 01:18:24.000000000 +0100
+@@ -15,11 +15,7 @@
+                                      (:file "api"
+                                             :depends-on ("package"))
+                                      (:file "copy"
+-                                            :depends-on ("api" "package"))))
+-               
+-               (:module "website"
+-                        :components ((:module "source"
+-                                              :components ((:static-file "index.lml"))))))
++                                            :depends-on ("api" "package")))))
+   :in-order-to ((test-op (load-op metacopy-test)))
+   :perform (test-op :after (op c)
+                     (describe
+@@ -33,4 +29,4 @@
+ (defmethod operation-done-p 
+            ((o test-op)
+             (c (eql (find-system 'metacopy))))
+-  (values nil))
+\ No newline at end of file
++  (values nil))
+diff -ur metacopy-0.2.orig/metacopy-test.asd metacopy-0.2/metacopy-test.asd
+--- metacopy-0.2.orig/metacopy-test.asd	2006-10-06 05:09:07.000000000 +0200
++++ metacopy-0.2/metacopy-test.asd	2008-01-19 01:18:42.000000000 +0100
+@@ -11,10 +11,7 @@
+ 
+   :components ((:module "unit-tests"
+                         :components ((:file "package")
+-                                     (:file "tests" :depends-on ("package"))))
+-               
+-               (:module "dev"
+-                        :components ((:static-file "notes.text"))))
++                                     (:file "tests" :depends-on ("package")))))
+   :depends-on (metacopy lift))
+ 
+ ;;; ---------------------------------------------------------------------------
+@@ -22,4 +19,4 @@
+ (defmethod operation-done-p 
+            ((o test-op)
+             (c (eql (find-system 'metacopy-test))))
+-  (values nil))
+\ No newline at end of file
++  (values nil))
