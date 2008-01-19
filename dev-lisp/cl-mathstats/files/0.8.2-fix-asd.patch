@@ -1,0 +1,17 @@
+diff -ur cl-mathstats-0.8.2.orig/cl-mathstats.asd cl-mathstats-0.8.2/cl-mathstats.asd
+--- cl-mathstats-0.8.2.orig/cl-mathstats.asd	2007-06-26 19:01:36.000000000 +0200
++++ cl-mathstats-0.8.2/cl-mathstats.asd	2008-01-19 01:44:00.000000000 +0100
+@@ -46,12 +46,7 @@
+ 			:depends-on ("package"
+ 				     "define-statistical-fun"))
+ 		 (:file "anova"
+-			:depends-on ("package"))))
+-               (:module 
+-		"website"
+-		:components
+-		((:module "source"
+-			  :components ((:static-file "index.lml"))))))
++			:depends-on ("package")))))
+   :in-order-to ((test-op (load-op cl-mathstats-test)))
+   :perform (test-op :after (op c)
+                     (describe
