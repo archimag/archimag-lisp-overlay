@@ -1,8 +1,12 @@
+AUX 0.1.1-fix-asd.patch 788 RMD160 e18a43a9390a786679fc99e0f5810c71d63e6d3b SHA1 a30c474552523120c393a4ba5339107a658cc364 SHA256 294cbde4086de285729eb391b0a9479f1ff07ffe0c3df96121420029f6e87f88
+MD5 1cbed26ea775a7a66a4fb685d8b64113 files/0.1.1-fix-asd.patch 788
+RMD160 e18a43a9390a786679fc99e0f5810c71d63e6d3b files/0.1.1-fix-asd.patch 788
+SHA256 294cbde4086de285729eb391b0a9479f1ff07ffe0c3df96121420029f6e87f88 files/0.1.1-fix-asd.patch 788
 DIST defsystem-compatibility-0.1.1.tar.bz2 9283 RMD160 3a141660c899c4afd0e8cf6ca75083e4d71f75a9 SHA1 e1b1745627992c75c8c76026c3d74452970f729c SHA256 e62edbfada1b73e90f0eb126e07d205242a3c7cb25b3ba0903fd1f24b26bb1bc
-EBUILD defsystem-compatibility-0.1.1.ebuild 651 RMD160 524df1394ca8e6841b6e4ca5299f9f8ddc596bd1 SHA1 7e0008a4aef2877f6d6e6662700169043c170b0d SHA256 35505f3b2ea2e988949909d0b0a95de0849d1f5b88daa3f46cb0438de2979ac2
-MD5 3d55a627eca22c1b743dfbd5a4b372fa defsystem-compatibility-0.1.1.ebuild 651
-RMD160 524df1394ca8e6841b6e4ca5299f9f8ddc596bd1 defsystem-compatibility-0.1.1.ebuild 651
-SHA256 35505f3b2ea2e988949909d0b0a95de0849d1f5b88daa3f46cb0438de2979ac2 defsystem-compatibility-0.1.1.ebuild 651
-MD5 5369d604c82e203ae68f82da58f925b2 files/digest-defsystem-compatibility-0.1.1 286
-RMD160 e54c99541eae420be6e20a14a01bddca217fa60e files/digest-defsystem-compatibility-0.1.1 286
-SHA256 8a332f622a5a9fd26f449d150fb3d09bf0280633d1651c7afe92e39831ff45ba files/digest-defsystem-compatibility-0.1.1 286
+EBUILD defsystem-compatibility-0.1.1-r1.ebuild 710 RMD160 0ca47fb5b186490ebae3aabbe349e2208209d2ce SHA1 7988ce50da10c23068072bd23fc792f25a70aed3 SHA256 800dbffabe5546d3237e97b169aa0f614c7e867923673c8db3477e2ce8305d12
+MD5 74631fec6aca35856086bfbcb6c9e4ba defsystem-compatibility-0.1.1-r1.ebuild 710
+RMD160 0ca47fb5b186490ebae3aabbe349e2208209d2ce defsystem-compatibility-0.1.1-r1.ebuild 710
+SHA256 800dbffabe5546d3237e97b169aa0f614c7e867923673c8db3477e2ce8305d12 defsystem-compatibility-0.1.1-r1.ebuild 710
+MD5 5369d604c82e203ae68f82da58f925b2 files/digest-defsystem-compatibility-0.1.1-r1 286
+RMD160 e54c99541eae420be6e20a14a01bddca217fa60e files/digest-defsystem-compatibility-0.1.1-r1 286
+SHA256 8a332f622a5a9fd26f449d150fb3d09bf0280633d1651c7afe92e39831ff45ba files/digest-defsystem-compatibility-0.1.1-r1 286

@@ -1,0 +1,18 @@
+diff -ur defsystem-compatibility-0.1.1.orig/defsystem-compatibility.asd defsystem-compatibility-0.1.1/defsystem-compatibility.asd
+--- defsystem-compatibility-0.1.1.orig/defsystem-compatibility.asd	2007-03-04 20:42:25.000000000 +0100
++++ defsystem-compatibility-0.1.1/defsystem-compatibility.asd	2008-01-19 01:14:13.000000000 +0100
+@@ -27,13 +27,7 @@
+ 			     (:file "defsystem-compatibility"
+ 				    :depends-on ("api"))
+ 			     (:file "asdf"
+-				    :depends-on ("api"))))
+-               
+-               (:module 
+-		"website"
+-		:components
+-		((:module "source"
+-			  :components ((:static-file "index.lml"))))))
++				    :depends-on ("api")))))
+   :in-order-to ((test-op (load-op defsystem-compatibility-test)))
+   :perform (test-op :after (op c)
+                     (describe 
