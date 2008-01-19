@@ -1,0 +1,32 @@
+diff -ur moptilities-0.3.8.orig/moptilities.asd moptilities-0.3.8/moptilities.asd
+--- moptilities-0.3.8.orig/moptilities.asd	2007-12-06 16:24:27.000000000 +0100
++++ moptilities-0.3.8/moptilities.asd	2008-01-19 00:55:58.000000000 +0100
+@@ -21,12 +21,7 @@
+   ((:module
+     "dev"
+     :components ((:file "moptilities")
+-		 (:static-file "notes.text")))
+-   (:module
+-    "website"
+-    :components 
+-    ((:module "source"
+-	      :components ((:static-file "index.lml"))))))
++		 (:static-file "notes.text"))))
+   :in-order-to ((test-op (load-op moptilities-test)))
+   :perform (test-op :after (op c)
+ 		    (funcall
+diff -ur moptilities-0.3.8.orig/moptilities-test.asd moptilities-0.3.8/moptilities-test.asd
+--- moptilities-0.3.8.orig/moptilities-test.asd	2007-12-06 16:24:27.000000000 +0100
++++ moptilities-0.3.8/moptilities-test.asd	2008-01-19 00:57:07.000000000 +0100
+@@ -19,10 +19,7 @@
+ 		"tests"
+ 		:components ((:file "package")
+ 			     (:file "tests" :depends-on ("package"))
+-			     (:file "copy-template" :depends-on ("tests"))))
+-               
+-               (:module "dev"
+-                        :components ((:static-file "notes.text"))))
++			     (:file "copy-template" :depends-on ("tests")))))
+   :depends-on (:moptilities :lift))
+ 
+ 
