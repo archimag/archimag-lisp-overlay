@@ -1,0 +1,35 @@
+diff -ur cl-graph-0.8.4.orig/cl-graph.asd cl-graph-0.8.4/cl-graph.asd
+--- cl-graph-0.8.4.orig/cl-graph.asd	2007-11-25 18:17:40.000000000 +0100
++++ cl-graph-0.8.4/cl-graph.asd	2008-01-19 01:41:43.000000000 +0100
+@@ -38,15 +38,8 @@
+ 		 (:file "graph-algorithms"
+ 			:depends-on ("graph"))
+                                      
+-		 (:static-file "notes.text")
+-
+ 		 (:module "graphviz" :depends-on ("graph")
+-			  :components ((:file "graphviz-support")))))
+-               (:module 
+-		"website"
+-		:components 
+-		((:module "source"
+-			  :components ((:static-file "index.lml"))))))
++			  :components ((:file "graphviz-support"))))))
+   :in-order-to ((test-op (load-op :cl-graph-test)))
+   :perform (test-op :after (op c)
+ 		    (funcall
+diff -ur cl-graph-0.8.4.orig/cl-graph-test.asd cl-graph-0.8.4/cl-graph-test.asd
+--- cl-graph-0.8.4.orig/cl-graph-test.asd	2007-11-25 18:17:40.000000000 +0100
++++ cl-graph-0.8.4/cl-graph-test.asd	2008-01-19 01:32:45.000000000 +0100
+@@ -19,10 +19,5 @@
+ 		 (:file "test-connected-components" :depends-on ("test-graph"))
+ 		 (:file "test-graph-metrics" :depends-on ("test-graph"))
+ 		 (:file "test-graph-algorithms" :depends-on ("test-graph"))
+-		 ))
+-               
+-               (:module 
+-		"dev"
+-		:components
+-		((:static-file "notes.text"))))
++		 )))
+   :depends-on (:cl-graph :lift))
