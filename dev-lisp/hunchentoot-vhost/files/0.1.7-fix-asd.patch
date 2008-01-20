@@ -1,0 +1,12 @@
+diff -ur hunchentoot-vhost_0.1.7.orig/hunchentoot-vhost.asd hunchentoot-vhost_0.1.7/hunchentoot-vhost.asd
+--- hunchentoot-vhost_0.1.7.orig/hunchentoot-vhost.asd	2007-10-07 07:09:47.000000000 +0200
++++ hunchentoot-vhost_0.1.7/hunchentoot-vhost.asd	2008-01-20 13:42:21.000000000 +0100
+@@ -40,8 +40,5 @@
+   :depends-on (hunchentoot)
+   :components
+   ((:static-file "version" :pathname #p"version.lisp-expr")
+-   (:static-file "README")
+-   (:static-file "LICENSE")
+-   (:static-file "NEWS")
+    (:cl-source-file "defpackage")
+    (:cl-source-file "hunchentoot-vhost" :depends-on ("defpackage"))))

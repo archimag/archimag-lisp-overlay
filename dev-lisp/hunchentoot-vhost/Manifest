@@ -1,0 +1,12 @@
+AUX 0.1.7-fix-asd.patch 595 RMD160 e9359fc5a3f67d0529cd22eba58736da90fb3ca4 SHA1 9c772b6b8e2fd9fff77c9f4ce679a06375a7c553 SHA256 9d2c9e3e0cb46fcf88d03655e29cfd865e8e466b11e2687828f9d506afbafe8a
+MD5 1a4cd09736509ab1e771611395f9cf95 files/0.1.7-fix-asd.patch 595
+RMD160 e9359fc5a3f67d0529cd22eba58736da90fb3ca4 files/0.1.7-fix-asd.patch 595
+SHA256 9d2c9e3e0cb46fcf88d03655e29cfd865e8e466b11e2687828f9d506afbafe8a files/0.1.7-fix-asd.patch 595
+DIST hunchentoot-vhost_0.1.7.tar.gz 4539 RMD160 8174383a96d6d7c02df9f2031304ff6195c03dfb SHA1 1fcc2d371c7827b02852b70feba3de72bcab6659 SHA256 d3f57d7cbbec930c49b5c0035c64ff57beb1ed900245e08e7f1e7a269103cda8
+EBUILD hunchentoot-vhost-0.1.7.ebuild 659 RMD160 39f942f10c5f98b891c7ac029fb36912713cc2b2 SHA1 d992a07036c5a5c55c104097a98869e032a0c756 SHA256 bbbee9ec39eddb33711f89b84fa5bd19ca6c91cf7d7ac66c66f9ad7b5c9b0313
+MD5 9f56a2d281db46bd176f31358da23679 hunchentoot-vhost-0.1.7.ebuild 659
+RMD160 39f942f10c5f98b891c7ac029fb36912713cc2b2 hunchentoot-vhost-0.1.7.ebuild 659
+SHA256 bbbee9ec39eddb33711f89b84fa5bd19ca6c91cf7d7ac66c66f9ad7b5c9b0313 hunchentoot-vhost-0.1.7.ebuild 659
+MD5 401da71ce157e5ad8e97e339f1ac15a8 files/digest-hunchentoot-vhost-0.1.7 265
+RMD160 969122cf4851fc1c3647f8ebee57ef261aee4a74 files/digest-hunchentoot-vhost-0.1.7 265
+SHA256 70a299e800ed6384e7a2f269bffb77dbe15f8838e954a100420107a432993437 files/digest-hunchentoot-vhost-0.1.7 265
