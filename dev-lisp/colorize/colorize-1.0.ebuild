@@ -15,7 +15,7 @@ IUSE=""
 DEPEND="!dev-lisp/cl-${PN}
 		dev-lisp/html-encode
 		dev-lisp/split-sequence
-		=dev-lisp/hyperspec-7.0*"
+		~dev-lisp/hyperspec-7.0"
 
 src_unpack() {
 	unpack ${A}
