@@ -18,6 +18,7 @@ DEPEND="!dev-lisp/cl-bind
 CLSYSTEMS="${PN} ${PN}-test"
 
 src_install() {
-	common-lisp-install *.asd {unit-tests,dev}/*.lisp *.config
+	common-lisp-install *.asd {unit-tests,dev}/*.lisp
 	common-lisp-symlink-asdf
+	dodoc *.config
 }
