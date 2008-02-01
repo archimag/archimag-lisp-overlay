@@ -25,7 +25,7 @@ src_unpack() {
 }
 
 src_install() {
-	common-lisp-install *.{asd,config} {dev,tests}/*.lisp
+	common-lisp-install *.asd {dev,tests}/*.lisp
 	common-lisp-symlink-asdf
-	dodoc doc/introduction-to-cl-containers.pdf
+	dodoc *.config doc/introduction-to-cl-containers.pdf
 }
