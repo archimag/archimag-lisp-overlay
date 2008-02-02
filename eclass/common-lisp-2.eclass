@@ -82,6 +82,8 @@ common-lisp-system-symlink() {
 common-lisp-2_src_install() {
 	common-lisp-install *.{lisp,asd}
 	common-lisp-symlink-asdf
-	dodoc COPYRIGHT README HEADER TODO CHANGELOG ChangeLog \
-		BUGS CONTRIBUTORS *NEWS 2> /dev/null
+	for i in COPYRIGHT README HEADER TODO CHANGELOG ChangeLog \
+		BUGS CONTRIBUTORS *NEWS ; do
+		[[ -f ${i} ]] && dodoc ${i}
+	done
 }
