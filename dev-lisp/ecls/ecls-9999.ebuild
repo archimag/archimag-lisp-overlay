@@ -18,7 +18,7 @@ DEPEND="=dev-libs/gmp-4*
 		app-text/texi2html
 		>=dev-libs/boehm-gc-6.8"
 
-IUSE="X threads unicode"
+IUSE="X c++ threads unicode"
 
 PROVIDE="virtual/commonlisp"
 
@@ -41,6 +41,7 @@ src_compile() {
 		--enable-boehm=system \
 		--enable-longdouble \
 		--enable-c99-complex \
+		$(use_with c++ cxx) \
 		$(use_with threads) \
 		$(use_with threads __thread) \
 		$(use_with unicode) \
