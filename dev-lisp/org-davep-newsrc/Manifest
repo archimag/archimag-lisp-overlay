@@ -1,8 +1,2 @@
 DIST org-davep-newsrc-2.0.tar.gz 2076 RMD160 7ebb0f5e56fdc8fc269326b0060fc4378a42b690 SHA1 62085bcb1475050724f0d2e849f84513235ab3f2 SHA256 f8c1fb27b1d2e58471c211dfd7c4cb6592412a9cf5b7a70113c163c3ae3a9051
 EBUILD org-davep-newsrc-2.0.ebuild 430 RMD160 55946facdc90ddf9f937becca5502386dab60fd5 SHA1 f31db314903a8963defbfe385e5b975a35004a09 SHA256 f123abff983f8ec5f3d3c902fe270343a0522f90cf70a99a27bbd3a9ea1c9975
-MD5 ede3ac1b569835b3a21a8a3f000e9eed org-davep-newsrc-2.0.ebuild 430
-RMD160 55946facdc90ddf9f937becca5502386dab60fd5 org-davep-newsrc-2.0.ebuild 430
-SHA256 f123abff983f8ec5f3d3c902fe270343a0522f90cf70a99a27bbd3a9ea1c9975 org-davep-newsrc-2.0.ebuild 430
-MD5 bc79404c72eb8a3feb82671d22d05b1e files/digest-org-davep-newsrc-2.0 256
-RMD160 29c895e99db6dbc0cde137e659342591c2312e1e files/digest-org-davep-newsrc-2.0 256
-SHA256 a9afcb95159f98f4288919875c2563779a5d7b122bb7b461ee91e061f74cd6a8 files/digest-org-davep-newsrc-2.0 256

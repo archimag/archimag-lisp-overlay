@@ -1,8 +1,2 @@
 DIST lw-compat_0.22.tar.gz 1805 RMD160 712c566ef5adb8b2c3307603fd2255df6f563803 SHA1 b1c8c85cd5b342012e497cb18158b790ceb2181f SHA256 c44c53a7887cb8425d09897cb19d4adc93c7e654f6b689246f880be4aa803fea
 EBUILD lw-compat-0.22.ebuild 491 RMD160 af20348e73ce3dfd0e6333fc5293c48580a93236 SHA1 ba1f1c2549e0afdfec4beec5dae0a3d4390fb69a SHA256 4ec2b2571da4cb0539ebc0cbaf0dab509d19b443ecd04264af7fa3c4db24b1de
-MD5 a81e819e864a9f0c77beb3f55f6ddb12 lw-compat-0.22.ebuild 491
-RMD160 af20348e73ce3dfd0e6333fc5293c48580a93236 lw-compat-0.22.ebuild 491
-SHA256 4ec2b2571da4cb0539ebc0cbaf0dab509d19b443ecd04264af7fa3c4db24b1de lw-compat-0.22.ebuild 491
-MD5 e5d8b70692845876f23046da9dc77c65 files/digest-lw-compat-0.22 238
-RMD160 b6be952052f8d0ede6f75f39fcc62afaff646eed files/digest-lw-compat-0.22 238
-SHA256 8acb953d4ae4e599f1bb2ac9e3ae8312670fdff7be7e0185233ecbcde03ab4ec files/digest-lw-compat-0.22 238

@@ -1,8 +1,2 @@
 DIST trivial-configuration-parser-1.1.tar.gz 5147 RMD160 d3cb821b605896379e8ba9ff7b23d529e1540b1c SHA1 bd98790c296b080e5cdbe878bc85b77ae23735c7 SHA256 4c31f1f0dbc86ab856ba667dc7350482bb92eb4f568850f5c5b42a4f403d0860
 EBUILD trivial-configuration-parser-1.1.ebuild 575 RMD160 3775f22bdde558981774adac01abce5caf3a2a4c SHA1 596f956d9ad2f7273c0176fa81371ed0c40d1102 SHA256 b81c0547b020a7880a646ad60cc77a8991f36ab09a0ae9e5023a776b923ebe33
-MD5 d48f1a6b6f79de179dc29f071f712b40 trivial-configuration-parser-1.1.ebuild 575
-RMD160 3775f22bdde558981774adac01abce5caf3a2a4c trivial-configuration-parser-1.1.ebuild 575
-SHA256 b81c0547b020a7880a646ad60cc77a8991f36ab09a0ae9e5023a776b923ebe33 trivial-configuration-parser-1.1.ebuild 575
-MD5 90e36f41de9ecb0bd47d2c46953277a5 files/digest-trivial-configuration-parser-1.1 292
-RMD160 e27eff7c4e51b44f11b5f6903f7e9609c60f6f1f files/digest-trivial-configuration-parser-1.1 292
-SHA256 e3131740a7cc96e89ff8415b540d4c5f12fbca68dab7a743478879e6bc8f9323 files/digest-trivial-configuration-parser-1.1 292

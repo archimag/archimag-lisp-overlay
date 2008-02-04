@@ -1,8 +1,2 @@
 DIST cl-vectors-0.1.4a.tar.gz 41913 RMD160 00203bd591dbf01bb305e38da112fa442a730801 SHA1 b810aec9f6fa98d78aaa2afa8ac04ad300d223d8 SHA256 9c3f9ff6493ef24f95fc1131c1c939f118b37338101ac72dfb70e81ea6f21445
 EBUILD cl-vectors-0.1.4a.ebuild 587 RMD160 51582158a40fe107dcfe2ac9eaf8ebb2b5dc07d7 SHA1 59b586ce1dfd79c20639b7945518e53e467d4985 SHA256 c9949a9aaa250f95246eaa5bd0b3d10e1c66c75dffea30908fabb4db858f274e
-MD5 d6785564be7b5cfe88db1b7258248b7f cl-vectors-0.1.4a.ebuild 587
-RMD160 51582158a40fe107dcfe2ac9eaf8ebb2b5dc07d7 cl-vectors-0.1.4a.ebuild 587
-SHA256 c9949a9aaa250f95246eaa5bd0b3d10e1c66c75dffea30908fabb4db858f274e cl-vectors-0.1.4a.ebuild 587
-MD5 755bf89a01b4fb247779c32b952b037d files/digest-cl-vectors-0.1.4a 250
-RMD160 6a5aa58733a521e55a6a6b4bf5bbbf2f60cccd32 files/digest-cl-vectors-0.1.4a 250
-SHA256 2605e1e5332d070e0ec6741f730a26dfb0ed162c2f6ff610fef18864786d6ca4 files/digest-cl-vectors-0.1.4a 250

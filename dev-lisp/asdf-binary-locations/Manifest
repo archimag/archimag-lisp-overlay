@@ -1,12 +1,3 @@
 AUX 0.2.5-fix-asd.patch 909 RMD160 2bd0b75f5226f7819e465c1c039091cc7f16a264 SHA1 bc21e74005ff8009264faa5b742376891c827037 SHA256 1e0b7080f7b5e1a9afee1e9d703fa4b9115c85b729a415135745ea31e94145a3
-MD5 74894f648821e0fa608dd181e2ea43c0 files/0.2.5-fix-asd.patch 909
-RMD160 2bd0b75f5226f7819e465c1c039091cc7f16a264 files/0.2.5-fix-asd.patch 909
-SHA256 1e0b7080f7b5e1a9afee1e9d703fa4b9115c85b729a415135745ea31e94145a3 files/0.2.5-fix-asd.patch 909
 DIST asdf-binary-locations-0.2.5.tar.bz2 10875 RMD160 20cd84fdefe2c8a215c41f42cd367e435a123378 SHA1 b001af9e281c64342e4f86d06dc0f2cce85eb73f SHA256 8ae690c520e468313052a2f628b5e6b768301d3bbe1b606483e3edd736ff94ac
 EBUILD asdf-binary-locations-0.2.5.ebuild 683 RMD160 6e5c583aa7ecf2708b71d6deee8bdbaf9adb3b42 SHA1 480ba89e853fa810d695b3aa57ca1c0a44ea9f26 SHA256 c80c30e120f253cce2dbe3caa8c10c2b79d2673a8b8d0d69013a8df64655e47f
-MD5 9061a4a9ba94e0f835e6de76abe3f6c6 asdf-binary-locations-0.2.5.ebuild 683
-RMD160 6e5c583aa7ecf2708b71d6deee8bdbaf9adb3b42 asdf-binary-locations-0.2.5.ebuild 683
-SHA256 c80c30e120f253cce2dbe3caa8c10c2b79d2673a8b8d0d69013a8df64655e47f asdf-binary-locations-0.2.5.ebuild 683
-MD5 9b9fcaba2ca046c3ffb52c5409cce56a files/digest-asdf-binary-locations-0.2.5 283
-RMD160 32c9dd9e626d6cd3b7f3f0836f54f953a4ef2501 files/digest-asdf-binary-locations-0.2.5 283
-SHA256 44114ad4bd7a9a8310e30c9cac8983769fce260c9968ab8f0ce07d0e7ef11f1f files/digest-asdf-binary-locations-0.2.5 283

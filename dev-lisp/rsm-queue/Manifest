@@ -1,8 +1,2 @@
 DIST cl-rsm-queue_1.1a.tar.gz 7364 RMD160 4e7d53088bd07fb7f4ccf88cdf80a50f42067c4b SHA1 9c40d03a8c07ee0bca5406715c7d4be735551956 SHA256 0c8be80935981472b350c5e15cdb2ffc0e4a27c93ab233ee2e363f30b5ec2c9a
 EBUILD rsm-queue-1.1a.ebuild 562 RMD160 08b42a5ac8fa668c23ccf22d6386cccf13135dda SHA1 39250ecba5f217baba89afa3f02e4e0d93750116 SHA256 c62fc2831520f3b2e645bd38b23fe06c15b865b3e4bd5b9cbd83c3d8a07c9fb1
-MD5 866c76aaa7685fe327f1ecb97c7f78d6 rsm-queue-1.1a.ebuild 562
-RMD160 08b42a5ac8fa668c23ccf22d6386cccf13135dda rsm-queue-1.1a.ebuild 562
-SHA256 c62fc2831520f3b2e645bd38b23fe06c15b865b3e4bd5b9cbd83c3d8a07c9fb1 rsm-queue-1.1a.ebuild 562
-MD5 703f65101efa9a243fb82202af54fdef files/digest-rsm-queue-1.1a 247
-RMD160 3cf93ce6c1e0c3511957432d396d8777e6cc44a9 files/digest-rsm-queue-1.1a 247
-SHA256 40a229edc3af3b5fad2d647532fff50c079914c5a417d7dd87d66fbc79391cc9 files/digest-rsm-queue-1.1a 247

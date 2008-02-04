@@ -1,8 +1,2 @@
 DIST metatilities-0.6.7.tar.bz2 216979 RMD160 d49276b8bdb1320952dc8a37e676ab9d33e09020 SHA1 9bb6124d4bcf2da5c2cff2933cf9c305be2ccebd SHA256 23af4f38b2e90d4cc3daaa7cfa3e9ba0e3aab05384a54d074f1c8899a7ec5d1e
 EBUILD metabang-dynamic-classes-0.6.7.ebuild 568 RMD160 a7d1503dffc002b240518e28e627f04190cb5ce8 SHA1 23a2d1b62d93341471379e9e308dd1499277f628 SHA256 817c47fda1d6bfe2c5781cfb5628ebe68478c4ddb4edf7f77fc400149befc4de
-MD5 7abb768434d76c2655cd95ae06dff361 metabang-dynamic-classes-0.6.7.ebuild 568
-RMD160 a7d1503dffc002b240518e28e627f04190cb5ce8 metabang-dynamic-classes-0.6.7.ebuild 568
-SHA256 817c47fda1d6bfe2c5781cfb5628ebe68478c4ddb4edf7f77fc400149befc4de metabang-dynamic-classes-0.6.7.ebuild 568
-MD5 c93034ff62f7b19bc3a8196d244efa0b files/digest-metabang-dynamic-classes-0.6.7 259
-RMD160 32d8433fd60cd0a34398b1555ce8f1988bcbd2c7 files/digest-metabang-dynamic-classes-0.6.7 259
-SHA256 409647e610274dd917a6a92be0665930dd6fffc824ec809d8664bd2fd76ab3f9 files/digest-metabang-dynamic-classes-0.6.7 259

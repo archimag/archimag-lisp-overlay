@@ -1,8 +1,2 @@
 DIST cl-rsm-delayed_1.0.tar.gz 10329 RMD160 596bfc347a6196e1794554fb90838aa9bdee0a2e SHA1 01a0333b3e25b95477d632ad566fee09f27b2fce SHA256 7b8731aea93ebe784f158e222a3469e66af555825bcabe301fbb0da0a269c0cd
 EBUILD rsm-delayed-1.0-r1.ebuild 604 RMD160 c573ebe67e28b370a9711fc9baeee65ebdf8f16d SHA1 70f016393b4aae07f5729247caf4bba921fe39ba SHA256 a27c3887089cde95c83be2324d138c23c986cb9d8ff2bdd1a4d7a8f961309c24
-MD5 347df6a91c57ca1e93b5db6602efef7b rsm-delayed-1.0-r1.ebuild 604
-RMD160 c573ebe67e28b370a9711fc9baeee65ebdf8f16d rsm-delayed-1.0-r1.ebuild 604
-SHA256 a27c3887089cde95c83be2324d138c23c986cb9d8ff2bdd1a4d7a8f961309c24 rsm-delayed-1.0-r1.ebuild 604
-MD5 d384dde6698e7e7385fe3169dd264601 files/digest-rsm-delayed-1.0-r1 253
-RMD160 1349b9448c1eca37efd3b93a6f17e515487149e0 files/digest-rsm-delayed-1.0-r1 253
-SHA256 e46479f3f6d8de389af037281e4ee9e02c1c4e18f0ea94650532d7dfc96a3f88 files/digest-rsm-delayed-1.0-r1 253

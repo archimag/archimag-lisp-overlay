@@ -1,8 +1,2 @@
 DIST mop-features_0.44.tar.gz 18261 RMD160 683428e250b8747127ef0e19f55e8972feb8db77 SHA1 835148d190450a0278aeeee97440c5da30b9eb3c SHA256 9a2283f10acd623e4d9a8ce45ddd744faaaafac10a9de26699220d24c015a60f
 EBUILD mop-features-0.44.ebuild 621 RMD160 8af5f840efa112bb8a4fefd696dc4224cccd7d28 SHA1 4eebf208026ceb864b45827ab95b66055fff7481 SHA256 5b6a4d4d8ebef4be7ec30ca43de7c5054c03e14accfa1fccbd223b722099769a
-MD5 9573fe219d6c35a157fbfa746ddd7530 mop-features-0.44.ebuild 621
-RMD160 8af5f840efa112bb8a4fefd696dc4224cccd7d28 mop-features-0.44.ebuild 621
-SHA256 5b6a4d4d8ebef4be7ec30ca43de7c5054c03e14accfa1fccbd223b722099769a mop-features-0.44.ebuild 621
-MD5 1c8b1ce54d4c77e205893632b959ad0c files/digest-mop-features-0.44 250
-RMD160 cf5437631b5802194d4b31b0d088904fac0bb3f6 files/digest-mop-features-0.44 250
-SHA256 a49b50e69aa6d500a3309bd4bf7341c590d4b39cf9289241f759c840dd4c52c5 files/digest-mop-features-0.44 250
