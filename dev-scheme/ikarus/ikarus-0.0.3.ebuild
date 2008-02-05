@@ -9,14 +9,19 @@ SRC_URI="http://www.cs.indiana.edu/~aghuloum/ikarus/${P}.tar.gz"
 LICENSE="GPL-3"
 SLOT="0"
 
-KEYWORDS="-* -amd64 ~x86"
-IUSE=""
+KEYWORDS="-* ~x86"
+IUSE="sse2"
 
 DEPEND="dev-libs/gmp"
 #for docs probably need dev-texlive/texlive-xetex but I can't test
 RDEPEND="${DEPEND}"
 
 src_compile() {
+	#dies if sse2 global use flag is not enabled
+	if use !sse2; then \
+		eerror "You must have a processor who supports \
+		SSE2 instructions" && die
+	fi
 	econf || die "econf failed"
 	emake || die "emake failed"
 }
