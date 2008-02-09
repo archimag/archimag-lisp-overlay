@@ -15,7 +15,8 @@ KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 DEPEND="!dev-lisp/cl-${PN}"
 
 src_install() {
-	common-lisp-install *.{lisp,asd} test-vectors/*.lisp
+	common-lisp-install *.{lisp,asd}
 	common-lisp-symlink-asdf
 	dodoc README TODO NEWS
+	dohtml doc/{${PN}.html,style.css}
 }
