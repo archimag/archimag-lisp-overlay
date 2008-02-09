@@ -15,23 +15,22 @@ IUSE="emacs doc"
 
 DEPEND="!dev-lisp/cl-${PN}
 		dev-lisp/spatial-trees
-		dev-lisp/flexichain
+		>=dev-lisp/flexichain-0.4.1
 		dev-lisp/clx
 		emacs? ( virtual/emacs )
 		doc? ( virtual/tetex sys-apps/texinfo )"
 
 CLSYSTEMS="Apps/Functional-Geometry/functional-geometry
 		Apps/Scigraph/scigraph
-		Backends/beagle/beagle-backend
 		Drei/cl-automaton/automaton
 		ESA/esa
 		Experimental/freetype/mcclim-freetype
-		Experimental/freetype/mcclim-freetype-cffi
+		Experimental/freetype/mcclim-truetype
 		Experimental/tree-with-cross-edges/mcclim-tree-with-cross-edges
 		Extensions/conditional-commands/conditional-commands
 		clim-examples clim-listener clouseau mcclim"
 SITEFILE="${FILESDIR}"/50mcclim-gentoo.el
-ELISP_SOURCES="Tools/Emacs/hyperclim.el Tools/Emacs/indent-clim.el"
+EMACS_SOURCES="Tools/Emacs/indent-clim.el Tools/Emacs/hyperclim.el"
 
 src_unpack() {
 	unpack ${A}
@@ -40,8 +39,8 @@ src_unpack() {
 
 src_compile() {
 	if use emacs ; then
-		mv ${ELISP_SOURCES} .
-		rm -rf "${S}"/Tools/Emacs
+		mv ${EMACS_SOURCES} .
+		rm -rf Tools/Emacs
 		elisp-comp *.el
 	fi
 	if use doc ; then
@@ -60,5 +59,5 @@ src_install() {
 		elisp-site-file-install ${SITEFILE}
 	fi
 	dodoc INSTALL* README TODO ReleaseNotes/*
-	use doc && dodoc Webpage/clim-paper.pdf Spec/src/clim.pdf
+	use doc && dodoc Spec/src/clim.pdf
 }
