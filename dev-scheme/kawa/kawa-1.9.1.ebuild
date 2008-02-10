@@ -4,13 +4,16 @@
 
 EAPI="1"
 
-inherit subversion java-pkg-2
+inherit java-pkg-2
 
 DESCRIPTION="Kawa, the Java-based Scheme system & Language Framework"
 HOMEPAGE="http://www.gnu.org/software/kawa/"
+my_Pname="kawa"
 XQTS_Ver="_1_0_2"
-SRC_URI="xqtests? ( http://www.w3.org/XML/Query/test-suite/XQTS${XQTS_Ver}.zip )"
-ESVN_REPO_URI="svn://sourceware.org/svn/kawa/trunk"
+S=${WORKDIR}/kawa-${PV}
+SRC_URI="http://ftp.ntua.gr/mirror/gnu/kawa/kawa-${PV}.tar.gz
+		xqtests? ( http://www.w3.org/XML/Query/test-suite/XQTS${XQTS_Ver}.zip )"
+
 
 LICENSE="MIT"
 SLOT="0"
@@ -31,7 +34,7 @@ src_unpack () {
 	#
 	pwd;echo;echo
 	#
-	subversion_fetch
+	unpack kawa-${PV}.tar.gz
 	#
 	echo -e "\n ${S}\n "
 	#
@@ -110,8 +113,7 @@ src_install () {
 	#rm -Rv ${D}/usr/share/java
 	#rm -Rv ${D}/usr/bin/
 
-	local SVN_PV=$(grep '^PACKAGE_VERSION' Makefile | sed -e 's/PACKAGE_VERSION = //')
-	java-pkg_newjar kawa-${SVN_PV}.jar
+	java-pkg_newjar kawa-${PV}.jar
 
 	# maybe repl.class -> kawa.repl
 	java-pkg_dolauncher "kawa" --main kawa.repl
@@ -130,5 +132,6 @@ src_install () {
 	cp doc/kawa.man doc/kawa.2
 	cp doc/qexo.man doc/qexo.2
 	doman doc/*.2
+
 
 }
