@@ -45,12 +45,7 @@ src_unpack () {
 }
 
 src_compile() {
-	# speeds up one-shot ebuilds.
-	#local ponzio=$(java-pkg_get-target)
-	#echo "$ponzio"
-	#die "ahahahahaha"
 	myconf="--disable-dependency-tracking"
-	#myconf="${myconf} --with-java-source=$(java-pkg_get-target)"
 	if use jemacs && ! use swing; then
 		echo
 		einfo "Although the swing USE flag is disabled you chose to enable jemacs,"
