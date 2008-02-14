@@ -21,7 +21,7 @@ SLOT="0"
 KEYWORDS="~x86"
 IUSE="+awt echo2 +frontend jemacs krl +sax servlets +swing swt +xml xqtests"
 
-COMMON_DEPEND=">=virtual/jdk-1.4
+COMMON_DEPEND=">=virtual/jdk-1.5
 			   frontend? ( sys-libs/readline:0 )
 			   sax2? ( dev-java/sax:0 )
 			   echo2? ( dev-java/echo2:0 )
