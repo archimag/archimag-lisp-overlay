@@ -81,7 +81,7 @@ src_install () {
 	rm -rv "${D}"/usr/share/java/ || die
 
 	local SVN_PV=$(grep '^PACKAGE_VERSION' Makefile | sed -e 's/PACKAGE_VERSION = //')
-	java-pkg_newjar kawa-${SNV_PV}.jar || die
+	java-pkg_newjar kawa-${SVN_PV}.jar || die
 
 	java-pkg_dolauncher "kawa" --main kawa.repl || die
 	java-pkg_dolauncher "qexo" --main kawa.repl --pkg_args \
