@@ -11,27 +11,25 @@ inherit eutils java-pkg-2
 DESCRIPTION="Kawa, the Java-based Scheme system & Language Framework"
 HOMEPAGE="http://www.gnu.org/software/kawa/"
 XQTS_Ver="1_0_2"
-SRC_URI="http://ftp.ntua.gr/mirror/gnu/kawa/kawa-${PV}.tar.gz
+SRC_URI="mirror://gnu/kawa/${P}.tar.gz
 		 xqtests? ( http://www.w3.org/XML/Query/test-suite/XQTS_${XQTS_Ver}.zip )"
 
-LICENSE="MIT"
+LICENSE="MIT public-domain
+		 jemacs? ( GPL-2 )
+		 krl? ( GPL-2 )"
 SLOT="0"
-KEYWORDS="~x86 ~amd64"
+KEYWORDS="~x86"
 IUSE="+awt echo2 +frontend jemacs krl +sax servlets +swing swt +xml xqtests"
 
-DEPEND=">=virtual/jdk-1.6
-		frontend? ( sys-libs/readline:0 )
-		xqtests? ( app-arch/unzip:0 )
-		sax2? ( dev-java/sax:0 )
-		echo2? ( dev-java/echo2:0 )
-		swt? ( dev-java/swt:3 )
-		servlets? ( dev-java/servletapi:2.4 )"
-RDEPEND=">=virtual/jdk-1.6
-		frontend? ( sys-libs/readline:0 )
-		sax2? ( dev-java/sax:0 )
-		echo2? ( dev-java/echo2:0 )
-		swt? ( dev-java/swt:3 )
-		servlets? ( dev-java/servletapi:2.4 )"
+COMMON_DEPEND=">=virtual/jdk-1.4
+			   frontend? ( sys-libs/readline:0 )
+			   sax2? ( dev-java/sax:0 )
+			   echo2? ( dev-java/echo2:0 )
+			   swt? ( dev-java/swt:3 )
+			   servlets? ( dev-java/servletapi:2.4 )"
+DEPEND="${COMMON_DEPEND}
+		xqtests? ( app-arch/unzip:0 )"
+RDEPEND="${COMMON_DEPEND}"
 
 xtestsuite="XQTS_${XQTS_Ver}"
 
