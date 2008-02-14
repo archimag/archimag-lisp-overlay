@@ -19,9 +19,10 @@ LICENSE="MIT public-domain
 		 krl? ( GPL-2 )"
 SLOT="0"
 KEYWORDS="~x86"
-IUSE="+awt echo2 +frontend jemacs krl +sax servlets +swing swt +xml xqtests"
+IUSE="+awt echo2 +frontend +java5 jemacs krl +sax servlets +swing swt +xml xqtests"
 
-COMMON_DEPEND=">=virtual/jdk-1.5
+COMMON_DEPEND="java5? ( >=virtual/jdk-1.5 )
+			   !java5?  ( >=virtual/jdk-1.4 )
 			   frontend? ( sys-libs/readline:0 )
 			   sax2? ( dev-java/sax:0 )
 			   echo2? ( dev-java/echo2:0 )
@@ -45,7 +46,11 @@ src_unpack () {
 
 src_compile() {
 	# speeds up one-shot ebuilds.
+	#local ponzio=$(java-pkg_get-target)
+	#echo "$ponzio"
+	#die "ahahahahaha"
 	myconf="--disable-dependency-tracking"
+	#myconf="${myconf} --with-java-source=$(java-pkg_get-target)"
 	if use jemacs && ! use swing; then
 		echo
 		einfo "Although the swing USE flag is disabled you chose to enable jemacs,"
@@ -71,7 +76,8 @@ src_compile() {
 		  $(use_enable echo2) \
 		  $(use_enable jemacs) \
 		  $(use_with awt) \
-		  $(use_with sax sax2) || die "econf failed."
+		  $(use_with sax sax2) \
+		  --with-java-source=$(java-pkg_get-target) || die "econf failed."
 
 	emake || die "emake failed."
 }
