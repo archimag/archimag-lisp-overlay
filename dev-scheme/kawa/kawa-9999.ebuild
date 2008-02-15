@@ -107,6 +107,6 @@ src_install () {
 	cp doc/qexo.man doc/qexo.2 || die
 	doman doc/*.2 || die
 	if use doc; then
-		dohtml -r ${S}/doc/kawa-html/
+		dohtml -r ${S}/doc/kawa-html/*
 	fi
 }
