@@ -19,7 +19,7 @@ LICENSE="MIT public-domain
 		 krl? ( GPL-2 )"
 SLOT="0"
 KEYWORDS="~x86"
-IUSE="+awt echo2 +frontend +java5 jemacs krl +sax servlets +swing swt +xml xqtests"
+IUSE="+awt doc echo2 +frontend +java5 jemacs krl +sax servlets +swing swt +xml xqtests"
 
 COMMON_DEPEND="java5? ( >=virtual/jdk-1.5 )
 			   !java5?  ( >=virtual/jdk-1.4 )
@@ -75,6 +75,11 @@ src_compile() {
 		  --with-java-source=$(java-pkg_get-target) || die "econf failed."
 
 	emake || die "emake failed."
+
+	if use doc; then
+		cd ${S}/doc
+		make html
+	fi
 }
 
 src_install () {
@@ -101,4 +106,7 @@ src_install () {
 	cp doc/kawa.man doc/kawa.2 || die
 	cp doc/qexo.man doc/qexo.2 || die
 	doman doc/*.2 || die
+	if use doc; then
+		dohtml -r ${S}/doc/kawa-html/
+	fi
 }
