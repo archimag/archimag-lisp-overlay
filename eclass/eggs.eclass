@@ -124,6 +124,7 @@ eggs_src_test() {
 
 eggs_src_install() {
 	pushd ${S}/install >/dev/null
+	[[ -f index.html ]] && rm index.html
 	eggs-set_paths
 	eggs-install_files
 	popd >/dev/null
