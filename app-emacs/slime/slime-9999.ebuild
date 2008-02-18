@@ -35,6 +35,7 @@ src_unpack() {
 	sed -i "s:@CONTRIBDIR@:${CLSOURCEROOT}/${CLPACKAGE}/contrib/:" "${S}"/swank.lisp
 	epatch "${FILESDIR}"/inspect-presentations.patch
 	epatch "${FILESDIR}"/${PV}-fix-ecl.patch
+	epatch "${FILESDIR}"/${PV}-dont-call-init.patch
 }
 
 rel_elisp-comp() {
