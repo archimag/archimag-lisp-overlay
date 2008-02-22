@@ -14,11 +14,6 @@ KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 DEPEND="!dev-lisp/cl-${PN}
 		dev-lisp/asdf"
 
-src_unpack() {
-	unpack ${A}
-	epatch "${FILESDIR}"/${PV}-fix-asd.patch
-}
-
 src_install() {
 	common-lisp-install *.asd dev/*.lisp
 	common-lisp-symlink-asdf
