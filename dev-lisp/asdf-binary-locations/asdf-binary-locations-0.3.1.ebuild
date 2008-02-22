@@ -15,7 +15,7 @@ DEPEND="!dev-lisp/cl-${PN}
 		dev-lisp/asdf"
 
 src_install() {
-	common-lisp-install *.asd dev/*.lisp
+	common-lisp-install *.asd dev/*.lisp test*
 	common-lisp-symlink-asdf
-	dodoc dev/notes.text
+	dodoc dev/notes.text lift-standard.config
 }
