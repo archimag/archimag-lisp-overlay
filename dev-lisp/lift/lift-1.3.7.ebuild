@@ -14,11 +14,6 @@ KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 
 CLSYSTEMS="${PN} ${PN}-test"
 
-src_unpack() {
-	unpack ${A}
-	epatch "${FILESDIR}"/${PV}-fix-asd.patch
-}
-
 src_install() {
 	common-lisp-install *.asd {dev,test}/*.lisp
 	common-lisp-symlink-asdf
