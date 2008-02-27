@@ -7,4 +7,4 @@ inherit eggs
 DESCRIPTION="Chicken-Scheme port of Gregor Kiczales' TinyCLOS object system."
 
 LICENSE="BSD"
-KEYWORDS="~x86"
+KEYWORDS="-*"
