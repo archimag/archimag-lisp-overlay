@@ -9,7 +9,7 @@ inherit eggs
 DESCRIPTION="A Foreign Function Interface for lazy people."
 
 LICENSE="BSD"
-KEYWORDS="~x86"
+KEYWORDS="-*"
 
 DEPEND="dev-chicken/easyffi
         dev-chicken/silex"
