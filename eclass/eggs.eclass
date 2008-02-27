@@ -113,16 +113,21 @@ eggs-set_paths() {
 
 
 eggs_src_compile() {
-	chicken-setup -R ${S}/install -P ${D}/usr/bin || die "egg compilation failed"
+	chicken-setup -R ${S}/install -P ${S}/binaries || die "egg compilation failed"
 }
 
 eggs_src_test() {
 	if [[ ${EGG_TESTABLE} == "yes" ]]; then
-		chicken-setup -nt -R ${S}/install -P ${D}/usr/bin || die "egg test phase failed"
+		chicken-setup -nt -R ${S}/install -P ${S}/binaries || die "egg test phase failed"
 	fi
 }
 
 eggs_src_install() {
+	if [[ -d ${S}/binaries ]]; then
+		pushd ${S}/binaries >/dev/null
+		dobin $(ls) || die
+		popd >/dev/null
+	fi
 	pushd ${S}/install >/dev/null
 	[[ -f index.html ]] && rm index.html
 	eggs-set_paths
