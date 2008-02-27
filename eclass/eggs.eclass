@@ -52,7 +52,7 @@ fi
 # Install egg files into the correct locations.
 eggs-install_files() {
 	ebegin "Installing files"
-	eggs-install_files_recursive
+	eggs-install_files_recursive "${@}"
 	einfo "Done with installation."
 }
 
@@ -104,6 +104,7 @@ eggs-set_paths() {
 	ebegin "Processing setup files"
 	for setup_file in $(ls *.setup-info); do
 		ebegin "  ${setup_file}"
+		sed -i -e "s:${S}/binaries:/usr/bin:g" ${setup_file} || die "failed setting binary paths in ${setup_file}"
 		sed -i -e "s:${S}/install:${CHICKEN_REPOSITORY}:g" ${setup_file} || die "failed setting extension paths in ${setup_file}"
 		sed -i -e "s:${CHICKEN_REPOSITORY}/\(.*\).html:${EGGDOC_DIR}/\1.html:g" ${setup_file} || die "failed setting documentation paths in ${setup_file}"
 		eend 0
