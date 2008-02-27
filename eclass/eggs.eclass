@@ -113,12 +113,12 @@ eggs-set_paths() {
 
 
 eggs_src_compile() {
-	chicken-setup -R ${S}/install || die "egg compilation failed"
+	chicken-setup -R ${S}/install -P ${D}/usr/bin || die "egg compilation failed"
 }
 
 eggs_src_test() {
 	if [[ ${EGG_TESTABLE} == "yes" ]]; then
-		chicken-setup -nt -R ${S}/install || die "egg test phase failed"
+		chicken-setup -nt -R ${S}/install -P ${D}/usr/bin || die "egg test phase failed"
 	fi
 }
 
