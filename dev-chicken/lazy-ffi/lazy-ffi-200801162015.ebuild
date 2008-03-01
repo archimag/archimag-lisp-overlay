@@ -12,5 +12,6 @@ LICENSE="BSD"
 KEYWORDS="-*"
 
 DEPEND="dev-chicken/easyffi
-        dev-chicken/silex"
+        dev-chicken/silex
+	dev-libs/libffi"
 RDEPEND="${DEPEND}"
