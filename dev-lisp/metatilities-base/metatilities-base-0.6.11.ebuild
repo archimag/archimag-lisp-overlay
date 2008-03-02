@@ -28,6 +28,6 @@ src_unpack() {
 
 src_install() {
 	common-lisp-install ${PN}.asd ${PN}-test.asd
-	common-lisp-install dev/*.lisp dev/utilities/copy-file.lisp unit-tests
+	common-lisp-install dev/*.lisp dev/utilities/copy-file.lisp tests
 	common-lisp-symlink-asdf
 }
