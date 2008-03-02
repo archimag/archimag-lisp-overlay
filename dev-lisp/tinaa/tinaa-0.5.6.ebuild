@@ -18,11 +18,6 @@ DEPEND="dev-lisp/defsystem-compatibility
 		dev-lisp/trivial-shell
 		dev-lisp/cl-graph"
 
-src_unpack() {
-	unpack ${A}
-	epatch "${FILESDIR}"/${PV}-fix-asd.patch
-}
-
 src_install() {
 	common-lisp-install *.asd dev/{*.lisp,tinaa.css} unit-tests
 	common-lisp-symlink-asdf
