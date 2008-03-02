@@ -6,12 +6,13 @@ OLD_EGGPAGE="yes"
 
 inherit eggs
 
-DESCRIPTION="A Foreign Function Interface for lazy people."
+DESCRIPTION="Chicken-Scheme interface to Python"
 
-LICENSE="BSD"
-KEYWORDS="-*"
+LICENSE="GPL"
+KEYWORDS="~x86"
 
-DEPEND="dev-chicken/easyffi
-        dev-chicken/silex
-	dev-libs/libffi"
+DEPEND="dev-lang/python
+	dev-chicken/easyffi
+	dev-chicken/utf8
+	dev-chicken/eggdoc"
 RDEPEND="${DEPEND}"
