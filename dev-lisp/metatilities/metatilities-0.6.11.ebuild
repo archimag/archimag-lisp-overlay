@@ -23,11 +23,10 @@ DEPEND="dev-lisp/asdf-system-connections
 src_unpack() {
 	unpack ${A}
 	rm "${S}"/dev/utilities/copy-file.lisp
-	epatch "${FILESDIR}"/${PV}-fix-asd.patch
 }
 
 src_install() {
-	common-lisp-install ${PN}.asd website
+	common-lisp-install ${PN}.asd
 	common-lisp-install dev/{utilities,allegro,lispworks,mcl,openmcl,sbcl,utilities}
 	common-lisp-symlink-asdf
 }
