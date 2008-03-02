@@ -17,8 +17,8 @@ CLSYSTEMS="${PN} ${PN}-test"
 src_install() {
 	common-lisp-install *.asd {dev,test}/*.lisp
 	common-lisp-symlink-asdf
-	for i in compare data examples ; do
+	for i in compare data examples resources; do
 		docinto ${i} && dodoc ${i}/*
 	done
-	dodoc ${PN}-standard.config
+	dodoc ${PN}-standard.config RELNOTES
 }
