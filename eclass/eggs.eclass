@@ -29,10 +29,10 @@ RDEPEND=">=dev-scheme/chicken-${VERSION}"
 SLOT="0"
 IUSE=""
 
-if [[ $PN == srfi* ]]; then
+if [[ ${PN} == srfi* ]]; then
 	EGG_NAME="srfi-${PN##srfi}"
 else
-	EGG_NAME=$PN
+	[[ -n ${EGG_NAME} ]] || EGG_NAME=$PN
 fi
 
 CHICKEN_REPOSITORY=${CHICKEN_REPOSITORY:-/usr/lib/chicken/3}
