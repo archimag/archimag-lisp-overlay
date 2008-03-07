@@ -33,7 +33,7 @@ src_compile() {
 	# all this is necessary for bootstrapping from svn. yes, I asked :P
 	emake ${OPTIONS} confclean || die
 	emake ${OPTIONS} spotless || die
-	emake ${OPTIONS} bootstrap || die
+	emake ${OPTIONS} bootstrap USE_HOST_PCRE=1 || die
 	emake ${OPTIONS} C_COMPILER_OPTIMIZATION_OPTIONS="$CFLAGS" \
 		USE_HOST_PCRE=1 CHICKEN=./chicken-boot || die
 
