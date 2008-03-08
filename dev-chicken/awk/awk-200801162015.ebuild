@@ -8,5 +8,5 @@ inherit eggs
 
 DESCRIPTION="Chicken-Scheme adaptation of the SCSH/PLT 'awk' macro."
 
-LICENSE="LGPL"
+LICENSE="LGPL-2"
 KEYWORDS="~x86"
