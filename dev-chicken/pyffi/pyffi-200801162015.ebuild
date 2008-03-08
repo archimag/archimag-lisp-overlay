@@ -8,7 +8,7 @@ inherit eggs
 
 DESCRIPTION="Chicken-Scheme interface to Python"
 
-LICENSE="GPL"
+LICENSE="GPL-3"
 KEYWORDS="~x86"
 
 DEPEND="dev-lang/python
