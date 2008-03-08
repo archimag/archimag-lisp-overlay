@@ -10,4 +10,4 @@ RDEPEND="${DEPEND}"
 DESCRIPTION="A facility for creating and deconstructing variant records (from EOPL)."
 
 LICENSE="BSD"
-KEYWORDS="~x86"
+KEYWORDS="-*"
