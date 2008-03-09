@@ -9,4 +9,4 @@ inherit eggs
 DESCRIPTION="Thread-safe queues with timeout."
 
 LICENSE="BSD"
-KEYWORDS="~x86"
+KEYWORDS="~x86 ~amd64"
