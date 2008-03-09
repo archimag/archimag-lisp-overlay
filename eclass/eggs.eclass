@@ -23,6 +23,8 @@
 # @DESCRIPTION:
 # Enables egg test-phase if set to 'yes'.
 
+inherit flag-o-matic
+
 VERSION=${NEED_CHICKEN:-3.0.0}
 DEPEND=">=dev-scheme/chicken-${VERSION}"
 RDEPEND=">=dev-scheme/chicken-${VERSION}"
@@ -112,14 +114,34 @@ eggs-set_paths() {
 	einfo "Done processing setup files."
 }
 
+# @FUNCTION: eggs-do_cscflags
+# @USAGE:
+# @DESCRIPTION:
+# Parse CFLAGS into CSCFLAGS
+eggs-do_cscflags() {
+	strip-flags || die
+	local flag
+	CSCFLAGS=""
+	for flag in ${CFLAGS}; do
+		CSCFLAGS="${CSCFLAGS} -C ${flag}"
+	done
+}
+
+eggs_src_unpack() {
+	mkdir ${S}
+	cd ${S}
+	unpack ${A} || die
+}
 
 eggs_src_compile() {
-	chicken-setup -R ${S}/install -P ${S}/binaries || die "egg compilation failed"
+	eggs-do_cscflags || die
+	chicken-setup -c "${CSCFLAGS}" -R ${S}/install -P ${S}/binaries || die "egg compilation failed"
 }
 
 eggs_src_test() {
 	if [[ ${EGG_TESTABLE} == "yes" ]]; then
-		chicken-setup -nt -R ${S}/install -P ${S}/binaries || die "egg test phase failed"
+		eggs-do_cscflags || die
+		chicken-setup -nt -c "${CSCFLAGS}" -R ${S}/install -P ${S}/binaries || die "egg test phase failed"
 	fi
 }
 
@@ -136,4 +158,4 @@ eggs_src_install() {
 	popd >/dev/null
 }
 
-EXPORT_FUNCTIONS src_compile src_test src_install
+EXPORT_FUNCTIONS src_unpack src_compile src_test src_install
