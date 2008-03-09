@@ -9,4 +9,4 @@ inherit eggs
 DESCRIPTION="Chicken-Scheme interface to UNIX domain sockets."
 
 LICENSE="BSD"
-KEYWORDS="~x86"
+KEYWORDS="~x86 ~amd64"
