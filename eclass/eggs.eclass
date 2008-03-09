@@ -15,7 +15,7 @@
 
 # @ECLASS-VARIABLE: NEED_CHICKEN
 # @DESCRIPTION:
-# If you need anything different from chicken 3.0.0, use the
+# If you need anything different from chicken 3.0.5, use the
 # NEED_CHICKEN variable before inheriting elisp.eclass.  Set it to the
 # major version the egg needs and the dependency will be adjusted.
 
@@ -23,9 +23,14 @@
 # @DESCRIPTION:
 # Enables egg test-phase if set to 'yes'.
 
+# @ECLASS-VARIABLE: EGG_NAME
+# @DESCRIPTION:
+# Override egg name autogeneration by settting this before importing
+# this eclass.
+
 inherit flag-o-matic
 
-VERSION=${NEED_CHICKEN:-3.0.0}
+VERSION=${NEED_CHICKEN:-3.0.5}
 DEPEND=">=dev-scheme/chicken-${VERSION}"
 RDEPEND=">=dev-scheme/chicken-${VERSION}"
 SLOT="0"
@@ -48,21 +53,25 @@ else
 	HOMEPAGE="http://chicken.wiki.br/${EGG_NAME}"
 fi
 
+# @FUNCTION: eggs-install_binaries
+# @USAGE:
+# @DESCRIPTION:
+# INstall egg binaries/scripts/wrappers into /usr/bin
+eggs-install_binaries() {
+	local files=$(ls)
+	local file
+	for file in ${files}; do
+		einfo "  => /usr/bin/${file}"
+		dobin ${file} || die "failed installing ${file}"
+		eend $!
+	done
+}
+
 # @FUNCTION: eggs-install_files
 # @USAGE:
 # @DESCRIPTION:
 # Install egg files into the correct locations.
 eggs-install_files() {
-	ebegin "Installing files"
-	eggs-install_files_recursive "${@}"
-	einfo "Done with installation."
-}
-
-# @FUNCTION: eggs-install_files_recursive
-# @USAGE:
-# @DESCRIPTION:
-# Internal use only.
-eggs-install_files_recursive() {
 	local destination="${1:-${CHICKEN_REPOSITORY}}"
 	local real_destination
 	local files=$(ls)
@@ -89,9 +98,9 @@ eggs-install_files_recursive() {
 		esac
 		if [[ -d ${file} ]];then
 			# To iterate is human, to recurse, divine.
-			( cd ${file}; eggs-install_files_recursive ${destination}/${file} )
+			( cd ${file}; eggs-install_files ${destination}/${file} )
 		else
-			einfo "  ${file} => ${real_destination}"
+			einfo "  => ${real_destination}/${file}"
 			doins ${file} || die "failed installing ${file}"
 			eend $!
 		fi
@@ -101,13 +110,12 @@ eggs-install_files_recursive() {
 # @FUNCTION: eggs-set_paths
 # @USAGE:
 # @DESCRIPTION:
-# Modify the .setup-info file(s) to reflect true installation paths.
+# Modify the .setup-info file(s) to reflect true documentation
+# installation paths.
 eggs-set_paths() {
 	ebegin "Processing setup files"
 	for setup_file in $(ls *.setup-info); do
 		ebegin "  ${setup_file}"
-		sed -i -e "s:${S}/binaries:/usr/bin:g" ${setup_file} || die "failed setting binary paths in ${setup_file}"
-		sed -i -e "s:${S}/install:${CHICKEN_REPOSITORY}:g" ${setup_file} || die "failed setting extension paths in ${setup_file}"
 		sed -i -e "s:${CHICKEN_REPOSITORY}/\(.*\).html:${EGGDOC_DIR}/\1.html:g" ${setup_file} || die "failed setting documentation paths in ${setup_file}"
 		eend 0
 	done
@@ -123,7 +131,7 @@ eggs-do_cscflags() {
 	local flag
 	CSCFLAGS=""
 	for flag in ${CFLAGS}; do
-		CSCFLAGS="${CSCFLAGS} -C ${flag}"
+		CSCFLAGS="${CSCFLAGS} -c -C ${flag}"
 	done
 }
 
@@ -135,26 +143,32 @@ eggs_src_unpack() {
 
 eggs_src_compile() {
 	eggs-do_cscflags || die
-	chicken-setup -c "${CSCFLAGS}" -R ${S}/install -P ${S}/binaries || die "egg compilation failed"
+	chicken-setup -k ${CSCFLAGS} \
+		-build-prefix ${S}/build \
+		-install-prefix ${S}/install || die "egg compilation failed"
 }
 
 eggs_src_test() {
 	if [[ ${EGG_TESTABLE} == "yes" ]]; then
 		eggs-do_cscflags || die
-		chicken-setup -nt -c "${CSCFLAGS}" -R ${S}/install -P ${S}/binaries || die "egg test phase failed"
+		chicken-setup -k -n -t ${CSCFLAGS} \
+			-build-prefix ${S}/build \
+			-install-prefix ${S}/install || die "egg test phase failed"
 	fi
 }
 
 eggs_src_install() {
-	if [[ -d ${S}/binaries ]]; then
-		pushd ${S}/binaries >/dev/null
-		dobin $(ls) || die
-		popd >/dev/null
-	fi
-	pushd ${S}/install >/dev/null
+	pushd ${S}/install/${CHICKEN_REPOSITORY} >/dev/null
 	[[ -f index.html ]] && rm index.html
 	eggs-set_paths
+	ebegin "Installing files"
+	if [[ -d ${S}/install/usr/bin ]]; then
+		pushd ${S}/install/usr/bin >/dev/null
+		eggs-install_binaries
+		popd >/dev/null
+	fi
 	eggs-install_files
+	einfo "Done with installation."
 	popd >/dev/null
 }
 
