@@ -9,7 +9,7 @@ inherit eggs-svn
 DESCRIPTION="A pure Scheme implementation of the 9p networked filesystem protocol."
 
 LICENSE="BSD"
-KEYWORDS="~x86"
+KEYWORDS="~x86 ~amd64"
 
 DEPEND="dev-chicken/iset"
 RDEPEND="${DEPEND}"
