@@ -131,7 +131,7 @@ eggs-do_cscflags() {
 	local flag
 	CSCFLAGS=""
 	for flag in ${CFLAGS}; do
-		CSCFLAGS="${CSCFLAGS} -c -C ${flag}"
+		CSCFLAGS="${CSCFLAGS} -C ${flag}"
 	done
 }
 
@@ -143,7 +143,7 @@ eggs_src_unpack() {
 
 eggs_src_compile() {
 	eggs-do_cscflags || die
-	chicken-setup -k ${CSCFLAGS} \
+	chicken-setup -k -c "${CSCFLAGS}" \
 		-build-prefix ${S}/build \
 		-install-prefix ${S}/install || die "egg compilation failed"
 }
@@ -151,7 +151,7 @@ eggs_src_compile() {
 eggs_src_test() {
 	if [[ ${EGG_TESTABLE} == "yes" ]]; then
 		eggs-do_cscflags || die
-		chicken-setup -k -n -t ${CSCFLAGS} \
+		chicken-setup -k -n -t -c "${CSCFLAGS}" \
 			-build-prefix ${S}/build \
 			-install-prefix ${S}/install || die "egg test phase failed"
 	fi
