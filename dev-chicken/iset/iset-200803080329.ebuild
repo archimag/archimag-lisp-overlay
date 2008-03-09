@@ -7,4 +7,4 @@ inherit eggs
 DESCRIPTION="Integer sets."
 
 LICENSE="BSD"
-KEYWORDS="~x86"
+KEYWORDS="~x86 ~amd64"
