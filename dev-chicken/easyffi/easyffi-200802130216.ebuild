@@ -7,7 +7,7 @@ inherit eggs
 DESCRIPTION="Generates bindings from C/C++ declarations."
 
 LICENSE="BSD"
-KEYWORDS="~x86"
+KEYWORDS="~x86 ~amd64"
 
 DEPEND="dev-chicken/silex"
 RDEPEND="${DEPEND}"
