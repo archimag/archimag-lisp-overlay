@@ -2,8 +2,6 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header:
 
-EAPI="1"
-
 inherit subversion multilib elisp-common
 
 DESCRIPTION="Chicken is a Scheme interpreter and native Scheme to C compiler"
