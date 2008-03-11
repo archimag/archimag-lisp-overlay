@@ -4,7 +4,7 @@
 
 inherit eggs eutils
 
-DESCRIPTION="A Foreign Function Interface for lazy people."
+DESCRIPTION="A Foreign Function Interface for lazy people, using gcc's libffi."
 
 LICENSE="BSD"
 KEYWORDS="-*"
