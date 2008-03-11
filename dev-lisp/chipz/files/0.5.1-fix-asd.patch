@@ -1,0 +1,34 @@
+diff -ur chipz-0.5.1.orig/chipz.asd chipz-0.5.1/chipz.asd
+--- chipz-0.5.1.orig/chipz.asd	2008-02-09 20:26:10.000000000 +0100
++++ chipz-0.5.1/chipz.asd	2008-02-09 21:57:30.000000000 +0100
+@@ -3,29 +3,13 @@
+   (:use :cl :asdf))
+ (in-package :chipz-system)
+ 
+-(defclass txt-file (doc-file) ())
+-(defclass css-file (doc-file) ())
+-
+-(defmethod source-file-type ((c txt-file) (s module)) "txt")
+-(defmethod source-file-type ((c css-file) (s module)) "css")
+-
+ (defsystem :chipz
+   :version "0.5.1"
+   :author "Nathan Froyd <froydnj@gmail.com>"
+   :maintainer "Nathan Froyd <froydnj@gmail.com>"
+   :description "A library for decompressing deflate, zlib, and gzip data"
+   :license "BSD style"
+-  :components ((:static-file "NEWS")
+-               (:static-file "LICENSE")
+-               (:static-file "TODO")
+-               (:file "package")
+-               (:module "doc"
+-                        :components
+-                        ((:html-file "chipz")
+-                         ;; XXX ASDF bogosity
+-                         (:txt-file "chipz-doc")
+-                         (:css-file "style")))
+-               (:file "types-and-tables" :depends-on ("package"))
++  :components ((:file "types-and-tables" :depends-on ("package"))
+                (:file "conditions" :depends-on ("package"))
+                (:file "inflate-state" :depends-on ("types-and-tables"))
+                (:file "bit-utils" :depends-on ("inflate-state"))

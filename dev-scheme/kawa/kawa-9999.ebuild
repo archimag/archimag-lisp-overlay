@@ -1,123 +1,112 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit java-pkg-2
+EAPI="1"
+
+JAVA_PKG_IUSE="source"
+
+inherit subversion eutils java-pkg-2
 
 DESCRIPTION="Kawa, the Java-based Scheme system & Language Framework"
 HOMEPAGE="http://www.gnu.org/software/kawa/"
-my_PV="1.9.1"
-my_Pname="kawa"
-XQTS_Ver="_1_0_2"
-S=${WORKDIR}/kawa-${my_PV}
-SRC_URI="http://ftp.ntua.gr/mirror/gnu/kawa/kawa-${my_PV}.tar.gz
-		xqtests? ( http://www.w3.org/XML/Query/test-suite/XQTS${XQTS_Ver}.zip )"
+XQTS_Ver="1_0_2"
+SRC_URI="xqtests? ( http://www.w3.org/XML/Query/test-suite/XQTS_${XQTS_Ver}.zip )"
+ESVN_REPO_URI="svn://sourceware.org/svn/kawa/trunk"
 
-
-LICENSE="MIT"
+LICENSE="MIT public-domain
+		 jemacs? ( GPL-2 )
+		 krl? ( GPL-2 )"
 SLOT="0"
-KEYWORDS="~x86 ~amd64"
-IUSE="frontend krl sax echo2 swt servlets awt xml jemacs xqtests"
+KEYWORDS="~x86"
+IUSE="+awt doc echo2 +frontend +java5 jemacs krl +sax servlets +swing swt +xml xqtests"
 
-DEPEND=">=virtual/jdk-1.6
-		frontend? ( sys-libs/readline )
-		xqtests? ( app-arch/unzip )
-		sax2? ( dev-java/sax )
-		echo2? ( dev-java/echo2 )
-		swt? ( >=dev-java/swt-3.3 )
-		servlets? ( >=dev-java/servletapi-2.4 )"
+COMMON_DEPEND="java5? ( >=virtual/jdk-1.5 )
+			   !java5?  ( >=virtual/jdk-1.4 )
+			   frontend? ( sys-libs/readline:0 )
+			   sax2? ( dev-java/sax:0 )
+			   echo2? ( dev-java/echo2:0 )
+			   swt? ( dev-java/swt:3 )
+			   servlets? ( dev-java/servletapi:2.4 )"
+DEPEND="${COMMON_DEPEND}
+		xqtests? ( app-arch/unzip:0 )"
+RDEPEND="${COMMON_DEPEND}"
 
-xtestsuite="XQTS${XQTS_Ver}"
+xtestsuite="XQTS_${XQTS_Ver}"
 
 src_unpack () {
-	#
-	pwd;echo;echo
-	#
-	unpack kawa-${my_PV}.tar.gz
-	#
-	echo -e "\n ${S}\n "
-	#
+	subversion_fetch || die
+
 	if use xqtests; then
-		dodir ${xtestsuite}
-		cd ${xtestsuite}
-		unpack XQTS${XQTS_Ver}.zip
+		mkdir ${WORKDIR}/${xtestsuite} || die
+		cd ${WORKDIR}/${xtestsuite} || die
+		unpack ${xtestsuite}.zip || die
 	fi
-	#
-	ls -la;
-	ls -la ..;
-	ls -la ${S};
-	#
 }
 
 src_compile() {
-	#
-	echo -e "\n src_compile_pwd: $(pwd) \n"
-	#
-local myconf
-		myconf="$(use_enable frontend kawa-frontend) \
-		$(use_enable xml) \
-		$(use_enable krl brl) \
-		$(use_enable echo2) \
-		$(use_enable jemacs) \
-		$(use_enable jemacs swing) \
-		$(use_with servlets servlet\
-		$(java-pkg_getjar servletapi-2.4 servlet-api.jar)) \
-		$(use_with swt swt\
-		$(java-pkg_getjar swt-3 swt.jar)) \
-		$(use_with awt) \
-		$(use_with xqtests XQTS\
-		${WORKDIR}/${xtestsuite}) \
-		$(use_with sax sax2)" 
-
-#
-echo -e "\n Configure flags: $myconf \n" 
-#
-
-econf ${myconf} || die "econf failed."
-
-# without --jobs=1 it fails
-emake -j1 || die "emake failed."
-}
-
-src_test () {
-#	emake -j1 check
-if emake -j1 check -n &> /dev/null; then
-	vecho ">>> Test phase [check]: ${CATEGORY}/${PF}"
-	if ! emake -j1 check; then
-		hasq test $FEATURES && die "Make check failed. See above for details."
-		hasq test $FEATURES || eerror "Make check failed. See above for details."
+	myconf="--disable-dependency-tracking"
+	if use jemacs && ! use swing; then
+		echo
+		einfo "Although the swing USE flag is disabled you chose to enable jemacs,"
+		einfo "so swing is enabled anyway."
+		echo
+		myconf="${myconf} --with-swing"
+	else
+		myconf="${myconf} $(use_with swing)"
 	fi
-fi
-	
+	if use xqtests; then
+		myconf="${myconf} $(use_with xqtests XQTS=${WORKDIR}/${xtestsuite})"
+	fi
+	if use servlets; then
+		myconf="${myconf} --with-servlet=$(java-pkg_getjar servletapi-2.4 servlet-api.jar)"
+	fi
+	if use swt; then
+		myconf="${myconf} --with-swt=$(java-pkg_getjar swt-3 swt.jar)"
+	fi
+
+	econf ${myconf} $(use_enable frontend kawa-frontend) \
+		  $(use_enable xml) \
+		  $(use_enable krl brl) \
+		  $(use_enable echo2) \
+		  $(use_enable jemacs) \
+		  $(use_with awt) \
+		  $(use_with sax sax2) \
+		  --with-java-source=$(java-pkg_get-target) || die "econf failed."
+
+	emake || die "emake failed."
+
+	if use doc; then
+		cd ${S}/doc
+		make html
+	fi
 }
 
 src_install () {
-	#
-	echo -e "\n src_compile_pwd: $(pwd) \n"
-	#
-	#einstall || die "einstall failed."
-	#rm -Rv ${D}/usr/share/java
-	#rm -Rv ${D}/usr/bin/
+	emake DESTDIR="${D}" install || die
+	rm -rv "${D}"/usr/share/java/ || die
 
-	java-pkg_newjar kawa-${my_PV}.jar
+	local SVN_PV=$(grep '^PACKAGE_VERSION' Makefile | sed -e 's/PACKAGE_VERSION = //')
+	java-pkg_newjar kawa-${SVN_PV}.jar || die
 
-	# maybe repl.class -> kawa.repl
-	java-pkg_dolauncher "kawa" --main kawa.repl
+	java-pkg_dolauncher "kawa" --main kawa.repl || die
 	java-pkg_dolauncher "qexo" --main kawa.repl --pkg_args \
-		"--xquery"
+		"--xquery" || die
 	java-pkg_dolauncher "kawa-cgi-servlet" --main \
-		gnu.kawa.servlet.CGIServletWrapper
-
+		gnu.kawa.servlet.CGIServletWrapper || die
 	if use jemacs; then
 		java-pkg_dolauncher "jemacs" --main \
-			gnu.jemacs.lang.ELisp
+			gnu.jemacs.lang.ELisp || die
 	fi
-	
-	dodoc ChangeLog TODO README NEWS
-	doinfo doc/kawa.info*
-	cp doc/kawa.man doc/kawa.2
-	cp doc/qexo.man doc/qexo.2
-	doman doc/*.2
 
+	use source && java-pkg_dosrc kawa/* gnu/*
 
+	dodoc ChangeLog TODO README NEWS || die
+	doinfo doc/kawa.info* || die
+	cp doc/kawa.man doc/kawa.2 || die
+	cp doc/qexo.man doc/qexo.2 || die
+	doman doc/*.2 || die
+	if use doc; then
+		dohtml -r ${S}/doc/kawa-html/*
+	fi
 }

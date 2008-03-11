@@ -35,6 +35,7 @@ src_unpack() {
 	sed -i "s:@CONTRIBDIR@:${CLSOURCEROOT}/${CLPACKAGE}/contrib/:" "${S}"/swank.lisp
 	epatch "${FILESDIR}"/inspect-presentations.patch
 	epatch "${FILESDIR}"/${PV}-fix-ecl.patch
+	epatch "${FILESDIR}"/${PV}-dont-call-init.patch
 }
 
 rel_elisp-comp() {
@@ -64,13 +65,13 @@ src_install() {
 	elisp-install ${PN} *.el{,c} ChangeLog "${FILESDIR}"/swank-loader.lisp || die "Cannot install SLIME core"
 	elisp-site-file-install "${FILESDIR}/${SITEFILE}"
 	cp "${FILESDIR}"/swank.asd "${S}"
-	# remove upstream swank-loader, since it will be unused
+	# remove upstream swank-loader, since it won't be used
 	rm "${S}"/swank-loader.lisp
 	common-lisp-install *.{lisp,asd}
 	common-lisp-symlink-asdf
 
 	## install contribs
-	elisp-install ${PN}/contrib/ contrib/*.el{,c} \
+	elisp-install ${PN}/contrib/ contrib/*.{el,elc,scm,goo} \
 		contrib/{README,ChangeLog} || die "Cannot install contribs"
 	insinto "${CLSOURCEROOT}"/swank/contrib
 	doins contrib/*.lisp
