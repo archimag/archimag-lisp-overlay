@@ -1,9 +1,13 @@
 #!/bin/bash
-set -x
+#set -x
 # Usage:
 # interpret a file: ./interpret mzscheme < scheme.scm
 # interpret code: ./interpret <<< "(display \"hello\nworld\")(newline)"   
 # use SLIB: ./interpret-slib <<< "(slib:report)"
+
+# tricky examples:
+# ./interpret bigloo <<< "(display (eq? (string->symbol \"\`\") '|\`|)))(newline)"
+# ./interpret bigloo <<< '(display (eq? (string->symbol "`") '\''|`|)))(newline)'
 
 # LOAD_SLIB=$(if [[ $0 == *slib* ]]; then echo "slib"; else echo ""; fi)
 if [[ $0 = *slib* ]]; then LOAD_SLIB="slib"; fi
@@ -11,7 +15,7 @@ if [[ $0 = *slib* ]]; then LOAD_SLIB="slib"; fi
 #echo "${LOAD_SLIB}"
 
 read -r -d "" PROGRAM
-#echo "${PROGRAM}"
+echo "PROGRAM = ${PROGRAM}"
 PROGRAM="(begin ${PROGRAM} (newline))"
 
 IMPLEMENTATION="${1:-all}"
@@ -30,8 +34,8 @@ run_bigloo() {
 run_chicken() {
     SLIB_INIT="chicken"
     echo "chicken:"
-    csi -require-extension syntax-case -eval \
-	"$([[ -z ${LOAD_SLIB} ]] && echo "${PROGRAM}" || echo "$(make_load_expression ${SLIB_INIT}) ${PROGRAM}")"
+#    csi -require-extension syntax-case -eval \
+    csi -eval "$([[ -z ${LOAD_SLIB} ]] && echo "${PROGRAM}" || echo "$(make_load_expression ${SLIB_INIT}) ${PROGRAM}")"
 }
 
 run_gambit() {

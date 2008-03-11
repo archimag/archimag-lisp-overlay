@@ -14,10 +14,10 @@ ESVN_OPTIONS="--non-interactive --username anonymous"
 
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~x86"
-IUSE="emacs +host-pcre"
+KEYWORDS=""
+IUSE="emacs"
 
-DEPEND="host-pcre? ( >=dev-libs/libpcre-7.6 )
+DEPEND=">=dev-libs/libpcre-7.6
 		sys-apps/texinfo
 		emacs? ( virtual/emacs )"
 
@@ -35,15 +35,9 @@ src_compile() {
 	# all this is necessary for bootstrapping from svn. yes, I asked :P
 	emake ${OPTIONS} confclean || die
 	emake ${OPTIONS} spotless || die
-	if use host-pcre; then
-		emake ${OPTIONS} bootstrap USE_HOST_PCRE=1 || die
-		emake ${OPTIONS} C_COMPILER_OPTIMIZATION_OPTIONS="$CFLAGS" \
-			USE_HOST_PCRE=1 CHICKEN=./chicken-boot || die
-	else
-		emake ${OPTIONS} bootstrap || die
-		emake ${OPTIONS} C_COMPILER_OPTIMIZATION_OPTIONS="$CFLAGS" \
-			CHICKEN=./chicken-boot || die
-	fi
+	emake ${OPTIONS} bootstrap USE_HOST_PCRE=1 || die
+	emake ${OPTIONS} C_COMPILER_OPTIMIZATION_OPTIONS="$CFLAGS" \
+		USE_HOST_PCRE=1 CHICKEN=./chicken-boot || die
 
 	use emacs && elisp-comp hen.el
 }

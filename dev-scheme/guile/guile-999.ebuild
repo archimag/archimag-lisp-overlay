@@ -28,10 +28,22 @@ MAJOR="1.8"
 
 IUSE="networking regex discouraged deprecated elisp nls debug-freelist debug-malloc debug threads"
 
+_src_unpack() {
+	cvs_src_unpack
+	sed 's#gnulib-tool --update#strace -f -e open,stat,stat64 gnulib-tool --update#' -i ${S}/autogen.sh
+}
+
 src_compile() {
-	sh -x ./autogen.sh
+#	mv configure.in configure.ac
+	echo "pwd: "; pwd
+	echo "ls: "; ls
+#	rm configure.in
+#	test -f configure.in && echo "yes" || echo "no"
+#	exit
+	sh ./autogen.sh
 
 #will fail for me if posix is disabled or without modules -- hkBst
+	ls
 	econf \
 		--enable-maintainer-mode \
 		--disable-error-on-warning \
