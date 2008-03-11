@@ -7,7 +7,7 @@ inherit eggs eutils
 DESCRIPTION="A Foreign Function Interface for lazy people, using gcc's libffi."
 
 LICENSE="BSD"
-KEYWORDS="-*"
+KEYWORDS="~x86"
 
 DEPEND="dev-chicken/easyffi
 		dev-chicken/silex"

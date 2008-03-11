@@ -14,7 +14,8 @@ KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~x86"
 IUSE="emacs host-pcre"
 
 DEPEND="host-pcre? ( dev-libs/libpcre )
-        sys-apps/texinfo emacs? ( virtual/emacs )"
+		sys-apps/texinfo
+		emacs? ( virtual/emacs )"
 
 SITEFILE=50hen-gentoo.el
 
