@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header:
 
+EAPI="1"
+
 inherit multilib elisp-common
 
 DESCRIPTION="Chicken is a Scheme interpreter and native Scheme to C compiler"
@@ -11,9 +13,9 @@ HOMEPAGE="http://www.call-with-current-continuation.org/"
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~x86"
-IUSE="emacs host-pcre"
+IUSE="emacs +host-pcre"
 
-DEPEND="host-pcre? ( dev-libs/libpcre )
+DEPEND="host-pcre? ( >=dev-libs/libpcre-7.6 )
 		sys-apps/texinfo
 		emacs? ( virtual/emacs )"
 

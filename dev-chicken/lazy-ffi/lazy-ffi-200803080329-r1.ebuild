@@ -10,7 +10,8 @@ LICENSE="BSD"
 KEYWORDS="~x86"
 
 DEPEND="dev-chicken/easyffi
-		dev-chicken/silex"
+		dev-chicken/silex
+		>=sys-devel/gcc-3.3"
 RDEPEND="${DEPEND}"
 
 pkg_setup() {
