@@ -33,9 +33,8 @@ src_compile() {
 	# all this is necessary for bootstrapping from svn. yes, I asked :P
 	emake ${OPTIONS} confclean || die
 	emake ${OPTIONS} spotless || die
-	emake ${OPTIONS} bootstrap USE_HOST_PCRE=1 || die
-	emake ${OPTIONS} C_COMPILER_OPTIMIZATION_OPTIONS="$CFLAGS" \
-		USE_HOST_PCRE=1 CHICKEN=./chicken-boot || die
+	emake ${OPTIONS} bootstrap || die
+	emake ${OPTIONS} USE_HOST_PCRE=1 CHICKEN=./chicken-boot || die
 
 	use emacs && elisp-comp hen.el
 }
@@ -43,6 +42,9 @@ src_compile() {
 RESTRICT=test
 
 src_install() {
+	# just in case..
+	unset A
+
 	emake ${OPTIONS} DESTDIR="${D}" CHICKEN=./chicken-boot install || die
 	dodoc ChangeLog* NEWS
 	dohtml -r html/

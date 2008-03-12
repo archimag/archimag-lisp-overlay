@@ -21,14 +21,16 @@ SITEFILE=50hen-gentoo.el
 
 src_unpack() {
 	unpack ${A}; cd "${S}"
-	sed "s,/lib,/$(get_libdir),g" -i defaults.make
+	sed "s:/lib:/$(get_libdir):g" -i defaults.make
 }
 
 src_compile() {
+	# $A is used by the makefile so >_>
+	unset A
+
 	OPTIONS="PLATFORM=linux PREFIX=/usr"
 
-	emake ${OPTIONS} C_COMPILER_OPTIMIZATION_OPTIONS="$CFLAGS" \
-		USE_HOST_PCRE=1 || die
+	emake ${OPTIONS} USE_HOST_PCRE=1 || die
 
 	use emacs && elisp-comp hen.el
 }
@@ -37,6 +39,8 @@ src_compile() {
 RESTRICT=test
 
 src_install() {
+	unset A
+
 	emake ${OPTIONS} DESTDIR="${D}" install || die
 	dodoc ChangeLog* NEWS
 	dohtml -r html/
