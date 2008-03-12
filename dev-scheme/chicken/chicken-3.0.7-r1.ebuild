@@ -42,7 +42,7 @@ RESTRICT=test
 src_install() {
 	unset A
 
-	emake ${OPTIONS} DESTDIR="${D}" install || die
+	emake ${OPTIONS} DESTDIR="${D}" USE_HOST_PCRE=1 install || die
 	dodoc ChangeLog* NEWS
 	dohtml -r html/
 	rm -rf "${D}"/usr/share/chicken/doc
