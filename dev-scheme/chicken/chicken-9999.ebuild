@@ -34,7 +34,8 @@ src_compile() {
 	emake ${OPTIONS} confclean || die
 	emake ${OPTIONS} spotless || die
 	emake ${OPTIONS} bootstrap || die
-	emake ${OPTIONS} USE_HOST_PCRE=1 CHICKEN=./chicken-boot || die
+	emake ${OPTIONS} C_COMPILER_OPTIMIZATION_OPTIONS="$CFLAGS" \
+		 USE_HOST_PCRE=1 CHICKEN=./chicken-boot || die
 
 	use emacs && elisp-comp hen.el
 }

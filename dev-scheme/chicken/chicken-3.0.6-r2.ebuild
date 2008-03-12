@@ -30,7 +30,8 @@ src_compile() {
 
 	OPTIONS="PLATFORM=linux PREFIX=/usr"
 
-	emake ${OPTIONS} USE_HOST_PCRE=1 || die
+	emake ${OPTIONS} C_COMPILER_OPTIMIZATION_OPTIONS="$CFLAGS" \
+		USE_HOST_PCRE=1 || die
 
 	use emacs && elisp-comp hen.el
 }
