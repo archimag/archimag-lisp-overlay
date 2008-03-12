@@ -31,9 +31,10 @@ src_compile() {
 	OPTIONS="PLATFORM=linux PREFIX=/usr"
 
 	# all this is necessary for bootstrapping from svn. yes, I asked :P
-	emake ${OPTIONS} confclean || die
-	emake ${OPTIONS} spotless || die
+	emake confclean || die
+	emake spotless || die
 	emake ${OPTIONS} bootstrap || die
+	emake confclean || die
 	emake ${OPTIONS} C_COMPILER_OPTIMIZATION_OPTIONS="$CFLAGS" \
 		 USE_HOST_PCRE=1 CHICKEN=./chicken-boot || die
 
