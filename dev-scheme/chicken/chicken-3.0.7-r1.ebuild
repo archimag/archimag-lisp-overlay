@@ -2,20 +2,18 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header:
 
-EAPI="1"
-
 inherit multilib elisp-common
 
 DESCRIPTION="Chicken is a Scheme interpreter and native Scheme to C compiler"
-SRC_URI="http://chicken.wiki.br/dev-snapshots/2008/03/09/${P}.tar.gz"
+SRC_URI="http://chicken.wiki.br/dev-snapshots/2008/03/12/${P}.tar.gz"
 HOMEPAGE="http://www.call-with-current-continuation.org/"
 
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~x86"
-IUSE="emacs +host-pcre"
+IUSE="emacs"
 
-DEPEND="host-pcre? ( >=dev-libs/libpcre-7.6 )
+DEPEND=">=dev-libs/libpcre-7.6
 		sys-apps/texinfo
 		emacs? ( virtual/emacs )"
 
@@ -23,18 +21,17 @@ SITEFILE=50hen-gentoo.el
 
 src_unpack() {
 	unpack ${A}; cd "${S}"
-	sed "s,/lib,/$(get_libdir),g" -i defaults.make
+	sed "s:/lib:/$(get_libdir):g" -i defaults.make
 }
 
 src_compile() {
+	# $A is used by the makefile so >_>
+	unset A
+
 	OPTIONS="PLATFORM=linux PREFIX=/usr"
 
-	if use host-pcre; then
-		emake ${OPTIONS} C_COMPILER_OPTIMIZATION_OPTIONS="$CFLAGS" \
-			USE_HOST_PCRE=1 || die
-	else
-		emake ${OPTIONS} C_COMPILER_OPTIMIZATION_OPTIONS="$CFLAGS" || die
-	fi
+	emake ${OPTIONS} C_COMPILER_OPTIMIZATION_OPTIONS="$CFLAGS" \
+		USE_HOST_PCRE=1 || die
 
 	use emacs && elisp-comp hen.el
 }
@@ -43,7 +40,9 @@ src_compile() {
 RESTRICT=test
 
 src_install() {
-	emake ${OPTIONS} DESTDIR="${D}" install || die
+	unset A
+
+	emake ${OPTIONS} DESTDIR="${D}" USE_HOST_PCRE=1 install || die
 	dodoc ChangeLog* NEWS
 	dohtml -r html/
 	rm -rf "${D}"/usr/share/chicken/doc

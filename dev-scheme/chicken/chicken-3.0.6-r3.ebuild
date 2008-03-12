@@ -2,17 +2,15 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header:
 
-inherit subversion multilib elisp-common
+inherit multilib elisp-common
 
 DESCRIPTION="Chicken is a Scheme interpreter and native Scheme to C compiler"
+SRC_URI="http://chicken.wiki.br/dev-snapshots/2008/03/11/${P}.tar.gz"
 HOMEPAGE="http://www.call-with-current-continuation.org/"
-
-ESVN_REPO_URI="https://galinha.ucpel.tche.br/svn/chicken-eggs/chicken/trunk"
-ESVN_OPTIONS="--non-interactive --username anonymous"
 
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~x86"
 IUSE="emacs"
 
 DEPEND=">=dev-libs/libpcre-7.6
@@ -22,36 +20,27 @@ DEPEND=">=dev-libs/libpcre-7.6
 SITEFILE=50hen-gentoo.el
 
 src_unpack() {
-	subversion_fetch || die
-	cd "${S}"
-	sed "s,/lib,/$(get_libdir),g" -i defaults.make
+	unpack ${A}; cd "${S}"
+	sed "s:/lib:/$(get_libdir):g" -i defaults.make
 }
 
 src_compile() {
+	# $A is used by the makefile so >_>
 	unset A
-
-	set > /tmp/envvars
 
 	OPTIONS="PLATFORM=linux PREFIX=/usr"
 
-	# all this is necessary for bootstrapping from svn. yes, I asked :P
-	emake ${OPTIONS} confclean || die
-	emake ${OPTIONS} spotless  || die
-	emake ${OPTIONS} bootstrap || die
-	emake ${OPTIONS} confclean || die
 	emake ${OPTIONS} C_COMPILER_OPTIMIZATION_OPTIONS="$CFLAGS" \
-		 USE_HOST_PCRE=1 CHICKEN=./chicken-boot || die
+		USE_HOST_PCRE=1 || die
 
 	use emacs && elisp-comp hen.el
 }
 
+# chicken doesn't seem to honor CHICKEN_PREFIX CHICKEN_HOME or LD_LIBRARY_PATH=${S}/.libs/
 RESTRICT=test
 
 src_install() {
-	# just in case..
 	unset A
-
-	OPTIONS="PLATFORM=linux PREFIX=/usr"
 
 	emake ${OPTIONS} DESTDIR="${D}" USE_HOST_PCRE=1 install || die
 	dodoc ChangeLog* NEWS

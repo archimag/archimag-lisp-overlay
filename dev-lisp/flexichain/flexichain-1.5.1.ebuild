@@ -15,7 +15,7 @@ SLOT="0"
 IUSE="doc"
 
 src_install() {
-	common-lisp-install *.{lisp,asd}
+	common-lisp-install *.{lisp,asd} version.lisp-expr
 	common-lisp-symlink-asdf
 	if use doc ; then
 		dodoc "${DISTDIR}"/{StrandhVilleneuveMoore,${PN}}.pdf

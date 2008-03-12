@@ -30,7 +30,7 @@
 
 inherit flag-o-matic
 
-VERSION=${NEED_CHICKEN:-3.0.5}
+VERSION=${NEED_CHICKEN:-3.0.6}
 DEPEND=">=dev-scheme/chicken-${VERSION}"
 RDEPEND=">=dev-scheme/chicken-${VERSION}"
 SLOT="0"
