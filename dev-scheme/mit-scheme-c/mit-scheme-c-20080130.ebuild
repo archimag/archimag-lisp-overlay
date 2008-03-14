@@ -26,7 +26,6 @@ dev-libs/libmcrypt
 dev-libs/openssl
 sys-libs/gdbm
 sys-libs/ncurses
-x11-libs/libX11
 "
 
 DEPEND="${RDEPEND}"
