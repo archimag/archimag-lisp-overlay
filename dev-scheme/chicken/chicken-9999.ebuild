@@ -39,8 +39,8 @@ src_compile() {
 	emake ${OPTIONS} spotless  || die
 	emake ${OPTIONS} bootstrap || die
 	emake ${OPTIONS} confclean || die
-	emake ${OPTIONS} C_COMPILER_OPTIMIZATION_OPTIONS="$CFLAGS" \
-		 USE_HOST_PCRE=1 CHICKEN=./chicken-boot || die
+	OPTIONS="${OPTIONS} USE_HOST_PCRE=1"
+	emake ${OPTIONS} C_COMPILER_OPTIMIZATION_OPTIONS="${CFLAGS}" CHICKEN=./chicken-boot || die
 
 	use emacs && elisp-comp hen.el
 }
@@ -51,9 +51,7 @@ src_install() {
 	# just in case..
 	unset A
 
-	OPTIONS="PLATFORM=linux PREFIX=/usr"
-
-	emake ${OPTIONS} DESTDIR="${D}" USE_HOST_PCRE=1 install || die
+	emake ${OPTIONS} DESTDIR="${D}" install || die
 	dodoc ChangeLog* NEWS
 	dohtml -r html/
 	rm -rf "${D}"/usr/share/chicken/doc

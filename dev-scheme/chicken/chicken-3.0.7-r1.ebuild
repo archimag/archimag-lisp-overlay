@@ -28,10 +28,9 @@ src_compile() {
 	# $A is used by the makefile so >_>
 	unset A
 
-	OPTIONS="PLATFORM=linux PREFIX=/usr"
+	OPTIONS="PLATFORM=linux PREFIX=/usr USE_HOST_PCRE=1"
 
-	emake ${OPTIONS} C_COMPILER_OPTIMIZATION_OPTIONS="$CFLAGS" \
-		USE_HOST_PCRE=1 || die
+	emake ${OPTIONS} C_COMPILER_OPTIMIZATION_OPTIONS="${CFLAGS}" || die
 
 	use emacs && elisp-comp hen.el
 }
@@ -42,7 +41,7 @@ RESTRICT=test
 src_install() {
 	unset A
 
-	emake ${OPTIONS} DESTDIR="${D}" USE_HOST_PCRE=1 install || die
+	emake ${OPTIONS} DESTDIR="${D}" install || die
 	dodoc ChangeLog* NEWS
 	dohtml -r html/
 	rm -rf "${D}"/usr/share/chicken/doc
