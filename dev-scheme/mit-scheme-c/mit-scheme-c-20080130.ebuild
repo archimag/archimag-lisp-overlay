@@ -9,7 +9,7 @@ HOMEPAGE="http://www.swiss.ai.mit.edu/projects/scheme/"
 SRC_URI="http://ftp.gnu.org/gnu/mit-scheme/snapshot.pkg/${PV}/${P}.tar.gz"
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~x86"
 IUSE="doc"
 S="${WORKDIR}/${P}/src"
 
@@ -28,7 +28,7 @@ sys-libs/gdbm
 sys-libs/ncurses
 "
 
-DEPEND="${RDEPEND}"
+DEPEND="${RDEPEND} !dev-scheme/mit-scheme"
 
 src_unpack() {
 	unpack ${A}; cd "${S}"
