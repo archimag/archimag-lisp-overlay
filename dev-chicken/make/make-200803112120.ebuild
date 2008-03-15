@@ -2,11 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-OLD_EGGPAGE="yes"
-
 inherit eggs
 
-DESCRIPTION="Oleg Kiselyov's XML parser."
+DESCRIPTION="Chicken-Scheme adaptation of the PLT 'make' macro."
 
-LICENSE="public-domain"
+LICENSE="LGPL-2"
 KEYWORDS="~x86"

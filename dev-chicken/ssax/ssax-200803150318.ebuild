@@ -2,11 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-OLD_EGGPAGE="yes"
-
 inherit eggs
 
-DESCRIPTION="Chicken-Scheme implementation of SRFI-37."
+DESCRIPTION="Oleg Kiselyov's XML parser."
 
-LICENSE="BSD"
+LICENSE="public-domain"
 KEYWORDS="~x86"
