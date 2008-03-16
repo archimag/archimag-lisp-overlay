@@ -7,7 +7,7 @@ inherit subversion multilib elisp-common
 DESCRIPTION="Chicken is a Scheme interpreter and native Scheme to C compiler"
 HOMEPAGE="http://www.call-with-current-continuation.org/"
 
-ESVN_REPO_URI="https://galinha.ucpel.tche.br/svn/chicken-eggs/chicken/trunk"
+ESVN_REPO_URI="http://galinha.ucpel.tche.br/svn/chicken-eggs/chicken/trunk"
 ESVN_OPTIONS="--non-interactive --username anonymous"
 
 LICENSE="BSD"

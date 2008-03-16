@@ -16,7 +16,7 @@
 inherit eggs subversion
 
 SRC_URI=""
-ESVN_REPO_URI="https://galinha.ucpel.tche.br/svn/chicken-eggs/release/3/${EGG_NAME}/trunk"
+ESVN_REPO_URI="http://galinha.ucpel.tche.br/svn/chicken-eggs/release/3/${EGG_NAME}/trunk"
 ESVN_OPTIONS="--non-interactive --username anonymous"
 
 eggs-svn_src_unpack() {
