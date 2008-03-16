@@ -18,7 +18,7 @@ LICENSE="MIT public-domain
 		 jemacs? ( GPL-2 )
 		 krl? ( GPL-2 )"
 SLOT="0"
-KEYWORDS="~x86"
+KEYWORDS=""
 IUSE="+awt doc echo2 +frontend +java5 jemacs krl +sax servlets +swing swt +xml xqtests"
 
 COMMON_DEPEND="java5? ( >=virtual/jdk-1.5 )
