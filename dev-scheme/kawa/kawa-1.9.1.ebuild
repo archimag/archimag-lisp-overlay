@@ -75,11 +75,11 @@ src_compile() {
 		  $(use_with sax sax2) \
 		  --with-java-source=$(java-pkg_get-target) || die "econf failed."
 
-	emake || die "emake failed."
+	emake -j1 || die "emake failed."
 }
 
 src_install () {
-	emake DESTDIR="${D}" install || die
+	emake -j1 DESTDIR="${D}" install || die
 	rm -rv "${D}"/usr/share/java/ || die
 
 	java-pkg_newjar kawa-${PV}.jar || die
