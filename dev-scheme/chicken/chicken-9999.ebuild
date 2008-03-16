@@ -8,7 +8,7 @@ DESCRIPTION="Chicken is a Scheme interpreter and native Scheme to C compiler"
 HOMEPAGE="http://www.call-with-current-continuation.org/"
 
 ESVN_REPO_URI="http://galinha.ucpel.tche.br/svn/chicken-eggs/chicken/trunk"
-ESVN_OPTIONS="--non-interactive --username anonymous"
+ESVN_OPTIONS="--username=anonymous --password= --non-interactive"
 
 LICENSE="BSD"
 SLOT="0"

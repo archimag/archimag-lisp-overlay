@@ -15,9 +15,9 @@
 
 inherit eggs subversion
 
-SRC_URI=""
+unset SRC_URI
 ESVN_REPO_URI="http://galinha.ucpel.tche.br/svn/chicken-eggs/release/3/${EGG_NAME}/trunk"
-ESVN_OPTIONS="--non-interactive --username anonymous"
+ESVN_OPTIONS="--username=anonymous --password= --non-interactive"
 
 eggs-svn_src_unpack() {
 	mkdir ${S}
