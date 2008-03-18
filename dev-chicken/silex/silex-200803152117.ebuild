@@ -6,5 +6,5 @@ inherit eggs
 
 DESCRIPTION="An efficient and powerful lexer generator."
 
-LICENSE=""
-KEYWORDS="~x86 ~amd64 "
+LICENSE="GPL-2"
+KEYWORDS="~x86 ~amd64"
