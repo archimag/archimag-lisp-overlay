@@ -10,3 +10,6 @@ DESCRIPTION="Chicken-Scheme interface to UNIX domain sockets."
 
 LICENSE="BSD"
 KEYWORDS="~x86 ~amd64"
+
+DEPEND="dev-chicken/easyffi"
+RDEPEND="${DEPEND}"
