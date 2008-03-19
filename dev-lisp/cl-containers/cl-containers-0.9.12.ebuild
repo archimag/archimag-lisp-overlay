@@ -19,11 +19,6 @@ DEPEND="dev-lisp/asdf-system-connections
 
 CLSYSTEMS="${PN} ${PN}-test"
 
-src_unpack() {
-	unpack ${A}
-	epatch "${FILESDIR}"/${PV}-fix-asd.patch
-}
-
 src_install() {
 	common-lisp-install *.asd {dev,tests}/*.lisp
 	common-lisp-symlink-asdf
