@@ -21,11 +21,6 @@ DEPEND="dev-lisp/metatilities
 
 CLSYSTEMS="${PN} ${PN}-test"
 
-src_unpack() {
-	unpack ${A}
-	epatch "${FILESDIR}"/${PV}-fix-asd.patch
-}
-
 src_install() {
 	common-lisp-install *.asd dev/{*.lisp,graphviz} unit-tests
 	common-lisp-symlink-asdf
