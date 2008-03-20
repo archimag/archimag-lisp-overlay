@@ -15,6 +15,6 @@ DEPEND=""
 
 src_install() {
 	common-lisp-install *.{asd,lisp}
-	common-lisp-install LICENSE NEWS README TODO
+	common-lisp-install NEWS README TODO
 	common-lisp-symlink-asdf
 }
