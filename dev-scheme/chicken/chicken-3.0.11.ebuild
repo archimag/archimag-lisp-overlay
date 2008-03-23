@@ -47,7 +47,7 @@ src_install() {
 	rm -rf "${D}"/usr/share/chicken/doc
 	
 	touch .keep
-	insinto ${D}/usr/lib/chicken/3
+	insinto /usr/lib/chicken/3
 	doins .keep
 
 	if use emacs; then
