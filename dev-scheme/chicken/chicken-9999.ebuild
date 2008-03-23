@@ -24,7 +24,7 @@ SITEFILE=50hen-gentoo.el
 src_unpack() {
 	subversion_fetch || die
 	cd "${S}"
-	sed "s,/lib,/$(get_libdir),g" -i defaults.make
+	dosed "s:/lib:/$(get_libdir):g" defaults.make
 }
 
 src_compile() {
@@ -55,6 +55,10 @@ src_install() {
 	dodoc ChangeLog* NEWS
 	dohtml -r html/
 	rm -rf "${D}"/usr/share/chicken/doc
+
+        touch .keep
+	insinto ${D}/usr/lib/chicken/3
+	doins .keep
 
 	if use emacs; then
 		elisp-install ${PN} *.{el,elc}

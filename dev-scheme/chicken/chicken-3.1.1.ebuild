@@ -5,7 +5,7 @@
 inherit multilib elisp-common
 
 DESCRIPTION="Chicken is a Scheme interpreter and native Scheme to C compiler"
-SRC_URI="http://chicken.wiki.br/dev-snapshots/2008/03/19/${P}.tar.gz"
+SRC_URI="http://chicken.wiki.br/dev-snapshots/2008/03/23/${P}.tar.gz"
 HOMEPAGE="http://www.call-with-current-continuation.org/"
 
 LICENSE="BSD"
@@ -21,7 +21,7 @@ SITEFILE=50hen-gentoo.el
 
 src_unpack() {
 	unpack ${A}; cd "${S}"
-	sed "s:/lib:/$(get_libdir):g" -i defaults.make
+	dosed "s:/lib:/$(get_libdir):g" defaults.make
 }
 
 src_compile() {
@@ -46,6 +46,10 @@ src_install() {
 	dohtml -r html/
 	rm -rf "${D}"/usr/share/chicken/doc
 
+	touch .keep
+	insinto ${D}/usr/lib/chicken/3
+	doins .keep
+		
 	if use emacs; then
 		elisp-install ${PN} *.{el,elc}
 		elisp-site-file-install "${FILESDIR}"/${SITEFILE}
