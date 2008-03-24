@@ -30,7 +30,7 @@
 
 inherit flag-o-matic
 
-VERSION=${NEED_CHICKEN:-3.0.6}
+VERSION=${NEED_CHICKEN:-3.1.0}
 DEPEND=">=dev-scheme/chicken-${VERSION}"
 RDEPEND=">=dev-scheme/chicken-${VERSION}"
 SLOT="0"
@@ -42,7 +42,7 @@ else
 	[[ -n ${EGG_NAME} ]] || EGG_NAME=$PN
 fi
 
-CHICKEN_REPOSITORY=${CHICKEN_REPOSITORY:-/usr/lib/chicken/3}
+CHICKEN_REPOSITORY=$(chicken-setup -R)
 EGGDOC_DIR="/usr/share/doc/chicken-eggs/${EGG_NAME}"
 
 SRC_URI="http://cleo.uwindsor.ca/cgi-bin/gentoo-eggs/${EGG_NAME}-3-${PV}.tar.gz"
