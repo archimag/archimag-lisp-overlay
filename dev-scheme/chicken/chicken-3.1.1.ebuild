@@ -46,10 +46,11 @@ src_install() {
 	dohtml -r html/
 	rm -rf "${D}"/usr/share/chicken/doc
 
-	touch .keep
-	insinto /usr/lib/chicken/3
-	doins .keep
-		
+        # put a .keep in the default egg repository
+        touch .keep
+        insinto /usr/$(get_libdir)/chicken/3
+        doins .keep
+
 	if use emacs; then
 		elisp-install ${PN} *.{el,elc}
 		elisp-site-file-install "${FILESDIR}"/${SITEFILE}
