@@ -21,7 +21,7 @@ SITEFILE=50hen-gentoo.el
 
 src_unpack() {
 	unpack ${A}; cd "${S}"
-	dosed "s:/lib:/$(get_libdir):g" defaults.make
+	sed -i -e "s:/lib:/$(get_libdir):g" defaults.make
 }
 
 src_compile() {
