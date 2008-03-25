@@ -116,8 +116,8 @@ eggs-set_paths() {
 	ebegin "Processing setup files"
 	for setup_file in $(ls *.setup-info); do
 		ebegin "  ${setup_file}"
-		sed -i -e "s:${CHICKEN_REPOSITORY}/\(.*\).html:${EGGDOC_DIR}/\1.html:g" ${setup_file} || die "failed setting documentation paths in ${setup_file}"
-		eend 0
+		dosed "s:${CHICKEN_REPOSITORY}/\(.*\).html:${EGGDOC_DIR}/\1.html:g" ${setup_file} || die "failed setting documentation paths in ${setup_file}"
+		eend $!
 	done
 	einfo "Done processing setup files."
 }
