@@ -30,24 +30,23 @@
 
 inherit flag-o-matic
 
-VERSION=${NEED_CHICKEN:-3.1.0}
+VERSION="${NEED_CHICKEN:-3.1.0}"
 DEPEND=">=dev-scheme/chicken-${VERSION}"
 RDEPEND=">=dev-scheme/chicken-${VERSION}"
 SLOT="0"
 IUSE=""
 
-if [[ ${PN} == srfi* ]]; then
+if [[ "${PN}" == "srfi*" ]]; then
 	EGG_NAME="srfi-${PN##srfi}"
 else
-	[[ -n ${EGG_NAME} ]] || EGG_NAME=$PN
+	[[ -n "${EGG_NAME}" ]] || EGG_NAME="$PN"
 fi
 
-CHICKEN_REPOSITORY=$(chicken-setup -R)
 EGGDOC_DIR="/usr/share/doc/chicken-eggs/${EGG_NAME}"
 
 SRC_URI="http://cleo.uwindsor.ca/cgi-bin/gentoo-eggs/${EGG_NAME}-3-${PV}.tar.gz"
 
-if [[ -n ${OLD_EGGPAGE} ]]; then
+if [[ -n "${OLD_EGGPAGE}" ]]; then
 	HOMEPAGE="http://www.call-with-current-continuation.org/eggs/${EGG_NAME}"
 else
 	HOMEPAGE="http://chicken.wiki.br/${EGG_NAME}"
@@ -58,13 +57,17 @@ fi
 # @DESCRIPTION:
 # INstall egg binaries/scripts/wrappers into /usr/bin
 eggs-install_binaries() {
-	local files=$(ls)
-	local file
-	for file in ${files}; do
-		einfo "  => /usr/bin/${file}"
-		dobin ${file} || die "failed installing ${file}"
-		eend $!
-	done
+	if [[ -d "${S}/install/${PROGRAM_PATH}" ]]; then
+		pushd "${S}/install/${PROGRAM_PATH}" >/dev/null
+		local files="$(ls)"
+		local file
+		for file in "${files}"; do
+			einfo "  => /usr/bin/${file}"
+			dobin "${file}" || die "failed installing ${file}"
+			eend $!
+		done
+		popd >/dev/null
+	fi
 }
 
 # @FUNCTION: eggs-install_files
@@ -74,34 +77,34 @@ eggs-install_binaries() {
 eggs-install_files() {
 	local destination="${1:-${CHICKEN_REPOSITORY}}"
 	local real_destination
-	local files=$(ls)
+	local files="$(ls)"
 	local file
-	for file in ${files}; do
-		case ${file} in
+	for file in "${files}"; do
+		case "${file}" in
 			*.html|*.css)
 				# Hackish, but working, way of displaying real destinations
 				# in info messages. Feel free to improve on it.
-				real_destination=${EGGDOC_DIR}
-				insinto ${EGGDOC_DIR}
+				real_destination="${EGGDOC_DIR}"
+				insinto "${EGGDOC_DIR}"
 				insopts -m644
 				;;
 			*.so)
-				real_destination=${destination}
-				insinto ${destination}
+				real_destination="${destination}"
+				insinto "${destination}"
 				insopts -m755
 				;;
 			*)
-				real_destination=${destination}
-				insinto ${destination}
+				real_destination="${destination}"
+				insinto "${destination}"
 				insopts -m644
 				;;
 		esac
-		if [[ -d ${file} ]];then
+		if [[ -d "${file}" ]];then
 			# To iterate is human, to recurse, divine.
-			( cd ${file}; eggs-install_files ${destination}/${file} )
+			( cd "${file}"; eggs-install_files "${destination}/${file}" )
 		else
 			einfo "  => ${real_destination}/${file}"
-			doins ${file} || die "failed installing ${file}"
+			doins "${file}" || die "failed installing ${file}"
 			eend $!
 		fi
 	done
@@ -114,61 +117,55 @@ eggs-install_files() {
 # installation paths.
 eggs-set_paths() {
 	ebegin "Processing setup files"
-	for setup_file in $(ls *.setup-info); do
-		ebegin "  ${setup_file}"
-		sed -i -e "s:${CHICKEN_REPOSITORY}/\(.*\).html:${EGGDOC_DIR}/\1.html:g" ${setup_file} || die "failed setting documentation paths in ${setup_file}"
+	for setup_file in "$(ls *.setup-info)"; do
+		einfo "  ${setup_file}"
+		sed -i -e "s:${PROGRAM_PATH}:/usr/bin:g" "${setup_file}" || die "failed setting binary instalation paths"
+		sed -i -e "s:${CHICKEN_REPOSITORY}/\(.*\).html:${EGGDOC_DIR}/\1.html:g" "${setup_file}" || die "failed setting documentation paths in ${setup_file}"
 		eend $!
 	done
 	einfo "Done processing setup files."
 }
 
-# @FUNCTION: eggs-do_cscflags
-# @USAGE:
-# @DESCRIPTION:
-# Parse CFLAGS into CSCFLAGS
-eggs-do_cscflags() {
-	strip-flags || die
-	local flag
-	CSCFLAGS=""
-	for flag in ${CFLAGS}; do
-		CSCFLAGS="${CSCFLAGS} -C ${flag}"
-	done
-}
+#
+# Ebuild function redefintions
+#
 
 eggs_src_unpack() {
-	mkdir ${S}
-	cd ${S}
-	unpack ${A} || die
+	mkdir "${S}"
+	cd "${S}"
+	unpack "${A}" || die
 }
 
 eggs_src_compile() {
-	eggs-do_cscflags || die
-	chicken-setup -k -c "${CSCFLAGS}" \
-		-build-prefix ${S}/build \
-		-install-prefix ${S}/install || die "egg compilation failed"
+	strip-flags || die
+	filter-ldflags -Wl,--as-needed
+	CSC_FLAGS="-C '$CFLAGS $LDFLAGS'"
+
+	CHICKEN_SETUP_OPTIONS="-k -build-prefix ${S}/build -install-prefix ${S}/install"
+
+	chicken-setup || die "egg compilation failed"
 }
 
 eggs_src_test() {
-	if [[ ${EGG_TESTABLE} == "yes" ]]; then
-		eggs-do_cscflags || die
-		chicken-setup -k -n -t -c "${CSCFLAGS}" \
-			-build-prefix ${S}/build \
-			-install-prefix ${S}/install || die "egg test phase failed"
+	if [[ "${EGG_TESTABLE}" == "yes" ]]; then
+		chicken-setup -n -t || die "egg test phase failed"
 	fi
 }
 
 eggs_src_install() {
-	pushd ${S}/install/${CHICKEN_REPOSITORY} >/dev/null
+	CHICKEN_REPOSITORY="$(chicken-setup -R)" || die
+	PROGRAM_PATH="$(chicken-setup -P)" || die
+
+	pushd "${S}/install/${CHICKEN_REPOSITORY}" >/dev/null
+
 	[[ -f index.html ]] && rm index.html
 	eggs-set_paths
+
 	ebegin "Installing files"
-	if [[ -d ${S}/install/usr/bin ]]; then
-		pushd ${S}/install/usr/bin >/dev/null
-		eggs-install_binaries
-		popd >/dev/null
-	fi
+	eggs-install_binaries
 	eggs-install_files
 	einfo "Done with installation."
+
 	popd >/dev/null
 }
 

@@ -15,13 +15,13 @@
 
 inherit eggs subversion
 
-unset SRC_URI
+SRC_URI=""
 ESVN_REPO_URI="http://galinha.ucpel.tche.br/svn/chicken-eggs/release/3/${EGG_NAME}/trunk"
 ESVN_OPTIONS="--username=anonymous --password= --non-interactive"
 
 eggs-svn_src_unpack() {
-	mkdir ${S}
-	cd ${S}
+	mkdir "${S}"
+	cd "${S}"
 	subversion_fetch || die
 }
 
