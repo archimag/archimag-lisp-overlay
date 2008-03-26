@@ -1,6 +1,6 @@
 # Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header:
+# $Header: $
 
 inherit multilib elisp-common
 
@@ -47,9 +47,11 @@ src_install() {
 	rm -rf "${D}"/usr/share/chicken/doc
 
         # put a .keep in the default egg repository
-        touch .keep
-        insinto /usr/$(get_libdir)/chicken/3
-        doins .keep
+        #touch .keep
+        #insinto /usr/$(get_libdir)/chicken/3
+        #doins .keep
+
+	keepdir /usr/$(get_libdir)/chicken/3
 
 	if use emacs; then
 		elisp-install ${PN} *.{el,elc}
