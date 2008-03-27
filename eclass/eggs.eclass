@@ -59,12 +59,11 @@ fi
 eggs-install_binaries() {
 	if [[ -d "${S}/install/${PROGRAM_PATH}" ]]; then
 		pushd "${S}/install/${PROGRAM_PATH}" >/dev/null
-		local files="$(ls)"
 		local file
-		for file in "${files}"; do
+		for file in $(ls); do
 			einfo "  => /usr/bin/${file}"
 			dobin "${file}" || die "failed installing ${file}"
-			eend $!
+			eend $?
 		done
 		popd >/dev/null
 	fi
@@ -75,26 +74,25 @@ eggs-install_binaries() {
 # @DESCRIPTION:
 # Install egg files into the correct locations.
 eggs-install_files() {
-	local destination="${1:-${CHICKEN_REPOSITORY}}"
+	local destination=${1:-${CHICKEN_REPOSITORY}}
 	local real_destination
-	local files="$(ls)"
 	local file
-	for file in "${files}"; do
+	for file in $(ls); do
 		case "${file}" in
 			*.html|*.css)
 				# Hackish, but working, way of displaying real destinations
 				# in info messages. Feel free to improve on it.
-				real_destination="${EGGDOC_DIR}"
+				real_destination=${EGGDOC_DIR}
 				insinto "${EGGDOC_DIR}"
 				insopts -m644
 				;;
 			*.so)
-				real_destination="${destination}"
+				real_destination=${destination}
 				insinto "${destination}"
 				insopts -m755
 				;;
 			*)
-				real_destination="${destination}"
+				real_destination=${destination}
 				insinto "${destination}"
 				insopts -m644
 				;;
@@ -105,7 +103,7 @@ eggs-install_files() {
 		else
 			einfo "  => ${real_destination}/${file}"
 			doins "${file}" || die "failed installing ${file}"
-			eend $!
+			eend $?
 		fi
 	done
 }
@@ -117,11 +115,12 @@ eggs-install_files() {
 # installation paths.
 eggs-set_paths() {
 	ebegin "Processing setup files"
-	for setup_file in "$(ls *.setup-info)"; do
+	for setup_file in $(ls *.setup-info); do
 		einfo "  ${setup_file}"
-		sed -i -e "s:${PROGRAM_PATH}:/usr/bin:g" "${setup_file}" || die "failed setting binary instalation paths"
-		sed -i -e "s:${CHICKEN_REPOSITORY}/\(.*\).html:${EGGDOC_DIR}/\1.html:g" "${setup_file}" || die "failed setting documentation paths in ${setup_file}"
-		eend $!
+		sed -e "s:${PROGRAM_PATH}:/usr/bin:g" \
+			-e "s:${CHICKEN_REPOSITORY}/\(.*\).html:${EGGDOC_DIR}/\1.html:g" \
+			-i "${setup_file}" || die "failed processing ${setup_file}"
+		eend $?
 	done
 	einfo "Done processing setup files."
 }
@@ -153,8 +152,8 @@ eggs_src_test() {
 }
 
 eggs_src_install() {
-	CHICKEN_REPOSITORY="$(chicken-setup -R)" || die
-	PROGRAM_PATH="$(chicken-setup -P)" || die
+	CHICKEN_REPOSITORY=$(chicken-setup -R) || die
+	PROGRAM_PATH=$(chicken-setup -P) || die
 
 	pushd "${S}/install/${CHICKEN_REPOSITORY}" >/dev/null
 
