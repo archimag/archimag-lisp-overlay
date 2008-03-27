@@ -139,7 +139,7 @@ eggs_src_unpack() {
 eggs_src_compile() {
 	strip-flags || die
 	filter-ldflags -Wl,--as-needed
-	CSC_FLAGS="-C '$CFLAGS $LDFLAGS'"
+	CSC_OPTIONS="-C '$CFLAGS $LDFLAGS'"
 
 	CHICKEN_SETUP_OPTIONS="-v -k -build-prefix ${S}/build -install-prefix ${S}/install"
 
