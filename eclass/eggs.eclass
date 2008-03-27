@@ -141,14 +141,14 @@ eggs_src_compile() {
 	filter-ldflags -Wl,--as-needed
 	CSC_FLAGS="-C '$CFLAGS $LDFLAGS'"
 
-	CHICKEN_SETUP_OPTIONS="-k -build-prefix ${S}/build -install-prefix ${S}/install"
+	CHICKEN_SETUP_OPTIONS="-v -k -build-prefix ${S}/build -install-prefix ${S}/install"
 
-	chicken-setup || die "egg compilation failed"
+	chicken-setup ${CHICKEN_SETUP_OPTIONS} || die "egg compilation failed"
 }
 
 eggs_src_test() {
 	if [[ "${EGG_TESTABLE}" == "yes" ]]; then
-		chicken-setup -n -t || die "egg test phase failed"
+		chicken-setup -n -t ${CHICKEN_SETUP_OPTIONS} || die "egg test phase failed"
 	fi
 }
 
