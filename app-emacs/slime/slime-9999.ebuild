@@ -26,7 +26,7 @@ CLSYSTEMS=swank
 SITEFILE=70${PN}-gentoo.el
 
 src_unpack() {
-	cvs_src_unpack
+	cvs_src_unpack && cd "${S}"
 
 	SWANK_VERSION=$(head -n 1 "${S}"/ChangeLog | awk '{print $1}')
 	sed "s:(defvar \*swank-wire-protocol-version\* nil:(defvar \*swank-wire-protocol-version\* \"${SWANK_VERSION}\":" -i "${S}"/swank.lisp
