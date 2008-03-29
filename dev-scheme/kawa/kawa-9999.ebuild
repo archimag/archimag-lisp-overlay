@@ -72,7 +72,7 @@ src_compile() {
 		  $(use_enable jemacs) \
 		  $(use_with awt) \
 		  $(use_with sax sax2) \
-		  --with-java-source=$(java-pkg_get-target) || die "econf failed."
+		  --with-java-source=$(java-pkg_get-source) || die "econf failed."
 
 	emake -j1 || die "emake failed."
 
