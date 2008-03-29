@@ -12,10 +12,16 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 
 DEPEND="dev-lisp/cl-fad
-		dev-lisp/fiveam"
+		dev-lisp/fiveam
+		doc? ( sys-apps/texinfo )"
+
+src_compile() {
+	use doc && texi2pdf documentation/${P}.texinfo
+}
 
 src_install() {
 	common-lisp-install *.{lisp,asd} zoneinfo
 	common-lisp-symlink-asdf
-	dodoc ChangeLog README TODO
+	dodoc CREDITS README TODO
+	use doc && dodoc documentation/${P}.pdf
 }
