@@ -33,7 +33,7 @@ eggs-svn_src_unpack() {
 	subversion_fetch || die
 }
 
-egg-svn_src_compile() {
+eggs-svn_src_compile() {
 	eggs-svn-doc_maker
 	eggs_src_compile
 }
