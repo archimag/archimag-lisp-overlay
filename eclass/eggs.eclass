@@ -28,6 +28,8 @@
 # Override egg name autogeneration by settting this before importing
 # this eclass.
 
+RESTRICT="primaryuri"
+
 inherit flag-o-matic
 
 VERSION="${NEED_CHICKEN:-3.1.0}"
