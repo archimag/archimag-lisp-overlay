@@ -23,10 +23,19 @@ else
 fi
 ESVN_OPTIONS="--username=anonymous --password= --non-interactive"
 
+eggs-svn-doc_maker() {
+	true
+}
+
 eggs-svn_src_unpack() {
 	mkdir "${S}"
 	cd "${S}"
 	subversion_fetch || die
 }
 
-EXPORT_FUNCTIONS src_unpack
+egg-svn_src_compile() {
+	eggs-svn-doc_maker
+	eggs_src_compile
+}
+
+EXPORT_FUNCTIONS src_unpack src_compile
