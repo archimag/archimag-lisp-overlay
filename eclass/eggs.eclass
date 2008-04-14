@@ -38,13 +38,16 @@ RDEPEND=">=dev-scheme/chicken-${VERSION}"
 SLOT="0"
 IUSE=""
 
-if [[ "${PN}" == "srfi*" ]]; then
-	EGG_NAME="srfi-${PN##srfi}"
-else
-	[[ -n "${EGG_NAME}" ]] || EGG_NAME="$PN"
-fi
+case ${PN} in
+	srfi*)
+		EGG_NAME=${PN/#srfi/srfi-}
+		;;
+	*)
+		EGG_NAME=${EGG_NAME:-${PN}}
+		;;
+esac
 
-EGGDOC_DIR="/usr/share/doc/chicken-eggs/${EGG_NAME}"
+EGGDOC_DIR="/usr/share/doc/chicken-eggs/${PN}"
 
 SRC_URI="http://cleo.uwindsor.ca/cgi-bin/gentoo-eggs/${EGG_NAME}-3-${PV}.tar.gz"
 
