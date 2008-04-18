@@ -5,7 +5,7 @@
 inherit multilib elisp-common
 
 DESCRIPTION="Chicken is a Scheme interpreter and native Scheme to C compiler"
-SRC_URI="http://chicken.wiki.br/dev-snapshots/2008/03/24/${P}.tar.gz"
+SRC_URI="http://chicken.wiki.br/dev-snapshots/2008/04/16/${P}.tar.gz"
 HOMEPAGE="http://www.call-with-current-continuation.org/"
 
 LICENSE="BSD"
@@ -46,15 +46,10 @@ src_install() {
 	dohtml -r html/
 	rm -rf "${D}"/usr/share/chicken/doc
 
-	# put a .keep in the default egg repository
-	#touch .keep
-	#insinto /usr/$(get_libdir)/chicken/3
-	#doins .keep
-
 	keepdir /usr/$(get_libdir)/chicken/3
 
 	if use emacs; then
-		elisp-install ${PN} *.{el,elc}
+		elisp-install ${PN} hen.{el,elc}
 		elisp-site-file-install "${FILESDIR}"/${SITEFILE}
 	fi
 }
