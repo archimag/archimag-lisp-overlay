@@ -10,7 +10,7 @@ HOMEPAGE="http://www.call-with-current-continuation.org/"
 
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~x86"
+KEYWORDS=""
 IUSE="emacs"
 
 DEPEND=">=dev-libs/libpcre-7.6
