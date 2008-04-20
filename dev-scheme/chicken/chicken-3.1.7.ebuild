@@ -5,7 +5,7 @@
 inherit multilib elisp-common
 
 DESCRIPTION="Chicken is a Scheme interpreter and native Scheme to C compiler"
-SRC_URI="http://chicken.wiki.br/dev-snapshots/2008/04/15/${P}.tar.gz"
+SRC_URI="http://chicken.wiki.br/dev-snapshots/2008/04/19/${P}.tar.gz"
 HOMEPAGE="http://www.call-with-current-continuation.org/"
 
 LICENSE="BSD"
