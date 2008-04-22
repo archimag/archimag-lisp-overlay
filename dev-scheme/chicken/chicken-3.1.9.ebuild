@@ -7,12 +7,12 @@ inherit multilib elisp-common
 RESTRICT="primaryuri"
 
 DESCRIPTION="Chicken is a Scheme interpreter and native Scheme to C compiler"
-SRC_URI="http://chicken.wiki.br/dev-snapshots/2008/04/19/${P}.tar.gz"
+SRC_URI="http://chicken.wiki.br/dev-snapshots/2008/04/22/${P}.tar.gz"
 HOMEPAGE="http://www.call-with-current-continuation.org/"
 
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~x86"
 IUSE="emacs"
 
 DEPEND=">=dev-libs/libpcre-7.6
