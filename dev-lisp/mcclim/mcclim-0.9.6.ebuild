@@ -7,7 +7,7 @@ inherit common-lisp-2 elisp eutils
 DESCRIPTION="McCLIM is a free software implementation of CLIM."
 HOMEPAGE="http://common-lisp.net/project/${PN}
 		http://cliki.net/McCLIM"
-SRC_URI="http://common-lisp.net/~sionescu/files/${P}.tar.bz2"
+SRC_URI="http://common-lisp.net/project/${PN}/downloads/${P}.tar.gz"
 LICENSE="LLGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
@@ -15,7 +15,7 @@ IUSE="emacs doc"
 
 DEPEND="!dev-lisp/cl-${PN}
 		dev-lisp/spatial-trees
-		>=dev-lisp/flexichain-0.4.1
+		>=dev-lisp/flexichain-1.5.1
 		dev-lisp/clx
 		emacs? ( virtual/emacs )
 		doc? ( virtual/tetex sys-apps/texinfo )"
@@ -28,12 +28,13 @@ CLSYSTEMS="Apps/Functional-Geometry/functional-geometry
 		Experimental/freetype/mcclim-truetype
 		Experimental/tree-with-cross-edges/mcclim-tree-with-cross-edges
 		Extensions/conditional-commands/conditional-commands
-		clim-examples clim-listener clouseau mcclim"
+		clim-examples clim-listener clouseau mcclim
+		mcclim-gif-bitmaps mcclim-jpeg-bitmaps"
 SITEFILE="${FILESDIR}"/50mcclim-gentoo.el
 EMACS_SOURCES="Tools/Emacs/indent-clim.el Tools/Emacs/hyperclim.el"
 
 src_unpack() {
-	unpack ${A}
+	unpack ${A} && cd ${S}
 	epatch "${FILESDIR}"/${PV}-mcclim.asd-cmucl.patch
 }
 
