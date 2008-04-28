@@ -17,6 +17,13 @@ DEPEND="!dev-lisp/cl-${PN}
 		dev-lisp/spatial-trees
 		>=dev-lisp/flexichain-1.5.1
 		dev-lisp/clx
+		dev-lisp/cffi
+		dev-lisp/skippy
+		dev-lisp/cl-jpeg
+		dev-lisp/zpb-ttf
+		dev-lisp/cl-vectors
+		dev-lisp/rt
+		dev-lisp/fiveam
 		emacs? ( virtual/emacs )
 		doc? ( virtual/tetex sys-apps/texinfo )"
 
