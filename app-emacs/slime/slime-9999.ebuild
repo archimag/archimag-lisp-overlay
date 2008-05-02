@@ -64,7 +64,7 @@ src_install() {
 	## install core
 	elisp-install ${PN} *.el{,c} ChangeLog "${FILESDIR}"/swank-loader.lisp || die "Cannot install SLIME core"
 	elisp-site-file-install "${FILESDIR}/${SITEFILE}"
-	cp "${FILESDIR}"/swank.asd "${S}"
+	cp "${FILESDIR}"/swank-${PV}.asd "${S}"/swank.asd
 	# remove upstream swank-loader, since it won't be used
 	rm "${S}"/swank-loader.lisp
 	common-lisp-install *.{lisp,asd}

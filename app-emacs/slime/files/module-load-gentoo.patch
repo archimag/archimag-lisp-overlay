@@ -1,17 +1,16 @@
-diff -Naur slime.old/swank.lisp slime/swank.lisp
---- slime.old/swank.lisp	2007-11-24 11:42:53.000000000 +0100
-+++ slime/swank.lisp	2007-11-24 11:54:23.000000000 +0100
-@@ -2274,10 +2274,15 @@
+diff --git a/swank.lisp b/swank.lisp
+index 8c6ef3a..9eaa4be 100644
+--- a/swank.lisp
++++ b/swank.lisp
+@@ -2270,10 +2270,13 @@ Record compiler notes signalled as `compiler-condition's."
    "Load the module MODULE."
    (dolist (module (if (listp modules) modules (list modules)))
      (unless (member (string module) *modules* :test #'string=)
 -      (require module (or filename (module-filename module)))))
-+      (let ((*compile-print* nil)
-+            (*compile-verbose* nil)
++      (let ((*load-print* nil)
++            (*load-verbose* nil)
 +            #+cmu (ext:*gc-verbose* nil))
-+        (handler-bind ((style-warning #'muffle-warning)
-+                       #+sbcl (sb-ext:compiler-note #'muffle-warning))
-+          (require module (or filename (module-filename module)))))))
++        (require module (or filename (module-filename module))))))
    *modules*)
  
 -(defvar *find-module* 'find-module
@@ -19,12 +18,21 @@ diff -Naur slime.old/swank.lisp slime/swank.lisp
    "Pluggable function to locate modules.
  The function receives a module name as argument and should return
  the filename of the module (or nil if the file doesn't exist).")
-@@ -2310,6 +2315,10 @@
+@@ -2303,6 +2306,19 @@ the filename of the module (or nil if the file doesn't exist).")
      (some (lambda (dir) (some #'probe-file (module-canditates name dir)))
            *load-path*)))
  
++(defun swank-compile-pathname ()
++  (make-pathname :name nil :type nil
++                 :defaults (car (asdf:output-files
++                                 (make-instance 'asdf:compile-op)
++                                 (car (asdf:module-components
++                                       (asdf:find-system :swank)))))))
++
 +(defun find-module-gentoo (module)
-+  (or (let ((*load-path* (list (pathname "@CONTRIBDIR@"))))
++  (or (let ((*load-path* (list (make-pathname :directory (append (pathname-directory (swank-compile-pathname))
++                                                                 '("contrib")))
++                               (pathname "/usr/share/common-lisp/source//swank/contrib/"))))
 +        (find-module module))
 +      (find-module module)))
  
