@@ -5,10 +5,15 @@
 (let ((*compile-print* nil)
       (*compile-verbose* nil)
       #+cmu (ext:*gc-verbose* nil))
-  (handler-bind ((style-warning #'muffle-warning))
-    (load #p"/usr/share/common-lisp/source/asdf/asdf.lisp")))
+  (handler-bind ((warning #'muffle-warning))
+    (load #p"/usr/share/common-lisp/source/asdf/asdf.lisp"
+          :print nil :verbose nil)))
 
 (push #p"/usr/share/common-lisp/systems/" asdf:*central-registry*)
 
-(asdf:oos 'asdf:load-op :asdf-binary-locations)
+(let ((*compile-print* nil)
+      (*compile-verbose* nil)
+      #+cmu (ext:*gc-verbose* nil))
+  (handler-bind ((warning #'muffle-warning))
+    (asdf:oos 'asdf:load-op :asdf-binary-locations)))
 (setf asdf:*centralize-lisp-binaries* t)
