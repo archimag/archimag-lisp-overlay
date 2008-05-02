@@ -31,11 +31,10 @@ src_unpack() {
 	SWANK_VERSION=$(head -n 1 "${S}"/ChangeLog | awk '{print $1}')
 	sed "s:(defvar \*swank-wire-protocol-version\* nil:(defvar \*swank-wire-protocol-version\* \"${SWANK_VERSION}\":" -i "${S}"/swank.lisp
 
-	epatch "${FILESDIR}"/module-load-gentoo.patch
-	sed -i "s:@CONTRIBDIR@:${CLSOURCEROOT}/${CLPACKAGE}/contrib/:" "${S}"/swank.lisp
-	epatch "${FILESDIR}"/inspect-presentations.patch
-	epatch "${FILESDIR}"/${PV}-fix-ecl.patch
+	epatch "${FILESDIR}"/${PV}-module-load-gentoo.patch
 	epatch "${FILESDIR}"/${PV}-dont-call-init.patch
+	epatch "${FILESDIR}"/${PV}-inspect-presentations.patch
+	epatch "${FILESDIR}"/${PV}-fix-ecl.patch
 	epatch "${FILESDIR}"/${PV}-fix-swank-listener-hooks-contrib.patch
 }
 

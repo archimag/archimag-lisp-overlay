@@ -1,5 +1,5 @@
 diff --git a/swank.lisp b/swank.lisp
-index 8c6ef3a..9eaa4be 100644
+index 8c6ef3a..3ef640a 100644
 --- a/swank.lisp
 +++ b/swank.lisp
 @@ -2270,10 +2270,13 @@ Record compiler notes signalled as `compiler-condition's."
@@ -18,21 +18,23 @@ index 8c6ef3a..9eaa4be 100644
    "Pluggable function to locate modules.
  The function receives a module name as argument and should return
  the filename of the module (or nil if the file doesn't exist).")
-@@ -2303,6 +2306,19 @@ the filename of the module (or nil if the file doesn't exist).")
+@@ -2303,6 +2306,21 @@ the filename of the module (or nil if the file doesn't exist).")
      (some (lambda (dir) (some #'probe-file (module-canditates name dir)))
            *load-path*)))
  
-+(defun swank-compile-pathname ()
++(defun swank-fasl-pathname ()
 +  (make-pathname :name nil :type nil
 +                 :defaults (car (asdf:output-files
 +                                 (make-instance 'asdf:compile-op)
 +                                 (car (asdf:module-components
 +                                       (asdf:find-system :swank)))))))
 +
++(defun append-dir (pathname dir)
++  (make-pathname :directory (append (pathname-directory pathname) dir)))
++
 +(defun find-module-gentoo (module)
-+  (or (let ((*load-path* (list (make-pathname :directory (append (pathname-directory (swank-compile-pathname))
-+                                                                 '("contrib")))
-+                               (pathname "/usr/share/common-lisp/source//swank/contrib/"))))
++  (or (let ((*load-path* (list (append-dir (swank-fasl-pathname) '("contrib"))
++                               (append-dir swank-loader:*source-directory* '("contrib")))))
 +        (find-module module))
 +      (find-module module)))
  
