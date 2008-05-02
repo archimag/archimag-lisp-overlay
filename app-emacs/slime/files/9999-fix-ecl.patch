@@ -1,7 +1,8 @@
-diff -ur slime.orig/swank-ecl.lisp slime/swank-ecl.lisp
---- slime.orig/swank-ecl.lisp	2008-01-10 21:12:21.000000000 +0100
-+++ slime/swank-ecl.lisp	2008-01-18 11:56:16.000000000 +0100
-@@ -22,7 +22,8 @@
+diff --git a/swank-ecl.lisp b/swank-ecl.lisp
+index 500748e..7624440 100644
+--- a/swank-ecl.lisp
++++ b/swank-ecl.lisp
+@@ -26,7 +26,8 @@
  
  ;;;; TCP Server
  
@@ -11,12 +12,13 @@ diff -ur slime.orig/swank-ecl.lisp slime/swank-ecl.lisp
  
  (defun resolve-hostname (name)
    (car (sb-bsd-sockets:host-ent-addresses
-@@ -201,20 +202,21 @@
+@@ -206,23 +207,24 @@
  
  ;;; Debugging
  
 -(import
-- '(si::*ihs-top*
+- '(si::*break-env*
+-   si::*ihs-top*
 -   si::*ihs-current*
 -   si::*ihs-base*
 -   si::*frs-base*
@@ -25,13 +27,16 @@ diff -ur slime.orig/swank-ecl.lisp slime/swank-ecl.lisp
 -   si::*tpl-level*
 -   si::frs-top
 -   si::ihs-top
+-   si::ihs-fun
+-   si::ihs-env
 -   si::sch-frs-base
 -   si::set-break-env
 -   si::set-current-ihs
 -   si::tpl-commands))
 +(eval-when (:compile-toplevel :load-toplevel :execute)
 +  (import
-+   '(si::*ihs-top*
++   '(si::*break-env*
++     si::*ihs-top*
 +     si::*ihs-current*
 +     si::*ihs-base*
 +     si::*frs-base*
@@ -40,23 +45,12 @@ diff -ur slime.orig/swank-ecl.lisp slime/swank-ecl.lisp
 +     si::*tpl-level*
 +     si::frs-top
 +     si::ihs-top
++     si::ihs-fun
++     si::ihs-env
 +     si::sch-frs-base
 +     si::set-break-env
 +     si::set-current-ihs
 +     si::tpl-commands)))
  
- (defimplementation call-with-debugging-environment (debugger-loop-fn)
-   (declare (type function debugger-loop-fn))
-diff -ur slime.orig/swank.lisp slime/swank.lisp
---- slime.orig/swank.lisp	2008-01-10 21:12:23.000000000 +0100
-+++ slime/swank.lisp	2008-01-18 12:05:56.000000000 +0100
-@@ -1451,7 +1451,8 @@
-                   (process-form-for-emacs (cdr form))))
-     (character (format nil "?~C" form))
-     (symbol (concatenate 'string (when (eq (symbol-package form)
--                                           #.(find-package "KEYWORD"))
-+                                           #-ecl #.(find-package "KEYWORD")
-+                                           #+ecl (find-package "KEYWORD"))
-                                    ":")
-                          (string-downcase (symbol-name form))))
-     (number (let ((*print-base* 10))
+ (defvar *backtrace* '())
+ 
