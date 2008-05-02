@@ -36,6 +36,7 @@ src_unpack() {
 	epatch "${FILESDIR}"/inspect-presentations.patch
 	epatch "${FILESDIR}"/${PV}-fix-ecl.patch
 	epatch "${FILESDIR}"/${PV}-dont-call-init.patch
+	epatch "${FILESDIR}"/${PV}-fix-swank-listener-hooks-contrib.patch
 }
 
 rel_elisp-comp() {
