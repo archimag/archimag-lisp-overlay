@@ -1,0 +1,13 @@
+--- include/Shared/i386-machine.ah	2007-02-15 14:45:47.000000000 -0500
++++ include/Shared/i386-machine.ah.new	2008-05-04 21:20:42.480292320 -0400
+@@ -33,6 +33,10 @@
+ %ifndef I386_MACHINE_ASM
+ %define I386_MACHINE_ASM
+ 
++%ifidn __OUTPUT_FORMAT__,elf
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
++
+ %define wordsize        4
+ %define object_align    8
+ %define code_align      4
