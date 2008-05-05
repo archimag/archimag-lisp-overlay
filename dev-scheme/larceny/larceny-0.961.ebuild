@@ -5,10 +5,10 @@
 inherit eutils
 
 DESCRIPTION="Larceny is a Scheme Interpreter and a Scheme to IA32 and C Compiler"
-LARCENY_SOURCE="http://www.ccs.neu.edu/home/will/Larceny/LarcenyReleases/${PN}-${PV}-src.tar.gz"
-LARCENY_X86_NATIVE_BINARY="http://www.ccs.neu.edu/home/will/Larceny/LarcenyReleases/${PN}-${PV}-bin-native-ia32-linux86.tar.gz"
-SRC_URI="${LARCENY_SOURCE}
-		 !mzhost? ( ${LARCENY_X86_NATIVE_BINARY} )"
+LARCENY_SOURCE="${PN}-${PV}-src.tar.gz"
+LARCENY_X86_NATIVE_BINARY="${PN}-${PV}-bin-native-ia32-linux86.tar.gz"
+SRC_URI="http://www.ccs.neu.edu/home/will/Larceny/LarcenyReleases/${LARCENY_SOURCE}
+		 !mzhost? ( http://www.ccs.neu.edu/home/will/Larceny/LarcenyReleases/${LARCENY_X86_NATIVE_BINARY} )"
 
 HOMEPAGE="http://www.ccs.neu.edu/home/will/Larceny/"
 
