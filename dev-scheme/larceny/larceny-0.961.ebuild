@@ -15,10 +15,11 @@ HOMEPAGE="http://www.ccs.neu.edu/home/will/Larceny/"
 LICENSE="Larceny"
 SLOT="0"
 KEYWORDS="~x86"
-IUSE="petit mzhost"
+IUSE="doc petit mzhost"
 
 DEPEND="mzhost? ( dev-scheme/drscheme )
-		dev-lang/nasm"
+		dev-lang/nasm
+		doc? ( app-text/asciidoc )"
 
 S="${WORKDIR}/${PN}-${PV}-src"
 
@@ -27,15 +28,15 @@ S="${WORKDIR}/${PN}-${PV}-src"
 # common-lisp-common-3.eclass for larceny.
 
 larceny-save-timestamp-hack() {
-	tar cpjf "${D}"/opt/larceny/portage-timestamp-compensate -C "${D}"/opt/larceny/lib
+	tar cpjf "${D}"/"${ROOT}"/opt/larceny/portage-timestamp-compensate -C "${D}"/"${ROOT}"/opt/larceny/lib
 }
 
 larceny-restore-timestamp-hack() {
-	tar xjpfo /opt/larceny/portage-timestamp-compensate -C /opt/larceny/lib
+	tar xjpfo "${ROOT}"/opt/larceny/portage-timestamp-compensate -C "${ROOT}"/opt/larceny/lib
 }
 
 larceny-remove-timestamp-hack() {
-	rm -rf /opt/larceny/lib &>/dev/null || true
+	rm -rf "${ROOT}"/opt/larceny/lib &>/dev/null || true
 }
 
 src_unpack() {
@@ -98,12 +99,19 @@ EOF
 		(larceny:compile-r6rs-runtime)
 		(exit)" | ../../larceny || die "failed to build R6RS libraries"
 	popd
+
+	if use doc; then
+		pushd doc
+		emake user-manual.chunked/index.html
+		emake larceny-notes.chunked/index.html
+		popd
+	fi
 }
 
 src_install() {
 	dodoc COPYRIGHT README-FIRST.txt doc/HOWTO-* || die "installing docs"
 
-	LARCENY_LOCATION="/opt/larceny"
+	LARCENY_LOCATION="/usr/share/larceny"
 	dodir ${LARCENY_LOCATION}
 	# use cp -a here to preserve the timestamps of the .fasl files in
 	# this step of the installation.
@@ -114,21 +122,42 @@ src_install() {
 		*.bin \
 		*.heap \
 		scheme-script \
-		"${D}"/${LARCENY_LOCATION}
+		"${D}"/"${ROOT}"/${LARCENY_LOCATION}
 
 	# sed the scripts with the correct location so they can be symlinked
 	LARCENY_SCRIPTS="larceny scheme-script twobit"
 	for script in ${LARCENY_SCRIPTS}; do
-		dosed "s:# LARCENY_ROOT=/usr/local/lib/larceny:LARCENY_ROOT=${LARCENY_LOCATION}:" ${LARCENY_LOCATION}/${script}
+		dosed "s:# LARCENY_ROOT=/usr/local/lib/larceny:LARCENY_ROOT=${ROOT}/${LARCENY_LOCATION}:" \
+			"${ROOT}"/${LARCENY_LOCATION}/${script}
 	done
 
 	# now we can symlink them to /usr/bin
 	dodir /usr/bin
-	pushd "${D}"/usr/bin &>/dev/null
 	for script in ${LARCENY_SCRIPTS}; do
-		dosym ../..${LARCENY_LOCATION}/${script} "${D}"/${script}
+		dosym "${ROOT}"/${LARCENY_LOCATION}/${script} "${ROOT}"/usr/bin/${script}
 	done
-	popd &>/dev/null
+
+	if use doc; then
+		cd "${S}"/doc/LarcenyNotes
+		docinto LarcenyNotes
+		dodoc ./*
+		cd "${S}"/doc/larceny-notes.chunked
+		docinto LarcenyNotes/html
+		dodoc ./*
+		cd "${S}"/doc/UserManual
+		docinto UserManual
+		dodoc ./*
+		cd "${S}"/doc/user-manual.chunked
+		docinto UserManual/html
+		dodoc ./*
+		cd "${S}"/doc/DevManual
+		docinto DevManual
+		dodoc ./*
+		cd "${S}"/doc/OldDocs
+		docinto OldDocs
+		dodoc ./*
+		cd "${S}"
+	fi
 
 	larceny-save-timestamp-hack
 }
