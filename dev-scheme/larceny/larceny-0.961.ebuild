@@ -28,15 +28,15 @@ S="${WORKDIR}/${PN}-${PV}-src"
 # common-lisp-common-3.eclass for larceny.
 
 larceny-save-timestamp-hack() {
-	tar cpjf "${D}"/"${ROOT}"/opt/larceny/portage-timestamp-compensate -C "${D}"/"${ROOT}"/opt/larceny/lib
+	tar cpjf "${D}"/"${ROOT}"/usr/share/larceny/portage-timestamp-compensate -C "${D}"/"${ROOT}"/usr/share/larceny/lib
 }
 
 larceny-restore-timestamp-hack() {
-	tar xjpfo "${ROOT}"/opt/larceny/portage-timestamp-compensate -C "${ROOT}"/opt/larceny/lib
+	tar xjpfo "${ROOT}"/usr/share/larceny/portage-timestamp-compensate -C "${ROOT}"/usr/share/larceny/lib
 }
 
 larceny-remove-timestamp-hack() {
-	rm -rf "${ROOT}"/opt/larceny/lib &>/dev/null || true
+	rm -rf "${ROOT}"/usr/share/larceny/lib &>/dev/null || true
 }
 
 src_unpack() {
@@ -166,6 +166,6 @@ pkg_postinst() {
 	larceny-restore-timestamp-hack
 }
 
-pkg_postrm() {
+pkg_prerm() {
 	larceny-remove-timestamp-hack
 }
