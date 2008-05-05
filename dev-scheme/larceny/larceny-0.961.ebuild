@@ -88,6 +88,7 @@ src_install() {
 		LARCENY_LOCATION="/opt/larceny"
 		dodir ${LARCENY_LOCATION}
 		# use cp -a here to preserve the times of the .fasl files
+		# FIXME: its still not enough. installed larceny is still broken, at least on paludis
 		cp -af larceny \
 			twobit \
 			lib \
@@ -107,7 +108,7 @@ src_install() {
 		dodir /usr/bin
 		pushd "${D}"/usr/bin &>/dev/null
 		for script in ${LARCENY_SCRIPTS}; do
-			dosym ../..${LARCENY_LOCATION}/${script} ${script}
+			dosym ../..${LARCENY_LOCATION}/${script} "${D}"/${script}
 		done
 		popd &>/dev/null
 }
