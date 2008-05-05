@@ -22,12 +22,30 @@ DEPEND="mzhost? ( dev-scheme/drscheme )
 
 S="${WORKDIR}/${PN}-${PV}-src"
 
+# BIG FAT HACK TAKE 2:
+# We need a customized version of the timestamp hack from
+# common-lisp-common-3.eclass for larceny.
+
+larceny-save-timestamp-hack() {
+	tar cpjf "${D}"/opt/larceny/portage-timestamp-compensate -C "${D}"/opt/larceny/lib
+}
+
+larceny-restore-timestamp-hack() {
+	tar xjpfo /opt/larceny/portage-timestamp-compensate -C /opt/larceny/lib
+}
+
+larceny-remove-timestamp-hack() {
+	rm -rf /opt/larceny/lib &>/dev/null || true
+}
+
 src_unpack() {
 	unpack ${LARCENY_SOURCE}
 
 	# do it this way so we're 100% sure of preserving the timestamps of the .fasl files,
 	# regardless of package manager quirks.
 	if ! use mzhost; then
+		echo "--- Unpacking ${DISTDIR}/${LARCENY_X86_NATIVE_BINARY} to ${WORKDIR}"
+		echo "gzip -dc ${DISTDIR}/${LARCENY_X86_NATIVE_BINARY} | tar xf - --no-same-owner --same-order"
 		gzip -dc "${DISTDIR}"/${LARCENY_X86_NATIVE_BINARY} | tar xf - --no-same-owner --same-order
 	fi
 
@@ -83,32 +101,42 @@ EOF
 }
 
 src_install() {
-		dodoc COPYRIGHT README-FIRST.txt doc/HOWTO-* || die "installing docs"
+	dodoc COPYRIGHT README-FIRST.txt doc/HOWTO-* || die "installing docs"
 
-		LARCENY_LOCATION="/opt/larceny"
-		dodir ${LARCENY_LOCATION}
-		# use cp -a here to preserve the times of the .fasl files
-		# FIXME: its still not enough. installed larceny is still broken, at least on paludis
-		cp -af larceny \
-			twobit \
-			lib \
-			startup.sch \
-			*.bin \
-			*.heap \
-			scheme-script \
-			"${D}"/${LARCENY_LOCATION}
+	LARCENY_LOCATION="/opt/larceny"
+	dodir ${LARCENY_LOCATION}
+	# use cp -a here to preserve the timestamps of the .fasl files in
+	# this step of the installation.
+	cp -af larceny \
+		twobit \
+		lib \
+		startup.sch \
+		*.bin \
+		*.heap \
+		scheme-script \
+		"${D}"/${LARCENY_LOCATION}
 
-		# sed the scripts with the correct location so they can be symlinked
-		LARCENY_SCRIPTS="larceny scheme-script twobit"
-		for script in ${LARCENY_SCRIPTS}; do
-			dosed "s:# LARCENY_ROOT=/usr/local/lib/larceny:LARCENY_ROOT=${LARCENY_LOCATION}:" ${LARCENY_LOCATION}/${script}
-		done
+	# sed the scripts with the correct location so they can be symlinked
+	LARCENY_SCRIPTS="larceny scheme-script twobit"
+	for script in ${LARCENY_SCRIPTS}; do
+		dosed "s:# LARCENY_ROOT=/usr/local/lib/larceny:LARCENY_ROOT=${LARCENY_LOCATION}:" ${LARCENY_LOCATION}/${script}
+	done
 
-		# now we can symlink them to /usr/bin
-		dodir /usr/bin
-		pushd "${D}"/usr/bin &>/dev/null
-		for script in ${LARCENY_SCRIPTS}; do
-			dosym ../..${LARCENY_LOCATION}/${script} "${D}"/${script}
-		done
-		popd &>/dev/null
+	# now we can symlink them to /usr/bin
+	dodir /usr/bin
+	pushd "${D}"/usr/bin &>/dev/null
+	for script in ${LARCENY_SCRIPTS}; do
+		dosym ../..${LARCENY_LOCATION}/${script} "${D}"/${script}
+	done
+	popd &>/dev/null
+
+	larceny-save-timestamp-hack
+}
+
+pkg_postinst() {
+	larceny-restore-timestamp-hack
+}
+
+pkg_postrm() {
+	larceny-remove-timestamp-hack
 }
