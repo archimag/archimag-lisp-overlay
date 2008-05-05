@@ -5,8 +5,8 @@
 inherit eutils
 
 DESCRIPTION="Larceny is a Scheme Interpreter and a Scheme to IA32 and C Compiler"
-LARCENY_SOURCE="${PN}-${PV}-src.tar.gz"
-LARCENY_X86_NATIVE_BINARY="${PN}-${PV}-bin-native-ia32-linux86.tar.gz"
+LARCENY_SOURCE="${P}-src.tar.gz"
+LARCENY_X86_NATIVE_BINARY="${P}-bin-native-ia32-linux86.tar.gz"
 SRC_URI="http://www.ccs.neu.edu/home/will/Larceny/LarcenyReleases/${LARCENY_SOURCE}
 		 !mzhost? ( http://www.ccs.neu.edu/home/will/Larceny/LarcenyReleases/${LARCENY_X86_NATIVE_BINARY} )"
 
@@ -21,35 +21,29 @@ DEPEND="mzhost? ( dev-scheme/drscheme )
 		dev-lang/nasm
 		doc? ( app-text/asciidoc )"
 
-S="${WORKDIR}/${PN}-${PV}-src"
+S="${WORKDIR}/${P}-src"
 
 # BIG FAT HACK TAKE 2:
 # We need a customized version of the timestamp hack from
 # common-lisp-common-3.eclass for larceny.
 
 larceny-save-timestamp-hack() {
-	tar cpjf "${D}"/"${ROOT}"/usr/share/larceny/portage-timestamp-compensate -C "${D}"/"${ROOT}"/usr/share/larceny/lib
+	tar cpjf "${D}"/usr/share/larceny/portage-timestamp-compensate -C "${D}"/usr/share/larceny/lib || \
+		die "Failed to create the timestamp hack"
 }
 
 larceny-restore-timestamp-hack() {
-	tar xjpfo "${ROOT}"/usr/share/larceny/portage-timestamp-compensate -C "${ROOT}"/usr/share/larceny/lib
+	tar xjpfo "${ROOT}"/usr/share/larceny/portage-timestamp-compensate -C "${ROOT}"/usr/share/larceny/lib || \
+		die "Failed to restore the timestamp hack"
 }
 
 larceny-remove-timestamp-hack() {
+	[[ -e "${ROOT}"/usr/share/larceny/lib ]] || return 0
 	rm -rf "${ROOT}"/usr/share/larceny/lib &>/dev/null || true
 }
 
 src_unpack() {
-	unpack ${LARCENY_SOURCE}
-
-	# do it this way so we're 100% sure of preserving the timestamps of the .fasl files,
-	# regardless of package manager quirks.
-	if ! use mzhost; then
-		echo "--- Unpacking ${DISTDIR}/${LARCENY_X86_NATIVE_BINARY} to ${WORKDIR}"
-		echo "gzip -dc ${DISTDIR}/${LARCENY_X86_NATIVE_BINARY} | tar xf - --no-same-owner --same-order"
-		gzip -dc "${DISTDIR}"/${LARCENY_X86_NATIVE_BINARY} | tar xf - --no-same-owner --same-order
-	fi
-
+	unpack ${A}
 	cd "${S}"
 
 	# fix PIC / STACK problems
@@ -58,8 +52,6 @@ src_unpack() {
 }
 
 src_compile() {
-	local setupscript
-
 	# stays a little more readable like this, yea? :)
 	cat > setupscript <<EOF
 (setup 'scheme: $(
@@ -80,36 +72,42 @@ EOF
 
 
 	if use mzhost; then
-		cat setupscript | mzscheme -f setup.sch
+		cat setupscript | mzscheme -f setup.sch || \
+			die "Compilation with mzhost failed"
 	else
-		cat setupscript | "${WORKDIR}"/${PN}-${PV}-bin-native-ia32-linux86/larceny -- setup.sch || die "compilation failed"
+		cat setupscript | "${WORKDIR}"/${P}-bin-native-ia32-linux86/larceny -- setup.sch || \
+			die "Compilation with native host failed"
 	fi
 
 	if use petit; then
-		echo "(exit)" | ./petit-larceny.bin -stopcopy -- src/Build/petit-larceny-heap.sch || die "compilation failed"
-		echo "(exit)" | ./twobit.bin -stopcopy -- src/Build/petit-twobit-heap.sch || die "compilation failed"
+		echo "(exit)" | ./petit-larceny.bin -stopcopy -- src/Build/petit-larceny-heap.sch || \
+			die "Compilation of petit larceny heap failed"
+		echo "(exit)" | ./twobit.bin -stopcopy -- src/Build/petit-twobit-heap.sch || \
+			die "Compilation of petit twobit heap failed"
 	else
-		echo "(exit)" | ./larceny.bin -stopcopy -- src/Build/iasn-larceny-heap.fasl || die "compilation failed"
-		echo "(exit)" | ./larceny.bin -stopcopy -- src/Build/iasn-twobit-heap.fasl || die "compilation failed"
+		echo "(exit)" | ./larceny.bin -stopcopy -- src/Build/iasn-larceny-heap.fasl || \
+			die "Compilation of native larceny heap failed"
+		echo "(exit)" | ./larceny.bin -stopcopy -- src/Build/iasn-twobit-heap.fasl || \
+			die "Compilation of native twobit heap failed"
 		cp larceny twobit
 	fi
 
 	pushd lib/R6RS
 	echo "(require 'r6rsmode)
 		(larceny:compile-r6rs-runtime)
-		(exit)" | ../../larceny || die "failed to build R6RS libraries"
+		(exit)" | ../../larceny || die "Compilation of R6RS libraries failed"
 	popd
 
 	if use doc; then
 		pushd doc
-		emake user-manual.chunked/index.html
-		emake larceny-notes.chunked/index.html
+		emake user-manual.chunked/index.html || die "Making user manual failed"
+		emake larceny-notes.chunked/index.html || die "Making implementation notes failed"
 		popd
 	fi
 }
 
 src_install() {
-	dodoc COPYRIGHT README-FIRST.txt doc/HOWTO-* || die "installing docs"
+	dodoc README-FIRST.txt doc/HOWTO-* || die "Installing docs failed"
 
 	LARCENY_LOCATION="/usr/share/larceny"
 	dodir ${LARCENY_LOCATION}
@@ -122,40 +120,42 @@ src_install() {
 		*.bin \
 		*.heap \
 		scheme-script \
-		"${D}"/"${ROOT}"/${LARCENY_LOCATION}
+		"${D}"/${LARCENY_LOCATION} || \
+		die "Installing larceny files failed"
 
 	# sed the scripts with the correct location so they can be symlinked
 	LARCENY_SCRIPTS="larceny scheme-script twobit"
 	for script in ${LARCENY_SCRIPTS}; do
 		dosed "s:# LARCENY_ROOT=/usr/local/lib/larceny:LARCENY_ROOT=${ROOT}/${LARCENY_LOCATION}:" \
-			"${ROOT}"/${LARCENY_LOCATION}/${script}
+			"${ROOT}"/${LARCENY_LOCATION}/${script} || die "dosed on ${script} failed"
 	done
 
 	# now we can symlink them to /usr/bin
 	dodir /usr/bin
 	for script in ${LARCENY_SCRIPTS}; do
-		dosym "${ROOT}"/${LARCENY_LOCATION}/${script} "${ROOT}"/usr/bin/${script}
+		dosym "${ROOT}"/${LARCENY_LOCATION}/${script} "${ROOT}"/usr/bin/${script} || \
+			die "dosym on ${script} failed"
 	done
 
 	if use doc; then
 		cd "${S}"/doc/LarcenyNotes
 		docinto LarcenyNotes
-		dodoc ./*
+		dodoc ./* || die "Installing doc/LarcenyNotes failed"
 		cd "${S}"/doc/larceny-notes.chunked
 		docinto LarcenyNotes/html
-		dodoc ./*
+		dodoc ./* || die "Installing doc/LarcenyNotes/html failed"
 		cd "${S}"/doc/UserManual
 		docinto UserManual
-		dodoc ./*
+		dodoc ./* || die "Installing doc/UserManual failed"
 		cd "${S}"/doc/user-manual.chunked
 		docinto UserManual/html
-		dodoc ./*
+		dodoc ./* || die "Installing doc/UserManual/html failed"
 		cd "${S}"/doc/DevManual
 		docinto DevManual
-		dodoc ./*
+		dodoc ./* || die "Installing doc/Devmanual failed"
 		cd "${S}"/doc/OldDocs
 		docinto OldDocs
-		dodoc ./*
+		dodoc ./* || die "Installing doc/OldDocs failed"
 		cd "${S}"
 	fi
 
