@@ -5,8 +5,10 @@
 inherit eutils
 
 DESCRIPTION="Larceny is a Scheme Interpreter and a Scheme to IA32 and C Compiler"
-SRC_URI="http://www.ccs.neu.edu/home/will/Larceny/LarcenyReleases/larceny-${PV}-src.tar.gz
-	!mzhost? ( http://www.ccs.neu.edu/home/will/Larceny/LarcenyReleases/larceny-${PV}-bin-native-ia32-linux86.tar.gz )"
+LARCENY_SOURCE="http://www.ccs.neu.edu/home/will/Larceny/LarcenyReleases/${PN}-${PV}-src.tar.gz"
+LARCENY_X86_NATIVE_BINARY="http://www.ccs.neu.edu/home/will/Larceny/LarcenyReleases/${PN}-${PV}-bin-native-ia32-linux86.tar.gz"
+SRC_URI="${LARCENY_SOURCE}
+		 !mzhost? ( ${LARCENY_X86_NATIVE_BINARY} )"
 
 HOMEPAGE="http://www.ccs.neu.edu/home/will/Larceny/"
 
@@ -16,13 +18,20 @@ KEYWORDS="~x86"
 IUSE="petit mzhost"
 
 DEPEND="mzhost? ( dev-scheme/drscheme )
-	dev-lang/nasm"
+		dev-lang/nasm"
 
 S="${WORKDIR}/${PN}-${PV}-src"
 
 src_unpack() {
-	unpack ${A}
-	cd ${S}
+	unpack ${LARCENY_SOURCE}
+
+	# do it this way so we're 100% sure of preserving the timestamps of the .fasl files,
+	# regardless of package manager quirks.
+	if ! use mzhost; then
+		gzip -dc "${DISTDIR}"/${LARCENY_X86_NATIVE_BINARY} | tar xf - --no-same-owner --same-order
+	fi
+
+	cd "${S}"
 
 	# fix PIC / STACK problems
 	epatch "${FILESDIR}"/${P}-textrelfix.patch
@@ -32,7 +41,9 @@ src_unpack() {
 src_compile() {
 	local setupscript
 
-	setupscript="(setup 'scheme: $(
+	# stays a little more readable like this, yea? :)
+	cat > setupscript <<EOF
+(setup 'scheme: $(
 				( use mzhost && echo "'mzscheme" ) ||
 				( echo "'larceny" )
 			)
@@ -45,12 +56,14 @@ src_compile() {
 		(build-executable)
 		(build-larceny-files)
 		$( use petit && echo "(build-twobit)" )
-		(exit)"
+		(exit)
+EOF
+
 
 	if use mzhost; then
-		echo "${setupscript}" | mzscheme -f setup.sch
+		cat setupscript | mzscheme -f setup.sch
 	else
-		echo "${setupscript}" | ${WORKDIR}/${PN}-${PV}-bin-native-ia32-linux86/larceny -- setup.sch || die "compilation failed"
+		cat setupscript | "${WORKDIR}"/${PN}-${PV}-bin-native-ia32-linux86/larceny -- setup.sch || die "compilation failed"
 	fi
 
 	if use petit; then
@@ -70,14 +83,31 @@ src_compile() {
 }
 
 src_install() {
-        dodoc COPYRIGHT README-FIRST.txt doc/HOWTO-* || die "installing docs"
-        mkdir -p ${D}/opt/larceny
-        mv -f larceny\
-		twobit\
-                lib\
-                startup.sch\
-		*.bin\
-                *.heap\
-                scheme-script\
-                 "${D}/opt/larceny"
+		dodoc COPYRIGHT README-FIRST.txt doc/HOWTO-* || die "installing docs"
+
+		LARCENY_LOCATION="/opt/larceny"
+		dodir ${LARCENY_LOCATION}
+		# use cp -a here to preserve the times of the .fasl files
+		cp -af larceny \
+			twobit \
+			lib \
+			startup.sch \
+			*.bin \
+			*.heap \
+			scheme-script \
+			"${D}"/${LARCENY_LOCATION}
+
+		# sed the scripts with the correct location so they can be symlinked
+		LARCENY_SCRIPTS="larceny scheme-script twobit"
+		for script in ${LARCENY_SCRIPTS}; do
+			dosed "s:# LARCENY_ROOT=/usr/local/lib/larceny:LARCENY_ROOT=${LARCENY_LOCATION}:" ${LARCENY_LOCATION}/${script}
+		done
+
+		# now we can symlink them to /usr/bin
+		dodir /usr/bin
+		pushd "${D}"/usr/bin &>/dev/null
+		for script in ${LARCENY_SCRIPTS}; do
+			dosym ../..${LARCENY_LOCATION}/${script} ${script}
+		done
+		popd &>/dev/null
 }
