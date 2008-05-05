@@ -138,24 +138,19 @@ src_install() {
 	done
 
 	if use doc; then
-		cd "${S}"/doc/LarcenyNotes
+		cd "${S}"
 		docinto LarcenyNotes
-		dodoc ./* || die "Installing doc/LarcenyNotes failed"
-		cd "${S}"/doc/larceny-notes.chunked
+		dodoc ./LarcenyNotes/* || die "Installing doc/LarcenyNotes failed"
 		docinto LarcenyNotes/html
-		dodoc ./* || die "Installing doc/LarcenyNotes/html failed"
-		cd "${S}"/doc/UserManual
+		dodoc ./larceny-notes.chunked/* || die "Installing doc/LarcenyNotes/html failed"
 		docinto UserManual
-		dodoc ./* || die "Installing doc/UserManual failed"
-		cd "${S}"/doc/user-manual.chunked
+		dodoc ./UserManual/* || die "Installing doc/UserManual failed"
 		docinto UserManual/html
-		dodoc ./* || die "Installing doc/UserManual/html failed"
-		cd "${S}"/doc/DevManual
+		dodoc ./user-manual.chunked/* || die "Installing doc/UserManual/html failed"
 		docinto DevManual
-		dodoc ./* || die "Installing doc/Devmanual failed"
-		cd "${S}"/doc/OldDocs
+		dodoc ./DevManual/* || die "Installing doc/Devmanual failed"
 		docinto OldDocs
-		dodoc ./* || die "Installing doc/OldDocs failed"
+		dodoc ./OldDocs/* || die "Installing doc/OldDocs failed"
 		cd "${S}"
 	fi
 
