@@ -12,20 +12,22 @@ SRC_URI="ftp://ftp-sop.inria.fr/mimosa/fp/Skribe/${MY_P}.tar.gz"
 
 SLOT="0"
 LICENSE="GPL-2"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 
-DEPEND=">=dev-scheme/bigloo-2.7a"
+DEPEND="dev-scheme/bigloo"
 
 S="${WORKDIR}/${MY_P}"
 
 src_unpack() {
 	unpack ${A}
-	cd ${S}
+	cd "${S}"
+
+#	cp ./etc/bigloo/configure ./etc/bigloo/configure.old
 
 	# falsify bigloo auto-strip feature to prevent pre-stripped QA errors
-	cat ./etc/bigloo/configure \
-		| sed -r 's/^blinkflags="(.*)"$/blinkflags="\1 -eval '\''(set! *strip* \\#f)'\''"/gi' - \
-		> ./etc/bigloo/configure
+	sed -r 's/^blinkflags="(.*)"$/blinkflags="\1 -eval '\''(set! *strip* \\#f)'\''"/gi' -i ./etc/bigloo/configure
+
+#	diff -u ./etc/bigloo/configure.old ./etc/bigloo/configure
 }
 
 src_compile() {
@@ -40,5 +42,5 @@ src_compile() {
 }
 
 src_install() {
-	emake DESTDIR=${D} install || "install failed"
+	emake DESTDIR="${D}" install || "install failed"
 }
