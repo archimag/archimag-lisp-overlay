@@ -92,10 +92,12 @@ src_install() {
 
 	LARCENY_LOCATION="/usr/share/larceny"
 	dodir ${LARCENY_LOCATION}
-	cp -f larceny \
+	# use cp -a here to preserve the timestamps of the .fasl files in
+	# this step of the installation.
+	mv -f larceny \
 		twobit \
-		startup.sch \
 		lib \
+		startup.sch \
 		*.bin \
 		*.heap \
 		scheme-script \
@@ -134,5 +136,5 @@ src_install() {
 	fi
 
 	# this oughta prevent bogus 'stale fasl' issues
-	find "${D}"/${LARCENY_LOCATION}/lib -name '*.fasl' -o -name '*.slfasl' -exec touch '{}' +
+	find "${D}"/${LARCENY_LOCATION}/lib -name '*.fasl' -exec touch '{}' +
 }
