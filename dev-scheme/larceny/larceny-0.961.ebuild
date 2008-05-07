@@ -92,7 +92,7 @@ src_install() {
 
 	LARCENY_LOCATION="/usr/share/larceny"
 	dodir ${LARCENY_LOCATION}
-	mv -f larceny \
+	cp -f larceny \
 		twobit \
 		startup.sch \
 		lib \
