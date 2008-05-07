@@ -136,5 +136,5 @@ src_install() {
 	fi
 
 	# this oughta prevent bogus 'stale fasl' issues
-	find "${D}"/${LARCENY_LOCATION}/lib -name '*.fasl' -exec touch '{}' +
+	find "${D}"/${LARCENY_LOCATION}/lib -name '*.fasl' -exec touch '{}'
 }
