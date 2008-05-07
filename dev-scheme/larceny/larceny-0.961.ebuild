@@ -23,25 +23,6 @@ DEPEND="mzhost? ( dev-scheme/drscheme )
 
 S="${WORKDIR}/${P}-src"
 
-# BIG FAT HACK TAKE 2:
-# We need a customized version of the timestamp hack from
-# common-lisp-common-3.eclass for larceny.
-
-larceny-save-timestamp-hack() {
-	tar cpjf "${D}"/usr/share/larceny/portage-timestamp-compensate -C "${D}"/usr/share/larceny/lib || \
-		die "Failed to create the timestamp hack"
-}
-
-larceny-restore-timestamp-hack() {
-	tar xjpfo "${ROOT}"/usr/share/larceny/portage-timestamp-compensate -C "${ROOT}"/usr/share/larceny/lib || \
-		die "Failed to restore the timestamp hack"
-}
-
-larceny-remove-timestamp-hack() {
-	[[ -e "${ROOT}"/usr/share/larceny/lib ]] || return 0
-	rm -rf "${ROOT}"/usr/share/larceny/lib &>/dev/null || true
-}
-
 src_unpack() {
 	unpack ${A}
 	cd "${S}"
@@ -113,7 +94,7 @@ src_install() {
 	dodir ${LARCENY_LOCATION}
 	# use cp -a here to preserve the timestamps of the .fasl files in
 	# this step of the installation.
-	cp -af larceny \
+	mv -f larceny \
 		twobit \
 		lib \
 		startup.sch \
@@ -138,7 +119,7 @@ src_install() {
 	done
 
 	if use doc; then
-		cd "${S}"
+		cd "${S}"/doc
 		docinto LarcenyNotes
 		dodoc ./LarcenyNotes/* || die "Installing doc/LarcenyNotes failed"
 		docinto LarcenyNotes/html
@@ -154,13 +135,6 @@ src_install() {
 		cd "${S}"
 	fi
 
-	larceny-save-timestamp-hack
-}
-
-pkg_postinst() {
-	larceny-restore-timestamp-hack
-}
-
-pkg_prerm() {
-	larceny-remove-timestamp-hack
+	# this oughta prevent bogus 'stale fasl' issues
+	find "${D}"/${LARCENY_LOCATION}/lib -name '*.fasl' -exec touch '{}'
 }
