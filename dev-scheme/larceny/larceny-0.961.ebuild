@@ -17,7 +17,9 @@ SLOT="0"
 KEYWORDS="~x86"
 IUSE="doc examples mzhost petit"
 
-DEPEND="mzhost? ( dev-scheme/drscheme )
+RDEPEND="!dev-scheme/larceny-bin"
+DEPEND="${RDEPEND}
+		mzhost? ( dev-scheme/drscheme )
 		dev-lang/nasm
 		doc? ( app-text/asciidoc )"
 
@@ -94,8 +96,8 @@ EOF
 
 	pushd lib/R6RS
 	echo "(require 'r6rsmode)
-		(larceny:compile-r6rs-runtime)
-		(exit)" | ../../larceny || die "Compilation of R6RS libraries failed"
+		  (larceny:compile-r6rs-runtime)
+		  (exit)" | ../../larceny || die "Compilation of R6RS libraries failed"
 	popd
 
 	if use doc; then
