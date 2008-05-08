@@ -138,7 +138,7 @@ src_install() {
 	done
 
 	if use doc; then
-		cd "${S}"
+		cd "${S}"/doc
 		docinto LarcenyNotes
 		dodoc ./LarcenyNotes/* || die "Installing doc/LarcenyNotes failed"
 		docinto LarcenyNotes/html
