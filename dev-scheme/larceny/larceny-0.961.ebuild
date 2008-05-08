@@ -15,7 +15,7 @@ HOMEPAGE="http://www.ccs.neu.edu/home/will/Larceny/"
 LICENSE="Larceny"
 SLOT="0"
 KEYWORDS="~x86"
-IUSE="doc petit mzhost"
+IUSE="doc examples mzhost petit"
 
 DEPEND="mzhost? ( dev-scheme/drscheme )
 		dev-lang/nasm
@@ -28,7 +28,7 @@ S="${WORKDIR}/${P}-src"
 # common-lisp-common-3.eclass for larceny.
 
 larceny-save-timestamp-hack() {
-	tar cpjf "${D}"/usr/share/larceny/portage-timestamp-compensate -C "${D}"/usr/share/larceny/lib || \
+	tar cpjf "${D}"/usr/share/larceny/portage-timestamp-compensate -C "${D}"/usr/share/larceny/lib . || \
 		die "Failed to create the timestamp hack"
 }
 
@@ -115,11 +115,11 @@ src_install() {
 	# this step of the installation.
 	cp -af larceny \
 		twobit \
-		lib \
+		scheme-script \
 		startup.sch \
 		*.bin \
 		*.heap \
-		scheme-script \
+		lib \
 		"${D}"/${LARCENY_LOCATION} || \
 		die "Installing larceny files failed"
 
@@ -136,6 +136,10 @@ src_install() {
 		dosym "${ROOT}"/${LARCENY_LOCATION}/${script} "${ROOT}"/usr/bin/${script} || \
 			die "dosym on ${script} failed"
 	done
+
+	if use examples; then
+		cp -af examples "${D}"/${LARCENY_LOCATION} || die "Installing examples failed."
+	fi
 
 	if use doc; then
 		cd "${S}"/doc
