@@ -6,7 +6,7 @@ inherit eutils java-pkg-2 java-ant-2
 DESCRIPTION="SISC is an extensible Java based interpreter of the algorithmic \
 language Scheme."
 HOMEPAGE="http://sisc-scheme.org/"
-SRC_URI="http://surfnet.dl.sourceforge.net/sourceforge/sisc/${P}.jar"
+SRC_URI="http://prdownloads.sourceforge.net/sisc/${P}.jar"
 
 LICENSE="|| ( GPL-2 MPL-1.1 )"
 SLOT="0"
