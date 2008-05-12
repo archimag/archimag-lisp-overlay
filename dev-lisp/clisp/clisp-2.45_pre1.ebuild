@@ -15,8 +15,7 @@ SLOT="2"
 KEYWORDS="~amd64 ~ppc ~ppc64 -sparc ~x86"
 IUSE="hyperspec X new-clx fastcgi gdbm gtk pcre postgres readline svm zlib"
 
-RDEPEND="dev-lisp/gentoo-init
-		 virtual/libiconv
+RDEPEND="virtual/libiconv
 		 >=dev-libs/libsigsegv-2.4
 		 >=dev-libs/ffcall-1.10
 		 fastcgi? ( dev-libs/fcgi )
@@ -31,6 +30,8 @@ RDEPEND="dev-lisp/gentoo-init
 		 hyperspec? ( dev-lisp/hyperspec )"
 
 DEPEND="${RDEPEND} X? ( new-clx? ( x11-misc/imake x11-proto/xextproto ) )"
+
+PDEEND="dev-lisp/gentoo-init"
 
 PROVIDE="virtual/commonlisp"
 
