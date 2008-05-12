@@ -5,25 +5,28 @@
 inherit eutils
 
 DESCRIPTION="Larceny is a Scheme Interpreter and a Scheme to IA32 and C Compiler"
-LARCENY_SOURCE="${P}-src.tar.gz"
-LARCENY_X86_NATIVE_BINARY="${P}-bin-native-ia32-linux86.tar.gz"
-SRC_URI="http://www.ccs.neu.edu/home/will/Larceny/LarcenyReleases/${LARCENY_SOURCE}
-		 !mzhost? ( http://www.ccs.neu.edu/home/will/Larceny/LarcenyReleases/${LARCENY_X86_NATIVE_BINARY} )"
+LARCENY_SOURCE=${P}-src
+LARCENY_X86_NATIVE_BINARY=${P}-bin-native-ia32-linux86
+SRC_URI="!binary? ( http://www.ccs.neu.edu/home/will/Larceny/LarcenyReleases/${LARCENY_SOURCE}.tar.gz )
+		 binary? ( http://www.ccs.neu.edu/home/will/Larceny/LarcenyReleases/${LARCENY_X86_NATIVE_BINARY}.tar.gz )"
 
 HOMEPAGE="http://www.ccs.neu.edu/home/will/Larceny/"
 
 LICENSE="Larceny"
 SLOT="0"
-KEYWORDS="~x86"
-IUSE="doc examples mzhost petit"
+KEYWORDS="~x86 ~amd64"
+IUSE="binary doc examples"
 
-RDEPEND="!dev-scheme/larceny-bin"
-DEPEND="${RDEPEND}
-		mzhost? ( dev-scheme/drscheme )
-		dev-lang/nasm
+DEPEND="dev-lang/nasm
 		doc? ( app-text/asciidoc )"
 
-S="${WORKDIR}/${P}-src"
+if use binary; then
+	MY_P=${LARCENY_SOURCE}
+else
+	MY_P=${LARCENY_X86_NATIVE_BINARY}
+fi
+
+S="${WORKDIR}"/${MY_P}
 
 # BIG FAT HACK TAKE 2:
 # We need a customized version of the timestamp hack from
@@ -44,18 +47,40 @@ larceny-remove-timestamp-hack() {
 	rm -rf "${ROOT}"/usr/share/larceny/lib &>/dev/null || true
 }
 
+pkg_setup() {
+	if ! use binary; then
+		if [[ -n ${FORCE_IMPL} ]]; then
+			LARCENY_BOOTSTRAP=${FORCE_IMPL}
+		elif has_version '>=dev-scheme/larceny-0.95'; then
+			einfo "Will bootstrap using installed larceny."
+			LARCENY_BOOTSTRAP=larceny
+		elif has_version '>=dev-scheme/drscheme-370'; then
+			einfo "Will bootstrap using PLT mzscheme."
+			LARCENY_BOOTSTRAP=mzscheme
+		else
+			eerror "You need >=larceny-0.95 or >=drscheme-370"
+			eerror "to compile larceny from source."
+			die "please install larceny binary or drscheme"
+		fi
+	fi
+}
+
 src_unpack() {
 	unpack ${A}
 	cd "${S}"
 
-	# fix PIC / STACK problems
-	epatch "${FILESDIR}"/${P}-textrelfix.patch
-	epatch "${FILESDIR}"/${P}-stackfix.patch
+	if ! use binary; then
+		# fix PIC / STACK problems
+		epatch "${FILESDIR}"/${P}-textrelfix.patch
+		epatch "${FILESDIR}"/${P}-stackfix.patch
+	fi
 }
 
 src_compile() {
-	# stays a little more readable like this, yea? :)
-	cat > setupscript <<EOF
+	if ! use binary; then
+
+		# stays a little more readable like this, yea? :)
+		cat > setupscript <<EOF
 (setup 'scheme: $(
 				( use mzhost && echo "'mzscheme" ) ||
 				( echo "'larceny" )
@@ -72,33 +97,29 @@ src_compile() {
 		(exit)
 EOF
 
+		case ${LARCENY_BOOSTRAP} in
+			larceny)
+				cat setupscript | larceny -- setup.sch || \
+					die "Compilation with native host failed"
+				;;
+			mzscheme)
+				cat setupscript | mzscheme -f setup.sch || \
+					die "Compilation with mzscheme host failed"
+				;;
+		esac
 
-	if use mzhost; then
-		cat setupscript | mzscheme -f setup.sch || \
-			die "Compilation with mzhost failed"
-	else
-		cat setupscript | "${WORKDIR}"/${P}-bin-native-ia32-linux86/larceny -- setup.sch || \
-			die "Compilation with native host failed"
-	fi
-
-	if use petit; then
-		echo "(exit)" | ./petit-larceny.bin -stopcopy -- src/Build/petit-larceny-heap.sch || \
-			die "Compilation of petit larceny heap failed"
-		echo "(exit)" | ./twobit.bin -stopcopy -- src/Build/petit-twobit-heap.sch || \
-			die "Compilation of petit twobit heap failed"
-	else
 		echo "(exit)" | ./larceny.bin -stopcopy -- src/Build/iasn-larceny-heap.fasl || \
 			die "Compilation of native larceny heap failed"
 		echo "(exit)" | ./larceny.bin -stopcopy -- src/Build/iasn-twobit-heap.fasl || \
 			die "Compilation of native twobit heap failed"
 		cp larceny twobit
-	fi
 
-	pushd lib/R6RS
-	echo "(require 'r6rsmode)
-		  (larceny:compile-r6rs-runtime)
-		  (exit)" | ../../larceny || die "Compilation of R6RS libraries failed"
-	popd
+		pushd lib/R6RS
+		echo "(require 'r6rsmode)
+			  (larceny:compile-r6rs-runtime)
+			  (exit)" | ../../larceny || die "Compilation of R6RS libraries failed"
+		popd
+	fi
 
 	if use doc; then
 		pushd doc
@@ -115,18 +136,24 @@ src_install() {
 	dodir ${LARCENY_LOCATION}
 	# use cp -a here to preserve the timestamps of the .fasl files in
 	# this step of the installation.
-	cp -af larceny \
-		twobit \
-		scheme-script \
-		startup.sch \
+	cp -af startup.sch \
+		compile-stale \
 		*.bin \
 		*.heap \
 		lib \
 		"${D}"/${LARCENY_LOCATION} || \
-		die "Installing larceny files failed"
+		die "Installing larceny base files failed"
+
+	if use binary; then
+		LARCENY_SCRIPTS="larceny larceny-np scheme-script twobit"
+	else
+		LARCENY_SCRIPTS="larceny scheme-script twobit"
+	fi
+
+	cp -af ${LARCENY_SCRIPTS} "${D}"/${LARCENY_LOCATION} || \
+		die "Installing larceny scripts failed"
 
 	# sed the scripts with the correct location so they can be symlinked
-	LARCENY_SCRIPTS="larceny scheme-script twobit"
 	for script in ${LARCENY_SCRIPTS}; do
 		dosed "s:# LARCENY_ROOT=/usr/local/lib/larceny:LARCENY_ROOT=${ROOT}/${LARCENY_LOCATION}:" \
 			"${ROOT}"/${LARCENY_LOCATION}/${script} || die "dosed on ${script} failed"
