@@ -1,0 +1,12 @@
+--- /root/temp/stalin/sources/stalin-0.11/makefile	2006-08-10 05:04:10.000000000 +0300
++++ makefile	2008-05-11 22:44:18.000000000 +0300
+@@ -13,8 +13,7 @@
+ # this.
+ 
+ stalin: stalin.c
+-	$(CC) -o stalin -I./include -O3 -fomit-frame-pointer\
+-              -fno-strict-aliasing ${ARCH_OPTS}\
++	$(CC) -o stalin -I./include $(CFLAGS)\
+ 	      stalin.c -L./include -lm -lgc
+ 	./post-make
+ 
