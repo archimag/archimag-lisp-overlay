@@ -13,6 +13,8 @@ SLOT="0"
 KEYWORDS="~x86"
 IUSE=""
 
+RESTRICT="strip"
+
 RDEPEND="x11-libs/libX11"
 DEPEND="${RDEPEND}"
 
