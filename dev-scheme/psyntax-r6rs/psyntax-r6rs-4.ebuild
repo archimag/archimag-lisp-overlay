@@ -2,8 +2,6 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit eutils
-
 DESCRIPTION="A portable R6RS library and syntax-case system."
 HOMEPAGE="http://www.cs.indiana.edu/~aghuloum/r6rs-libraries/"
 SRC_URI="http://www.cs.indiana.edu/~aghuloum/r6rs-libraries/${PN}-rev${PV}.tgz"
@@ -29,7 +27,10 @@ src_unpack() {
 	unpack ${A}
 	cd "${S}"
 
-	# copy a better makefile for easier building
+	# upstream's makefile requires Chez Petite and Ikarus to be installed
+	# for anything to be built.  copy in a new makefile that uses the
+	# provided pre-built files to bootstrap the other interpreters and
+	# avoid this requirement
 	cp "${FILESDIR}/${P}-Makefile" ./Makefile
 }
 
