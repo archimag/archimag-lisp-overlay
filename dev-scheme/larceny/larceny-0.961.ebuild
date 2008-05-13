@@ -54,6 +54,9 @@ pkg_setup() {
 		elif has_version '>=dev-scheme/larceny-0.95'; then
 			einfo "Will bootstrap using installed larceny."
 			LARCENY_BOOTSTRAP=larceny
+		elif has_version '>=dev-scheme/larceny-petit-0.95'; then
+			einfo "Will bootstrap using installed larceny-petit."
+			LARCENY_BOOTSTRAP=petite
 		elif has_version '>=dev-scheme/drscheme-370'; then
 			einfo "Will bootstrap using PLT mzscheme."
 			LARCENY_BOOTSTRAP=mzscheme
@@ -81,20 +84,16 @@ src_compile() {
 
 		# stays a little more readable like this, yea? :)
 		cat > setupscript <<EOF
-(setup 'scheme: $(
-				( use mzhost && echo "'mzscheme" ) ||
-				( echo "'larceny" )
-			)
-			'host: 'linux86
-			$( ! use petit && echo "'sassy" ))
-		(build-config-files)
-		(load-compiler)
-		(build-heap)
-		(build-runtime)
-		(build-executable)
-		(build-larceny-files)
-		$( use petit && echo "(build-twobit)" )
-		(exit)
+(setup 'scheme: '${LARCENY_BOOTSTRAP}
+	   'host: 'linux86
+	   'sassy
+(build-config-files)
+(load-compiler)
+(build-heap)
+(build-runtime)
+(build-executable)
+(build-larceny-files)
+(exit)
 EOF
 
 		case ${LARCENY_BOOSTRAP} in
