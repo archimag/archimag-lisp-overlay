@@ -17,7 +17,9 @@ SLOT="0"
 KEYWORDS="~x86 ~amd64"
 IUSE="binary doc examples"
 
-DEPEND="dev-lang/nasm
+RDEPEND="!dev-scheme/larceny-petit"
+DEPEND="${RDEPEND}
+		dev-lang/nasm
 		doc? ( app-text/asciidoc )"
 
 if use binary; then
