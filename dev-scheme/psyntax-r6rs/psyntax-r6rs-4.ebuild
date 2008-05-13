@@ -14,12 +14,12 @@ DEPEND="bigloo? ( >=dev-scheme/bigloo-3.0b )
 	chicken? ( >=dev-scheme/chicken-2.170 )
 	gambit? ( >=dev-scheme/gambit-4.0_beta20 )
 	ikarus? ( dev-scheme/ikarus )
-	larceny? ( || ( >=dev-scheme/larceny-0.93 >=dev-scheme/larceny-bin-0.93 ) )
+	larceny? ( >=dev-scheme/larceny-0.93 )
 	mit-scheme? ( dev-scheme/mit-scheme-c )
 	mzscheme? ( dev-scheme/drscheme )
-	scheme48? ( dev-scheme/scheme48-1.7 )"
+	scheme48? ( >=dev-scheme/scheme48-1.7 )"
 
-S="${WORKDIR}/${PN}"
+S="${WORKDIR}"/${PN}
 
 IUSE="bigloo chicken gambit ikarus larceny mit-scheme mzscheme scheme48"
 
@@ -31,7 +31,7 @@ src_unpack() {
 	# for anything to be built.  copy in a new makefile that uses the
 	# provided pre-built files to bootstrap the other interpreters and
 	# avoid this requirement
-	cp "${FILESDIR}/${P}-Makefile" ./Makefile
+	cp "${FILESDIR}"/${P}-Makefile ./Makefile
 }
 
 src_compile() {
