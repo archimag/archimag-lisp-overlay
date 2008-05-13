@@ -1,0 +1,76 @@
+--- src/Asm/Standard-C/dumpheap-unix.sch	2006-08-25 11:57:03.000000000 -0400
++++ src/Asm/Standard-C/dumpheap-unix.sch.new	2008-05-04 19:06:25.679214127 -0400
+@@ -75,7 +75,7 @@
+   (execute
+    (twobit-format 
+     #f
+-    "gcc -falign-functions=4 -c ~a ~a -D__USE_FIXED_PROTOTYPES__ -Wpointer-arith -Wimplicit ~a -o ~a ~a"
++    "gcc -fPIC -falign-functions=4 -c ~a ~a -D__USE_FIXED_PROTOTYPES__ -Wpointer-arith -Wimplicit ~a -o ~a ~a"
+     (if (optimize-c-code) "" "-gstabs+")
+     unix/petit-include-path
+     (if (optimize-c-code) "-O3 -DNDEBUG" "")
+@@ -97,7 +97,7 @@
+   (execute
+    (twobit-format 
+     #f
+-    "gcc ~a -rdynamic -o ~a ~a ~a"
++    "gcc -fPIC ~a -rdynamic -o ~a ~a ~a"
+     (if (optimize-c-code) "" "-gstabs+")
+     output-name
+     (apply string-append (insert-space object-files))
+@@ -107,7 +107,7 @@
+   (execute
+    (twobit-format 
+     #f
+-    "gcc ~a -o ~a ~a ~a"
++    "gcc -fPIC ~a -o ~a ~a ~a"
+     (if (optimize-c-code) "" "-gstabs+")
+     output-name
+     (apply string-append (insert-space object-files))
+@@ -117,7 +117,7 @@
+   (execute
+    (twobit-format 
+     #f
+-    "gcc ~a -Wl,-export-dynamic -o ~a ~a ~a"
++    "gcc -fPIC ~a -Wl,-export-dynamic -o ~a ~a ~a"
+     (if (optimize-c-code) "" "-gstabs+")
+     output-name
+     (apply string-append (insert-space object-files))
+@@ -127,7 +127,7 @@
+   (execute
+    (twobit-format 
+     #f
+-    "gcc ~a -shared -o ~a ~a ~a"
++    "gcc -fPIC ~a -shared -o ~a ~a ~a"
+     (if (optimize-c-code) "" "-gstabs+")
+     output-name
+     (apply string-append (insert-space object-files))
+@@ -137,7 +137,7 @@
+   (execute
+    (twobit-format 
+     #f
+-    "gcc ~a -shared -o ~a ~a ~a"
++    "gcc -fPIC ~a -shared -o ~a ~a ~a"
+     (if (optimize-c-code) "" "-gstabs+")
+     output-name
+     (apply string-append (insert-space object-files))
+@@ -149,7 +149,7 @@
+   (execute
+    (twobit-format 
+     #f
+-    "gcc ~a -flat_namespace -bundle -undefined suppress -o ~a ~a ~a"
++    "gcc -fPIC ~a -flat_namespace -bundle -undefined suppress -o ~a ~a ~a"
+     (if (optimize-c-code) "" "-gstabs+")
+     output-name
+     (apply string-append (insert-space object-files))
+--- src/Rts/make-templates.sch	2007-11-07 15:30:25.000000000 -0500
++++ src/Rts/make-templates.sch.new	2008-05-04 19:06:48.200246986 -0400
+@@ -138,7 +138,7 @@
+ (define (template-common uncommon)
+   (string-append
+ "INC_ROOT = ../../include
+-CFLAGS    = -ISys -I$(INC_ROOT) -I$(INC_ROOT)/Sys -I$(INC_ROOT)/Shared $(DEBUGINFO) $(OPTIMIZE)
++CFLAGS    = -fPIC -ISys -I$(INC_ROOT) -I$(INC_ROOT)/Sys -I$(INC_ROOT)/Shared $(DEBUGINFO) $(OPTIMIZE)
+ ASFLAGS   = -I$(INC_ROOT)/ -I$(INC_ROOT)/Sys/ -I$(INC_ROOT)/Shared/
+ " uncommon))
+ 
