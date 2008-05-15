@@ -1,5 +1,5 @@
 diff --git a/swank-ecl.lisp b/swank-ecl.lisp
-index 500748e..7624440 100644
+index 6d3786f..239f52b 100644
 --- a/swank-ecl.lisp
 +++ b/swank-ecl.lisp
 @@ -26,7 +26,8 @@
@@ -54,3 +54,31 @@ index 500748e..7624440 100644
  
  (defvar *backtrace* '())
  
+@@ -230,10 +232,10 @@
+   (and
+    (symbolp x)
+    (member (symbol-package x)
+-           (list #.(find-package :swank)
+-                 #.(find-package :swank-backend)
+-                 #.(ignore-errors (find-package :swank-mop))
+-                 #.(ignore-errors (find-package :swank-loader))))
++           (list (find-package :swank)
++                 (find-package :swank-backend)
++                 (ignore-errors (find-package :swank-mop))
++                 (ignore-errors (find-package :swank-loader))))
+    t))
+ 
+ (defun is-swank-source-p (name)
+diff --git a/swank.lisp b/swank.lisp
+index 8c6ef3a..38479ea 100644
+--- a/swank.lisp
++++ b/swank.lisp
+@@ -1419,7 +1419,7 @@ converted to lower case."
+                   (process-form-for-emacs (cdr form))))
+     (character (format nil "?~C" form))
+     (symbol (concatenate 'string (when (eq (symbol-package form)
+-                                           #.(find-package "KEYWORD"))
++                                           (find-package "KEYWORD"))
+                                    ":")
+                          (string-downcase (symbol-name form))))
+     (number (let ((*print-base* 10))

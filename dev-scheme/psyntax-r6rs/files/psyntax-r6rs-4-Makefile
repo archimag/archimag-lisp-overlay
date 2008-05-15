@@ -1,0 +1,52 @@
+SCHEME_SRC=psyntax-buildscript.ss psyntax/builders.ss psyntax/compat.ss\
+           psyntax/config.ss psyntax/expander.ss psyntax/internal.ss\
+           psyntax/library-manager.ss psyntax/main.ss
+
+psyntax-ikarus.pp: $(SCHEME_SRC)
+	ikarus --r6rs-script psyntax-buildscript.ss
+	cp psyntax.pp psyntax-ikarus.pp
+
+psyntax-gambit.pp: pre-built/psyntax-gambit.pp gsi.r6rs.ss $(SCHEME_SRC)
+	cp pre-built/psyntax-gambit.pp psyntax.pp
+	./gsi.r6rs.ss psyntax-buildscript.ss 
+	./gsi.r6rs.ss psyntax-buildscript.ss 
+	cp psyntax.pp psyntax-gambit.pp
+
+psyntax-chicken.pp: pre-built/psyntax-chicken.pp csi.r6rs.ss $(SCHEME_SRC)
+	cp pre-built/psyntax-chicken.pp psyntax.pp
+	./csi.r6rs.ss psyntax-buildscript.ss 
+	./csi.r6rs.ss psyntax-buildscript.ss 
+	cp psyntax.pp psyntax-chicken.pp
+
+psyntax-larceny.pp: psyntax-larceny.pp larceny.r6rs.ss $(SCHEME_SRC)
+	cp pre-built/psyntax-larceny.pp psyntax.pp
+	larceny -- larceny.r6rs.ss psyntax-buildscript.ss 
+	larceny -- larceny.r6rs.ss psyntax-buildscript.ss 
+	cp psyntax.pp psyntax-larceny.pp
+
+psyntax-mzscheme.pp: pre-built/psyntax-mzscheme.pp mzscheme.r6rs.ss $(SCHEME_SRC)
+	cp pre-built/psyntax-mzscheme.pp psyntax.pp
+	mzscheme -f mzscheme.r6rs.ss -- psyntax-buildscript.ss 
+	mzscheme -f mzscheme.r6rs.ss -- psyntax-buildscript.ss 
+	cp psyntax.pp psyntax-mzscheme.pp
+
+psyntax-bigloo.pp: pre-built/psyntax-bigloo.pp bigloo.r6rs.ss $(SCHEME_SRC)
+	cp pre-built/psyntax-bigloo.pp psyntax.pp
+	echo '(load "bigloo.r6rs.ss")' | bigloo -i -- psyntax-buildscript.ss 
+	echo '(load "bigloo.r6rs.ss")' | bigloo -i -- psyntax-buildscript.ss 
+	cp psyntax.pp psyntax-bigloo.pp
+
+psyntax-mit-scheme.pp: pre-built/psyntax-mit-scheme.pp mit-scheme.r6rs.ss $(SCHEME_SRC)
+	cp pre-built/psyntax-mit-scheme.pp psyntax.pp
+	echo "" | mit-scheme -heap 10240 -load mit-scheme.r6rs.ss 
+	echo "" | mit-scheme -heap 10240 -load mit-scheme.r6rs.ss 
+	cp psyntax.pp psyntax-mit-scheme.pp
+
+psyntax-scheme48.pp: pre-built/psyntax-scheme48.pp scheme48.r6rs.ss $(SCHEME_SRC)
+	(cp pre-built/psyntax-scheme48.pp psyntax.pp) && \
+	(cat scheme48.r6rs.ss | scheme48 -h 100000000) && \
+	(cat scheme48.r6rs.ss | scheme48 -h 100000000) && \
+	(cp psyntax.pp psyntax-scheme48.pp)
+
+clean:
+	rm -f *.pp

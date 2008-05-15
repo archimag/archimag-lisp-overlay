@@ -5,10 +5,10 @@
 inherit eutils
 
 DESCRIPTION="Larceny is a Scheme Interpreter and a Scheme to IA32 and C Compiler"
-LARCENY_SOURCE=${P}-src
-LARCENY_X86_NATIVE_BINARY=${P}-bin-native-ia32-linux86
+LARCENY_SOURCE=larceny-${PV}-src
+LARCENY_X86_PETIT_BINARY=larceny-${PV}-bin-petit-stdc-linux86
 SRC_URI="!binary? ( http://www.ccs.neu.edu/home/will/Larceny/LarcenyReleases/${LARCENY_SOURCE}.tar.gz )
-		 binary? ( http://www.ccs.neu.edu/home/will/Larceny/LarcenyReleases/${LARCENY_X86_NATIVE_BINARY}.tar.gz )"
+		 x86? ( binary? ( http://www.ccs.neu.edu/home/will/Larceny/LarcenyReleases/${LARCENY_X86_PETIT_BINARY}.tar.gz ) )"
 
 HOMEPAGE="http://www.ccs.neu.edu/home/will/Larceny/"
 
@@ -17,7 +17,7 @@ SLOT="0"
 KEYWORDS="~x86 ~amd64"
 IUSE="binary doc examples"
 
-RDEPEND="!dev-scheme/larceny-petit"
+RDEPEND="!dev-scheme/larceny"
 DEPEND="${RDEPEND}
 		dev-lang/nasm
 		doc? ( app-text/asciidoc )"
@@ -25,7 +25,7 @@ DEPEND="${RDEPEND}
 if ! use binary; then
 	MY_P=${LARCENY_SOURCE}
 else
-	MY_P=${LARCENY_X86_NATIVE_BINARY}
+	MY_P=${LARCENY_X86_PETIT_BINARY}
 fi
 
 S="${WORKDIR}"/${MY_P}
@@ -35,18 +35,18 @@ S="${WORKDIR}"/${MY_P}
 # common-lisp-common-3.eclass for larceny.
 
 larceny-save-timestamp-hack() {
-	tar cpjf "${D}"/usr/share/larceny/portage-timestamp-compensate -C "${D}"/usr/share/larceny lib || \
+	tar cpjf "${D}"/usr/share/larceny-petit/portage-timestamp-compensate -C "${D}"/usr/share/larceny-petit lib || \
 		die "Failed to create the timestamp hack"
 }
 
 larceny-restore-timestamp-hack() {
-	tar xjpfo "${ROOT}"/usr/share/larceny/portage-timestamp-compensate -C "${ROOT}"/usr/share/larceny || \
+	tar xjpfo "${ROOT}"/usr/share/larceny-petit/portage-timestamp-compensate -C "${ROOT}"/usr/share/larceny-petit || \
 		die "Failed to restore the timestamp hack"
 }
 
 larceny-remove-timestamp-hack() {
-	[[ -d "${ROOT}"/usr/share/larceny/lib ]] || return 0
-	rm -rf "${ROOT}"/usr/share/larceny/lib &>/dev/null || true
+	[[ -d "${ROOT}"/usr/share/larceny-petit/lib ]] || return 0
+	rm -rf "${ROOT}"/usr/share/larceny-petit/lib &>/dev/null || true
 }
 
 pkg_setup() {
@@ -54,19 +54,19 @@ pkg_setup() {
 		if [[ -n ${FORCE_IMPL} ]]; then
 			einfo "Forcing on bootstrap with ${FORCE_IMPL}"
 			LARCENY_BOOTSTRAP=${FORCE_IMPL}
-		elif has_version '>=dev-scheme/larceny-0.95'; then
-			einfo "Will bootstrap using installed larceny."
-			LARCENY_BOOTSTRAP=larceny
-		#elif has_version '>=dev-scheme/larceny-petit-0.95'; then
-			#einfo "Will bootstrap using installed larceny-petit."
-			#LARCENY_BOOTSTRAP=petite
+		#elif has_version '>=dev-scheme/larceny-0.95'; then
+			#einfo "Will bootstrap using installed larceny."
+			#LARCENY_BOOTSTRAP=larceny
+		elif has_version '>=dev-scheme/larceny-petit-0.95'; then
+			einfo "Will bootstrap using installed larceny-petit."
+			LARCENY_BOOTSTRAP=petite
 		elif has_version '>=dev-scheme/drscheme-370'; then
 			einfo "Will bootstrap using PLT mzscheme."
 			LARCENY_BOOTSTRAP=mzscheme
 		else
-			eerror "You need >=larceny-0.95 or >=drscheme-370"
+			eerror "You need >=larceny-petit-0.95 or >=drscheme-370"
 			eerror "to compile larceny from source."
-			die "please install larceny binary or drscheme"
+			die "please install larceny-petit binary or drscheme"
 		fi
 	fi
 }
@@ -88,14 +88,14 @@ src_compile() {
 		# stays a little more readable like this, yea? :)
 		cat > setupscript <<EOF
 (setup 'scheme: '${LARCENY_BOOTSTRAP}
-	   'host: 'linux86
-	   'sassy)
+	   'host: 'linux86)
 (build-config-files)
 (load-compiler)
 (build-heap)
 (build-runtime)
 (build-executable)
 (build-larceny-files)
+(build-twobit)
 (exit)
 EOF
 
@@ -110,18 +110,19 @@ EOF
 				;;
 		esac
 
-		echo "(exit)" | ./larceny.bin -stopcopy -- src/Build/iasn-larceny-heap.fasl || \
-			die "Compilation of native larceny heap failed"
-		echo "(exit)" | ./larceny.bin -stopcopy -- src/Build/iasn-twobit-heap.fasl || \
-			die "Compilation of native twobit heap failed"
-		cp larceny twobit
+		echo "(exit)" | ./petit-larceny.bin -stopcopy -- src/Build/petit-larceny-heap.sch || \
+			die "Compilation of petit larceny heap failed"
+		echo "(exit)" | ./twobit.bin -stopcopy -- src/Build/petit-twobit-heap.sch || \
+			die "Compilation of petit twobit heap failed"
 
-		pushd lib/R6RS
-		echo "(require 'r6rsmode)
-			  (larceny:compile-r6rs-runtime)
-			  (exit)" | ../../larceny || die "Compilation of R6RS libraries failed"
-		popd
 	fi
+
+	# for petit, R6RS runtime has to be built even with the binary.
+	pushd lib/R6RS
+	echo "(require 'r6rsmode)
+		  (larceny:compile-r6rs-runtime)
+		  (exit)" | ../../larceny || die "Compilation of R6RS libraries failed"
+	popd
 
 	if use doc; then
 		pushd doc
@@ -134,7 +135,7 @@ EOF
 src_install() {
 	dodoc README-FIRST.txt doc/HOWTO-* || die "Installing docs failed"
 
-	LARCENY_LOCATION="/usr/share/larceny"
+	LARCENY_LOCATION="/usr/share/larceny-petit"
 	dodir ${LARCENY_LOCATION}
 	# use cp -a here to preserve the timestamps of the .fasl files in
 	# this step of the installation.
@@ -145,12 +146,13 @@ src_install() {
 		*.bin \
 		*.heap \
 		lib \
+		include \
 		"${D}"/${LARCENY_LOCATION} || \
 		die "Installing larceny base files failed"
 
 	# the binary sometimes has misterious mtime issues.
 	if use binary; then
-		find "${D}"/${LARCENY_LOCATION}/lib -name '*.fasl' -o -name '*.slfasl' -exec touch '{}' +
+		find "${D}"/${LARCENY_LOCATION}/lib -name '*.so' -exec touch '{}' +
 	fi
 
 	# sed the scripts with the correct location so they can be symlinked
@@ -159,7 +161,7 @@ src_install() {
 	dosed "s:# LARCENY_ROOT=/usr/local/lib/larceny:LARCENY_ROOT=${ROOT}/${LARCENY_LOCATION}:" \
 		"${ROOT}"/${LARCENY_LOCATION}/scheme-script || die "dosed scheme-script failed"
 
-	LARCENY_SYMLINKS="gdb-larceny larceny larceny-np twobit"
+	LARCENY_SYMLINKS="gdb-larceny larceny larceny-np petit twobit"
 
 	# now we can symlink them to /usr/bin
 	dodir /usr/bin

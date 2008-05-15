@@ -10,8 +10,10 @@ SRC_URI="ftp://ftp.ecn.purdue.edu/qobi/${P}.tgz"
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="~x86 ~amd64"
+KEYWORDS="~x86"
 IUSE=""
+
+RESTRICT="strip"
 
 RDEPEND="x11-libs/libX11"
 DEPEND="${RDEPEND}"
