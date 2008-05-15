@@ -148,6 +148,11 @@ src_install() {
 		"${D}"/${LARCENY_LOCATION} || \
 		die "Installing larceny base files failed"
 
+	# the binary sometimes has misterious mtime issues.
+	if use binary; then
+		find "${D}"/${LARCENY_LOCATION}/lib -name '*.so' -exec touch '{}' +
+	fi
+
 	if use binary; then
 		LARCENY_SCRIPTS="larceny larceny-np scheme-script twobit petit"
 	else
