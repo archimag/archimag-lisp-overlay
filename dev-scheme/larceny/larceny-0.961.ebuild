@@ -45,13 +45,16 @@ larceny-restore-timestamp-hack() {
 }
 
 larceny-remove-timestamp-hack() {
-	[[ -e "${ROOT}"/usr/share/larceny/lib ]] || return 0
-	rm -rf "${ROOT}"/usr/share/larceny/lib/* &>/dev/null || true
+	[[ -d "${ROOT}"/usr/share/larceny/lib ]] || return 0
+	pushd "${ROOT}"/usr/share/larceny/lib >/dev/null
+	rm -rf ./* &>/dev/null || true
+	popd >/dev/null
 }
 
 pkg_setup() {
 	if ! use binary; then
 		if [[ -n ${FORCE_IMPL} ]]; then
+			einfo "Forcing on bootstrap with ${FORCE_IMPL}"
 			LARCENY_BOOTSTRAP=${FORCE_IMPL}
 		elif has_version '>=dev-scheme/larceny-0.95'; then
 			einfo "Will bootstrap using installed larceny."
