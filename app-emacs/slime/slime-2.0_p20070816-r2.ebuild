@@ -27,6 +27,7 @@ src_unpack() {
 	sed "s:(defvar \*swank-wire-protocol-version\* nil:(defvar \*swank-wire-protocol-version\* \"${SWANK_VERSION}\":" -i swank.lisp
 
 	epatch "${FILESDIR}"/move-6000-lines-and-fix-slime-edit-definition.patch
+	epatch "${FILESDIR}"/clisp-frame-1-up-fixup.patch
 }
 
 src_compile() {
