@@ -46,7 +46,7 @@ larceny-restore-timestamp-hack() {
 
 larceny-remove-timestamp-hack() {
 	[[ -e "${ROOT}"/usr/share/larceny/lib ]] || return 0
-	rm -rf "${ROOT}"/usr/share/larceny/lib &>/dev/null || true
+	rm -rf "${ROOT}"/usr/share/larceny/lib/* &>/dev/null || true
 }
 
 pkg_setup() {
