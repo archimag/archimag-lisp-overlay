@@ -22,7 +22,7 @@ DEPEND="${RDEPEND}
 		dev-lang/nasm
 		doc? ( app-text/asciidoc )"
 
-if use binary; then
+if ! use binary; then
 	MY_P=${LARCENY_SOURCE}
 else
 	MY_P=${LARCENY_X86_NATIVE_BINARY}
@@ -56,9 +56,9 @@ pkg_setup() {
 		elif has_version '>=dev-scheme/larceny-0.95'; then
 			einfo "Will bootstrap using installed larceny."
 			LARCENY_BOOTSTRAP=larceny
-		elif has_version '>=dev-scheme/larceny-petit-0.95'; then
-			einfo "Will bootstrap using installed larceny-petit."
-			LARCENY_BOOTSTRAP=petite
+		#elif has_version '>=dev-scheme/larceny-petit-0.95'; then
+			#einfo "Will bootstrap using installed larceny-petit."
+			#LARCENY_BOOTSTRAP=petite
 		elif has_version '>=dev-scheme/drscheme-370'; then
 			einfo "Will bootstrap using PLT mzscheme."
 			LARCENY_BOOTSTRAP=mzscheme
@@ -88,7 +88,7 @@ src_compile() {
 		cat > setupscript <<EOF
 (setup 'scheme: '${LARCENY_BOOTSTRAP}
 	   'host: 'linux86
-	   'sassy
+	   'sassy)
 (build-config-files)
 (load-compiler)
 (build-heap)
@@ -98,8 +98,8 @@ src_compile() {
 (exit)
 EOF
 
-		case ${LARCENY_BOOSTRAP} in
-			larceny)
+		case ${LARCENY_BOOTSTRAP} in
+			larceny|petite)
 				cat setupscript | larceny -- setup.sch || \
 					die "Compilation with native host failed"
 				;;

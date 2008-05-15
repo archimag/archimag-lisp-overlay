@@ -22,7 +22,7 @@ DEPEND="${RDEPEND}
 		dev-lang/nasm
 		doc? ( app-text/asciidoc )"
 
-if use binary; then
+if ! use binary; then
 	MY_P=${LARCENY_SOURCE}
 else
 	MY_P=${LARCENY_X86_PETIT_BINARY}
@@ -98,8 +98,8 @@ src_compile() {
 (exit)
 EOF
 
-		case ${LARCENY_BOOSTRAP} in
-			larceny)
+		case ${LARCENY_BOOTSTRAP} in
+			larceny|petite)
 				cat setupscript | larceny -- setup.sch || \
 					die "Compilation with native host failed"
 				;;
@@ -148,17 +148,10 @@ src_install() {
 		die "Installing larceny base files failed"
 
 	if use binary; then
-		LARCENY_SCRIPTS="larceny larceny-np scheme-script twobit"
+		LARCENY_SCRIPTS="larceny larceny-np scheme-script twobit petit"
 	else
-		LARCENY_SCRIPTS="larceny scheme-script twobit"
+		LARCENY_SCRIPTS="larceny scheme-script twobit petit"
 	fi
-
-	#for script in ${LARCENY_SCRIPTS}; do
-		#LARCENY_SCRIPTS_RENAMED="${LARCENY_SCRIPTS_RENAMED} ${script}-petit"
-		#mv "${S}"/${script} "${S}"/${script}-petit
-	#do
-
-	LARCENY_SCRIPTS="${LARCENY_SCRIPTS} petit"
 
 	cp -af ${LARCENY_SCRIPTS} "${D}"/${LARCENY_LOCATION} || \
 		die "Installing larceny scripts failed"
