@@ -138,7 +138,9 @@ src_install() {
 	dodir ${LARCENY_LOCATION}
 	# use cp -a here to preserve the timestamps of the .fasl files in
 	# this step of the installation.
-	cp -af startup.sch \
+	cp -af larceny \
+		scheme-script \
+		startup.sch \
 		compile-stale \
 		*.bin \
 		*.heap \
@@ -151,27 +153,24 @@ src_install() {
 		find "${D}"/${LARCENY_LOCATION}/lib -name '*.fasl' -o -name '*.slfasl' -exec touch '{}' +
 	fi
 
-	if use binary; then
-		LARCENY_SCRIPTS="larceny larceny-np scheme-script twobit"
-	else
-		LARCENY_SCRIPTS="larceny scheme-script twobit"
-	fi
-
-	cp -af ${LARCENY_SCRIPTS} "${D}"/${LARCENY_LOCATION} || \
-		die "Installing larceny scripts failed"
-
 	# sed the scripts with the correct location so they can be symlinked
-	for script in ${LARCENY_SCRIPTS}; do
-		dosed "s:# LARCENY_ROOT=/usr/local/lib/larceny:LARCENY_ROOT=${ROOT}/${LARCENY_LOCATION}:" \
-			"${ROOT}"/${LARCENY_LOCATION}/${script} || die "dosed on ${script} failed"
-	done
+	dosed "s:# LARCENY_ROOT=/usr/local/lib/larceny:LARCENY_ROOT=${ROOT}/${LARCENY_LOCATION}:" \
+		"${ROOT}"/${LARCENY_LOCATION}/larceny || die "dosed larceny failed"
+	dosed "s:# LARCENY_ROOT=/usr/local/lib/larceny:LARCENY_ROOT=${ROOT}/${LARCENY_LOCATION}:" \
+		"${ROOT}"/${LARCENY_LOCATION}/scheme-script || die "dosed scheme-script failed"
+
+	LARCENY_SYMLINKS="gdb-larceny larceny larceny-np twobit"
 
 	# now we can symlink them to /usr/bin
 	dodir /usr/bin
-	for script in ${LARCENY_SCRIPTS}; do
-		dosym "${ROOT}"/${LARCENY_LOCATION}/${script} "${ROOT}"/usr/bin/${script} || \
-			die "dosym on ${script} failed"
+	for link in ${LARCENY_SYMLINKS}; do
+		dosym "${ROOT}"/${LARCENY_LOCATION}/larceny "${ROOT}"/usr/bin/${link} || \
+			die "dosym larceny->${link} failed"
 	done
+
+	# this wil probably need to die when we get an eselect module for scheme-script
+	dosym "${ROOT}"/${LARCENY_LOCATION}/scheme-script "${ROOT}"/usr/bin/scheme-script || \
+		die "dosym for scheme-script->scheme-script failed"
 
 	if use examples; then
 		cp -af examples "${D}"/${LARCENY_LOCATION} || die "Installing examples failed."
