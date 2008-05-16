@@ -4,11 +4,9 @@
 
 inherit flag-o-matic eutils toolchain-funcs multilib
 
-MY_P=${PN}-${PV/_/-}
-
 DESCRIPTION="A portable, bytecode-compiled implementation of Common Lisp"
 HOMEPAGE="http://clisp.sourceforge.net/"
-SRC_URI="http://www.xach.com/tmp/${MY_P}.tar.bz2"
+SRC_URI="mirror://sourceforge/clisp/${P}.tar.bz2"
 
 LICENSE="GPL-2"
 SLOT="2"
@@ -43,12 +41,11 @@ enable_modules() {
 	done
 }
 
-S="${WORKDIR}"/${MY_P}
 BUILDDIR="builddir"
 
 src_compile() {
 	# built-in features
-	local myconf="--with-ffcall"
+	local myconf="--with-ffcall --with-dynamic-modules"
 	use readline || myconf="${myconf} --with-noreadline"
 
 	# default modules
