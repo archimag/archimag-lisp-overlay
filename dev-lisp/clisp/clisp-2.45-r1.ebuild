@@ -93,6 +93,9 @@ src_install() {
 	doman clisp.1
 	dodoc SUMMARY README* NEWS MAGIC.add ANNOUNCE clisp.dvi clisp.html
 	chmod a+x "${D}"/usr/$(get_libdir)/clisp-${PV/_*/}/clisp-link
+	# stripping them removes common symbols (defined but unitialised variables)
+	# which are then needed to build modules...
+	export STRIP_MASK="*/usr/$(get_libdir)/clisp-${PV}/*/*"
 	popd
 	dohtml doc/impnotes.{css,html} ${BUILDDIR}/clisp.html doc/clisp.png
 	dodoc ${BUILDDIR}/clisp.ps doc/{editors,CLOS-guide,LISP-tutorial}.txt
