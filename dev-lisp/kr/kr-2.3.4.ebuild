@@ -11,7 +11,7 @@ LICENSE="public-domain"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
-DEPEND="!dev-lisp/cl-${xPN}"
+DEPEND="!dev-lisp/cl-${PN}"
 
 S=${WORKDIR}/${PN}_${PV}
 
