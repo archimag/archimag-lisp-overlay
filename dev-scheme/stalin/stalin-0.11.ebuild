@@ -25,6 +25,7 @@ src_unpack() {
 	cd ${S}
 	epatch ${FILESDIR}/${P}-makefile.patch
 }
+
 pkg_setup() {
 	ewarn "Stalin is an ugly beast, which will eat"
 	ewarn "all your memory and stress you processor"
@@ -62,7 +63,10 @@ src_install() {
 	doins libgc.a
 	doins libstalin.a
 	doins stalin
+	doins stalin-architecture-name
+	doins stalin.architectures
 	chmod 755 ${D}/usr/lib/${PN}/stalin
+	chmod 755 ${D}/usr/lib/${PN}/stalin-architecture-name
 	cd ..
 
 (
