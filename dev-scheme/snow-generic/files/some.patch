@@ -1,0 +1,44 @@
+diff -ru /var/tmp/portage/dev-scheme/snow-generic-1.1.2/work/snow-generic/v1.1.2/bin/snowfort.in /home/marijn/snow-generic/bin/snowfort.in
+--- /var/tmp/portage/dev-scheme/snow-generic-1.1.2/work/snow-generic/v1.1.2/bin/snowfort.in	2007-04-04 23:31:33.000000000 +0200
++++ /home/marijn/snow-generic/bin/snowfort.in	2008-05-18 17:29:05.000000000 +0200
+@@ -1,4 +1,4 @@
+-":";SNOW_DEBUG= SNOW_TEST= SNOW_PATH= SNOW_USER_ROOT= SNOW_SITE_ROOT= SNOW_USER_DIR= SNOW_SITE_DIR= SNOW_PATH_GLOBAL= exec @SNOW_SITE_ROOT@/current/bin/snow -- "$0" "$@"
++":";SNOW_DEBUG= SNOW_TEST= SNOW_PATH= SNOW_USER_ROOT= SNOW_SITE_ROOT= SNOW_USER_DIR= SNOW_SITE_DIR= SNOW_PATH_GLOBAL= exec @SNOW_BIN_DIR@/snow -- "$0" "$@"
+ 
+ ;;;============================================================================
+ 
+Only in /home/marijn/snow-generic/bin: snowfort.in~
+diff -ru /var/tmp/portage/dev-scheme/snow-generic-1.1.2/work/snow-generic/v1.1.2/bin/snowman.in /home/marijn/snow-generic/bin/snowman.in
+--- /var/tmp/portage/dev-scheme/snow-generic-1.1.2/work/snow-generic/v1.1.2/bin/snowman.in	2007-04-04 23:31:52.000000000 +0200
++++ /home/marijn/snow-generic/bin/snowman.in	2008-05-18 17:29:30.000000000 +0200
+@@ -1,4 +1,4 @@
+-":";SNOW_DEBUG= SNOW_TEST= SNOW_PATH= SNOW_USER_ROOT= SNOW_SITE_ROOT= SNOW_USER_DIR= SNOW_SITE_DIR= SNOW_PATH_GLOBAL= exec @SNOW_SITE_ROOT@/current/bin/snow -- "$0" "$@"
++":";SNOW_DEBUG= SNOW_TEST= SNOW_PATH= SNOW_USER_ROOT= SNOW_SITE_ROOT= SNOW_USER_DIR= SNOW_SITE_DIR= SNOW_PATH_GLOBAL= exec @SNOW_BIN_DIR@/snow -- "$0" "$@"
+ 
+ ;;;============================================================================
+ 
+Only in /home/marijn/snow-generic/bin: snowman.in~
+diff -ru /var/tmp/portage/dev-scheme/snow-generic-1.1.2/work/snow-generic/v1.1.2/configure /home/marijn/snow-generic/configure
+--- /var/tmp/portage/dev-scheme/snow-generic-1.1.2/work/snow-generic/v1.1.2/configure	2008-03-12 22:12:52.000000000 +0100
++++ /home/marijn/snow-generic/configure	2008-05-18 17:30:32.000000000 +0200
+@@ -556,6 +556,7 @@
+ create_files ()
+ {
+   cat > configure.sed <<EOF
++s,@SNOW_BIN_DIR@,${SNOW_BIN_DIR:-"/usr/bin"},g
+ s,@SNOW_SITE_ROOT@,${SNOW_SITE_ROOT:-"/usr/share/snow"},g
+ s,@SNOW_USER_ROOT@,${SNOW_USER_ROOT:-".snow"},g
+ s,@SNOW_VERSION@,${SNOW_VERSION:-"v0.0.0"},g
+Only in /home/marijn/snow-generic/: configure~
+diff -ru /var/tmp/portage/dev-scheme/snow-generic-1.1.2/work/snow-generic/v1.1.2/makefile.in /home/marijn/snow-generic/makefile.in
+--- /var/tmp/portage/dev-scheme/snow-generic-1.1.2/work/snow-generic/v1.1.2/makefile.in	2008-05-18 17:28:18.000000000 +0200
++++ /home/marijn/snow-generic/makefile.in	2008-05-18 17:30:04.000000000 +0200
+@@ -108,6 +108,6 @@
+ 	done
+ 	rm -f $(DESTDIR)$(snow_site_current_dir)
+ 	ln -s $(snow_site_dir) $(DESTDIR)$(snow_site_current_dir)
+-	@echo "Don't forget to add $(snow_site_current_dir)/bin to your PATH"
++	@echo "Don't forget to add $(bin_dir) to your PATH"
+ 
+ uninstall:
+Only in /home/marijn/snow-generic/: makefile.in~

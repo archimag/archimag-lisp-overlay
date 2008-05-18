@@ -1,0 +1,66 @@
+diff -ru /var/tmp/portage/dev-scheme/snow-generic-1.1.2/work/snow-generic/v1.1.2/makefile.in /home/marijn/snow-generic/makefile.in
+--- /var/tmp/portage/dev-scheme/snow-generic-1.1.2/work/snow-generic/v1.1.2/makefile.in	2007-04-04 23:34:42.000000000 +0200
++++ /home/marijn/snow-generic/makefile.in	2008-05-18 17:42:13.000000000 +0200
+@@ -68,28 +68,28 @@
+ 	rm -rf host*
+ 
+ install:
+-	$(MKIDIRS) $(bin_dir)
+-	$(INSTALL_PROGRAM) bin/snow $(bin_dir)/snow
+-	$(INSTALL_PROGRAM) bin/snowman $(bin_dir)/snowman
+-	$(INSTALL_PROGRAM) bin/snowfort $(bin_dir)/snowfort
+-	$(MKIDIRS) $(base_dir)
++	$(MKIDIRS) $(DESTDIR)$(bin_dir)
++	$(INSTALL_PROGRAM) bin/snow $(DESTDIR)$(bin_dir)/snow
++	$(INSTALL_PROGRAM) bin/snowman $(DESTDIR)$(bin_dir)/snowman
++	$(INSTALL_PROGRAM) bin/snowfort $(DESTDIR)$(bin_dir)/snowfort
++	$(MKIDIRS) $(DESTDIR)$(base_dir)
+ 	@for file in $(BASE_FILES); do \
+ 	  echo $(INSTALL_SOURCE) base/$$file $(base_dir)/$$file; \
+-	  $(INSTALL_SOURCE) base/$$file $(base_dir)/$$file; \
++	  $(INSTALL_SOURCE) base/$$file $(DESTDIR)$(base_dir)/$$file; \
+ 	done
+-	$(MKIDIRS) $(pack_dir)
++	$(MKIDIRS) $(DESTDIR)$(pack_dir)
+ 	@for pkg in $(CORE_PACKAGES); do \
+ 	  VERSIONS=`ls pack/$$pkg`; \
+-	  $(MKIDIRS) $(pack_dir)/$$pkg; \
++	  $(MKIDIRS) $(DESTDIR)$(pack_dir)/$$pkg; \
+ 	  for ver in $$VERSIONS; do \
+ 	    SUBDIRS=`ls pack/$$pkg/$$ver`; \
+-	    $(MKIDIRS) $(pack_dir)/$$pkg/$$ver; \
++	    $(MKIDIRS) $(DESTDIR)$(pack_dir)/$$pkg/$$ver; \
+ 	    for sub in $$SUBDIRS; do \
+ 	      FILES=`ls pack/$$pkg/$$ver/$$sub`; \
+-	      $(MKIDIRS) $(pack_dir)/$$pkg/$$ver/$$sub; \
++	      $(MKIDIRS) $(DESTDIR)$(pack_dir)/$$pkg/$$ver/$$sub; \
+ 	      for file in $$FILES; do \
+ 	        echo $(INSTALL_SOURCE) pack/$$pkg/$$ver/$$sub/$$file $(pack_dir)/$$pkg/$$ver/$$sub/$$file; \
+-	        $(INSTALL_SOURCE) pack/$$pkg/$$ver/$$sub/$$file $(pack_dir)/$$pkg/$$ver/$$sub/$$file; \
++	        $(INSTALL_SOURCE) pack/$$pkg/$$ver/$$sub/$$file $(DESTDIR)$(pack_dir)/$$pkg/$$ver/$$sub/$$file; \
+ 	      done; \
+ 	    done; \
+ 	  done; \
+@@ -97,17 +97,17 @@
+ 	@for snow_host in $(all_snow_hosts); do \
+ 	  echo "Setting up for SNOW_HOST=$$snow_host"; \
+ 	  for pkg in $(CORE_PACKAGES); do \
+-	    VERSIONS=`ls $(pack_dir)/$$pkg`; \
++	    VERSIONS=`ls $(DESTDIR)$(pack_dir)/$$pkg`; \
+ 	    for ver in $$VERSIONS; do \
+ 	      echo "  compiling $$pkg/$$ver"; \
+-	      (cd $(pack_dir)/$$pkg/$$ver/snow && \
+-	      SNOW_HOST="$$snow_host" "$(bin_dir)/snow" --compile "$$pkg.scm" \
++	      (cd $(DESTDIR)$(pack_dir)/$$pkg/$$ver/snow && \
++	      SNOW_HOST="$$snow_host" "$(DESTDIR)$(bin_dir)/snow" --compile "$$pkg.scm" \
+ 	      ) || exit 1; \
+ 	    done \
+ 	  done \
+ 	done
+-	rm -f $(snow_site_current_dir)
+-	ln -s $(snow_site_dir) $(snow_site_current_dir)
++	rm -f $(DESTDIR)$(snow_site_current_dir)
++	ln -s $(snow_site_dir) $(DESTDIR)$(snow_site_current_dir)
+ 	@echo "Don't forget to add $(snow_site_current_dir)/bin to your PATH"
+ 
+ uninstall:
