@@ -1,8 +1,22 @@
 diff --git a/swank-ecl.lisp b/swank-ecl.lisp
-index 6d3786f..239f52b 100644
+index 6d3786f..c6ddbd5 100644
 --- a/swank-ecl.lisp
 +++ b/swank-ecl.lisp
-@@ -26,7 +26,8 @@
+@@ -12,6 +12,7 @@
+ 
+ (defvar *tmp*)
+ 
++(eval-when (:compile-toplevel)
+ (if (find-package :gray)
+   (import-from :gray *gray-stream-symbols* :swank-backend)
+   (import-from :ext *gray-stream-symbols* :swank-backend))
+@@ -21,12 +22,13 @@
+    :eql-specializer-object
+    :generic-function-declarations
+    :specializer-direct-methods
+-   :compute-applicable-methods-using-classes))
++   :compute-applicable-methods-using-classes)))
+ 
  
  ;;;; TCP Server
  
@@ -12,7 +26,7 @@ index 6d3786f..239f52b 100644
  
  (defun resolve-hostname (name)
    (car (sb-bsd-sockets:host-ent-addresses
-@@ -206,23 +207,24 @@
+@@ -206,23 +208,24 @@
  
  ;;; Debugging
  
@@ -33,7 +47,7 @@ index 6d3786f..239f52b 100644
 -   si::set-break-env
 -   si::set-current-ihs
 -   si::tpl-commands))
-+(eval-when (:compile-toplevel :load-toplevel :execute)
++(eval-when (:compile-toplevel)
 +  (import
 +   '(si::*break-env*
 +     si::*ihs-top*
@@ -54,7 +68,7 @@ index 6d3786f..239f52b 100644
  
  (defvar *backtrace* '())
  
-@@ -230,10 +232,10 @@
+@@ -230,10 +233,10 @@
    (and
     (symbolp x)
     (member (symbol-package x)
