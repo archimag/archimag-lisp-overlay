@@ -22,7 +22,6 @@ DEPEND="dev-lisp/asdf-system-connections
 
 src_unpack() {
 	unpack ${A}
-	rm "${S}"/dev/utilities/copy-file.lisp
 	epatch "${FILESDIR}"/uncomment-directory-name-p.patch
 }
 
