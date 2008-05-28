@@ -18,7 +18,8 @@ DEPEND="dev-lisp/md5
 		dev-lisp/chunga
 		dev-lisp/cl-ppcre
 		dev-lisp/url-rewrite
-		dev-lisp/cl-who"
+		dev-lisp/cl-who
+		dev-lisp/cl-fad"
 
 CLSYSTEMS="${PN} ${PN}-test"
 
