@@ -4,11 +4,9 @@
 
 inherit common-lisp-2 eutils
 
-MY_P=metatilities-${PV}
-
 DESCRIPTION="metabang.com's base set of core utilities."
-HOMEPAGE="http://common-lisp.net/project/metatilities/"
-SRC_URI="http://common-lisp.net/~sionescu/files/${MY_P}.tar.bz2"
+HOMEPAGE="http://common-lisp.net/project/metatilities-base/"
+SRC_URI="http://common-lisp.net/~sionescu/files/${P}.tar.bz2"
 
 LICENSE="MIT"
 SLOT="0"
@@ -19,15 +17,8 @@ DEPEND="dev-lisp/moptilities
 
 CLSYSTEMS="${PN} ${PN}-test"
 
-S="${WORKDIR}"/${MY_P}
-
-src_unpack() {
-	unpack ${A}
-	rm "${S}"/dev/dynamic-class.lisp
-}
-
 src_install() {
 	common-lisp-install ${PN}.asd ${PN}-test.asd
-	common-lisp-install dev/*.lisp dev/utilities/copy-file.lisp tests
+	common-lisp-install dev/*.lisp
 	common-lisp-symlink-asdf
 }
