@@ -16,7 +16,8 @@ DEPEND="dev-lisp/defsystem-compatibility
 		dev-lisp/metatilities
 		dev-lisp/lml2
 		dev-lisp/trivial-shell
-		dev-lisp/cl-graph"
+		dev-lisp/cl-graph
+		dev-lisp/anaphora"
 
 src_install() {
 	common-lisp-install *.asd dev/{*.lisp,tinaa.css} unit-tests
