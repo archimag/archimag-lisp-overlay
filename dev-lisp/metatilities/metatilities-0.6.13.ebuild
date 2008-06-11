@@ -13,11 +13,10 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 
 DEPEND="dev-lisp/asdf-system-connections
-		dev-lisp/metatilities-base
+		>=dev-lisp/metatilities-base-0.6.0
 		dev-lisp/moptilities
 		dev-lisp/cl-containers
 		dev-lisp/metabang-bind
-		dev-lisp/defsystem-compatibility
 		dev-lisp/lift"
 
 src_unpack() {
@@ -26,7 +25,6 @@ src_unpack() {
 }
 
 src_install() {
-	common-lisp-install ${PN}.asd
-	common-lisp-install dev/{utilities,allegro,lispworks,mcl,openmcl,sbcl,utilities}
+	common-lisp-install ${PN}.asd dev/
 	common-lisp-symlink-asdf
 }

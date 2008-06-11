@@ -1,6 +1,6 @@
 diff -ur metatilities-0.6.12.orig/dev/utilities/files.lisp metatilities-0.6.12/dev/utilities/files.lisp
---- metatilities-0.6.12.1.orig/dev/utilities/files.lisp	2008-03-17 03:49:35.000000000 +0100
-+++ metatilities-0.6.12.1/dev/utilities/files.lisp	2008-04-02 19:13:06.000000000 +0200
+--- metatilities-0.6.13.orig/dev/utilities/files.lisp	2008-03-17 03:49:35.000000000 +0100
++++ metatilities-0.6.13/dev/utilities/files.lisp	2008-04-02 19:13:06.000000000 +0200
 @@ -540,7 +540,7 @@
                    (list directory-spec)))
      (values nil)))
