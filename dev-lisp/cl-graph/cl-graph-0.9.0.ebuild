@@ -12,11 +12,12 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 
-DEPEND="dev-lisp/metatilities
+DEPEND="dev-lisp/asdf-system-connections
+		>=dev-lisp/metatilities-base-0.6.0
+		dev-lisp/dynamic-classes
 		dev-lisp/cl-containers
 		dev-lisp/metabang-bind
-		dev-lisp/cl-mathstats
-		dev-lisp/asdf-system-connections
+		dev-lisp/moptilities
 		dev-lisp/lift"
 
 CLSYSTEMS="${PN} ${PN}-test"
