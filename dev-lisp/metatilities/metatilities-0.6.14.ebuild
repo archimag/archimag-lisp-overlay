@@ -13,7 +13,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 
 DEPEND="dev-lisp/asdf-system-connections
-		>=dev-lisp/metatilities-base-0.6.0
+		>=dev-lisp/metatilities-base-0.6.3
 		dev-lisp/moptilities
 		dev-lisp/cl-containers
 		dev-lisp/metabang-bind
