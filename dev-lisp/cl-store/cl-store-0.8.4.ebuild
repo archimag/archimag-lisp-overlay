@@ -28,10 +28,12 @@ src_compile() {
 }
 
 src_install() {
-	common-lisp-install *.{lisp,asd} allegrocl clisp cmucl ecl \
-		lispworks openmcl sbcl
+	common-lisp-install *.{lisp,asd}
+	for p in abcl acl clisp cmucl ecl lispworks openmcl sbcl ; do
+		common-lisp-install ${p}/*.lisp
+	done
 	common-lisp-symlink-asdf
-	dodoc ChangeLog README
+	dodoc ChangeLog
 	doinfo *.info*
 
 }
