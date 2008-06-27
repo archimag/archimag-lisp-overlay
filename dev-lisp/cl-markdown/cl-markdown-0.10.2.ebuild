@@ -12,22 +12,23 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 
-DEPEND="dev-lisp/metatilities
+DEPEND=">=dev-lisp/metatilities-base-0.6.0
+		dev-lisp/metabang-bind
+		dev-lisp/dynamic-classes
+		dev-lisp/cl-containers
+		dev-lisp/anaphora
 		dev-lisp/cl-ppcre
 		dev-lisp/trivial-shell
+		dev-lisp/lift
 		dev-lisp/lml2
 		dev-lisp/cl-html-diff
 		dev-lisp/html-encode"
 
 CLSYSTEMS="${PN} ${PN}-test"
 
-src_unpack() {
-	unpack ${A}
-	epatch "${FILESDIR}"/${PV}-fix-asd.patch
-}
-
 src_install() {
 	common-lisp-install ${PN}.asd ${PN}-test.asd
-	common-lisp-install dev/*.lisp unit-tests *.config
+	common-lisp-install dev/*.lisp resources unit-tests
 	common-lisp-symlink-asdf
+	dodoc *.config
 }

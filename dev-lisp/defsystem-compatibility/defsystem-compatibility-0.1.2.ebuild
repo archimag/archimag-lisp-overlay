@@ -12,15 +12,10 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 
-DEPEND="dev-lisp/metatilities-base
+DEPEND=">=dev-lisp/metatilities-base-0.6.0
 		dev-lisp/lift"
 
 CLSYSTEMS="${PN} ${PN}-test"
-
-src_unpack() {
-	unpack ${A}
-	epatch "${FILESDIR}"/${PV}-fix-asd.patch
-}
 
 src_install() {
 	common-lisp-install *.asd dev unit-tests

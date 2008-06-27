@@ -19,6 +19,8 @@ DEPEND="dev-lisp/lw-compat"
 
 CLSYSTEMS="mop-feature-tests"
 
+S="${WORKDIR}"/${MY_P}
+
 src_install() {
 	common-lisp-install *.{lisp,asd} tests/
 	common-lisp-symlink-asdf

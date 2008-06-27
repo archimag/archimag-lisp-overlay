@@ -12,11 +12,13 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 
-DEPEND="dev-lisp/defsystem-compatibility
+DEPEND=">=dev-lisp/defsystem-compatibility-0.1.2
 		dev-lisp/metatilities
 		dev-lisp/lml2
 		dev-lisp/trivial-shell
-		dev-lisp/cl-graph"
+		dev-lisp/cl-graph
+		dev-lisp/anaphora
+		dev-lisp/cl-markdown"
 
 src_install() {
 	common-lisp-install *.asd dev/{*.lisp,tinaa.css} unit-tests
