@@ -6,8 +6,8 @@ inherit common-lisp-2
 
 DESCRIPTION="CL-PPCRE is a portable regular expression library for Common Lisp."
 HOMEPAGE="http://weitz.de/cl-ppcre/
-		http://www.cliki.net/cl-ppcre"
-SRC_URI="http://common-lisp.net/~sionescu/ediware/${PN}_${PV}.orig.tar.gz"
+		  http://www.cliki.net/cl-ppcre"
+SRC_URI="http://common-lisp.net/~sionescu/files/ediware/${P}.tar.bz2"
 LICENSE="BSD-2"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 SLOT="0"
