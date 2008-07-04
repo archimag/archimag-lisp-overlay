@@ -20,11 +20,11 @@
                        :defaults *load-truename*)
         :if-does-not-exist nil))
 
-(defclass asdf::no-load-file (asdf:cl-source-file) ())
+(defclass no-load-file (cl-source-file) ())
 
-(defmethod asdf:perform ((op asdf:load-op) (c asdf::no-load-file)) nil)
+(defmethod perform ((op load-op) (c no-load-file)) nil)
 
-(defmacro define-swank-system (&rest sysdep-components)
+(defmacro define-swank-system (sysdep-files)
   `(defsystem swank
        :name "Swank is the Common Lips back-end to SLIME"
        :serial t
@@ -34,7 +34,7 @@
                                   (if (atom component)
                                       (list :file component)
                                       component))
-                              sysdep-components)
+                              sysdep-files)
                     (:file "swank")
                     (:module "contrib"
                      :components ((:no-load-file "swank-arglists")
@@ -52,33 +52,21 @@
                   (load-site-init-file)
                   (load-user-init-file))))
 
-#+sbcl  (define-swank-system
-	  "swank-sbcl"
-	  "swank-source-path-parser"
-	  "swank-source-file-cache"
-	  "swank-gray")
+#+(or cmu scl sbcl openmcl lispworks allegro clisp armedbear cormanlisp ecl)
+(define-swank-system
+  #+cmu (swank-source-path-parser swank-source-file-cache swank-cmucl)
+  #+scl (swank-source-path-parser swank-source-file-cache swank-scl)
+  #+sbcl (swank-source-path-parser swank-source-file-cache swank-sbcl swank-gray)
+  #+openmcl (metering swank-openmcl swank-gray)
+  #+lispworks (swank-lispworks swank-gray)
+  #+allegro (swank-allegro swank-gray)
+  #+clisp (xref metering swank-clisp swank-gray)
+  #+armedbear (swank-abcl)
+  #+cormanlisp (swank-corman swank-gray)
+  #+ecl (swank-source-path-parser swank-source-file-cache swank-ecl swank-gray))
 
-#+openmcl (define-swank-system
-	    "metering"
-	    "swank-openmcl"
-	    "swank-gray")
-
-#+cmu (define-swank-system
-	"swank-source-path-parser"
-	"swank-source-file-cache"
-	"swank-cmucl")
-
-#+clisp (define-swank-system
-	  "xref"
-	  "metering"
-	  "swank-clisp"
-	  "swank-gray")
-
-#+armedbear (define-swank-system
-		"swank-abcl")
-
-#+ecl (define-swank-system
-	  "swank-ecl" "swank-gray")
+#-(or cmu scl sbcl openmcl lispworks allegro clisp armedbear cormanlisp ecl)
+(error "Your CL implementation is not supported !")
 
 (in-package #:swank-loader)
 
