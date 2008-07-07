@@ -38,7 +38,7 @@ src_unpack() {
 	epatch "${FILESDIR}"/${PV}-inspect-presentations.patch
 	epatch "${FILESDIR}"/${PV}-fix-ecl.patch
 	epatch "${FILESDIR}"/${PV}-fix-swank-listener-hooks-contrib.patch
-	epatch "${FILESDIR}"/${PV}-slime-intendation-fix.patch
+	epatch "${FILESDIR}"/${PV}-fix-slime-intendation.patch
 }
 
 rel_elisp-comp() {
