@@ -5,7 +5,7 @@
 inherit common-lisp-2 elisp
 
 DESCRIPTION="SLIME, the Superior Lisp Interaction Mode (Extended)"
-HOMEPAGE="http://common-lisp.net/project/${PN}/"
+HOMEPAGE="http://common-lisp.net/project/slime/"
 SRC_URI="mirror://gentoo/${P}.tar.bz2"
 
 LICENSE="GPL-2 xref.lisp"
@@ -13,7 +13,9 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE="doc"
 
-DEPEND="doc? ( virtual/latex-base )"
+RDEPEND="virtual/commonlisp"
+DEPEND="${RDEPEND}
+		doc? ( virtual/texi2dvi )"
 
 CLPACKAGE=swank
 CLSYSTEMS=swank
@@ -32,8 +34,11 @@ src_unpack() {
 
 src_compile() {
 	elisp-comp *.el || die "Cannot compile core Elisp files"
-	emake -j1 -C doc ${PN}.info || die "Cannot build info docs"
-	if use doc; then emake -j1 -C doc ${PN}.{ps,pdf} || die "Cannot build docs"; fi
+	emake -j1 -C doc slime.info || die "Cannot build info docs"
+	if use doc; then
+		VARTEXFONTS="${T}"/fonts \
+			emake -j1 -C doc slime.{ps,pdf} || die "emake doc failed"
+	fi
 }
 
 src_install() {
@@ -48,6 +53,6 @@ src_install() {
 
 	# install docs
 	dodoc README* ChangeLog HACKING NEWS PROBLEMS
-	doinfo doc/${PN}.info
-	use doc && dodoc doc/${PN}.{ps,pdf}
+	doinfo doc/slime.info
+	use doc && dodoc doc/slime.{ps,pdf}
 }
