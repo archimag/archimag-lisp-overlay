@@ -1,24 +1,14 @@
-diff -u osicat_0.5.0.orig/osicat-glue.c osicat_0.5.0/osicat-glue.c
---- osicat_0.5.0.orig/osicat-glue.c	2005-10-06 17:25:31.000000000 -0500
-+++ osicat_0.5.0/osicat-glue.c	2005-10-28 10:45:59.000000000 -0500
-@@ -26,6 +26,7 @@
- #include <pwd.h>
- #include <errno.h>
- #include <unistd.h>
-+#include <stdlib.h>
- 
- extern int
- osicat_mode (char * name, int follow_p)
-Only in osicat_0.5.0: osicat-glue.c~
-diff -u osicat_0.5.0.orig/osicat.asd osicat_0.5.0/osicat.asd
---- osicat_0.5.0.orig/osicat.asd	2005-10-06 17:25:31.000000000 -0500
-+++ osicat_0.5.0/osicat.asd	2005-10-28 10:51:43.000000000 -0500
-@@ -31,17 +31,19 @@
+diff -uw osicat_0.5.0.orig/osicat.asd osicat_0.5.0/osicat.asd
+--- osicat_0.5.0.orig/osicat.asd	2005-10-07 00:25:31.000000000 +0200
++++ osicat_0.5.0/osicat.asd	2008-07-10 01:36:06.000000000 +0200
+@@ -31,17 +31,21 @@
  			#+darwin "-dynamiclib"
  			"-fPIC"))
  
 -(defmethod output-files ((o compile-op) (c c-source-file))
-+(defclass osicat-c-source-file (c-source-file) ())
++(defclass osicat-c-source-file (cl-source-file) ())
++
++(defmethod source-file-type ((c osicat-c-source-file) (s module)) "c")
 +
 +(defmethod output-files ((o compile-op) (c osicat-c-source-file))
    (list (make-pathname :name (component-name c)
@@ -36,7 +26,7 @@ diff -u osicat_0.5.0.orig/osicat.asd osicat_0.5.0/osicat.asd
    (unless (zerop (run-shell-command "~A ~A ~{~A ~}-o ~A"
  				    *gcc*
  				    (namestring (component-pathname c))
-@@ -72,7 +74,7 @@
+@@ -72,7 +76,7 @@
      :version "0.5.0"
      :depends-on (:uffi)
      :components
@@ -45,4 +35,14 @@ diff -u osicat_0.5.0.orig/osicat.asd osicat_0.5.0/osicat.asd
       (:file "packages")
       (:grovel-file "grovel-constants" :depends-on ("packages"))
       (:file "early-util" :depends-on ("packages"))
-Only in osicat_0.5.0: osicat.asd~
+diff -uw osicat_0.5.0.orig/osicat-glue.c osicat_0.5.0/osicat-glue.c
+--- osicat_0.5.0.orig/osicat-glue.c	2005-10-07 00:25:31.000000000 +0200
++++ osicat_0.5.0/osicat-glue.c	2008-07-10 01:36:29.000000000 +0200
+@@ -26,6 +26,7 @@
+ #include <pwd.h>
+ #include <errno.h>
+ #include <unistd.h>
++#include <stdlib.h>
+ 
+ extern int
+ osicat_mode (char * name, int follow_p)
