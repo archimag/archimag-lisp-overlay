@@ -14,6 +14,6 @@ KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 src_install() {
 	common-lisp-install *.{lisp,asd}
 	common-lisp-symlink-asdf
-	dohtml doc/index.html
-	dodoc doc/mandelbrot* doc/background.gif
+	dohtml doc/{index.html,mandelbrot.png}
+	dodoc doc/mandelbrot.lisp
 }
