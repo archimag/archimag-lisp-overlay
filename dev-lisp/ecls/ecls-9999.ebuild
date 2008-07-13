@@ -39,12 +39,13 @@ src_compile() {
 	econf \
 		--with-system-gmp \
 		--enable-boehm=system \
-		--enable-longdouble \
-		--enable-c99-complex \
+		--enable-gengc \
+		--enable-smallcons \
+		$(use_enable x86 asmapply) \
 		$(use_with c++ cxx) \
-		$(use_with threads) \
+		$(use_enable threads) \
 		$(use_with threads __thread) \
-		$(use_with unicode) \
+		$(use_enable unicode) \
 		$(use_with X x) \
 		$(use_with X clx) \
 		|| die "econf failed"
@@ -53,7 +54,7 @@ src_compile() {
 }
 
 src_install () {
-	emake DESTDIR="${D}" install || die
+	emake DESTDIR="${D}" install || die "Could not build ECL"
 
 	dohtml doc/*.html
 	dodoc ANNOUNCEMENT Copyright
