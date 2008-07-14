@@ -54,6 +54,10 @@ pkg_setup() {
 		eerror "refer to Bug #119016 for more information."
 		die
 	fi
+	if use doc && ! built_with_use media-gfx/graphviz png; then
+		eerror "media-gfx/graphviz has to be built with png support."
+		die "Missing png USE-flag for media-gfx/graphviz"
+	fi
 }
 
 CONFIG="${S}/customize-target-features.lisp"
