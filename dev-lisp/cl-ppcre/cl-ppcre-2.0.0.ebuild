@@ -8,13 +8,22 @@ DESCRIPTION="CL-PPCRE is a portable regular expression library for Common Lisp."
 HOMEPAGE="http://weitz.de/cl-ppcre/
 		  http://www.cliki.net/cl-ppcre"
 SRC_URI="http://common-lisp.net/~sionescu/files/ediware/${P}.tar.bz2"
+
 LICENSE="BSD-2"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 SLOT="0"
 
+DEPEND="dev-lisp/flexi-streams"
+PDEPEND="dev-lisp/cl-ppcre-unicode"
+
+src_unpack() {
+	unpack ${A} && cd ${S}
+	rm -rf cl-ppcre-unicode test/unicode*
+}
+
 src_install() {
-	common-lisp-install *.{lisp,asd}
+	common-lisp-install *.lisp ${PN}.asd test/
 	common-lisp-symlink-asdf
-	dodoc CHANGELOG README doc/benchmarks.2002-12-22.txt
+	dodoc CHANGELOG
 	dohtml doc/index.html
 }
