@@ -4,27 +4,29 @@
 
 inherit common-lisp-2 eutils multilib
 
-MY_PV="${PV:0:4}-${PV:4:2}-${PV:6:2}"
+PKGNAME=cl+ssl
+MY_P=${PKGNAME}-${PV:0:4}-${PV:4:2}-${PV:6:2}
+
 DESCRIPTION="A simple Common Lisp interface to OpenSSL."
-HOMEPAGE="http://sourceforge.net/projects/${PN}/"
-SRC_URI="http://common-lisp.net/project/${PN}/download/cl+ssl-${MY_PV}.tar.gz"
+HOMEPAGE="http://common-lisp.net/project/cl-plus-ssl/"
+SRC_URI="http://common-lisp.net/~sionescu/files/${MY_P}.tar.bz2"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~x86 ~sparc ~amd64 ~ppc"
 IUSE=""
-DEPEND=">=dev-lisp/cffi-0.9.1
+DEPEND=">=dev-lisp/cffi-0.9.2_p20080723
 		dev-lisp/trivial-gray-streams
 		dev-lisp/flexi-streams"
 
-CLPACKAGE=cl+ssl
-CLSYSTEMS=cl+ssl
+CLPACKAGE=${PKGNAME}
+CLSYSTEMS=${PKGNAME}
 
-S="${WORKDIR}/cl+ssl-${MY_PV}"
+S="${WORKDIR}"/${MY_P}
 
 src_unpack() {
 	unpack ${A}
 	rm "${S}"/Makefile
-	sed -i "s,/usr/lib,/usr/$(get_libdir),g" "${S}"/cl+ssl.asd
+	sed -i "s,/usr/lib,/usr/$(get_libdir),g" "${S}"/${PKGNAME}.asd
 }
 
 src_install() {
