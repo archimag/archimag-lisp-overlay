@@ -4,11 +4,11 @@
 
 inherit common-lisp-2
 
-MY_P=${PN}-${PV/*_p20/}
+MY_P=${PN}_${PV}
 
 DESCRIPTION="The Common Foreign Function Interface (CFFI)"
 HOMEPAGE="http://common-lisp.net/project/cffi/"
-SRC_URI="http://common-lisp.net/project/${PN}/tarballs/${MY_P}.tar.gz"
+SRC_URI="http://common-lisp.net/project/${PN}/releases/${MY_P}.tar.gz"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"

@@ -1,12 +1,12 @@
 diff -ur cffi-080723.orig/doc/gendocs.sh cffi-080723/doc/gendocs.sh
---- cffi-080723.orig/doc/gendocs.sh	2006-01-25 01:46:43.000000000 +0100
-+++ cffi-080723/doc/gendocs.sh	2008-07-27 23:43:31.000000000 +0200
+--- cffi_0.10.0.orig/doc/gendocs.sh	2006-01-25 01:46:43.000000000 +0100
++++ cffi_0.10.0/doc/gendocs.sh	2008-07-27 23:43:31.000000000 +0200
 @@ -217,7 +217,7 @@
  echo "Generating html by node... ($cmd)"
  eval $cmd
  split_html_dir=$PACKAGE.html
 -sbcl --load colorize-lisp-examples.lisp "${split_html_dir}/*.html"
-+sbcl --load colorize-lisp-examples.lisp ${split_html_dir}/*.html
++sbcl --load colorize-lisp-examples.lisp "${split_html_dir}"/*.html
  (
    cd ${split_html_dir} || exit 1
    #fix libc xrefs
