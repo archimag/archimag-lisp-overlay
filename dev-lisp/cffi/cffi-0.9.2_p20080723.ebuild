@@ -30,7 +30,9 @@ src_unpack() {
 }
 
 src_compile() {
-	use doc && make -C doc manual spec || die "Cannot build docs"
+	if use doc ; then
+		make -C doc manual spec || die "Cannot build docs"
+	fi
 }
 
 src_install() {
