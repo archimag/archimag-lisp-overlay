@@ -33,12 +33,12 @@ src_unpack() {
 	SWANK_VERSION=$(head -n 1 "${S}"/ChangeLog | awk '{print $1}')
 	sed "s:(defvar \*swank-wire-protocol-version\* nil:(defvar \*swank-wire-protocol-version\* \"${SWANK_VERSION}\":" -i "${S}"/swank.lisp
 
-	epatch "${FILESDIR}"/${PV}-module-load-gentoo.patch
-	epatch "${FILESDIR}"/${PV}-dont-call-init.patch
-	epatch "${FILESDIR}"/${PV}-inspect-presentations.patch
-	epatch "${FILESDIR}"/${PV}-fix-ecl.patch
-	epatch "${FILESDIR}"/${PV}-fix-swank-listener-hooks-contrib.patch
-	epatch "${FILESDIR}"/${PV}-fix-slime-indentation.patch
+	epatch "${FILESDIR}"/${PV}/module-load-gentoo.patch
+	epatch "${FILESDIR}"/${PV}/dont-call-init.patch
+	epatch "${FILESDIR}"/${PV}/inspect-presentations.patch
+	epatch "${FILESDIR}"/${PV}/fix-ecl.patch
+	epatch "${FILESDIR}"/${PV}/fix-swank-listener-hooks-contrib.patch
+	epatch "${FILESDIR}"/${PV}/fix-slime-indentation.patch
 }
 
 rel_elisp-comp() {
@@ -69,8 +69,8 @@ src_compile() {
 src_install() {
 	## install core
 	elisp-install ${PN} *.el{,c} ChangeLog "${FILESDIR}"/swank-loader.lisp || die "Cannot install SLIME core"
-	elisp-site-file-install "${FILESDIR}/${SITEFILE}"
-	cp "${FILESDIR}"/swank-${PV}.asd "${S}"/swank.asd
+	elisp-site-file-install "${FILESDIR}"/${PV}/${SITEFILE} || die "Cannot install site file"
+	cp "${FILESDIR}"/${PV}/swank.asd "${S}"
 	# remove upstream swank-loader, since it won't be used
 	rm "${S}"/swank-loader.lisp
 	common-lisp-install *.{lisp,asd}
