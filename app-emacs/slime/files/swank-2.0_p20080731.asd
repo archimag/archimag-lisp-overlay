@@ -20,6 +20,8 @@
                        :defaults *load-truename*)
         :if-does-not-exist nil))
 
+(defclass no-load-file (cl-source-file) ())
+
 (defmethod perform ((op load-op) (c no-load-file)) nil)
 
 (defmacro define-swank-system (sysdep-files)
@@ -33,7 +35,18 @@
                                       (list :file component)
                                       component))
                               sysdep-files)
-                    (:file "swank"))
+                    (:file "swank")
+                    (:module "contrib"
+                     :components ((:no-load-file "swank-arglists")
+                                  (:no-load-file "swank-asdf")
+                                  (:no-load-file "swank-c-p-c")
+                                  (:no-load-file "swank-fancy-inspector")
+                                  (:no-load-file "swank-fuzzy")
+                                  (:no-load-file "swank-indentation")
+                                  (:no-load-file "swank-listener-hooks")
+                                  (:no-load-file "swank-motd")
+                                  (:no-load-file "swank-presentations")
+                                  (:no-load-file "swank-presentation-streams"))))
        :depends-on (#+sbcl sb-bsd-sockets)
        :perform (load-op :after (op swank)
                   (load-site-init-file)
