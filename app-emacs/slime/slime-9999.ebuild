@@ -6,7 +6,7 @@ ECVS_SERVER="common-lisp.net:/project/slime/cvsroot"
 ECVS_MODULE="slime"
 ECVS_PASS="anonymous"
 
-inherit common-lisp-2 elisp cvs
+inherit common-lisp-2 elisp cvs eutils
 
 DESCRIPTION="SLIME, the Superior Lisp Interaction Mode (Extended)"
 HOMEPAGE="http://common-lisp.net/project/slime/"
