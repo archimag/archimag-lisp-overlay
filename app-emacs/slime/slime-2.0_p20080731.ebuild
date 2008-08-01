@@ -79,3 +79,22 @@ src_install() {
 	doinfo doc/slime.info
 	use doc && dodoc doc/slime.{ps,pdf}
 }
+
+pkg_postinst() {
+	elisp-site-regen
+	while read line; do elog "${line}"; done <<-EOF
+
+	SLIME notes for Gentoo
+	----------------------
+
+	If you're interested in hacking this ebuild, SLIME uses its own
+	swank.asd system definition file and swank-loader.lisp.
+
+	As always with CVS ebuilds, DO NOT report problems to upstream.
+	Always report problems to the Gentoo Bugzilla at
+	http://bugs.gentoo.org
+
+	Gentoo LISP Project <http://www.gentoo.org/proj/en/lisp/>
+
+EOF
+}
