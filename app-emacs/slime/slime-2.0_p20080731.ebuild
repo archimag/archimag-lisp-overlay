@@ -71,13 +71,14 @@ src_install() {
 	common-lisp-symlink-asdf
 
 	## install contribs
-	elisp-install ${PN}/contrib/ contrib/*.{el,elc,scm,goo} \
-		contrib/{README,ChangeLog} || die "Cannot install contribs"
+	elisp-install ${PN}/contrib/ contrib/*.{el,elc,scm,goo} || die "Cannot install contribs"
 	insinto "${CLSOURCEROOT}"/swank/contrib
 	doins contrib/*.lisp
 
 	## install docs
 	dodoc README* ChangeLog HACKING NEWS PROBLEMS
+	newdoc contrib/README README.contrib
+	newdoc contrib/ChangeLog ChangeLog.contrib
 	doinfo doc/slime.info
 	use doc && dodoc doc/slime.{ps,pdf}
 }
