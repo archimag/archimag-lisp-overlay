@@ -94,7 +94,7 @@ EOF
 src_unpack() {
 	unpack ${A}
 	mv sbcl-*-linux sbcl-binary
-	cd "${S}"
+	mkdir "${S}" && cd "${S}"
 	git_src_unpack
 
 #	epatch "${FILESDIR}/disable-tests-gentoo-${PV}.patch"
