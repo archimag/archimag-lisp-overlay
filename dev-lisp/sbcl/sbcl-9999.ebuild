@@ -31,7 +31,8 @@ SRC_URI="x86? ( mirror://sourceforge/sbcl/${PN}-${BV_X86}-x86-linux-binary.tar.b
 LICENSE="MIT"
 SLOT="0"
 
-KEYWORDS="-* ~amd64 ~ppc ~sparc ~x86"
+#KEYWORDS="-* ~amd64 ~ppc ~sparc ~x86"
+KEYWORDS=""
 
 IUSE="ldb source threads unicode doc cobalt"
 
