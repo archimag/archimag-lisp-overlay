@@ -2,13 +2,12 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-ECVS_SERVER="common-lisp.net:/project/ecl/cvsroot"
-ECVS_PASS="anonymous"
-ECVS_MODULE="ecl"
+inherit eutils multilib
 
-inherit eutils multilib cvs
+MY_P=ecl-${PV}
 
 DESCRIPTION="ECL is an embeddable Common Lisp implementation."
+SRC_URI="mirror://sourceforge/${PN}/${MY_P}.tgz"
 HOMEPAGE="http://common-lisp.net/project/ecl/"
 SLOT="0"
 LICENSE="BSD LGPL-2"
@@ -22,10 +21,11 @@ IUSE="X c++ threads unicode"
 
 PROVIDE="virtual/commonlisp"
 
-S="${WORKDIR}"/ecl
+S="${WORKDIR}"/${MY_P}
 
 src_unpack() {
-	cvs_src_unpack
+	unpack ${A}
+	cd ${S}
 
 	# change LISP-IMPLEMENTATION-VERSION because upstream version for
 	# live builds contains spaces which ASDF-BINARY-LOCATIONS doesn't like

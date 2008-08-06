@@ -1,0 +1,18 @@
+diff -ur ecl-0.9l.orig/src/h/object.h ecl-0.9l/src/h/object.h
+--- ecl-0.9l.orig/src/h/object.h	2008-07-12 18:55:07.000000000 +0200
++++ ecl-0.9l/src/h/object.h	2008-08-06 01:21:00.000000000 +0200
+@@ -23,8 +23,13 @@
+ 	Integer and boolean types (see config.h)
+ */
+ 
++#ifndef TRUE
+ #define	TRUE		1	/*  boolean true value  */
++#endif
++
++#ifndef FALSE
+ #define	FALSE		0	/*  boolean false value  */
++#endif
+ 
+ #if !defined(__cplusplus) && !defined(bool)
+ typedef int bool;
+Only in ecl-0.9l/src/h: object.h.~1.85.~

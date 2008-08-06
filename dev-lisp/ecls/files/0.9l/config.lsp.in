@@ -3,6 +3,28 @@
 ;; Configuration file for ECL
 ;;
 (in-package "LISP")
+
+#+(and (not ecl-min) uname)
+(ffi:clines "
+#include <sys/utsname.h>
+")
+
+#+(and (not ecl-min) uname)
+(defun uname ()
+ (ffi:c-inline () () :object "{
+	cl_object output;
+	struct utsname aux;
+	if (uname(&aux) < 0)
+		output = Cnil;
+	else
+		output = cl_list(5, make_base_string_copy(aux.sysname),
+			    make_base_string_copy(aux.nodename),
+			    make_base_string_copy(aux.release),
+			    make_base_string_copy(aux.version),
+			    make_base_string_copy(aux.machine));
+	@(return) = output;
+}" :one-liner nil))
+
 ;;
 ;; * Short and long site names
 ;;
@@ -11,12 +33,12 @@
 (defun short-site-name ()
   "Args: ()
 Returns, as a string, the location of the machine on which ECL runs."
-  "@SHORT_SITE_NAME@")
+  nil)
 
 (defun long-site-name () 
   "Args: ()
 Returns, as a string, the location of the machine on which ECL runs."
-  "@LONG_SITE_NAME@")
+  nil)
 
 ;;
 ;; * ECL version, architecture, etc
@@ -29,32 +51,46 @@ Returns the version of your ECL as a string."
 (defun machine-type ()
   "Args: ()
 Returns, as a string, the type of the machine on which ECL runs."
-  "@ARCHITECTURE@")
+  (or (ext:getenv "HOSTTYPE")
+      #+(or :mingw32 :msvc :cygwin)
+      (ext:getenv "PROCESSOR_ARCHITECTURE")
+      #+uname
+      (fifth (uname))
+      "@ARCHITECTURE@"))
 
-;; obtained from uname(2) where available
 (defun machine-instance ()
   "Args: ()
-Returns, as a string, the identifier of the machine on which ECL runs. Obtained
-from uname(2) where available."
-  "@MACHINE_INSTANCE@")
+Returns, as a string, the identifier of the machine on which ECL runs."
+  (or (ext:getenv "HOSTNAME")
+      #+(or :mingw32 :msvc :cygwin)
+      (ext:getenv "COMPUTERNAME")
+      #+uname
+      (second (uname))
+      ))
 
 (defun machine-version ()
   "Args: ()
 Returns, as a string, the version of the machine on which ECL runs. Obtained from
 uname(2) where available."
-  "@MACHINE_VERSION@")
+  (or #+(or :mingw32 :msvc :cygwin)
+      (ext:getenv "PROCESSOR_LEVEL")))
 
 (push :@thehost@ *features*)
 
 (defun software-type ()
   "Args: ()
 Returns, as a string, the type of the software under which ECL runs."
-  "@SOFTWARE_TYPE@")
+  (or #+uname (first (uname))
+      "@SOFTWARE_TYPE@"))
 
 (defun software-version ()
   "Args: ()
 Returns, as a string, the version of the software under which ECL runs."
-  "@SOFTWARE_VERSION@")
+  (or #+uname (third (uname))
+      #.(let ((aux "@SOFTWARE_VERSION@"))
+	  (if (plusp (length aux))
+	      aux
+	      nil))))
 
 ;;
 ;; * Set up some room
@@ -62,7 +98,7 @@ Returns, as a string, the version of the software under which ECL runs."
 #-boehm-gc
 (progn
   (sys::allocate 'CONS 200)
-  (sys::allocate 'STRING 40))
+  (sys::allocate 'BASE-STRING 40))
 
 ;;
 ;; * Set configuration pathnames. Notice the trailing slash!
