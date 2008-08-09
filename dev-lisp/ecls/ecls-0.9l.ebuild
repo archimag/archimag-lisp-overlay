@@ -17,11 +17,19 @@ DEPEND="=dev-libs/gmp-4*
 		app-text/texi2html
 		>=dev-libs/boehm-gc-6.8"
 
-IUSE="X c++ threads unicode"
+IUSE="X cxx threads unicode"
 
 PROVIDE="virtual/commonlisp"
 
 S="${WORKDIR}"/${MY_P}
+
+pkg_setup() {
+	if use cxx && built_with_use dev-libs/boehm-gc nocxx ; then
+		eerror "If you want C++ support in ECLS, you need to compile dev-libs/boehm-gc"
+		eerror "with C++ support and deactivate the \"nocxx\" USE flag for it"
+		die
+	fi
+}
 
 src_unpack() {
 	unpack ${A}
@@ -40,9 +48,8 @@ src_compile() {
 		--with-system-gmp \
 		--enable-boehm=system \
 		--enable-gengc \
-		--enable-smallcons \
-		$(use_enable x86 asmapply) \
-		$(use_with c++ cxx) \
+		--enable-longdouble \
+		$(use_with cxx) \
 		$(use_enable threads) \
 		$(use_with threads __thread) \
 		$(use_enable unicode) \
