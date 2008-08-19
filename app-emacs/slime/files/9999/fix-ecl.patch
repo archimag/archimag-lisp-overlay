@@ -1,3 +1,8 @@
+Author: Stelian Ionescu <sionescu@common-lisp.net>
+Date: 2008-01-18
+Status: Pending
+Description: Fixes compiling SWANK with ECL
+
 diff --git a/swank-ecl.lisp b/swank-ecl.lisp
 index 6d3786f..c6ddbd5 100644
 --- a/swank-ecl.lisp

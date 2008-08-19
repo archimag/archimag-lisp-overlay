@@ -1,3 +1,9 @@
+Author: Ulrich Muller <ulm@gentoo.org>
+Date: 2008-08-01
+Status: Gentoo-only
+Description: Make slime-changelog-date return a fixed string replaced at
+ compile-time by the ebuild instead of computing it from the ChangeLog
+
 --- slime-2.0_p20080731-old/slime.el	2008-08-01 15:48:07.000000000 +0200
 +++ slime-2.0_p20080731/slime.el	2008-08-01 15:51:15.000000000 +0200
 @@ -97,13 +97,7 @@
