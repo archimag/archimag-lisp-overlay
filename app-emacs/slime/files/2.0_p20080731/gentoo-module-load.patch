@@ -1,3 +1,9 @@
+Author: Stelian Ionescu <sionescu@common-lisp.net>
+Date: 2007-08-26
+Status: Gentoo-only
+Description: Patch SWANK:SWANK-REQUIRE to load contribs from the
+ ASDF system directory
+
 diff --git a/swank.lisp b/swank.lisp
 index 8c6ef3a..3ef640a 100644
 --- a/swank.lisp

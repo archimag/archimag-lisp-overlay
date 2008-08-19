@@ -1,3 +1,8 @@
+Author: Stelian Ionescu <sionescu@common-lisp.net>
+Date: 2007-07-04
+Status: Pending
+Description: Fix a few glitches in slime-indentation contrib
+
 diff -ur slime.orig/contrib/slime-indentation.el slime/contrib/slime-indentation.el
 --- slime.orig/contrib/slime-indentation.el	2008-08-11 21:58:01.000000000 +0200
 +++ slime/contrib/slime-indentation.el	2008-08-11 21:59:28.000000000 +0200

@@ -1,3 +1,8 @@
+Author: Stelian Ionescu <sionescu@common-lisp.net>
+Date: 2008-05-02
+Status: Pending
+Description: Add missing IN-PACKAGE to contrib/swank-listener-hooks.lisp to fix compilation
+
 diff --git a/contrib/swank-listener-hooks.lisp b/contrib/swank-listener-hooks.lisp
 index 64dd7cb..81e6eff 100644
 --- a/contrib/swank-listener-hooks.lisp
