@@ -1,4 +1,4 @@
-Author: Ulrich Muller <ulm@gentoo.org>
+Author: Ulrich Müller <ulm@gentoo.org>
 Date: 2008-08-01
 Status: Gentoo-only
 Description: Make slime-changelog-date return a fixed string replaced at
