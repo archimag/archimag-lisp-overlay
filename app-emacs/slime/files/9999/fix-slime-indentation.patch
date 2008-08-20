@@ -3,10 +3,11 @@ Date: 2007-07-04
 Status: Pending
 Description: Fix a few glitches in slime-indentation contrib
 
-diff -ur slime.orig/contrib/slime-indentation.el slime/contrib/slime-indentation.el
---- slime.orig/contrib/slime-indentation.el	2008-08-11 21:58:01.000000000 +0200
-+++ slime/contrib/slime-indentation.el	2008-08-11 21:59:28.000000000 +0200
-@@ -1031,27 +1031,32 @@
+diff --git a/contrib/slime-indentation.el b/contrib/slime-indentation.el
+index e486937..6b76736 100644
+--- a/contrib/slime-indentation.el
++++ b/contrib/slime-indentation.el
+@@ -1031,27 +1031,32 @@ stored."
  
  (mapcar #'define-cl-indent
  	'((block 1)
@@ -50,7 +51,7 @@ diff -ur slime.orig/contrib/slime-indentation.el slime/contrib/slime-indentation
  	  (do		((&whole 4 &rest (&whole 1 &rest 2)) ; ((arg step incr))
  			 (&whole 4 &rest 3) ; result: ((condition) (form) ...)
  			 &rest cl-indent:indent-do))
-@@ -1062,27 +1067,25 @@
+@@ -1062,27 +1067,25 @@ stored."
  	  (dolist	((&whole 4 2 1) &body))
  	  (dotimes . dolist)
  	  (eval-when 1)
@@ -58,9 +59,8 @@ diff -ur slime.orig/contrib/slime-indentation.el slime/contrib/slime-indentation
 -			 &body))
 +	  (flet		((&whole 4 &rest (&whole 1 (&whole 4 &rest 1) &body)) &body))
  	  (labels . flet) (macrolet . flet)
--	  (if		(&rest 2))
 +	  (handler-case (4 &rest (&whole 2 4 &rest 2)))
-+	  (if		(&rest 4))
+ 	  (if		(&rest 4))
  	  ;; FIXME: Which of those do I really want?
  	  ;; (lambda	((&whole 4 &rest 1) &body))
 -	  (lambda	((&whole 4 &rest 1)
@@ -88,7 +88,7 @@ diff -ur slime.orig/contrib/slime-indentation.el slime/contrib/slime-indentation
  	  ;; Combines the worst features of BLOCK, LET and TAGBODY
  	  (prog		((&whole 4 &rest 1) &rest cl-indent:indent-tagbody))
  	  (prog* . prog)
-@@ -1093,14 +1096,15 @@
+@@ -1093,14 +1096,15 @@ stored."
            (restart-case . handler-case)
  	  (return 0)
  	  (return-from	(nil &body))
@@ -107,7 +107,7 @@ diff -ur slime.orig/contrib/slime-indentation.el slime/contrib/slime-indentation
            (with-compilation-unit (4 &body))
            (with-hash-table-iterator (4 &body))
            (with-output-to-string (4 &body))
-@@ -1109,7 +1113,8 @@
+@@ -1109,7 +1113,8 @@ stored."
            (with-open-stream . with-open-file)
            (with-package-iterator (4 &body))
            (with-simple-restart (4 &body))
