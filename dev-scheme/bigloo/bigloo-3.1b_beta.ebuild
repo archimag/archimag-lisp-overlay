@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-DATE="29Jul08"
+DATE="18Aug08"
 
 inherit elisp-common multilib
 
@@ -18,9 +18,12 @@ SLOT="0"
 LICENSE="GPL-2"
 KEYWORDS="~amd64 ~ppc ~x86"
 
-DEPEND="emacs? ( virtual/emacs )
+DEPEND="dev-libs/boehm-gc
+		emacs? ( virtual/emacs )
 		java? ( virtual/jdk
 				app-arch/zip )"
+
+RDEPEND="${DEPEND}"
 
 S=${WORKDIR}/${MY_P%-*}
 
@@ -44,6 +47,7 @@ src_compile() {
 		--benchmark=yes \
 		--sharedbde=no \
 		--sharedcompiler=no \
+		--customgc=no \
 		--coflags="" || die "configure failed"
 
 #		--bee=$(if use fullbee; then echo full; else echo partial; fi) \
