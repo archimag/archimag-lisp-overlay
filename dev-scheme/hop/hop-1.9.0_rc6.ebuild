@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-scheme/hop/hop-1.8.5.ebuild,v 1.1 2008/01/03 13:47:32 hkbst Exp $
 
-inherit multilib
+inherit multilib eutils
 
 MY_P=${P/_/-}
 
@@ -26,6 +26,10 @@ src_unpack() {
 	cp share/Makefile share/Makefile.old
 	sed "s:\$(BUILDSHAREDIR)/hop.js -c > \$(HOPSHAREDIR):\$(BUILDSHAREDIR)/hop.js -c > \$(DESTDIR)\$(HOPSHAREDIR):" -i share/Makefile
 	diff -u share/Makefile.old share/Makefile
+
+	cd weblets/hz/
+	rm .afile
+	epatch "${FILESDIR}"/hz_db.patch
 }
 
 src_compile() {
