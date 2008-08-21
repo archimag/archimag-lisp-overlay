@@ -24,11 +24,6 @@ CLSYSTEMS="${PN} ${PN}-tests ${PN}-examples ${PN}-grovel ${PN}-uffi-compat"
 
 S="${WORKDIR}"/${MY_P}
 
-src_unpack() {
-	unpack ${A} && cd ${S}
-	epatch "${FILESDIR}"/fix-gendocs.sh.patch
-}
-
 src_compile() {
 	if use doc ; then
 		make -C doc manual spec || die "Cannot build docs"
