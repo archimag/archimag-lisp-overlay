@@ -17,7 +17,7 @@ DEPEND="=dev-libs/gmp-4*
 		app-text/texi2html
 		>=dev-libs/boehm-gc-6.8"
 
-IUSE="X cxx threads unicode"
+IUSE="X cxx debug threads unicode"
 
 PROVIDE="virtual/commonlisp"
 
@@ -50,6 +50,7 @@ src_compile() {
 		--enable-gengc \
 		--enable-longdouble \
 		$(use_with cxx) \
+		$(use_enable debug) \
 		$(use_enable threads) \
 		$(use_with threads __thread) \
 		$(use_enable unicode) \
