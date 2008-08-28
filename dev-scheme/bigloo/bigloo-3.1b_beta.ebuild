@@ -33,7 +33,9 @@ IUSE="emacs java"
 # fullbee"
 
 src_compile() {
-	use emacs && elisp-comp etc/*.el
+	if use emacs; then
+		elisp-compile etc/*.el || die "elisp-compile failed"
+	fi
 
 	# Bigloo doesn't use autoconf and consequently a lot of options used by econf give errors
 	# Manuel Serrano says: "Please, dont talk to me about autoconf. I simply dont want to hear about it..."
@@ -65,7 +67,7 @@ src_install () {
 	emake -j1 DESTDIR="${D}" install || die "install failed"
 
 	if use emacs; then
-		elisp-install ${PN} etc/*.el
+		elisp-install ${PN} etc/*.{el,elc} || die "elisp-install failed"
 		elisp-site-file-install "${FILESDIR}/${SITEFILE}"
 	fi
 
