@@ -44,8 +44,7 @@ src_compile() {
 	sed "s,@PACKAGE_VERSION@,${PV},g" version.lisp.in > version.lisp
 	use doc && makeinfo stumpwm.texi
 	if use emacs; then
-		cd contrib
-		elisp-comp *.el || die "Cannot compile contrib Elisp files"
+		elisp-compile contrib/*.el || die "Cannot compile contrib Elisp files"
 	fi
 }
 
