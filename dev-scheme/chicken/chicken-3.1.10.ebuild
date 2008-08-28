@@ -34,7 +34,9 @@ src_compile() {
 
 	emake ${OPTIONS} C_COMPILER_OPTIMIZATION_OPTIONS="${CFLAGS}" || die
 
-	use emacs && elisp-compile hen.el
+	if use emacs; then
+		elisp-compile hen.el || die
+	fi
 }
 
 # chicken doesn't seem to honor CHICKEN_PREFIX CHICKEN_HOME or LD_LIBRARY_PATH=${S}/.libs/
@@ -51,8 +53,8 @@ src_install() {
 	keepdir /usr/$(get_libdir)/chicken/3
 
 	if use emacs; then
-		elisp-install ${PN} hen.{el,elc}
-		elisp-site-file-install "${FILESDIR}"/${SITEFILE}
+		elisp-install ${PN} hen.{el,elc} || die
+		elisp-site-file-install "${FILESDIR}"/${SITEFILE} || die
 	fi
 }
 

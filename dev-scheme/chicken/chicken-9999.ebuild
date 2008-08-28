@@ -42,7 +42,9 @@ src_compile() {
 	OPTIONS="${OPTIONS} USE_HOST_PCRE=1"
 	emake ${OPTIONS} C_COMPILER_OPTIMIZATION_OPTIONS="${CFLAGS}" CHICKEN=./chicken-boot || die
 
-	use emacs && elisp-compile hen.el
+	if use emacs; then
+		elisp-compile hen.el || die
+	fi
 }
 
 RESTRICT=test
@@ -59,8 +61,8 @@ src_install() {
 	keepdir /usr/$(get_libdir)/chicken/3
 
 	if use emacs; then
-		elisp-install ${PN} hen.{el,elc}
-		elisp-site-file-install "${FILESDIR}"/${SITEFILE}
+		elisp-install ${PN} hen.{el,elc} || die
+		elisp-site-file-install "${FILESDIR}"/${SITEFILE} || die
 	fi
 }
 
