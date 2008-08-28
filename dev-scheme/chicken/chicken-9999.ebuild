@@ -42,7 +42,7 @@ src_compile() {
 	OPTIONS="${OPTIONS} USE_HOST_PCRE=1"
 	emake ${OPTIONS} C_COMPILER_OPTIMIZATION_OPTIONS="${CFLAGS}" CHICKEN=./chicken-boot || die
 
-	use emacs && elisp-comp hen.el
+	use emacs && elisp-compile hen.el
 }
 
 RESTRICT=test

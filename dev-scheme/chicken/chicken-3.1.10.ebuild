@@ -34,7 +34,7 @@ src_compile() {
 
 	emake ${OPTIONS} C_COMPILER_OPTIMIZATION_OPTIONS="${CFLAGS}" || die
 
-	use emacs && elisp-comp hen.el
+	use emacs && elisp-compile hen.el
 }
 
 # chicken doesn't seem to honor CHICKEN_PREFIX CHICKEN_HOME or LD_LIBRARY_PATH=${S}/.libs/
