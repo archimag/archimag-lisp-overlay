@@ -38,7 +38,7 @@ CLSYSTEMS="Apps/Functional-Geometry/functional-geometry
 		clim-examples clim-listener clouseau mcclim
 		mcclim-gif-bitmaps mcclim-jpeg-bitmaps"
 SITEFILE="${FILESDIR}"/50mcclim-gentoo.el
-EMACS_SOURCES="Tools/Emacs/indent-clim.el Tools/Emacs/hyperclim.el"
+ELISP_SOURCES="Tools/Emacs/indent-clim.el Tools/Emacs/hyperclim.el"
 
 src_unpack() {
 	unpack ${A} && cd ${S}
@@ -47,9 +47,9 @@ src_unpack() {
 
 src_compile() {
 	if use emacs ; then
-		mv ${EMACS_SOURCES} .
+		mv ${ELISP_SOURCES} .
 		rm -rf Tools/Emacs
-		elisp-comp *.el
+		elisp-compile *.el
 	fi
 	if use doc ; then
 		cd Spec/src
