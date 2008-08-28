@@ -44,8 +44,8 @@ src_unpack() {
 }
 
 src_compile() {
-	elisp-comp *.el || die "Cannot compile core Elisp files"
-	EMACSFLAGS="${EMACSFLAGS} -L . -L contrib -l slime" \
+	elisp-compile *.el || die "Cannot compile core Elisp files"
+	BYTECOMPFLAGS="${BYTECOMPFLAGS} -L contrib -l slime" \
 		elisp-compile contrib/*.el || die "Cannot compile contrib Elisp files"
 	emake -j1 -C doc slime.info || die "Cannot build info docs"
 	if use doc; then
