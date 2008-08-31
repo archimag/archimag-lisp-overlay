@@ -2,11 +2,11 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EDARCS_REPOSITORY="http://common-lisp.net/project/parenscript/repository/parenscript/"
+EGIT_REPO_URI="http://common-lisp.net/project/parenscript/git/parenscript/"
 
-inherit eutils darcs common-lisp-2
+inherit common-lisp-2 git eutils
 
-DESCRIPTION="${PN} is a small lispy language that can be compiled to JavaScript."
+DESCRIPTION="Parenscript is a small lispy language that can be compiled to JavaScript."
 HOMEPAGE="http://common-lisp.net/project/parenscript/"
 SRC_URI=""
 LICENSE="BSD"
@@ -22,6 +22,7 @@ src_compile() {
 	use doc && { cd docs ; sh build.sh ; }
 }
 
+# TODO: install extras/js-expander.el
 src_install() {
 	common-lisp-install parenscript.asd src t
 	common-lisp-symlink-asdf
