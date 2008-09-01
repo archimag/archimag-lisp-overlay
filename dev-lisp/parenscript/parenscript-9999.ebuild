@@ -16,7 +16,7 @@ IUSE="doc"
 DEPEND="!dev-lisp/cl-${PN}
 		!dev-lisp/cl-${PN}-darcs
 		!dev-lisp/${PN}-darcs
-		doc? ( virtual/tetex dev-tex/latex2html )"
+		doc? ( virtual/latex-base )"
 
 src_compile() {
 	use doc && { cd docs ; sh build.sh ; }
@@ -26,6 +26,6 @@ src_compile() {
 src_install() {
 	common-lisp-install parenscript.asd src t
 	common-lisp-symlink-asdf
-	dodoc contributors docs/*.lisp
-	use doc && dodoc docs/*.pdf
+	dodoc contributors docs/internal/notes-and-links.txt || die
+	use doc && { dodoc docs/*.pdf || die ; }
 }
