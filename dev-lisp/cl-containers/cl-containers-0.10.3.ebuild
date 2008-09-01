@@ -19,6 +19,11 @@ DEPEND="dev-lisp/asdf-system-connections
 
 CLSYSTEMS="${PN} ${PN}-test"
 
+src_unpack() {
+	unpack ${A} && cd "${S}"
+	epatch "${FILESDIR}"/fix-typo.patch
+}
+
 src_install() {
 	common-lisp-install *.asd {dev,tests}/*.lisp
 	common-lisp-symlink-asdf

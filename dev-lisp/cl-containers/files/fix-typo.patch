@@ -1,0 +1,17 @@
+Author: Stelian Ionescu <sionescu@common-lisp.net>
+Date: 2008-09-01
+Status: Pending
+Description: Fix typo
+
+diff -ur cl-containers-0.10.3.orig/dev/vectors.lisp cl-containers-0.10.3/dev/vectors.lisp
+--- cl-containers-0.10.3.orig/dev/vectors.lisp	2008-08-31 22:22:42.000000000 +0200
++++ cl-containers-0.10.3/dev/vectors.lisp	2008-09-01 21:45:47.000000000 +0200
+@@ -179,7 +179,7 @@
+ 
+ (defmethod item-at! :before ((container flexible-vector-container) value &rest indices)
+   (declare (ignore value)
+-           (dynamic-extent indicies))
++           (dynamic-extent indices))
+   (resize-vector container (1+ (first indices))))
+ 
+ ;;; ---------------------------------------------------------------------------
