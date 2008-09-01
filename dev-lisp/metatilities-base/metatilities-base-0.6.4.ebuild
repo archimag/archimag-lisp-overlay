@@ -17,6 +17,11 @@ DEPEND="dev-lisp/moptilities
 
 CLSYSTEMS="${PN} ${PN}-test"
 
+src_unpack() {
+	unpack ${A} && cd ${S}
+	epatch "${FILESDIR}"/fix-wrong-evaluation-time.patch
+}
+
 src_install() {
 	common-lisp-install ${PN}.asd ${PN}-test.asd
 	common-lisp-install dev/*.lisp
