@@ -17,11 +17,6 @@ DEPEND="dev-lisp/closer-mop
 
 CLSYSTEMS="${PN} ${PN}-test"
 
-src_unpack() {
-	unpack ${A}
-	epatch "${FILESDIR}"/${PV}-fix-asd.patch
-}
-
 src_install() {
 	common-lisp-install *.asd dev/*.lisp tests
 	common-lisp-symlink-asdf
