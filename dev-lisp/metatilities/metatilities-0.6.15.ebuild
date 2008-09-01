@@ -20,8 +20,8 @@ DEPEND="dev-lisp/asdf-system-connections
 		dev-lisp/lift"
 
 src_unpack() {
-	unpack ${A}
-	epatch "${FILESDIR}"/uncomment-directory-name-p.patch
+	unpack ${A} && cd "${S}"
+	epatch "${FILESDIR}"/fix-dynamic-extent.patch
 }
 
 src_install() {
