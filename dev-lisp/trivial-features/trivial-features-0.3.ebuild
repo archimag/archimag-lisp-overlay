@@ -4,13 +4,17 @@
 
 inherit common-lisp-2 eutils
 
+MY_P=${PN}_${PV}
+
 DESCRIPTION="TRIVIAL-FEATURES ensures consistent *FEATURES* across multiple Common Lisp implementations."
 HOMEPAGE="http://www.cliki.net/trivial-features"
-SRC_URI="http://common-lisp.net/~sionescu/files/${P}.tar.bz2"
+SRC_URI="http://common-lisp.net/~loliveira/tarballs/${PN}/${MY_P}.tar.gz"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 DEPEND=""
+
+S="${WORKDIR}"/${MY_P}
 
 src_install() {
 	common-lisp-install *.asd src/ tests/
