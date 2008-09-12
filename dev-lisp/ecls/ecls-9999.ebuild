@@ -2,11 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-ECVS_SERVER="common-lisp.net:/project/ecl/cvsroot"
-ECVS_PASS="anonymous"
-ECVS_MODULE="ecl"
+EGIT_REPO_URI="http://ecls.sourceforge.net/git/ecl/.git"
 
-inherit eutils multilib cvs
+inherit eutils multilib git
 
 DESCRIPTION="ECL is an embeddable Common Lisp implementation."
 HOMEPAGE="http://common-lisp.net/project/ecl/"
@@ -22,8 +20,6 @@ IUSE="X cxx debug threads unicode"
 
 PROVIDE="virtual/commonlisp"
 
-S="${WORKDIR}"/ecl
-
 pkg_setup() {
 	if use cxx && built_with_use dev-libs/boehm-gc nocxx ; then
 		eerror "If you want C++ support in ECLS, you need to compile dev-libs/boehm-gc"
@@ -33,7 +29,7 @@ pkg_setup() {
 }
 
 src_unpack() {
-	cvs_src_unpack
+	git_src_unpack
 
 	# change LISP-IMPLEMENTATION-VERSION because upstream version for
 	# live builds contains spaces which ASDF-BINARY-LOCATIONS doesn't like
