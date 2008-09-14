@@ -57,15 +57,11 @@ src_compile() {
 }
 
 src_install() {
-	cat >abcl <<EOF
-#!/bin/sh
-exec \$(java-config-2 --java) -Xmx256M -Xrs \
-	-Djava.library.path=/usr/$(get_libdir)/abcl/ -cp \
-	\$(java-config-2 -p abcl) org.armedbear.lisp.Main "\$@"
-EOF
-	dobin abcl
 	exeinto /usr/$(get_libdir)/abcl
 	doexe src/org/armedbear/lisp/libabcl.so
 	java-pkg_dojar abcl.jar
+	java-pkg_dolauncher "${PN}" \
+		--main "org.armedbear.lisp.Main" \
+		--java_args "-server -Xrs -Djava.library.path=/usr/$(get_libdir)/${PN}/"
 	dodoc README
 }
