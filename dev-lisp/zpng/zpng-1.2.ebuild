@@ -6,7 +6,7 @@ inherit common-lisp-2
 
 DESCRIPTION="A Common Lisp library for creating PNG files."
 HOMEPAGE="http://www.xach.com/lisp/zpng/"
-SRC_URI="http://common-lisp.net/~sionescu/files/${P}.tar.gz"
+SRC_URI="http://common-lisp.net/~sionescu/files/${P}.tar.bz2"
 
 LICENSE="BSD-2"
 SLOT="0"
@@ -16,6 +16,6 @@ DEPEND="dev-lisp/salza2"
 src_install() {
 	common-lisp-install *.{lisp,asd}
 	common-lisp-symlink-asdf
-	dohtml doc/{index.html,mandelbrot.png}
-	dodoc doc/mandelbrot.lisp
+	dohtml doc/{index.html,*.png}
+	docinto examples && dodoc doc/*.lisp
 }
