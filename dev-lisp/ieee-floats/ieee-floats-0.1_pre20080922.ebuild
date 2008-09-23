@@ -10,7 +10,7 @@ SRC_URI="http://common-lisp.net/~sionescu/files/${P}.tar.bz2"
 LICENSE="ZLIB"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
-DEPEND=""
+DEPEND="dev-lisp/fiveam"
 
 src_install() {
 	common-lisp-install *.{lisp,asd}
