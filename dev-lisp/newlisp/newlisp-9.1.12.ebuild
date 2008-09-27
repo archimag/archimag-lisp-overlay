@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header $
 
+EAPI=1
+
 DESCRIPTION="A new Lisp dialect"
 HOMEPAGE="http://www.newlisp.org"
 #SRC_URI="mirror://sourceforge/newlisp/${P}.tgz"
@@ -10,7 +12,7 @@ SRC_URI="http://newlisp.org/downloads/development/${P}.tgz"
 LICENSE="GPL-2"
 # please keep sorted
 KEYWORDS="~amd64 ~x86"
-IUSE="unicode readline tcltk"
+IUSE="+unicode +readline tcltk"
 SLOT="0"
 
 DEPEND="readline? ( sys-libs/readline )
