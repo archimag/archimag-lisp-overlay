@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI=2
+
 inherit eutils multilib
 
 MY_P=ecl-${PV}
@@ -15,21 +17,14 @@ KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 
 DEPEND="=dev-libs/gmp-4*
 		app-text/texi2html
-		>=dev-libs/boehm-gc-6.8"
+		>=dev-libs/boehm-gc-6.8
+		cxx? ( dev-libs/boehm-gc[-nocxx] )"
 
 IUSE="X cxx debug threads unicode"
 
 PROVIDE="virtual/commonlisp"
 
 S="${WORKDIR}"/${MY_P}
-
-pkg_setup() {
-	if use cxx && built_with_use dev-libs/boehm-gc nocxx ; then
-		eerror "If you want C++ support in ECLS, you need to compile dev-libs/boehm-gc"
-		eerror "with C++ support and deactivate the \"nocxx\" USE flag for it"
-		die
-	fi
-}
 
 src_unpack() {
 	unpack ${A}
