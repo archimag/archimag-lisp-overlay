@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI=2
+
 inherit common-lisp-2 eutils
 
 DESCRIPTION="Elephant is an object database for Common Lisp"
@@ -20,20 +22,8 @@ DEPEND="!dev-lisp/cl-${PN}
 		dev-lisp/clsql
 		dev-lisp/cl-base64
 		dev-lisp/fiveam
-		postgres? ( dev-lisp/clsql )
-		sqlite3? ( dev-lisp/clsql )"
-
-check_clsql_flag() {
-	if use ${1} && ! built_with_use dev-lisp/clsql ${1} ; then
-		eerror "If you enable the \"${1}\" use flag you must also enable it for dev-lisp/clsql"
-		die
-	fi
-}
-
-pkg_setup() {
-	check_clsql_flag postgres
-	check_clsql_flag sqlite3
-}
+		postgres? ( dev-lisp/clsql[postgres] )
+		sqlite3? ( dev-lisp/clsql[sqlite3] )"
 
 src_unpack() {
 	unpack ${A}
