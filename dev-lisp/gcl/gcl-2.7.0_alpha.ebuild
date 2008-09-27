@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI=1
+
 DEB_PV="84.1"
 MY_PN="${PN}cvs"
 MY_PV="${PV%_alpha}"
@@ -18,7 +20,7 @@ SLOT="0"
 #KEYWORDS="~amd64"
 KEYWORDS=""
 
-IUSE="readline ansi"
+IUSE="+readline +ansi"
 
 RDEPEND="readline? ( sys-libs/readline )
 	dev-libs/gmp
