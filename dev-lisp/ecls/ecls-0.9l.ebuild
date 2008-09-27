@@ -20,7 +20,7 @@ DEPEND="=dev-libs/gmp-4*
 		>=dev-libs/boehm-gc-6.8
 		cxx? ( dev-libs/boehm-gc[-nocxx] )"
 
-IUSE="X cxx debug threads unicode"
+IUSE="X cxx debug +threads +unicode"
 
 PROVIDE="virtual/commonlisp"
 
