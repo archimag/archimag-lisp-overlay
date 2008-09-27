@@ -36,7 +36,7 @@ SLOT="0"
 #KEYWORDS="-* ~amd64 ~ppc ~sparc ~x86"
 KEYWORDS=""
 
-IUSE="ldb source threads unicode doc cobalt"
+IUSE="ldb source +threads +unicode doc cobalt"
 
 DEPEND="doc? ( sys-apps/texinfo media-gfx/graphviz[png] )"
 
