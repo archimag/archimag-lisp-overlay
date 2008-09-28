@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit common-lisp-2
+inherit common-lisp-2 eutils
 
 DESCRIPTION="An ASDF-Extension that makes it easy to specify where your Common Lisp binaries (FASL files) should go."
 HOMEPAGE="http://common-lisp.net/project/cl-containers/asdf-binary-locations"
@@ -13,6 +13,11 @@ KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 
 DEPEND="!dev-lisp/cl-${PN}
 		dev-lisp/asdf"
+
+src_unpack() {
+	unpack ${A} && cd "${S}"
+	epatch "${FILESDIR}"/fix-features.patch
+}
 
 src_install() {
 	common-lisp-install *.asd dev/*.lisp test*
