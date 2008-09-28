@@ -12,9 +12,8 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 
-DEPEND="dev-lisp/asdf-system-connections
-		dev-lisp/metatilities-base
-		dev-lisp/dynamic-classes
+DEPEND=">=dev-lisp/metatilities-base-0.6.6
+		dev-lisp/asdf-system-connections
 		dev-lisp/lift"
 
 CLSYSTEMS="${PN} ${PN}-test"
