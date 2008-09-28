@@ -6,7 +6,7 @@ inherit common-lisp-2 eutils
 
 DESCRIPTION="metabang.com's base set of core utilities."
 HOMEPAGE="http://common-lisp.net/project/metatilities-base/"
-SRC_URI="http://common-lisp.net/~sionescu/files/${P}.tar.bz2"
+SRC_URI="http://common-lisp.net/~sionescu/files/${P}.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
