@@ -15,7 +15,7 @@ KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 DEPEND="dev-lisp/asdf-system-connections
 		>=dev-lisp/metatilities-base-0.6.0
 		dev-lisp/dynamic-classes
-		dev-lisp/cl-containers
+		>=dev-lisp/cl-containers-0.11.0
 		dev-lisp/metabang-bind
 		dev-lisp/moptilities
 		dev-lisp/lift"
