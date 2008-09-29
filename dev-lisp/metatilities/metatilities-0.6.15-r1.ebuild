@@ -22,6 +22,7 @@ DEPEND="dev-lisp/asdf-system-connections
 src_unpack() {
 	unpack ${A} && cd "${S}"
 	epatch "${FILESDIR}"/fix-dynamic-extent.patch
+	epatch "${FILESDIR}"/fix-export-new-states.patch
 }
 
 src_install() {
