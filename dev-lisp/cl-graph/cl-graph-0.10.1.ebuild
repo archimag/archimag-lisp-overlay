@@ -13,14 +13,16 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 
 DEPEND="dev-lisp/asdf-system-connections
-		>=dev-lisp/metatilities-base-0.6.0
-		dev-lisp/dynamic-classes
+		>=dev-lisp/metatilities-0.6.15
 		>=dev-lisp/cl-containers-0.11.0
-		dev-lisp/metabang-bind
-		dev-lisp/moptilities
 		dev-lisp/lift"
 
 CLSYSTEMS="${PN} ${PN}-test"
+
+src_unpack() {
+	unpack ${A} && cd "${S}"
+	epatch "${FILESDIR}"/fix-deps.patch
+}
 
 src_install() {
 	common-lisp-install *.asd dev/{*.lisp,graphviz} unit-tests
