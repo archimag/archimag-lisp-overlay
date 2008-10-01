@@ -34,7 +34,7 @@ src_unpack() {
 	epatch "${FILESDIR}"/${PV}/headers-gentoo.patch
 }
 
-src_compile() {
+src_configure() {
 	econf \
 		--with-system-gmp \
 		--enable-boehm=system \
@@ -48,6 +48,9 @@ src_compile() {
 		$(use_with X x) \
 		$(use_with X clx) \
 		|| die "econf failed"
+}
+
+src_compile() {
 	#parallel fails
 	emake -j1 || die "make failed"
 }
