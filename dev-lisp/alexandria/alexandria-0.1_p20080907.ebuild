@@ -20,4 +20,5 @@ src_install() {
 	if use doc ; then
 		dodoc "${DISTDIR}"/alexandria.pdf
 	fi
+	dodoc AUTHORS
 }
