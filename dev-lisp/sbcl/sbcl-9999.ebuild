@@ -51,7 +51,7 @@ pkg_setup() {
 		eerror "(the \"vanilla\" profile) and \"source /etc/profile\" before continuing."
 		die
 	fi
-	if built_with_use --missing true sys-libs/glibc nptl; then
+	if ! built_with_use --missing true sys-libs/glibc nptl; then
 		eerror "Building SBCL without NPTL support on at least x86 and amd64"
 		eerror "architectures is not a supported configuration in Gentoo.  Please"
 		eerror "refer to Bug #119016 for more information."
