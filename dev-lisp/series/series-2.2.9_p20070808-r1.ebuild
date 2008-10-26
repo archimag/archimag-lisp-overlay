@@ -16,7 +16,8 @@ DEPEND="!dev-lisp/cl-${PN}"
 src_unpack() {
 	unpack ${A}
 	cd "${S}"
-	epatch "${FILESDIR}"/${PV}-ecl-fix.patch
+	epatch "${FILESDIR}"/${PV}-ecl-support.patch
+	epatch "${FILESDIR}"/${PV}-scl-support.patch
 }
 
 src_install() {
