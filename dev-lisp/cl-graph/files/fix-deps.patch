@@ -1,6 +1,11 @@
-diff -ur cl-graph-0.10.1.orig/cl-graph.asd cl-graph-0.10.1/cl-graph.asd
---- cl-graph-0.10.1.orig/cl-graph.asd	2008-09-29 20:14:13.000000000 +0200
-+++ cl-graph-0.10.1/cl-graph.asd	2008-09-29 21:11:06.000000000 +0200
+Author: Stelian Ionescu <sionescu@common-lisp.net>
+Date: 2008-10-28
+Status: Gentoo-only
+Description: Add hard dep on moptilities and include subgraph-containing in main system
+
+diff -Naur cl-graph-0.10.2.orig/cl-graph.asd cl-graph-0.10.2/cl-graph.asd
+--- cl-graph-0.10.2.orig/cl-graph.asd	2008-10-28 16:22:05.000000000 +0100
++++ cl-graph-0.10.2/cl-graph.asd	2008-10-28 16:45:46.000000000 +0100
 @@ -32,8 +32,10 @@
                          :depends-on ("graph"))
                   (:file "graph-matrix"
@@ -13,25 +18,29 @@ diff -ur cl-graph-0.10.1.orig/cl-graph.asd cl-graph-0.10.1/cl-graph.asd
                   (:module "graphviz" :depends-on ("graph")
                            :components ((:file "graphviz-support"))))))
    :in-order-to ((test-op (load-op :cl-graph-test)))
-@@ -42,6 +44,8 @@
+@@ -42,8 +44,10 @@
  		      (intern (symbol-name '#:run-tests) :lift)
  		      :config :generic))
    :depends-on ((:version :metatilities-base "0.6.0")
+-	       (:version :cl-containers "0.11.0")
+-	       ))
 +               (:version :moptilities "0.3.10")
 +               (:version :metatilities "0.6.15")
-                (:version :cl-containers "0.11.0")
-                ))
++               (:version :cl-containers "0.11.0")
++               ))
  
+ (defmethod operation-done-p
+            ((o test-op) (c (eql (find-system 'cl-graph))))
 @@ -85,14 +89,6 @@
-                 ((:file "graph-metrics")))))
+ 		((:file "graph-metrics")))))
  
  #+asdf-system-connections
 -(asdf:defsystem-connection cl-graph-and-moptilities
 -  :requires (cl-graph moptilities)
 -  :components ((:module
--                "dev"
--                :components
--                ((:file "subgraph-containing")))))
+-		"dev"
+-		:components
+-		((:file "subgraph-containing")))))
 -
 -#+asdf-system-connections
  (asdf:defsystem-connection cl-graph-and-dynamic-classes
