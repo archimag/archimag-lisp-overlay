@@ -12,11 +12,16 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 
-DEPEND=">=dev-lisp/metatilities-base-0.6.6
-		dev-lisp/asdf-system-connections
+DEPEND="dev-lisp/asdf-system-connections
+		>=dev-lisp/metatilities-base-0.6.6
 		dev-lisp/lift"
 
 CLSYSTEMS="${PN} ${PN}-test"
+
+src_unpack() {
+	unpack ${A}
+	rm "${S}"/GNUmakefile || die "No makefile"
+}
 
 src_install() {
 	common-lisp-install *.asd {dev,tests}/*.lisp
