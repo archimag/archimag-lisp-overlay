@@ -20,14 +20,20 @@ DEPEND="dev-lisp/cl-ppcre
 
 RDEPEND="${DEPEND}
 	emacs? ( app-emacs/slime )
-	!clisp? ( !sbcl? ( !amd64? ( dev-lisp/cmucl ) ) )
-	clisp? ( >=dev-lisp/clisp-2.38-r2[X,-new-clx] )
+	!sbcl? ( !clisp? ( dev-lisp/openmcl ) )
+	!sbcl? ( clisp? ( >=dev-lisp/clisp-2.38-r2[X,-new-clx] ) )
 	sbcl?  ( dev-lisp/sbcl )"
 
-src_compile() {
+src_configure() {
 	sed "s,@PACKAGE_VERSION@,${PV},g" version.lisp.in > version.lisp
-	use doc && makeinfo stumpwm.texi
-	if use emacs; then
+	mv stumpwm.texi.in stumpwm.texi
+}
+
+src_compile() {
+	if use doc ; then
+		makeinfo stumpwm.texi || die "Cannot build info focs"
+	fi
+	if use emacs ; then
 		elisp-compile contrib/*.el || die "Cannot compile contrib Elisp files"
 	fi
 }
@@ -35,7 +41,9 @@ src_compile() {
 src_install() {
 	common-lisp-install *.{lisp,asd} contrib/*.lisp
 	common-lisp-symlink-asdf
-	elisp-install / contrib/*.el{,c} || die "Cannot install contrib Elisp files"
+	if use emacs; then
+		elisp-install / contrib/*.el{,c} || die "Cannot install contrib Elisp files"
+	fi
 	cp "${FILESDIR}"/README.Gentoo . && sed -i "s:@VERSION@:${PV}:" README.Gentoo
 	dodoc README NEWS ChangeLog README.Gentoo contrib/stumpish
 	use doc && doinfo stumpwm.info
