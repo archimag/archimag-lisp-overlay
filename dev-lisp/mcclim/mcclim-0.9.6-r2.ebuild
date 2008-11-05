@@ -25,7 +25,7 @@ DEPEND="!dev-lisp/cl-${PN}
 		dev-lisp/rt
 		dev-lisp/fiveam
 		emacs? ( virtual/emacs )
-		doc? ( virtual/tetex sys-apps/texinfo )"
+		doc? ( sys-apps/texinfo )"
 
 CLSYSTEMS="Apps/Functional-Geometry/functional-geometry
 		Apps/Scigraph/scigraph
