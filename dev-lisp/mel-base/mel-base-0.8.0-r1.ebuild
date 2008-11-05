@@ -15,7 +15,7 @@ KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE="doc"
 
 DEPEND="!dev-lisp/cl-${PN}
-		doc? ( virtual/tetex sys-apps/texinfo )"
+		doc? ( sys-apps/texinfo )"
 RDEPEND="${DEPEND}
 		app-misc/mime-types"
 
