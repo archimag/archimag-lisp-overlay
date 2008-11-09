@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-DATE="03Nov08"
+DATE="07Nov08"
 
 inherit elisp-common multilib
 
