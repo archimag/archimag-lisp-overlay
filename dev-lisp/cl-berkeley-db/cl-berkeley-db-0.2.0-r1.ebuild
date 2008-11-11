@@ -4,9 +4,8 @@
 
 inherit common-lisp-2
 
-DESCRIPTION="cl-berkeley-db is a common-lisp wrapper to the berkeley database
-library."
-HOMEPAGE="http://common-lisp.net/project/${PN}"
+DESCRIPTION="cl-berkeley-db is a common-lisp wrapper to the berkeley database library."
+HOMEPAGE="http://common-lisp.net/project/cl-berkeley-db/"
 SRC_URI="http://common-lisp.net/project/${PN}/dist/${P}.tar.gz"
 LICENSE="BSD"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
