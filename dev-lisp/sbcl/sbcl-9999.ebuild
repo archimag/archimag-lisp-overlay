@@ -9,13 +9,13 @@ EGIT_REPO_URI="git://git.boinkor.net/sbcl.git"
 inherit common-lisp-common-3 eutils flag-o-matic git
 
 #same order as http://www.sbcl.org/platform-table.html
-BV_X86=1.0.15
-BV_AMD64=1.0.15
-BV_PPC=1.0
-BV_SPARC=0.9.17
+BV_X86=1.0.22
+BV_AMD64=1.0.22
+BV_PPC=1.0.22
+BV_SPARC=1.0.22
 BV_ALPHA=0.9.12
-BV_MIPS=1.0.17
-BV_MIPSEL=1.0.17
+BV_MIPS=1.0.22
+BV_MIPSEL=1.0.22
 
 DESCRIPTION="Steel Bank Common Lisp (SBCL) is an implementation of ANSI Common Lisp."
 HOMEPAGE="http://sbcl.sourceforge.net/"
@@ -33,7 +33,6 @@ SRC_URI="x86? ( mirror://sourceforge/sbcl/${PN}-${BV_X86}-x86-linux-binary.tar.b
 LICENSE="MIT"
 SLOT="0"
 
-#KEYWORDS="-* ~amd64 ~ppc ~sparc ~x86"
 KEYWORDS=""
 
 IUSE="ldb source +threads +unicode doc cobalt"
@@ -43,6 +42,11 @@ DEPEND="doc? ( sys-apps/texinfo media-gfx/graphviz[png] )"
 PDEPEND="dev-lisp/gentoo-init"
 
 PROVIDE="virtual/commonlisp"
+
+#Disable warnings about executable stacks, as this won't be fixed soon, by
+#upstream
+QA_EXECSTACK="usr/bin/sbcl usr/lib/sbcl/src/runtime/sbcl \
+usr/lib/sbcl/src/runtime/*.o"
 
 pkg_setup() {
 	if built_with_use sys-devel/gcc hardened && gcc-config -c | grep -qv vanilla; then
