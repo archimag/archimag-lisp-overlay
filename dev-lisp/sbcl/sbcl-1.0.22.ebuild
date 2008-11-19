@@ -17,7 +17,7 @@ DESCRIPTION="Steel Bank Common Lisp (SBCL) is an implementation of ANSI Common L
 HOMEPAGE="http://sbcl.sourceforge.net/"
 SRC_URI="mirror://sourceforge/sbcl/${P}-source.tar.bz2
 	x86? ( mirror://sourceforge/sbcl/${PN}-${BV_X86}-x86-linux-binary.tar.bz2 )
-	amd64? ( mirror://sourceforge/sbcl/${PN}-${BV_AMD64}-x86-64-linux-binary.tar.bz2 )
+	amd64? ( http://switch.dl.sourceforge.net/sourceforge/sbcl/${PN}-${BV_AMD64}-x86-64-linux-binary.tar.bz2 )
 	ppc? ( mirror://sourceforge/sbcl/${PN}-${BV_PPC}-powerpc-linux-binary.tar.bz2 )
 	sparc? ( mirror://sourceforge/sbcl/${PN}-${BV_SPARC}-sparc-linux-binary.tar.bz2 )
 	alpha? ( mirror://sourceforge/sbcl/${PN}-${BV_ALPHA}-alpha-linux-binary.tar.bz2 )
