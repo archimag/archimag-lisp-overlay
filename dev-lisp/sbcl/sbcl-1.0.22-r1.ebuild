@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI=2
+
 inherit common-lisp-common-3 eutils flag-o-matic
 
 #same order as http://www.sbcl.org/platform-table.html
@@ -32,9 +34,9 @@ SLOT="0"
 
 KEYWORDS="-* ~amd64 ~ppc ~sparc ~x86"
 
-IUSE="ldb source threads unicode doc cobalt"
+IUSE="ldb source +threads +unicode doc cobalt"
 
-DEPEND="doc? ( sys-apps/texinfo media-gfx/graphviz )"
+DEPEND="doc? ( sys-apps/texinfo media-gfx/graphviz[png] )"
 
 PDEPEND="dev-lisp/gentoo-init"
 
@@ -52,16 +54,11 @@ pkg_setup() {
 		eerror "(the \"vanilla\" profile) and \"source /etc/profile\" before continuing."
 		die
 	fi
-	if (use x86 || use amd64) && has_version "<sys-libs/glibc-2.6" \
-		&& ! built_with_use sys-libs/glibc nptl; then
+	if ! built_with_use --missing true sys-libs/glibc nptl; then
 		eerror "Building SBCL without NPTL support on at least x86 and amd64"
 		eerror "architectures is not a supported configuration in Gentoo.  Please"
 		eerror "refer to Bug #119016 for more information."
 		die
-	fi
-	if use doc && ! built_with_use media-gfx/graphviz png; then
-		eerror "media-gfx/graphviz has to be built with png support."
-		die "Missing png USE-flag for media-gfx/graphviz"
 	fi
 }
 
@@ -98,7 +95,6 @@ EOF
 src_unpack() {
 	unpack ${A}
 	mv sbcl-*-linux sbcl-binary
-	cd "${S}"
 
 #	epatch "${FILESDIR}/disable-tests-gentoo-${PV}.patch"
 	use source && sed 's%"$(BUILD_ROOT)%$(MODULE).lisp "$(BUILD_ROOT)%' -i contrib/vanilla-module.mk
