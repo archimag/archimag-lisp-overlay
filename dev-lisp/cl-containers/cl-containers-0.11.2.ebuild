@@ -18,11 +18,6 @@ DEPEND="dev-lisp/asdf-system-connections
 
 CLSYSTEMS="${PN} ${PN}-test"
 
-src_unpack() {
-	unpack ${A}
-	rm "${S}"/GNUmakefile || die "No makefile"
-}
-
 src_install() {
 	common-lisp-install *.asd {dev,tests}/*.lisp
 	common-lisp-symlink-asdf
