@@ -46,6 +46,6 @@ s:libdir = .*:libdir = @libdir@:
 /^LINK_LIBS = /{p;s:\(LINK_LIBS\):\1_CL:;}
 /^LINK_LIBS_CL = /s:\$(GAMBCLIB): -lgambc:
 /^LINK_LIBS_CL = /s:\(\$(rootfromhere)/lib/\): -L\1:
-/^LINK_LIBS_CL = /s:\$(GAMBCGSILIB): -lgambcgsi:
-/^LINK_LIBS_CL = /s:\$(GAMBCGSCLIB): -lgambcgsc:
+/^LINK_LIBS_CL = /s:\$(GAMBCGSILIB): -L. -lgambcgsi:
+/^LINK_LIBS_CL = /s:\$(GAMBCGSCLIB): -L. -lgambcgsc:
 
