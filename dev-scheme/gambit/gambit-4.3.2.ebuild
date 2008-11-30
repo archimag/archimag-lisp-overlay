@@ -25,14 +25,7 @@ S=${WORKDIR}/${MY_P}
 IUSE="big-iron emacs static"
 
 pkg_setup() {
-	if ! use big-iron; then
-		ewarn "NOT compiling each Scheme module as a single C function"
-		ewarn "NOT using gcc specific optimizations"
-		ewarn "approximately 0.5GB ram will be needed"
-		ewarn "if you experience thrashing, try disabling parallel building or setting -O1"
-		# need this much memory in MBytes (does *not* check swap)
-		CHECKREQS_MEMORY="768" check_reqs
-	else
+	if use big-iron; then
 		ewarn "compiling each Scheme module as a single C function"
 		ewarn "using gcc specific optimizations"
 		ewarn "approximately 2GB ram will be needed instead of 0.5GB"
@@ -41,6 +34,13 @@ pkg_setup() {
 		ewarn "unless your system is BIG IRON"
 		# need this much memory in MBytes (does *not* check swap)
 		CHECKREQS_MEMORY="2560"	check_reqs
+	else
+		ewarn "NOT compiling each Scheme module as a single C function"
+		ewarn "NOT using gcc specific optimizations"
+		ewarn "approximately 0.5GB ram will be needed"
+		ewarn "if you experience thrashing, try disabling parallel building or setting -O1"
+		# need this much memory in MBytes (does *not* check swap)
+		CHECKREQS_MEMORY="768" check_reqs
 	fi
 }
 
