@@ -50,5 +50,5 @@ src_install() {
 }
 
 pkg_postinst() {
-	while read line; do einfo ${line}; done < "${ROOT}"/usr/share/doc/${P}/README.Gentoo
+	while read line; do elog ${line}; done < "${ROOT}"/usr/share/doc/${P}/README.Gentoo
 }
