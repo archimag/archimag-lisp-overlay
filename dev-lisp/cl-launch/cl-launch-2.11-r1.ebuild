@@ -11,8 +11,11 @@ LICENSE="No-Problem-Bugroff LLGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 
+CL_LAUNCH_FASLDIR=/var/cache/cl-launch
+
 src_install() {
 	dobin cl-launch.sh
 	common-lisp-install launcher.lisp wrapper.sh cl-launch.asd
 	common-lisp-symlink-asdf
+	keepdir "${CL_LAUNCH_FASLDIR}"
 }
