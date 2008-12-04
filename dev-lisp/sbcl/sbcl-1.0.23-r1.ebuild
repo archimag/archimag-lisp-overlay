@@ -95,6 +95,7 @@ EOF
 src_unpack() {
 	unpack ${A}
 	mv sbcl-*-linux sbcl-binary
+	cd "${S}"
 
 #	epatch "${FILESDIR}/disable-tests-gentoo-${PV}.patch"
 	use source && sed 's%"$(BUILD_ROOT)%$(MODULE).lisp "$(BUILD_ROOT)%' -i contrib/vanilla-module.mk
