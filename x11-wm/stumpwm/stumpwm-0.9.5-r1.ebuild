@@ -81,7 +81,3 @@ src_install() {
 	dodoc README NEWS ChangeLog README.Gentoo
 	use doc && doinfo stumpwm.info
 }
-
-pkg_postinst() {
-	while read line; do einfo ${line}; done < "${ROOT}"/usr/share/doc/${PF}/README.Gentoo
-}
