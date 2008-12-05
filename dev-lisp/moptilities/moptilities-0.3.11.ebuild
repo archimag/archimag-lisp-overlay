@@ -12,7 +12,7 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 
-DEPEND="dev-lisp/closer-mop
+DEPEND=">=dev-lisp/closer-mop-0.55
 		dev-lisp/lift"
 
 CLSYSTEMS="${PN} ${PN}-test"
