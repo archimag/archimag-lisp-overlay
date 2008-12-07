@@ -11,7 +11,7 @@ LICENSE="BSD"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 SLOT="0"
 IUSE=""
-DEPEND="=sys-libs/db-4.5*
+DEPEND="=sys-libs/db-4.6*
 		dev-lisp/cffi
 		dev-lisp/trivial-garbage"
 
@@ -20,5 +20,6 @@ CLSYSTEMS="src/${PN}"
 src_install() {
 	common-lisp-install src/*.{lisp,asd}
 	common-lisp-symlink-asdf
-	dohtml docs/*
+	dodoc docs/AUTHORS
+	dohtml docs/{api,index.html,style.css}
 }
