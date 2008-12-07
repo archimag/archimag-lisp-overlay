@@ -15,7 +15,7 @@ KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
 DEPEND="!dev-lisp/cl-${PN}
-		dev-lisp/closure-common
+		>=dev-lisp/closure-common-${PV}
 		dev-lisp/puri
 		dev-lisp/trivial-gray-streams"
 
