@@ -12,7 +12,7 @@ SRC_URI="http://download.savannah.nongnu.org/releases/stumpwm/${P}.tgz"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="sbcl emacs doc"
+IUSE="emacs doc"
 #IUSE="sbcl clisp emacs doc"
 RESTRICT="strip"
 
@@ -28,8 +28,8 @@ DEPEND="dev-lisp/cl-ppcre
 RDEPEND="${DEPEND}"
 
 WRAP_OPTS='
-#SBCL_OPTIONS="--no-sysinit --no-userinit"
-#CLISP_OPTIONS="-ansi -K full -norc --verbose"
+SBCL_OPTIONS="--no-sysinit --no-userinit"
+# CLISP_OPTIONS="-ansi -K full -norc --verbose"
 '
 
 src_unpack() {
@@ -52,6 +52,8 @@ src_compile() {
 # 	else
 # 		LISP=sbcl ; NORC="--no-sysinit --no-userinit" ; EVAL=--eval
 # 	fi
+
+	addwrite /var/cache/cl-launch
 	LISP_FASL_CACHE=/var/cache/cl-launch \
 		cl-launch.sh --lisp ${LISP} --wrap "${WRAP_OPTS}" \
 		--path "${CLSYSTEMROOT}" --path-current \
