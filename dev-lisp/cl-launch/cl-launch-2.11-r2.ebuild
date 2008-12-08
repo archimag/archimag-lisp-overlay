@@ -18,4 +18,5 @@ src_install() {
 	common-lisp-install launcher.lisp wrapper.sh cl-launch.asd
 	common-lisp-symlink-asdf
 	keepdir "${CL_LAUNCH_FASLDIR}"
+	fperms 1777 "${CL_LAUNCH_FASLDIR}"
 }
