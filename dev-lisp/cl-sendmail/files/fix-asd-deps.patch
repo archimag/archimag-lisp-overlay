@@ -1,0 +1,14 @@
+diff -Naurw cl-sendmail.orig/cl-sendmail.asd cl-sendmail/cl-sendmail.asd
+--- cl-sendmail.orig/cl-sendmail.asd	2007-09-07 05:11:37.000000000 +0200
++++ cl-sendmail/cl-sendmail.asd	2008-12-08 03:32:41.000000000 +0100
+@@ -27,8 +27,9 @@
+   :author "Robert Marlow <rob@bobturf.org>"
+   :maintainer "Robert Marlow <rob@bobturf.org>"
+   :serial t
+-  :version "0.5.0"
++  :version "0.5.5"
+   :depends-on (:cl-mime 
++               :cl-base64
+ 	       #+sbcl :sb-bsd-sockets
+ 	       :xmls 
+ 	       :xmls-tools)
