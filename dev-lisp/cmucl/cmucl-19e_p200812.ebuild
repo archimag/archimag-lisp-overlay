@@ -4,18 +4,19 @@
 
 inherit common-lisp-common-3 eutils toolchain-funcs
 
-YEAR=2008
 PATCHSET=${PV/*_p/}
+YEAR=${PATCHSET:0:4}
+MONTH=${PATCHSET:4:5}
 
 DESCRIPTION="CMU Common Lisp is an implementation of ANSI Common Lisp"
 HOMEPAGE="http://www.cons.org/cmucl/"
-SRC_URI="http://common-lisp.net/project/cmucl/downloads/snapshots/${YEAR}/${PATCHSET}/cmucl-src-${YEAR}-${PATCHSET}.tar.bz2
-		http://common-lisp.net/project/cmucl/downloads/snapshots/${YEAR}/${PATCHSET}/cmucl-${YEAR}-${PATCHSET}-x86-linux.tar.bz2"
+SRC_URI="http://common-lisp.net/project/cmucl/downloads/snapshots/${YEAR}/${MONTH}/cmucl-src-${YEAR}-${MONTH}.tar.bz2
+		http://common-lisp.net/project/cmucl/downloads/snapshots/${YEAR}/${MONTH}/cmucl-${YEAR}-${MONTH}-x86-linux.tar.bz2"
 
 LICENSE="public-domain"
 SLOT="0"
 KEYWORDS="~x86"
-IUSE="source X"
+IUSE="X source sse2"
 
 DEPEND="x11-libs/openmotif
 		sys-devel/bc"
@@ -27,7 +28,7 @@ S="${WORKDIR}"
 
 src_unpack() {
 	unpack ${A}
-	epatch "${FILESDIR}"/${PV/_*/}-gentoo.patch
+	epatch "${FILESDIR}"/19f-gentoo.patch
 	find "${S}" -type f \( -name \*.sh -o -name linux-nm \) \
 		-exec chmod +x '{}' \;
 	sed -i -e "s,CC = .*,CC = $(tc-getCC),g" src/lisp/Config.linux_gencgc
@@ -37,8 +38,13 @@ src_unpack() {
 
 src_compile() {
 	use X || local OPTS="-u"
-	local buildimage="bin/lisp -core lib/cmucl/lib/lisp.core -batch -noinit -nositeinit"
-	src/tools/build.sh -C "" -o "${buildimage}" ${OPTS} || die "Cannot build the compiler"
+	if use sse2 ; then
+		export CMUFPU="sse2"
+	else
+		export CMUFPU="x87"
+	fi
+	local buildimage="bin/lisp -core lib/cmucl/lib/lisp-${CMUFPU}.core -batch -noinit -nositeinit"
+	src/tools/build.sh -C "" -o "${buildimage}" ${OPTS} -f ${CMUFPU} || die "Cannot build the compiler"
 }
 
 src_install() {
@@ -47,6 +53,15 @@ src_install() {
 	for i in cmucl-${PV}-x86-linux.{,extra.}tar.gz; do
 		tar xzpf $i -C "${D}"/usr
 	done
+
+	mv "${D}"/usr/bin/lisp "${D}"/usr/bin/lisp.bin
+	cat > "${T}"/lisp <<EOF
+#!/bin/sh
+
+exec ${ROOT%/}/usr/bin/lisp.bin -f ${CMUFPU} "\$@"
+EOF
+	dobin "${T}"/lisp
+
 	mv "${D}"/usr/doc "${D}"/usr/share/doc/${PF}
 	mv "${D}"/usr/man "${D}"/usr/share/
 
@@ -84,5 +99,5 @@ pkg_postinst() {
 }
 
 pkg_postrm() {
-	standard-impl-postrm cmucl /usr/bin/lisp
+	standard-impl-postrm cmucl /usr/bin/lisp.bin
 }
