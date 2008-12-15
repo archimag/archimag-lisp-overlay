@@ -16,7 +16,7 @@ IUSE=""
 DEPEND="!dev-lisp/cl-${PN}
 		dev-lisp/rsm-queue"
 
-S="${WORKDIR}"/cl-${P/_beta/b}
+S="${WORKDIR}"/cl-${PN/_beta/b}
 
 src_install() {
 	common-lisp-install *.{lisp,asd}
