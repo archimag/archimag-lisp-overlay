@@ -54,10 +54,10 @@ BUILDDIR="builddir"
 #  * oracle: can't install oracle-instantclient
 
 src_unpack() {
-	unpack ${A} && cd "${S}"
+	unpack ${A}
 
 	# More than -O1 breaks alpha/ia64
-	use alpha || use ia64 && sed -i -e 's/-O2//g' src/makemake.in
+	use alpha || use ia64 && sed -i -e 's/-O2//g' "${S}"/src/makemake.in
 }
 
 src_configure() {
