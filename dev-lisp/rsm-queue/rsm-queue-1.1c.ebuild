@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit common-lisp-2
+inherit common-lisp-2 eutils
 
 DESCRIPTION="R. Scott McIntire's Common Lisp queue library."
 HOMEPAGE="http://packages.debian.org/unstable/devel/cl-rsm-queue"
@@ -15,7 +15,12 @@ IUSE=""
 
 DEPEND="!dev-lisp/cl-${PN}"
 
-S="${WORKDIR}"/cl-${P}
+S="${WORKDIR}"/cl-${PN}
+
+src_unpack() {
+	unpack ${A}
+	epatch "${FILESDIR}"/gentoo-1.1c-fix-ftype.patch
+}
 
 src_install() {
 	common-lisp-install *.{lisp,asd}

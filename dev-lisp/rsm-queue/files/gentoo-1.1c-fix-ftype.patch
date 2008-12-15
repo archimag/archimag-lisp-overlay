@@ -1,0 +1,12 @@
+diff -Naur cl-rsm-queue.orig/queue.lisp cl-rsm-queue/queue.lisp
+--- cl-rsm-queue.orig/queue.lisp	2003-10-20 19:32:15.000000000 +0200
++++ cl-rsm-queue/queue.lisp	2008-12-16 00:26:42.000000000 +0100
+@@ -47,7 +47,7 @@
+     que))
+ 
+ 
+-(declaim (ftype (function () list) create))
++(declaim (ftype (function (&optional t) list) create))
+ 
+ (defun create (&optional obj)
+   "Create a queue. If <obj> is non nil queue it up. In order to create a queue
