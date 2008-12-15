@@ -5,8 +5,9 @@
 inherit common-lisp-2
 
 DESCRIPTION="A Common Lisp library providing access to dynamic index structures for spatially-extended data."
-HOMEPAGE="http://www.cliki.net/${PN}"
+HOMEPAGE="http://www.cliki.net/spatial-trees"
 SRC_URI="http://ftp.linux.org.uk/pub/lisp/cclan/${P}.tar.gz"
+
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"

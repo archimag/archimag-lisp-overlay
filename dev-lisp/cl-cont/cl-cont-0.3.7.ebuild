@@ -9,9 +9,11 @@ MY_P=${PN}_${PV}
 DESCRIPTION="CL-CONT is a code walker that implements delimited continuations in Common Lisp."
 HOMEPAGE="http://common-lisp.net/project/cl-cont/"
 SRC_URI="http://common-lisp.net/project/${PN}/releases/${MY_P}.tar.gz"
+
 LICENSE="LLGPL-2.1"
-KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 SLOT="0"
+KEYWORDS="~amd64 ~ppc ~sparc ~x86"
+IUSE=""
 
 DEPEND="dev-lisp/closer-mop
 		dev-lisp/rt"

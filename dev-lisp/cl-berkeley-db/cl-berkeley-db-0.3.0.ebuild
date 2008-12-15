@@ -6,13 +6,15 @@ EAPI=1
 
 inherit common-lisp-2
 
-DESCRIPTION="cl-berkeley-db is a common-lisp wrapper to the berkeley database library."
+DESCRIPTION="A common-lisp wrapper to the Berkeley database library."
 HOMEPAGE="http://common-lisp.net/project/cl-berkeley-db/"
 SRC_URI="http://common-lisp.net/project/${PN}/dist/${P}.tar.gz"
+
 LICENSE="BSD"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 SLOT="0"
 IUSE=""
+
 DEPEND="sys-libs/db:4.6
 		dev-lisp/cffi
 		dev-lisp/trivial-garbage"

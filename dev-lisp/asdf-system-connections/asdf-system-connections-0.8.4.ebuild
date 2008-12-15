@@ -4,13 +4,14 @@
 
 inherit common-lisp-2 eutils
 
-DESCRIPTION="ASDF-System-Connections provides auto-loading of systems that only make sense when several other systems are loaded."
+DESCRIPTION="Provides auto-loading of systems that only make sense when several other systems are loaded."
 HOMEPAGE="http://common-lisp.net/project/cl-containers/asdf-system-connections/"
 SRC_URI="http://common-lisp.net/~sionescu/files/${P}.tar.bz2"
 
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
+IUSE=""
 
 DEPEND="!dev-lisp/cl-${PN}"
 

@@ -5,12 +5,13 @@
 inherit common-lisp-2 eutils
 
 DESCRIPTION="LIFT is an SUnit variant and much much more."
-HOMEPAGE="http://common-lisp.net/project/${PN}/"
+HOMEPAGE="http://common-lisp.net/project/lift/"
 SRC_URI="http://common-lisp.net/~sionescu/files/${P}.tar.bz2"
 
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
+IUSE=""
 
 CLSYSTEMS="${PN} ${PN}-test"
 

@@ -4,24 +4,26 @@
 
 inherit common-lisp-2
 
-DESCRIPTION="LOCAL-TIME is a development library for manipulating date and time information in a semi-standard manner."
+DESCRIPTION="LOCAL-TIME is a development library for manipulating date and time information."
 HOMEPAGE="http://common-lisp.net/project/local-time/"
 SRC_URI="http://common-lisp.net/project/${PN}/${P}.tar.gz"
+
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
+IUSE=""
 
 DEPEND="dev-lisp/cl-fad
 		dev-lisp/fiveam
 		doc? ( sys-apps/texinfo )"
 
 src_compile() {
-	use doc && texi2pdf documentation/${P}.texinfo
+	use doc && texi2pdf documentation/${PN}.texinfo
 }
 
 src_install() {
 	common-lisp-install *.{lisp,asd} zoneinfo
 	common-lisp-symlink-asdf
 	dodoc CREDITS README TODO
-	use doc && dodoc documentation/${P}.pdf
+	use doc && dodoc ${PN}.pdf
 }

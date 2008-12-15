@@ -5,12 +5,14 @@
 inherit common-lisp-2
 
 DESCRIPTION="Portable URI library for Common Lisp based on the Franz, Inc. :net.uri module."
-HOMEPAGE="http://${PN}.b9.com/"
+HOMEPAGE="http://puri.b9.com/"
 SRC_URI="http://files.b9.com/${PN}/${P}.tar.gz"
+
 LICENSE="LLGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
+
 DEPEND="!dev-lisp/cl-${PN}
 		dev-lisp/ptester"
 

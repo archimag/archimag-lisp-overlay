@@ -7,13 +7,15 @@ inherit common-lisp-2
 MY_PV=${PV:0:4}-${PV:4:2}-${PV:6:2}
 
 DESCRIPTION="A library of macros and functions by Fare Rideau."
-HOMEPAGE="http://www.cliki.net/fare-matcher http://www.cliki.net/fare-matcher-docs"
+HOMEPAGE="http://www.cliki.net/fare-matcher
+		http://www.cliki.net/fare-matcher-docs"
 SRC_URI="http://fare.tunes.org/asdf-packages/${PN}-${MY_PV}.tar.gz"
 
 LICENSE="No-Problem-Bugroff"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
+
 DEPEND="!dev-lisp/cl-${PN}
 		dev-lisp/fare-utils"
 

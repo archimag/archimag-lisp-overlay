@@ -32,13 +32,10 @@ SRC_URI="x86? ( mirror://sourceforge/sbcl/${PN}-${BV_X86}-x86-linux-binary.tar.b
 
 LICENSE="MIT"
 SLOT="0"
-
 KEYWORDS=""
-
 IUSE="ldb source +threads +unicode doc cobalt"
 
 DEPEND="doc? ( sys-apps/texinfo media-gfx/graphviz[png] )"
-
 PDEPEND="dev-lisp/gentoo-init"
 
 PROVIDE="virtual/commonlisp"

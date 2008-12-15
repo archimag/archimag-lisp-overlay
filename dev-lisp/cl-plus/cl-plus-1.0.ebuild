@@ -6,7 +6,7 @@ inherit common-lisp-2
 
 DESCRIPTION="Common Lisp extensions such as a DEFCONSTANT wrappers"
 HOMEPAGE="http://packages.debian.org/unstable/devel/cl-plus"
-SRC_URI="http://ftp.debian.org/debian/pool/main/c/${PN}/${PN}_${PV}.orig.tar.gz"
+SRC_URI="mirror://debian/pool/main/c/${PN}/${PN}_${PV}.orig.tar.gz"
 
 LICENSE="public-domain"
 SLOT="0"

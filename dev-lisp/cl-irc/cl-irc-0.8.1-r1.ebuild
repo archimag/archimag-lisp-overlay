@@ -5,12 +5,14 @@
 inherit common-lisp-2
 
 DESCRIPTION="A Common Lisp IRC client library"
-HOMEPAGE="http://common-lisp.net/project/${PN}/"
+HOMEPAGE="http://common-lisp.net/project/cl-irc/"
 SRC_URI="http://common-lisp.net/project/${PN}/releases/${P}.tar.gz"
+
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
+
 DEPEND="dev-lisp/split-sequence
 		dev-lisp/usocket
 		dev-lisp/flexi-streams"

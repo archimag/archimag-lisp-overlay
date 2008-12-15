@@ -4,20 +4,22 @@
 
 inherit common-lisp-2 eutils
 
-PKG="${PN}-version-${PV}"
+MY_P="${PN}-version-${PV}"
 
 DESCRIPTION="Araneida is small, highly-portable web server for Common Lisp"
 HOMEPAGE="http://www.cliki.net/Araneida"
-SRC_URI="http://common-lisp.net/project/${PN}/release/${PKG}.tar.gz"
+SRC_URI="http://common-lisp.net/project/${PN}/release/${MY_P}.tar.gz"
+
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
+
 DEPEND="!dev-lisp/cl-${PN}
 		dev-lisp/split-sequence
 		dev-lisp/net-telent-date"
 
-S="${WORKDIR}/${PKG}"
+S="${WORKDIR}/${MY_P}"
 
 src_install() {
 	common-lisp-install *.{asd,lisp} NEWS

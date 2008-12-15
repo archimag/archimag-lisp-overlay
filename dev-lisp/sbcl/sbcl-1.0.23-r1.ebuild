@@ -31,13 +31,10 @@ SRC_URI="mirror://sourceforge/sbcl/${P}-source.tar.bz2
 
 LICENSE="MIT"
 SLOT="0"
-
 KEYWORDS="-* ~amd64 ~ppc ~sparc ~x86"
-
 IUSE="ldb source +threads +unicode doc cobalt"
 
 DEPEND="doc? ( sys-apps/texinfo media-gfx/graphviz[png] )"
-
 PDEPEND="dev-lisp/gentoo-init"
 
 PROVIDE="virtual/commonlisp"

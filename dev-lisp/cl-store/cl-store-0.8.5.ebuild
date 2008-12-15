@@ -13,6 +13,7 @@ SRC_URI="http://common-lisp.net/project/${PN}/files/${MY_P}.tgz"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
+IUSE=""
 
 DEPEND="sys-apps/texinfo"
 

@@ -5,9 +5,10 @@
 inherit common-lisp-2 elisp eutils
 
 DESCRIPTION="McCLIM is a free software implementation of CLIM."
-HOMEPAGE="http://common-lisp.net/project/${PN}
+HOMEPAGE="http://common-lisp.net/project/mcclim
 		http://cliki.net/McCLIM"
 SRC_URI="http://common-lisp.net/project/${PN}/downloads/${P}.tar.gz"
+
 LICENSE="LLGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
@@ -41,7 +42,7 @@ SITEFILE="${FILESDIR}"/50mcclim-gentoo.el
 ELISP_SOURCES="Tools/Emacs/indent-clim.el Tools/Emacs/hyperclim.el"
 
 src_unpack() {
-	unpack ${A} && cd ${S}
+	unpack ${A} && cd "${S}"
 	epatch "${FILESDIR}"/${PV}-mcclim.asd-cmucl.patch
 }
 

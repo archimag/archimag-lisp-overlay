@@ -5,9 +5,9 @@
 inherit common-lisp-2 eutils
 
 DESCRIPTION="Common Lisp utilities for printing and parsing date"
-HOMEPAGE="http://packages.debian.org/unstable/devel/cl-${PN}
-	http://www.cliki.net/${PN}"
-SRC_URI="http://ftp.debian.org/debian/pool/main/c/cl-${PN}/cl-${PN}_${PV}.orig.tar.gz"
+HOMEPAGE="http://packages.debian.org/unstable/devel/cl-net-telent-date
+	http://www.cliki.net/net-telent-date"
+SRC_URI="mirror://debian/pool/main/c/cl-${PN}/cl-${PN}_${PV}.orig.tar.gz"
 
 LICENSE="public-domain"
 SLOT="0"
@@ -16,4 +16,4 @@ IUSE=""
 
 DEPEND="!dev-lisp/cl-${PN}"
 
-S="${WORKDIR}/cl-${P}"
+S="${WORKDIR}"/cl-${P}

@@ -7,7 +7,7 @@ inherit common-lisp-2
 MY_PV=${PV:0:4}-${PV:4:2}-${PV:6:2}
 
 DESCRIPTION="An HTML parser written in Common Lisp."
-HOMEPAGE="http://common-lisp.net/project/closure/${PN}/"
+HOMEPAGE="http://common-lisp.net/project/closure/closure-html/"
 SRC_URI="http://common-lisp.net/project/closure/download/${PN}-${MY_PV}.tgz"
 
 LICENSE="MIT"

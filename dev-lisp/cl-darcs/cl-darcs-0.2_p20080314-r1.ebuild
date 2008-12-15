@@ -8,6 +8,7 @@ DESCRIPTION="CL-DARCS is a client for the darcs version control system written i
 HOMEPAGE="http://common-lisp.net/project/cl-darcs
 		http://www.cliki.net/CL-DARCS"
 SRC_URI="http://common-lisp.net/~sionescu/files/${P}.tar.bz2"
+
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"

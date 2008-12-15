@@ -17,11 +17,10 @@ SRC_URI="mirror://debian/pool/main/g/gcl/gcl_${PV}.orig.tar.gz
 
 LICENSE="GPL-2"
 SLOT="0"
-#Tested on ~x86 and ~amd64 only, left untouched the old KEYWORDS
-KEYWORDS="~amd64 ppc ~sparc ~x86"
+#Tested on ~x86 and ~amd64 only
+KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE="emacs +readline debug X tk doc +ansi"
 
-#if the files get striped gcl breaks
 RESTRICT="strip"
 
 RDEPEND="emacs? ( virtual/emacs )
@@ -30,14 +29,12 @@ RDEPEND="emacs? ( virtual/emacs )
 	tk? ( dev-lang/tk )
 	X? ( x11-libs/libXt x11-libs/libXext x11-libs/libXmu x11-libs/libXaw )
 	virtual/latex-base"
-
 DEPEND="${RDEPEND}
 	>=app-text/texi2html-1.64
 	>=sys-devel/autoconf-2.52"
 
 src_unpack() {
-	unpack ${A}
-	cd "${S}"
+	unpack ${A} && cd "${S}"
 	epatch ../gcl_${PV}-${DEB_PV}.diff
 }
 
@@ -97,11 +94,10 @@ src_test() {
 		| sed s/bootstrapped_ansi_gcl/bootstrapped_r_gcl/g \
 		| ./bootstrapped_gcl
 
-		for x in "./bootstrapped_r_gcl" "unixport/saved_gcl"
-		do
+		for x in "./bootstrapped_r_gcl" "unixport/saved_gcl" ; do
 			echo "(compiler::emit-fn t)" \
-			| ${x} \
-			|| die "Phase 2, bootstraped compiler failed in tests"
+				| ${x} \
+				|| die "Phase 2, bootstraped compiler failed in tests"
 		done
 	fi
 }
@@ -109,31 +105,31 @@ src_test() {
 
 src_install() {
 	make DESTDIR="${D}" install || die "make install failed"
-	mv -v ${D}/default.el elisp/
+	mv -v "${D}"/default.el elisp/
 
 	if use emacs; then
-		mv -v elisp/add-default.el ${T}/50gcl-gentoo.el
-		elisp-site-file-install ${T}/50gcl-gentoo.el
+		mv -v elisp/add-default.el "${T}"/50gcl-gentoo.el
+		elisp-site-file-install "${T}"/50gcl-gentoo.el
 		elisp-install ${PN} elisp/*
-		chmod -Rv 0644 ${D}/usr/share/emacs/site-lisp/gcl/*
+		chmod -Rv 0644 "${D}"/usr/share/emacs/site-lisp/gcl/*
 	else
-		rm -Rv ${D}/usr/share/emacs
+		rm -Rv "${D}"/usr/share/emacs
 	fi
 
 	if use doc; then
-		mv -v ${D}/usr/share/doc/dwdoc.* ${D}/usr/share/doc/dwdoc
-		mv -v ${D}/usr/share/doc/*.dvi ${D}/usr/share/doc/dwdoc
-		mkdir -pv ${D}/usr/share/doc/${PF}/tex
-		cp -Rv ${D}/usr/share/doc/dwdoc ${D}/usr/share/doc/${PF}/tex
-		rm -Rv ${D}/usr/share/doc/dwdoc
+		mv -v "${D}"/usr/share/doc/dwdoc.* "${D}"/usr/share/doc/dwdoc
+		mv -v "${D}"/usr/share/doc/*.dvi "${D}"/usr/share/doc/dwdoc
+		mkdir -pv "${D}"/usr/share/doc/${PF}/tex
+		cp -Rv "${D}"/usr/share/doc/dwdoc "${D}"/usr/share/doc/${PF}/tex
+		rm -Rv "${D}"/usr/share/doc/dwdoc
 	else
-		rm -Rv ${D}/usr/share/doc/dwd*
+		rm -Rv "${D}"/usr/share/doc/dwd*
 	fi
 
 
-	cat ${D}/usr/bin/gcl
+	cat "${D}"/usr/bin/gcl
 	dosed /usr/bin/gcl
-	cat ${D}/usr/bin/gcl
+	cat "${D}"/usr/bin/gcl
 	fperms 0755 /usr/bin/gcl
 
 	dosed /usr/lib/${PN}-${MY_PV}/gcl-tk/gcltksrv
@@ -142,13 +138,13 @@ src_install() {
 	rm -Rv doc/CVS
 	dodoc readme* RELEASE* ChangeLog* doc/*
 
-	for i in ${D}/usr/share/doc/gcl-{tk,si}; do
-		mv -v $i ${D}/usr/share/doc/${PF}
+	for i in "${D}"/usr/share/doc/gcl-{tk,si}; do
+		mv -v $i "${D}"/usr/share/doc/${PF}
 	done
 
 	doman gcl.1
 	doinfo info/*.info*
-	find ${D}/usr/lib/gcl-${MY_PV}/ -type f \( -perm 640 -o -perm 750 \) -exec chmod -v 0644 '{}' \;
+	find "${D}"/usr/lib/gcl-${MY_PV}/ -type f \( -perm 640 -o -perm 750 \) -exec chmod -v 0644 '{}' \;
 }
 
 pkg_postinst() {

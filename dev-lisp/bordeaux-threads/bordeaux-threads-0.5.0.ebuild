@@ -9,6 +9,7 @@ MY_P=${PN}_${PV}
 DESCRIPTION="A library meant to make writing portable multi-threaded apps simple."
 HOMEPAGE="http://common-lisp.net/project/bordeaux-threads/"
 SRC_URI="http://common-lisp.net/project/${PN}/releases/${MY_P}.tar.gz"
+
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"

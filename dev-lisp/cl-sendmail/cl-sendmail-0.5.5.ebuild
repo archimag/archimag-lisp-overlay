@@ -7,6 +7,7 @@ inherit common-lisp-2
 DESCRIPTION="A Common Lisp library for sending email."
 HOMEPAGE="http://www.cliki.net/cl-mime/"
 SRC_URI="http://www.bobturf.org/software/${PN}/${P}.tar.gz"
+
 LICENSE="LLGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"

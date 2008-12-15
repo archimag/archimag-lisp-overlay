@@ -5,12 +5,15 @@
 inherit common-lisp-2 eutils
 
 DESCRIPTION="ITERATE is a lispy and extensible replacement for the Common Lisp LOOP macro"
-HOMEPAGE="http://common-lisp.net/project/${PN}/ http://www.cliki.net/${PN}/"
+HOMEPAGE="http://common-lisp.net/project/iterate/
+		http://www.cliki.net/iterate/"
 SRC_URI="http://common-lisp.net/project/${PN}/releases/${P}.tar.gz"
+
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
+
 DEPEND="!dev-lisp/cl-${PN}"
 
 src_unpack() {

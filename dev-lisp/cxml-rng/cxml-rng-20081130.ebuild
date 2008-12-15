@@ -6,9 +6,10 @@ inherit common-lisp-2
 
 MY_PV=${PV:0:4}-${PV:4:2}-${PV:6:2}
 
-DESCRIPTION="An implementation of Relax NG schema validation written in Common Lisp, including support for compact syntax, DTD Compatibility, and the XSD type library."
+DESCRIPTION="An implementation of Relax NG schema validation written in Common Lisp."
 HOMEPAGE="http://www.lichteblau.com/cxml-rng/"
 SRC_URI="http://www.lichteblau.com/${PN}/download/${PN}-${MY_PV}.tgz"
+
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
@@ -23,7 +24,8 @@ DEPEND=">=dev-lisp/cxml-${PV}
 S="${WORKDIR}"/${PN}-${MY_PV}
 
 src_unpack() {
-	unpack ${A}
+	unpack ${A} && cd "${S}"
+
 	rm "${S}"/GNUmakefile
 }
 

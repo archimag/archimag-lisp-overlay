@@ -7,6 +7,7 @@ inherit common-lisp-2 elisp eutils
 DESCRIPTION="Climacs is an Emacs-like text editor written in Common Lisp."
 HOMEPAGE="http://common-lisp.net/project/climacs"
 SRC_URI="http://common-lisp.net/~sionescu/files/${P}.tar.bz2"
+
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"

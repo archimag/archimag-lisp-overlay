@@ -8,10 +8,12 @@ DESCRIPTION="S-XML-RPC is an implementation of XML-RPC in Common Lisp for both c
 HOMEPAGE="http://www.common-lisp.net/project/s-xml-rpc/"
 SRC_URI="mirror://gentoo/${P}.tar.gz
 		http://common-lisp.net/project/${PN}/S-XML-RPC.html"
+
 LICENSE="LLGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
+
 DEPEND="!dev-lisp/cl-${PN}
 		dev-lisp/s-xml
 		dev-lisp/s-base64

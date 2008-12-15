@@ -4,15 +4,17 @@
 
 inherit common-lisp-2
 
-DESCRIPTION="CL-FTP is a Networking Library that provides FTP client (for now) functionality to Common Lisp programs."
+DESCRIPTION="CL-FTP is a Common Lisp FTP client library."
 HOMEPAGE="http://www.mapcar.org/~mrd/cl-ftp/
 		http://packages.debian.org/unstable/devel/cl-ftp
 		http://www.cliki.net/CL-FTP"
-SRC_URI="http://ftp.debian.org/debian/pool/main/c/${PN}/${PN}_${PV}.tar.gz"
+SRC_URI="mirror://debian/pool/main/c/${PN}/${PN}_${PV}.tar.gz"
+
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
+
 DEPEND="dev-lisp/acl-compat
 		dev-lisp/split-sequence"
 

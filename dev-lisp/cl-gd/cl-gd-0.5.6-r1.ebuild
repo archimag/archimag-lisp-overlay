@@ -8,9 +8,11 @@ DESCRIPTION="CL-GD is a library for Common Lisp which interfaces ti the GD Graph
 HOMEPAGE="http://weitz.de/cl-gd/
 		http://www.cliki.net/cl-gd/"
 SRC_URI="http://common-lisp.net/~sionescu/ediware/${PN}_${PV}.orig.tar.gz"
+
 LICENSE="BSD-2"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
+IUSE=""
 
 DEPEND=">=dev-lisp/uffi-1.3.4
 		dev-lisp/cffi

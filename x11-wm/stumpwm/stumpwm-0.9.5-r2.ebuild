@@ -9,11 +9,13 @@ inherit common-lisp-2 eutils elisp
 DESCRIPTION="Stumpwm is a tiling, keyboard driven X11 Window Manager written entirely in Common Lisp."
 HOMEPAGE="http://www.nongnu.org/stumpwm/"
 SRC_URI="http://download.savannah.nongnu.org/releases/stumpwm/${P}.tgz"
+
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="emacs doc"
 #IUSE="sbcl clisp emacs doc"
+
 RESTRICT="strip"
 
 DEPEND="dev-lisp/cl-ppcre

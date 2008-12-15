@@ -11,17 +11,19 @@ MY_P=cl-${PN}_${FULL_PV}
 
 DESCRIPTION="McIntire's Common Lisp RSA Library"
 HOMEPAGE="http://packages.debian.org/unstable/devel/cl-rsm-rsa"
-SRC_URI="http://ftp.debian.org/debian/pool/main/c/cl-${PN}/${MY_P}.tar.gz"
+SRC_URI="mirror://debian/pool/main/c/cl-${PN}/${MY_P}.tar.gz"
+
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="~sparc ~x86"
+KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
+
 DEPEND="!dev-lisp/cl-${PN}
 		dev-lisp/rsm-mod
 		dev-lisp/rsm-string
 		dev-lisp/cl-plus"
 
-S="${WORKDIR}"/cl-${PN}-${FULL_PV}
+S="${WORKDIR}"/${MY_P}
 
 src_unpack() {
 	unpack ${A}

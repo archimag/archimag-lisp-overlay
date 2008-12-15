@@ -11,26 +11,23 @@ MY_P="${MY_PN}-${MY_PV}"
 
 DESCRIPTION="GCL is the official Common Lisp for the GNU project."
 HOMEPAGE="http://www.gnu.org/software/gcl/"
-
 SRC_URI="mirror://debian/pool/main/g/${MY_PN}/${MY_PN}_${MY_PV}-${DEB_PV}.tar.gz"
 
 LICENSE="GPL-2"
-
 SLOT="0"
 #KEYWORDS="~amd64"
 KEYWORDS=""
-
 IUSE="+readline +ansi"
+
+RESTRICT="strip"
 
 RDEPEND="readline? ( sys-libs/readline )
 	dev-libs/gmp
 	sys-devel/autoconf"
-
 DEPEND="${RDEPEND}
 	virtual/latex-base"
 
 S="${WORKDIR}/${MY_P}"
-RESTRICT="strip"
 
 src_compile() {
 	pwd
@@ -43,5 +40,5 @@ src_compile() {
 }
 
 src_install() {
-	emake DESTDIR=${D} install || die "emake install failed."
+	emake DESTDIR="${D}" install || die "emake install failed."
 }

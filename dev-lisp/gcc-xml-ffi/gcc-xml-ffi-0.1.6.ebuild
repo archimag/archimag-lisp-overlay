@@ -9,9 +9,11 @@ MY_P=${PN}_${PV}
 DESCRIPTION="A system for automatically generating common lisp foreign function interface (FFI) bindings from C and C++ code."
 HOMEPAGE="http://www.cyrusharmon.org/projects?project=gcc-xml-ffi"
 SRC_URI="http://cyrusharmon.org/static/releases/${MY_P}.tar.gz"
+
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
+IUSE=""
 
 DEPEND="!dev-lisp/cl-${PN}
 		dev-lisp/ch-util
@@ -19,9 +21,9 @@ DEPEND="!dev-lisp/cl-${PN}
 		dev-lisp/xmls
 		dev-cpp/gccxml"
 
-CLSYSTEMS="gcc-xml-ffi gcc-xml-ffi-test"
+CLSYSTEMS="${PN} ${PN}-test"
 
-S=${WORKDIR}/${MY_P}
+S="${WORKDIR}"/${MY_P}
 
 src_unpack() {
 	unpack ${A}

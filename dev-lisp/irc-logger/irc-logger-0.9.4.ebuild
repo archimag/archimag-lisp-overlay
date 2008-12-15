@@ -5,12 +5,14 @@
 inherit common-lisp-2 eutils
 
 DESCRIPTION="A Common Lisp IRC logger library"
-HOMEPAGE="http://b9.com/"
+HOMEPAGE="http://www.cliki.net/irc-logger"
 SRC_URI="http://files.b9.com/${PN}/${P}.tar.gz"
+
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
+
 DEPEND="!dev-lisp/cl-${PN}
 		dev-lisp/cl-irc
 		dev-lisp/cl-ppcre

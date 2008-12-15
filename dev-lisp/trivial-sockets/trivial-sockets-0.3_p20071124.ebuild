@@ -7,10 +7,12 @@ inherit common-lisp-2
 DESCRIPTION="A portable Common Lisp networking library for undemanding Internet clients"
 HOMEPAGE="http://www.cliki.net/trivial-sockets"
 SRC_URI="http://common-lisp.net/~sionescu/files/${P}.tar.bz2"
+
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE="doc"
+
 DEPEND="!dev-lisp/cl-${PN}
 		doc? ( sys-apps/texinfo )"
 

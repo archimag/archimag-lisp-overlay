@@ -8,11 +8,11 @@ DESCRIPTION="A parser that parses HTML documents and generates a sexp-based repr
 HOMEPAGE="http://www.cl-user.net/asp/libs/cl-html-parse
 		http://www.cliki.net/CL-HTML-Parse"
 SRC_URI="mirror://gentoo/${PN}_${PV}.tar.gz"
+
 LICENSE="LLGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
-DEPEND=""
 
 S="${WORKDIR}"/${PN}
 

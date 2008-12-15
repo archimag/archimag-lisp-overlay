@@ -7,14 +7,15 @@ inherit common-lisp-2 eutils
 DEB_PV=1
 
 DESCRIPTION="Common Lisp source code from Peter Norvig's Artificial Intelligence: A Modern Approach"
-HOMEPAGE="http://aima.cs.berkeley.edu/ http://www.norvig.com/ http://packages.debian.org/unstable/devel/${PN}.html"
+HOMEPAGE="http://aima.cs.berkeley.edu/lisp/doc/overview.html
+		http://packages.debian.org/unstable/devel/cl-aima.html"
 SRC_URI="mirror://gentoo/${PN}_${PV}.orig.tar.gz
-	mirror://gentoo/${PN}_${PV}-${DEB_PV}.diff.gz"
+		mirror://gentoo/${PN}_${PV}-${DEB_PV}.diff.gz"
+
 LICENSE="Norvig"
 SLOT="0"
 KEYWORDS="~amd64 ~sparc ~x86"
 IUSE=""
-DEPEND=""
 
 CLPACKAGE="aima"
 CLSYSTEMS="aima"

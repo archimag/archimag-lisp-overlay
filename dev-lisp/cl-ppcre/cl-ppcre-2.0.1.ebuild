@@ -10,14 +10,15 @@ HOMEPAGE="http://weitz.de/cl-ppcre/
 SRC_URI="http://common-lisp.net/~sionescu/files/ediware/${P}.tar.bz2"
 
 LICENSE="BSD-2"
-KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 SLOT="0"
+KEYWORDS="~amd64 ~ppc ~sparc ~x86"
+IUSE=""
 
 DEPEND="dev-lisp/flexi-streams"
 PDEPEND="dev-lisp/cl-ppcre-unicode"
 
 src_unpack() {
-	unpack ${A} && cd ${S}
+	unpack ${A} && cd "${S}"
 	rm -rf cl-ppcre-unicode test/unicode*
 }
 

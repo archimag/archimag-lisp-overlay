@@ -6,11 +6,13 @@ inherit common-lisp-2
 
 DESCRIPTION="R. Scott McIntire's Common Lisp Discrete Random Number Library"
 HOMEPAGE="http://packages.debian.org/unstable/devel/cl-rsm-rand"
-SRC_URI="http://ftp.debian.org/debian/pool/main/c/cl-${PN}/cl-${PN}_${PV/_beta/b}.tar.gz"
+SRC_URI="mirror://debian/pool/main/c/cl-${PN}/cl-${PN}_${PV/_beta/b}.tar.gz"
+
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="~sparc ~x86"
+KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
+
 DEPEND="!dev-lisp/cl-${PN}"
 
 S="${WORKDIR}"/cl-${P}

@@ -8,9 +8,11 @@ DESCRIPTION="Ironclad is a Common Lisp library similar to OpenSSL, GNU TLS or Cr
 HOMEPAGE="http://method-combination.net/lisp/ironclad/
 		http://www.cliki.net/Ironclad"
 SRC_URI="http://common-lisp.net/~sionescu/files/${P}.tar.bz2"
+
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
+IUSE=""
 
 DEPEND="!dev-lisp/cl-${PN}"
 

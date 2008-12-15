@@ -7,6 +7,7 @@ inherit common-lisp-2 eutils
 DESCRIPTION="CL-PDF is a cross-platform Common Lisp library for generating PDF files"
 HOMEPAGE="http://www.fractalconcept.com/asp/cl-pdf"
 SRC_URI="http://common-lisp.net/~sionescu/files/${P}.tar.bz2"
+
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64 ~sparc ~ppc ~x86"

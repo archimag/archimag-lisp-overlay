@@ -9,8 +9,8 @@ inherit flag-o-matic eutils toolchain-funcs multilib
 DESCRIPTION="A portable, bytecode-compiled implementation of Common Lisp"
 HOMEPAGE="http://clisp.sourceforge.net/"
 SRC_URI="mirror://sourceforge/clisp/${P}.tar.bz2"
-LICENSE="GPL-2"
 
+LICENSE="GPL-2"
 SLOT="2"
 KEYWORDS="~alpha ~amd64 ~ia64 ~ppc -sparc ~x86"
 IUSE="hyperspec X new-clx dbus fastcgi gdbm gtk pari +pcre postgres +readline svm +zlib"
@@ -31,9 +31,7 @@ RDEPEND="virtual/libiconv
 		 X? ( new-clx? ( x11-libs/libXpm ) )
 		 hyperspec? ( dev-lisp/hyperspec )"
 # 		 berkdb? ( sys-libs/db:4.5 )
-
 DEPEND="${RDEPEND} X? ( new-clx? ( x11-misc/imake x11-proto/xextproto ) )"
-
 PDEPEND="dev-lisp/gentoo-init"
 
 PROVIDE="virtual/commonlisp"
@@ -56,8 +54,7 @@ BUILDDIR="builddir"
 #  * oracle: can't install oracle-instantclient
 
 src_unpack() {
-	unpack ${A}
-	cd "${S}"
+	unpack ${A} && cd "${S}"
 
 	# More than -O1 breaks alpha/ia64
 	use alpha || use ia64 && sed -i -e 's/-O2//g' src/makemake.in

@@ -2,24 +2,28 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI=1
+
 inherit common-lisp-2 eutils multilib
 
 DESCRIPTION="A multi-platform SQL interface for Common Lisp"
-HOMEPAGE="http://${PN}.b9.com/
+HOMEPAGE="http://clsql.b9.com/
 		http://packages.debian.org/unstable/devel/cl-sql.html
 		http://www.cliki.net/CLSQL"
 SRC_URI="http://files.b9.com/clsql/${P}.tar.gz"
+
 LICENSE="LLGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE="postgres mysql sqlite sqlite3 odbc"
+
 DEPEND="!dev-lisp/cl-sql
 		dev-lisp/md5
 		>=dev-lisp/uffi-1.5.7
 		postgres? ( dev-db/libpq )
 		mysql? ( virtual/mysql )
-		sqlite? ( =dev-db/sqlite-2* )
-		sqlite3? ( =dev-db/sqlite-3* )
+		sqlite? ( dev-db/sqlite:0 )
+		sqlite3? ( dev-db/sqlite:3 )
 		odbc? ( dev-db/unixODBC )"
 
 src_unpack() {

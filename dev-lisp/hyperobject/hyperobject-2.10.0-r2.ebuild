@@ -5,13 +5,15 @@
 inherit common-lisp-2
 
 DESCRIPTION="Hyperobject is a Common Lisp library for representing objects."
-HOMEPAGE="http://${PN}.b9.com/
-	http://www.cliki.net/${PN}"
+HOMEPAGE="http://hyperobject.b9.com/
+		http://www.cliki.net/hyperobject"
 SRC_URI="http://files.b9.com/${PN}/${PN}-${PV}.tar.gz"
+
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
+
 DEPEND="!dev-lisp/cl-${PN}
 		dev-lisp/kmrcl
 		dev-lisp/rt

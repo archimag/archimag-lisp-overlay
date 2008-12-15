@@ -4,17 +4,18 @@
 
 inherit common-lisp-2 multilib
 
-PKG="uffi-${PV}"
+MY_P="uffi-${PV}"
 
 DESCRIPTION="Portable FFI library for Common Lisp."
 HOMEPAGE="http://uffi.b9.com/"
-SRC_URI="http://files.b9.com/uffi/${PKG}.tar.gz"
+SRC_URI="http://files.b9.com/uffi/${MY_P}.tar.gz"
+
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
-S="${WORKDIR}/${PKG}"
+S="${WORKDIR}"/${MY_P}
 
 CLSYSTEMS="${PN} ${PN}-tests"
 

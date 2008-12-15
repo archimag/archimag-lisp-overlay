@@ -13,6 +13,7 @@ SRC_URI="ftp://ftp-sop.inria.fr/mimosa/fp/Skribe/${MY_P}.tar.gz"
 SLOT="0"
 LICENSE="GPL-2"
 KEYWORDS="~amd64 ~x86"
+IUSE=""
 
 DEPEND="dev-scheme/bigloo"
 

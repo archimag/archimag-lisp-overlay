@@ -4,9 +4,10 @@
 
 inherit common-lisp-2 eutils
 
-DESCRIPTION="Colorize is a Common Lisp application for colorizing Common Lisp, Scheme, Elisp, C, C++ or Java code."
+DESCRIPTION="Colorize is a Common Lisp application for colorizing source code."
 HOMEPAGE="http://www.cliki.net/colorize"
 SRC_URI="http://www.unmutual.info/software/${P}.tar.gz"
+
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"

@@ -10,16 +10,16 @@ inherit eutils multilib git
 
 DESCRIPTION="ECL is an embeddable Common Lisp implementation."
 HOMEPAGE="http://common-lisp.net/project/ecl/"
-SLOT="0"
+
 LICENSE="BSD LGPL-2"
+SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
+IUSE="X cxx debug +threads +unicode"
 
 DEPEND="=dev-libs/gmp-4*
 		app-text/texi2html
 		>=dev-libs/boehm-gc-6.8
 		cxx? ( dev-libs/boehm-gc[-nocxx] )"
-
-IUSE="X cxx debug +threads +unicode"
 
 PROVIDE="virtual/commonlisp"
 

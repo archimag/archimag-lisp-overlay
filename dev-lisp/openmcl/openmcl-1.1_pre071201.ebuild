@@ -10,17 +10,16 @@ DESCRIPTION="OpenMCL is a Common Lisp implementation, derived from Digitool's MC
 HOMEPAGE="http://openmcl.clozure.com/"
 SRC_URI="amd64? ( ftp://clozure.com/pub/testing/${PN}-linuxx8664-snapshot-${MY_PV}.tar.gz )"
 #		 ppc?   ( ftp://clozure.com/pub/testing/${PN}-linuxppc-snapshot-${MY_PV}.tar.gz )"
+
 LICENSE="LLGPL-2.1"
 SLOT="0"
 #KEYWORDS="-* ~amd64 ~ppc ~ppc64"
 KEYWORDS="-* ~amd64"
 IUSE=""
 
-DEPEND=""
-
 PROVIDE="virtual/commonlisp"
 
-S=${WORKDIR}/ccl
+S="${WORKDIR}"/ccl
 
 src_compile() {
 	if use amd64; then

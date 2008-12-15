@@ -9,13 +9,13 @@ HOMEPAGE="http://www.newlisp.org"
 SRC_URI="mirror://sourceforge/newlisp/${P}.tgz"
 
 LICENSE="GPL-2"
+SLOT="0"
 # please keep sorted
 KEYWORDS="~amd64 ~x86"
-IUSE="+unicode +readline tcltk"
-SLOT="0"
+IUSE="+unicode +readline tk"
 
 DEPEND="readline? ( sys-libs/readline )
-		tcltk? ( dev-lang/tk )"
+		tk? ( dev-lang/tk )"
 
 src_unpack() {
 	unpack ${A}; cd "${S}"

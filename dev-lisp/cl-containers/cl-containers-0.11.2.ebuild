@@ -4,13 +4,14 @@
 
 inherit common-lisp-2 eutils
 
-DESCRIPTION="CL-containers adds binary search trees, red-black trees, sparse arrays, and other useful containers to CommonLisp."
+DESCRIPTION="CL-containers adds trees, sparse arrays, and other useful containers to CommonLisp."
 HOMEPAGE="http://common-lisp.net/project/cl-containers/"
 SRC_URI="http://common-lisp.net/~sionescu/files/${P}.tar.bz2"
 
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
+IUSE=""
 
 DEPEND="dev-lisp/asdf-system-connections
 		>=dev-lisp/metatilities-base-0.6.6

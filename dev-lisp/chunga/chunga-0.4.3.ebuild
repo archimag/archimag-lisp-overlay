@@ -7,8 +7,10 @@ inherit common-lisp-2
 DESCRIPTION="Portable chunked streams for Common Lisp"
 HOMEPAGE="http://weitz.de/chunga/"
 SRC_URI="http://common-lisp.net/~sionescu/files/ediware/${P}.tar.bz2"
+
 LICENSE="BSD-2"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
+IUSE=""
 SLOT="0"
 
 DEPEND="!dev-lisp/cl-${PN}

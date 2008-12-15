@@ -23,7 +23,8 @@ PROVIDE="virtual/commonlisp"
 S="${WORKDIR}"
 
 src_unpack() {
-	unpack ${A}
+	unpack ${A} && cd "${S}"
+
 	epatch "${FILESDIR}"/${PV}-gentoo.patch
 	epatch "${FILESDIR}"/${PV}-patch-001-fix-hash-table-load-form.patch
 	find "${S}" -type f \( -name \*.sh -o -name linux-nm \) \

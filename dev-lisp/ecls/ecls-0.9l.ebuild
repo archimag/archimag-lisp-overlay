@@ -11,24 +11,23 @@ MY_P=ecl-${PV}
 DESCRIPTION="ECL is an embeddable Common Lisp implementation."
 SRC_URI="mirror://sourceforge/${PN}/${MY_P}.tgz"
 HOMEPAGE="http://common-lisp.net/project/ecl/"
-SLOT="0"
+
 LICENSE="BSD LGPL-2"
+SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
+IUSE="X cxx debug +threads +unicode"
 
 DEPEND="=dev-libs/gmp-4*
 		app-text/texi2html
 		>=dev-libs/boehm-gc-6.8
 		cxx? ( dev-libs/boehm-gc[-nocxx] )"
 
-IUSE="X cxx debug +threads +unicode"
-
 PROVIDE="virtual/commonlisp"
 
 S="${WORKDIR}"/${MY_P}
 
 src_unpack() {
-	unpack ${A}
-	cd ${S}
+	unpack ${A} && cd "${S}"
 
 	# change LISP-IMPLEMENTATION-VERSION because upstream version for
 	# live builds contains spaces which ASDF-BINARY-LOCATIONS doesn't like

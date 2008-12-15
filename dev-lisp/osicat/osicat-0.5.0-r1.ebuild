@@ -4,19 +4,21 @@
 
 inherit common-lisp-2 eutils
 
-PKG="${PN}_${PV}"
+MY_P="${PN}_${PV}"
 
 DESCRIPTION="${PN} is a lightweight operating system interface for Common Lisp on Unix-platforms."
-HOMEPAGE="http://www.common-lisp.net/project/${PN}/"
-SRC_URI="http://common-lisp.net/project/${PN}/files/${PKG}.tar.gz"
+HOMEPAGE="http://www.common-lisp.net/project/osicat/"
+SRC_URI="http://common-lisp.net/project/${PN}/files/${MY_P}.tar.gz"
+
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
+
 DEPEND="!dev-lisp/cl-${PN}
 		dev-lisp/uffi"
 
-S="${WORKDIR}/${PKG}"
+S="${WORKDIR}/${MY_P}"
 
 src_unpack() {
 	unpack ${A}

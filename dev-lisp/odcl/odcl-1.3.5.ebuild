@@ -5,21 +5,22 @@
 inherit common-lisp-2 eutils
 
 DESCRIPTION="A Common Lisp library of utility functions."
-HOMEPAGE="http://packages.debian.org/unstable/devel/cl-${PN}"
-SRC_URI="http://ftp.debian.org/debian/pool/main/c/cl-${PN}/cl-${PN}_${PV}.orig.tar.gz"
+HOMEPAGE="http://packages.debian.org/unstable/devel/cl-odcl"
+SRC_URI="mirror://debian/pool/main/c/cl-${PN}/cl-${PN}_${PV}.orig.tar.gz"
+
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
+
 DEPEND="!dev-lisp/cl-${PN}"
 
 S="${WORKDIR}"/cl-${P}
 
 src_unpack() {
-	unpack ${A}
+	unpack ${A}	&& cd "${S}"
 	epatch "${FILESDIR}"/${PV}-package-lock-gentoo.patch
 	epatch "${FILESDIR}"/${PV}-gentoo.patch
-	cd "${S}"
 	epatch "${FILESDIR}"/clisp-tests-gentoo.patch
 }
 

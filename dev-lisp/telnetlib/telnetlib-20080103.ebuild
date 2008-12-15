@@ -15,6 +15,7 @@ SRC_URI="http://${MY_PN}.googlecode.com/files/${MY_P}.zip"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
+IUSE=""
 
 DEPEND="dev-lisp/usocket
 		dev-lisp/flexi-streams"

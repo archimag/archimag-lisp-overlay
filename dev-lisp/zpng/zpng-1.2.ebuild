@@ -11,6 +11,8 @@ SRC_URI="http://common-lisp.net/~sionescu/files/${P}.tar.bz2"
 LICENSE="BSD-2"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
+IUSE=""
+
 DEPEND="dev-lisp/salza2"
 
 src_install() {

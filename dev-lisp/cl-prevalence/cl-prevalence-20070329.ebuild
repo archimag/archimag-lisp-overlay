@@ -7,9 +7,11 @@ inherit common-lisp-2
 DESCRIPTION="CL-PREVALENCE is an implementation of Object Prevalence for Common Lisp."
 HOMEPAGE="http://www.common-lisp.net/project/cl-prevalence/"
 SRC_URI="http://common-lisp.net/~sionescu/files/${P}.tar.bz2"
+
 LICENSE="LLGPL-2.1"
-KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 SLOT="0"
+KEYWORDS="~amd64 ~ppc ~sparc ~x86"
+IUSE=""
 
 DEPEND="dev-lisp/s-xml
 		dev-lisp/s-sysdeps"

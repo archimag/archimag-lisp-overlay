@@ -10,12 +10,14 @@ DESCRIPTION="Common Lisp package to read and write ${PN} image files"
 HOMEPAGE="http://www.pvv.ntnu.no/~musum/lisp/code/
 	http://www.cliki.net/${PN}
 	http://packages.debian.org/unstable/devel/cl-${PN}.html"
-SRC_URI="http://ftp.debian.org/debian/pool/main/c/cl-${PN}/cl-${PN}_${PV}.orig.tar.gz
+SRC_URI="mirror://debian/pool/main/c/cl-${PN}/cl-${PN}_${PV}.orig.tar.gz
 		http://ftp.de.debian.org/debian/pool/main/c/cl-${PN}/cl-${PN}_${PV}-${DEB_PV}.diff.gz"
+
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
+
 DEPEND="!dev-lisp/cl-${PN}
 		dev-lisp/uffi"
 

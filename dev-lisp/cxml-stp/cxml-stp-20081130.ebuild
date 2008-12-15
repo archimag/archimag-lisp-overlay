@@ -9,6 +9,7 @@ MY_PV=${PV:0:4}-${PV:4:2}-${PV:6:2}
 DESCRIPTION="A Common Lisp alternative to the W3C's DOM."
 HOMEPAGE="http://www.lichteblau.com/cxml-stp/"
 SRC_URI="http://www.lichteblau.com/${PN}/download/${PN}-${MY_PV}.tgz"
+
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"

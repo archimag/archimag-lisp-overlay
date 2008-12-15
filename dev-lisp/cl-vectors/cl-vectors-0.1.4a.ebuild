@@ -7,9 +7,12 @@ inherit common-lisp-2
 DESCRIPTION="A pure Common Lisp library to create, transform and render anti-aliased vectorial paths."
 HOMEPAGE="http://projects.tuxee.net/cl-vectors"
 SRC_URI="http://projects.tuxee.net/${PN}/files/${P}.tar.gz"
+
 LICENSE="LLGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
+IUSE=""
+
 DEPEND="dev-lisp/zpb-ttf"
 
 CLSYSTEMS="cl-aa-misc cl-aa cl-paths-ttf cl-paths cl-vectors"

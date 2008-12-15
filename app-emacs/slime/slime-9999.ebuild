@@ -10,7 +10,6 @@ inherit common-lisp-2 elisp cvs eutils
 
 DESCRIPTION="SLIME, the Superior Lisp Interaction Mode (Extended)"
 HOMEPAGE="http://common-lisp.net/project/slime/"
-SRC_URI=""
 
 LICENSE="GPL-2 xref.lisp"
 SLOT="0"

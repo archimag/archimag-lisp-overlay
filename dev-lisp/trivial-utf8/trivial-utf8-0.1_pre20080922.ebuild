@@ -7,10 +7,11 @@ inherit common-lisp-2 eutils
 DESCRIPTION="A small library for doing UTF-8-based input and output."
 HOMEPAGE="http://common-lisp.net/project/trivial-utf-8/"
 SRC_URI="http://common-lisp.net/~sionescu/files/${P}.tar.bz2"
+
 LICENSE="ZLIB"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
-DEPEND=""
+IUSE=""
 
 CLPACKAGE="trivial-utf-8"
 CLSYSTEMS="trivial-utf-8"

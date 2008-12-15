@@ -13,6 +13,7 @@ SRC_URI="http://common-lisp.net/project/${PN}/files/${MY_P}.tgz"
 LICENSE="MIT LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
+IUSE=""
 
 DEPEND="dev-lisp/iterate
 		dev-lisp/cl-ppcre

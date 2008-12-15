@@ -8,9 +8,11 @@ DESCRIPTION="${PN} is a portable templating library for Common Lisp"
 HOMEPAGE="http://weitz.de/html-template/
 		http://www.cliki.net/html-template/"
 SRC_URI="http://common-lisp.net/~sionescu/ediware/${P}.tar.gz"
+
 LICENSE="BSD-2"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
+IUSE=""
 
 DEPEND="!dev-lisp/cl-${PN}"
 

@@ -4,9 +4,10 @@
 
 inherit common-lisp-2
 
-DESCRIPTION="CL-HTML-DIFF is a Common Lisp library for generating a human-readable diff of two HTML documents, using HTML."
+DESCRIPTION="A Common Lisp library for generating a human-readable diff of two HTML documents."
 HOMEPAGE="http://www.cliki.net/CL-HTML-DIFF"
 SRC_URI="http://lemonodor.com/code/${PN}_${PV}.tar.gz"
+
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"

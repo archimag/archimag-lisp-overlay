@@ -5,12 +5,14 @@
 inherit common-lisp-2
 
 DESCRIPTION="${PN} is a universal socket library for Common Lisp."
-HOMEPAGE="http://common-lisp.net/project/${PN}/"
+HOMEPAGE="http://common-lisp.net/project/usocket/"
 SRC_URI="http://common-lisp.net/project/${PN}/releases/${PN}-${PV}.tar.gz"
+
 LICENSE="MIT"
+SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
-SLOT="0"
+
 DEPEND="!dev-lisp/cl-${PN}
 		dev-lisp/split-sequence
 		dev-lisp/rt"

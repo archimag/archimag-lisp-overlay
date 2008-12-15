@@ -8,9 +8,11 @@ DESCRIPTION='ODD-STREAMS is a library which implements binary streams with "odd"
 HOMEPAGE="http://weitz.de/odd-streams/
 		http://www.cliki.net/odd-streams"
 SRC_URI="http://common-lisp.net/~sionescu/files/ediware/${P}.tar.bz2"
+
 LICENSE="BSD-2"
-KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 SLOT="0"
+KEYWORDS="~amd64 ~ppc ~sparc ~x86"
+IUSE=""
 
 DEPEND=">=dev-lisp/trivial-gray-streams-20060925"
 

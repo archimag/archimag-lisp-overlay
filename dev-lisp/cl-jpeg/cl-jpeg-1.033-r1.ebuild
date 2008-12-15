@@ -7,10 +7,12 @@ inherit common-lisp-2 eutils
 DESCRIPTION="A JPEG library for Common Lisp"
 HOMEPAGE="http://sourceforge.net/projects/cljl"
 SRC_URI="mirror://sourceforge/cljl/cljl-${PV}.tar.gz"
+
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc x86"
 IUSE=""
+
 DEPEND="dev-lisp/cl-plus"
 
 S="${WORKDIR}"/cljl

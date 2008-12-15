@@ -13,6 +13,7 @@ SRC_URI="http://cyrusharmon.org/static/releases/${MY_P}.tar.gz"
 LICENSE="BSD-2"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
+IUSE=""
 
 DEPEND="dev-lisp/hunchentoot"
 

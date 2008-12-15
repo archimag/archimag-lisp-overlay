@@ -9,9 +9,11 @@ MY_P=${PN}_${PV}
 DESCRIPTION="ASDF Extensions from Cyrus Harmon."
 HOMEPAGE="http://www.cyrusharmon.org/projects?project=ch-asdf"
 SRC_URI="http://cyrusharmon.org/static/releases/${MY_P}.tar.gz"
+
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
+IUSE=""
 
 DEPEND="!dev-lisp/cl-${PN}
 		dev-lisp/ch-util

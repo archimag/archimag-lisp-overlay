@@ -6,11 +6,13 @@ inherit common-lisp-2 eutils
 
 DESCRIPTION="R. Scott McIntire's Common Lisp Filter Library."
 HOMEPAGE="http://packages.debian.org/unstable/devel/cl-rsm-filter"
-SRC_URI="http://ftp.debian.org/debian/pool/main/c/cl-${PN}/cl-${PN}_${PV/_beta/b}.tar.gz"
+SRC_URI="mirror://debian/pool/main/c/cl-${PN}/cl-${PN}_${PV/_beta/b}.tar.gz"
+
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="~sparc ~x86"
+KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
+
 DEPEND="!dev-lisp/cl-${PN}
 		dev-lisp/rsm-queue"
 

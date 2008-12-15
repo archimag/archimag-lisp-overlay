@@ -5,13 +5,14 @@
 inherit common-lisp-2
 
 DESCRIPTION="Flexichain is an API for editable sequences."
-HOMEPAGE="http://common-lisp.net/project/${PN}/"
+HOMEPAGE="http://common-lisp.net/project/flexichain/"
 SRC_URI="http://www.common-lisp.net/~sionescu/files/${P}.tar.bz2
 		doc? ( http://common-lisp.net/project/${PN}/download/StrandhVilleneuveMoore.pdf
 				http://common-lisp.net/project/${PN}/download/${PN}.pdf )"
+
 LICENSE="LGPL-2.1"
-KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 SLOT="0"
+KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE="doc"
 
 src_install() {

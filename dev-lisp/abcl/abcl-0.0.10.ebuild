@@ -7,6 +7,7 @@ inherit eutils java-utils-2
 DESCRIPTION="Armed Bear Common Lisp is a Common Lisp implementation for the JVM."
 HOMEPAGE="http://armedbear.org/abcl.html"
 SRC_URI="http://armedbear.org/${P}.tar.gz"
+
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~x86"

@@ -11,6 +11,7 @@ SRC_URI="http://common-lisp.net/~sionescu/files/${P}.tar.gz"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
+IUSE=""
 
 DEPEND="dev-lisp/moptilities
 		dev-lisp/lift"

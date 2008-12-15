@@ -27,7 +27,8 @@ PROVIDE="virtual/commonlisp"
 S="${WORKDIR}"
 
 src_unpack() {
-	unpack ${A}
+	unpack ${A} && cd "${S}"
+
 	epatch "${FILESDIR}"/19f-gentoo.patch
 	find "${S}" -type f \( -name \*.sh -o -name linux-nm \) \
 		-exec chmod +x '{}' \;

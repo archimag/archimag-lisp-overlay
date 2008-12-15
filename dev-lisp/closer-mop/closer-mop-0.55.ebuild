@@ -6,7 +6,7 @@ inherit common-lisp-2
 
 MY_P=${PN}_${PV}
 
-DESCRIPTION="Closer to MOP is a compatibility layer that rectifies many of the absent or incorrect MOP features as detected by MOP Feature Tests."
+DESCRIPTION="Closer to MOP is a Common Lisp Metaobject Protocol compatibility layer."
 HOMEPAGE="http://common-lisp.net/project/closer/closer-mop.html"
 SRC_URI="http://common-lisp.net/project/closer/ftp/${MY_P}.tar.gz"
 
