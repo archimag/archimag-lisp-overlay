@@ -1,6 +1,6 @@
 diff -ur cl-rsm-bool-comp-1.0.orig/bool-comp.lisp cl-rsm-bool-comp-1.0/bool-comp.lisp
---- cl-rsm-bool-comp-1.0.orig/bool-comp.lisp	2003-09-11 11:40:46.000000000 -0500
-+++ cl-rsm-bool-comp-1.0/bool-comp.lisp	2003-10-26 17:48:50.000000000 -0600
+--- cl-rsm-bool-comp.orig/bool-comp.lisp	2003-09-11 11:40:46.000000000 -0500
++++ cl-rsm-bool-comp/bool-comp.lisp	2003-10-26 17:48:50.000000000 -0600
 @@ -151,7 +151,7 @@
  has all entries set to K.
  Returns t if at least one entry differs from K; otherwise nil."
@@ -471,5 +471,3 @@ diff -ur cl-rsm-bool-comp-1.0.orig/bool-comp.lisp cl-rsm-bool-comp-1.0/bool-comp
      (dotimes (i size term)
        (declare (type fixnum i))
        (term-set term i (random 3)))))
-Only in cl-rsm-bool-comp-1.0: bool-comp.lisp~
-Only in cl-rsm-bool-comp-1.0: bool-comp.x86f

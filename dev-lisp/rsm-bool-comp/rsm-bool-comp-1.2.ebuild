@@ -15,13 +15,13 @@ IUSE=""
 
 DEPEND="!dev-lisp/cl-${PN}"
 
-S="${WORKDIR}"/cl-${P}
+S="${WORKDIR}"/cl-${PN}
 
 # FIXME: does not work with current SBCLs
 
 src_unpack() {
 	unpack ${A}
-	epatch "${FILESDIR}"/${P}-gentoo.patch
+	epatch "${FILESDIR}"/${PV}-gentoo-fix-type-declarations.patch
 }
 
 src_install() {
