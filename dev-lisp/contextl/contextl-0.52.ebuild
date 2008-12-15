@@ -22,6 +22,13 @@ DEPEND="!dev-lisp/cl-${PN}
 
 S="${WORKDIR}"/${MY_P}
 
+src_unpack() {
+	unpack ${A} && cd "${S}"
+
+	mv contextl-with-layer-gc.alternative-asd contextl-with-layer-gc.asd
+	mv contextl-without-layer-gc.alternative-asd contextl-without-layer-gc.asd
+}
+
 src_install() {
 	common-lisp-install *.{lisp,asd} test/*.lisp
 	common-lisp-symlink-asdf
