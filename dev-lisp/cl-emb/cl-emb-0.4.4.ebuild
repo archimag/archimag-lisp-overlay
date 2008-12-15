@@ -6,8 +6,7 @@ inherit common-lisp-2
 
 DESCRIPTION="Embedded Common Lisp and template system"
 HOMEPAGE="http://common-lisp.net/project/cl-emb/"
-# SRC_URI="http://common-lisp.net/project/cl-emb/cl-emb-${PV}.tar.gz"
-SRC_URI="mirror://gentoo/${P}.tar.gz"
+SRC_URI="http://common-lisp.net/~sionescu/files/${P}.tar.gz"
 
 LICENSE="LLGPL-2.1"
 SLOT="0"
