@@ -14,14 +14,13 @@ KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
 DEPEND="!dev-lisp/cl-${PN}
-		dev-lisp/rsm-queue
-		dev-lisp/cl-plus"
+		dev-lisp/rsm-queue"
 
-S="${WORKDIR}"/cl-${P}
+S="${WORKDIR}"/cl-${PN}
 
 src_unpack() {
 	unpack ${A}
-	epatch "${FILESDIR}"/${PV}-defconstant-gentoo.patch
+	epatch "${FILESDIR}"/${PV}-gentoo-fix-defconstant.patch
 }
 
 src_install() {

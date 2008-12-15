@@ -1,0 +1,12 @@
+diff -Naur cl-rsm-bitcomp.orig/bitcomp.lisp cl-rsm-bitcomp/bitcomp.lisp
+--- cl-rsm-bitcomp.orig/bitcomp.lisp	2008-03-13 22:09:40.000000000 +0100
++++ cl-rsm-bitcomp/bitcomp.lisp	2008-12-16 00:38:59.000000000 +0100
+@@ -22,7 +22,7 @@
+     (:report (lambda (condition stream)
+                (format stream "Warning: ~a~%" (message condition))))))
+ 
+-(defconstant +null-rep+ (make-condition 'null-compressed))
++(defvar +null-rep+ (make-condition 'null-compressed))
+ 
+ ;;;;
+ ;;;; Representation Layer.
