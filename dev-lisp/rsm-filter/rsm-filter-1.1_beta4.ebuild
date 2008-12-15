@@ -16,11 +16,11 @@ IUSE=""
 DEPEND="!dev-lisp/cl-${PN}
 		dev-lisp/rsm-queue"
 
-S="${WORKDIR}"/cl-${P/_beta/b}
+S="${WORKDIR}"/cl-${PN/_beta/b}
 
 src_unpack() {
 	unpack ${A}
-	epatch "${FILESDIR}"/${PV}_fix-ftype-declarations.patch
+	epatch "${FILESDIR}"/${PV}-gentoo-fix-ftype-declarations.patch
 }
 
 src_install() {

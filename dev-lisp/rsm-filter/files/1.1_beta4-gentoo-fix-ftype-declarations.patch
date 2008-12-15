@@ -1,6 +1,6 @@
 diff -Naur cl-rsm-filter-1.1b2.old/filter.lisp cl-rsm-filter-1.1b2/filter.lisp
---- cl-rsm-filter-1.1b2.old/filter.lisp	2003-09-24 05:14:55.000000000 +0200
-+++ cl-rsm-filter-1.1b2/filter.lisp	2007-11-24 21:17:45.000000000 +0100
+--- cl-rsm-filter.orig/filter.lisp	2003-09-24 05:14:55.000000000 +0200
++++ cl-rsm-filter/filter.lisp	2007-11-24 21:17:45.000000000 +0100
 @@ -29,7 +29,7 @@
          (rsm.queue:enqueue el que)))))
  
