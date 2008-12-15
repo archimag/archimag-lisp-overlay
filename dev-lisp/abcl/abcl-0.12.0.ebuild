@@ -2,20 +2,22 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit eutils subversion java-pkg-2 java-ant-2
+inherit eutils java-pkg-2 java-ant-2
 
 DESCRIPTION="Armed Bear Common Lisp is a Common Lisp implementation for the JVM."
 HOMEPAGE="http://common-lisp.net/project/armedbear/"
-ESVN_REPO_URI="svn://common-lisp.net/project/armedbear/svn/trunk/j"
+SRC_URI="mirror://sourceforge/armedbear-j/${PN}-src-${PV}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~x86"
 IUSE="jad"
 
 RDEPEND=">=virtual/jre-1.5
 	jad? ( dev-java/jad-bin )"
 DEPEND=">=virtual/jdk-1.5"
+
+S="${WORKDIR}"/${PN}-src-${PV}
 
 src_compile() {
 	eant abcl.compile || die "Can't compile ABCL"
