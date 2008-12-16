@@ -18,7 +18,7 @@ DEPEND="!dev-lisp/cl-${PN}
 		dev-lisp/rsm-cache
 		dev-lisp/rsm-random"
 
-S="${WORKDIR}"/cl-${P}
+S="${WORKDIR}"/cl-${PN}
 
 src_install() {
 	common-lisp-install *.{lisp,asd}
