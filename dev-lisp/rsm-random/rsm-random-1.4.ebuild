@@ -27,5 +27,5 @@ src_install() {
 	doexe random.so
 	common-lisp-install *.{lisp,asd}
 	common-lisp-symlink-asdf
-	dohtml ${PN}.html
+	dohtml ${PN}.html ob01.jpg
 }
