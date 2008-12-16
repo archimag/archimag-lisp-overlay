@@ -15,7 +15,7 @@ IUSE=""
 
 DEPEND="!dev-lisp/cl-${PN}"
 
-S="${WORKDIR}"/cl-${P}
+S="${WORKDIR}"/cl-${PN}
 
 src_install() {
 	common-lisp-install *.{lisp,asd}
