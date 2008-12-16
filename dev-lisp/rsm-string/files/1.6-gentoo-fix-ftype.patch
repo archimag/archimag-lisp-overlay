@@ -1,0 +1,23 @@
+diff -Naur cl-rsm-string.orig/string.lisp cl-rsm-string/string.lisp
+--- cl-rsm-string.orig/string.lisp	2006-07-14 23:03:56.000000000 +0200
++++ cl-rsm-string/string.lisp	2008-12-16 01:48:55.000000000 +0100
+@@ -75,8 +75,8 @@
+                      (concatenate 'string s1 join-string s2)) str-list))))
+ 
+ 
+-(declaim (ftype (function ((list string) (list string) 
+-                                         &key (function t)) list)
++(declaim (ftype (function ((or list string) (or list string)
++                           &key (function t)) list)
+                 contains))
+ 
+ (defun contains (str-list elem-list &key (contain-meaning #'some))
+@@ -92,7 +92,7 @@
+       collect str))
+ 
+ 
+-(declaim (ftype (function (list string &key (:unique t)) list)
++(declaim (ftype (function (list list &key (:unique t)) list)
+                 does-not-contain))
+ 
+ (defun does-not-contain (str-list str-elems &key (unique nil))
