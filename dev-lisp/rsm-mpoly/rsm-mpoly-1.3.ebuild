@@ -16,7 +16,7 @@ IUSE=""
 DEPEND="!dev-lisp/cl-${PN}
 		dev-lisp/rsm-filter"
 
-S="${WORKDIR}"/cl-${P}
+S="${WORKDIR}"/cl-${PN}
 
 src_install() {
 	common-lisp-install *.{lisp,asd}
