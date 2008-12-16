@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI=2
+
 inherit common-lisp-2
 
 DESCRIPTION="Weblocks is a continuations-based web framework written in Common Lisp."
@@ -23,19 +25,30 @@ DEPEND="dev-lisp/closer-mop
 		dev-lisp/md5
 		dev-lisp/fare-matcher
 		dev-lisp/cl-cont
+		dev-lisp/parenscript
+		dev-lisp/anaphora
+		dev-lisp/f-underscore
 		dev-lisp/cl-fad
 		dev-lisp/clsql
+		dev-lisp/elephant
 		dev-lisp/cl-prevalence
-		dev-lisp/rt"
+		dev-lisp/rt
+		dev-lisp/lift"
 
 CLSYSTEMS="${PN} ${PN}-test ${PN}-scripts ${PN}-store-test
 		   src/store/clsql/${PN}-clsql
+		   src/store/elephant/${PN}-elephant
 		   src/store/memory/${PN}-memory
-		   src/store/prevalence/${PN}-prevalence"
+		   src/store/prevalence/${PN}-prevalence
+		   examples/${PN}-clsql-demo/${PN}-clsql-demo
+		   examples/${PN}-demo/${PN}-demo
+		   examples/${PN}-elephant-demo/${PN}-elephant-demo"
 
 src_install() {
-	common-lisp-install *.asd pub scripts src test
+	dodir "${CLSOURCEROOT}"/${PN}/scripts
+	cp -a scripts/weblocks-core "${D}/${CLSOURCEROOT}"/${PN}/scripts
+	rm -rf scripts/weblocks-core
+	common-lisp-install *.asd examples pub scripts src test
 	common-lisp-symlink-asdf
 	dodoc docs/*
-	insinto /usr/share/doc/${P}/examples && doins -r examples/*
 }
