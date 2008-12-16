@@ -1,0 +1,19 @@
+diff -Naur cl-rsm-modal.orig/modal.lisp cl-rsm-modal/modal.lisp
+--- cl-rsm-modal.orig/modal.lisp	2003-09-11 18:40:26.000000000 +0200
++++ cl-rsm-modal/modal.lisp	2008-12-16 01:36:17.000000000 +0100
+@@ -34,10 +34,11 @@
+     (make-hash-table :test #'equalp)
+   "Stores modal systems by name.")
+ 
+-(defconstant +primitive-truth-function+
+-    #'(lambda (world prop)
+-        (declare (ignore world prop))
+-        nil)
++(defun always-false (world prop)
++  (declare (ignore world prop))
++  nil)
++
++(defconstant +primitive-truth-function+ 'always-false
+   "The default function to compute the default value of 
+ a proposition in a given world."
+   )

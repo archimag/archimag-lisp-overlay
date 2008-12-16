@@ -16,11 +16,11 @@ IUSE=""
 DEPEND="!dev-lisp/cl-${PN}
 		dev-lisp/cl-plus"
 
-S="${WORKDIR}"/cl-${P}
+S="${WORKDIR}"/cl-${PN}
 
 src_unpack() {
 	unpack ${A}
-	epatch "${FILESDIR}"/${PV}-defconstant-gentoo.patch
+	epatch "${FILESDIR}"/${PV}-gentoo-fix-defconstant.patch
 }
 
 src_install() {
