@@ -19,13 +19,16 @@ DEPEND="!dev-lisp/cl-${PN}
 		doc? ( virtual/latex-base )"
 
 src_compile() {
-	use doc && { cd docs ; sh build.sh ; }
+	if use doc ; then
+		cd docs
+		sh build.sh || die "Cannot build docs"
+	fi
 }
 
 # TODO: install extras/js-expander.el
 src_install() {
 	common-lisp-install parenscript.asd src t
 	common-lisp-symlink-asdf
-	dodoc contributors docs/internal/notes-and-links.txt || die
-	use doc && { dodoc docs/*.pdf || die ; }
+	dodoc contributors docs/internal/notes-and-links.txt || die "Cannot install docs"
+	use doc && { dodoc docs/*.pdf || die "Cannot install docs" ; }
 }
