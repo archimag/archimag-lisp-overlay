@@ -15,11 +15,11 @@ IUSE=""
 
 DEPEND="!dev-lisp/cl-${PN}"
 
-S="${WORKDIR}"/cl-${P}
+S="${WORKDIR}"/cl-${PN}
 
 src_unpack() {
 	unpack ${A}
-	epatch "${FILESDIR}"/${PV}-format-args-gentoo.patch
+	epatch "${FILESDIR}"/${PV}-gentoo-format-args.patch
 }
 
 src_install() {

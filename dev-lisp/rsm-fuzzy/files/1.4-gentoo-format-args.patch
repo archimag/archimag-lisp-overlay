@@ -1,6 +1,6 @@
 diff -u cl-rsm-fuzzy-1.2.orig/check.lisp cl-rsm-fuzzy-1.2/check.lisp
---- cl-rsm-fuzzy-1.2.orig/check.lisp	2003-09-11 12:29:29.000000000 -0500
-+++ cl-rsm-fuzzy-1.2/check.lisp	2004-08-06 11:27:33.632557472 -0500
+--- cl-rsm-fuzzy.orig/check.lisp	2003-09-11 12:29:29.000000000 -0500
++++ cl-rsm-fuzzy/check.lisp	2004-08-06 11:27:33.632557472 -0500
 @@ -31,7 +31,7 @@
            (unless (and (>= y 0.0)
                         (<= y 1.0))
