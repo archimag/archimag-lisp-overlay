@@ -1,0 +1,41 @@
+diff -Naur cl-rsm-rsa.orig/rsa.lisp cl-rsm-rsa/rsa.lisp
+--- cl-rsm-rsa.orig/rsa.lisp	2003-10-22 01:08:40.000000000 +0200
++++ cl-rsm-rsa/rsa.lisp	2008-12-16 01:58:12.000000000 +0100
+@@ -22,14 +22,17 @@
+ (defconstant +alphabet-size+ 97
+   "The number of characters of the alphabet.")
+ 
+-(defconstant +digits+ "0123456789"
+-  "All the digits.")
+-
+-(defconstant +pos-digits+ "123456789"
+-  "All digits except 0.")
+-
+-(defconstant +odd-digits+ "13579"
+-  "All odd digits.")
++(alexandria:define-constant +digits+ "0123456789"
++  :test #'string=
++  :documentation "All the digits.")
++
++(alexandria:define-constant +pos-digits+ "123456789"
++  :test #'string=
++  :documentation "All digits except 0.")
++
++(alexandria:define-constant +odd-digits+ "13579"
++  :test #'string=
++  :documentation "All odd digits.")
+ 
+ (defvar *name-key-hash* (make-hash-table :test #'equal)
+   "Associates a name with an rsa-keys structure.")
+diff -Naur cl-rsm-rsa.orig/rsm-rsa.asd cl-rsm-rsa/rsm-rsa.asd
+--- cl-rsm-rsa.orig/rsm-rsa.asd	2003-10-22 01:08:40.000000000 +0200
++++ cl-rsm-rsa/rsm-rsa.asd	2008-12-16 01:56:49.000000000 +0100
+@@ -25,7 +25,7 @@
+   :licence "BSD-style"
+   :description "RSA encryption utilities."
+ 
+-  :depends-on (rsm-mod)
++  :depends-on (rsm-mod alexandria)
+   
+   :components
+   ((:file "package")

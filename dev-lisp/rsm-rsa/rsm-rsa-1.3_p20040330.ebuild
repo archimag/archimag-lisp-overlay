@@ -5,7 +5,7 @@
 inherit common-lisp-2
 
 MY_PV=${PV:0:3}
-CVS_PV=${PV:4:4}.${PV:8:2}.${PV:10}
+CVS_PV=${PV:5:4}.${PV:9:2}.${PV:11}
 FULL_PV=${MY_PV}+cvs.${CVS_PV}
 MY_P=cl-${PN}_${FULL_PV}
 
@@ -23,11 +23,11 @@ DEPEND="!dev-lisp/cl-${PN}
 		dev-lisp/rsm-string
 		dev-lisp/cl-plus"
 
-S="${WORKDIR}"/${MY_P}
+S="${WORKDIR}"/cl-${PN}
 
 src_unpack() {
 	unpack ${A}
-	epatch "${FILESDIR}"/${PV}-defconstant-gentoo.patch
+	epatch "${FILESDIR}"/${PV}-gentoo-fix-defconstant.patch
 }
 
 src_install() {
