@@ -13,7 +13,7 @@ HOMEPAGE="http://common-lisp.net/project/ecl/"
 
 LICENSE="BSD LGPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~ppc ~sparc ~x86"
+KEYWORDS=""
 IUSE="X cxx debug +threads +unicode"
 
 DEPEND="dev-libs/gmp
