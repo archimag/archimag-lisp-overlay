@@ -1,6 +1,6 @@
-diff -ur ecl-0.9l.orig/src/h/object.h ecl-0.9l/src/h/object.h
---- ecl-0.9l.orig/src/h/object.h	2008-07-12 18:55:07.000000000 +0200
-+++ ecl-0.9l/src/h/object.h	2008-08-06 01:21:00.000000000 +0200
+diff -Naur ecl-8.12.0.orig/src/h/object.h ecl-8.12.0/src/h/object.h
+--- ecl.orig/src/h/object.h	2008-12-17 16:41:53.000000000 +0100
++++ ecl/src/h/object.h	2008-12-17 19:35:05.000000000 +0100
 @@ -23,8 +23,13 @@
  	Integer and boolean types (see config.h)
  */
@@ -15,4 +15,3 @@ diff -ur ecl-0.9l.orig/src/h/object.h ecl-0.9l/src/h/object.h
  
  #if !defined(__cplusplus) && !defined(bool)
  typedef int bool;
-Only in ecl-0.9l/src/h: object.h.~1.85.~

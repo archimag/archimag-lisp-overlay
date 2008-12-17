@@ -9,15 +9,15 @@ inherit eutils multilib
 MY_P=ecl-${PV}
 
 DESCRIPTION="ECL is an embeddable Common Lisp implementation."
-SRC_URI="mirror://sourceforge/${PN}/${MY_P}.tgz"
 HOMEPAGE="http://common-lisp.net/project/ecl/"
+SRC_URI="mirror://sourceforge/${PN}/${MY_P}.tar.gz"
 
 LICENSE="BSD LGPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE="X cxx debug +threads +unicode"
 
-DEPEND="=dev-libs/gmp-4*
+DEPEND="dev-libs/gmp
 		app-text/texi2html
 		>=dev-libs/boehm-gc-6.8
 		cxx? ( dev-libs/boehm-gc[-nocxx] )"
@@ -40,8 +40,8 @@ src_unpack() {
 src_configure() {
 	econf \
 		--with-system-gmp \
-		--enable-boehm=system \
 		--enable-gengc \
+		--enable-boehm=system \
 		--enable-longdouble \
 		$(use_with cxx) \
 		$(use_enable debug) \
