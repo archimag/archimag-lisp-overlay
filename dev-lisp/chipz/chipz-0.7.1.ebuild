@@ -14,8 +14,8 @@ KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
 src_unpack() {
-	unpack ${A}
-	epatch "${FILESDIR}"/${PV}-fix-asd.patch
+	unpack ${A} && cd "${S}"
+	epatch "${FILESDIR}"/gentoo-fix-asd.patch
 }
 
 src_install() {
