@@ -1,0 +1,2667 @@
+diff -Naur stumpwm-0.9.5.orig/color.lisp stumpwm-0.9.5/color.lisp
+--- stumpwm-0.9.5.orig/color.lisp	2008-10-21 23:07:48.000000000 +0200
++++ stumpwm-0.9.5/color.lisp	2008-12-23 05:08:54.000000000 +0100
+@@ -59,26 +59,26 @@
+ 
+ (defun adjust-color (color amt)
+   (labels ((max-min (x y) (max 0 (min 1 (+ x y)))))
+-    (setf (xlib:color-red color) (max-min (xlib:color-red color) amt)
+-          (xlib:color-green color) (max-min (xlib:color-green color) amt)
+-          (xlib:color-blue color) (max-min (xlib:color-blue color) amt))))
++    (setf (sxlib:color-red color) (max-min (sxlib:color-red color) amt)
++          (sxlib:color-green color) (max-min (sxlib:color-green color) amt)
++          (sxlib:color-blue color) (max-min (sxlib:color-blue color) amt))))
+ 
+ (defun alloc-color (screen color)
+-  (xlib:alloc-color (xlib:screen-default-colormap (screen-number screen)) color))
++  (sxlib:alloc-color (sxlib:screen-default-colormap (screen-number screen)) color))
+ 
+ (defun lookup-color (screen color)
+-  (xlib:lookup-color (xlib:screen-default-colormap (screen-number screen)) color))
++  (sxlib:lookup-color (sxlib:screen-default-colormap (screen-number screen)) color))
+ 
+ ;; Normal colors are dimmed and bright colors are intensified in order
+ ;; to more closely resemble the VGA pallet.
+ (defun update-color-map (screen)
+   "Read *colors* and cache their pixel colors for use when rendering colored text."
+-  (let ((scm (xlib:screen-default-colormap (screen-number screen))))
++  (let ((scm (sxlib:screen-default-colormap (screen-number screen))))
+     (labels ((map-colors (amt)
+                (loop for c in *colors*
+-                     as color = (xlib:lookup-color scm c)
++                     as color = (sxlib:lookup-color scm c)
+                      do (adjust-color color amt)
+-                     collect (xlib:alloc-color scm color))))
++                     collect (sxlib:alloc-color scm color))))
+       (setf (screen-color-map-normal screen) (apply #'vector (map-colors -0.25))
+             (screen-color-map-bright screen) (apply #'vector (map-colors 0.25))))))
+ 
+@@ -115,11 +115,11 @@
+         ((set-fg-bg (fg bg)
+            (if *reverse*
+                (setf
+-                (xlib:gcontext-foreground gc) bg
+-                (xlib:gcontext-background gc) fg)
++                (sxlib:gcontext-foreground gc) bg
++                (sxlib:gcontext-background gc) fg)
+                (setf
+-                (xlib:gcontext-foreground gc) fg
+-                (xlib:gcontext-background gc) bg)))
++                (sxlib:gcontext-foreground gc) fg
++                (sxlib:gcontext-background gc) bg)))
+          (update-colors ()
+            (set-fg-bg (get-fg-color screen cc *foreground*)
+                       (get-bg-color screen cc *background*))))
+@@ -167,8 +167,8 @@
+     r))
+ 
+ (defun render-strings (screen cc padx pady strings highlights &optional (draw t))
+-  (let* ((height (+ (xlib:font-descent (screen-font screen))
+-                    (xlib:font-ascent (screen-font screen))))
++  (let* ((height (+ (sxlib:font-descent (screen-font screen))
++                    (sxlib:font-ascent (screen-font screen))))
+          (width 0)
+          (gc (ccontext-gc cc))
+          (win (ccontext-win cc))
+@@ -187,14 +187,14 @@
+                 do (progn
+                      (let ((en (if (and en (eq #\^ (elt s (1+ en)))) (1+ en) en)))
+                        (when draw
+-                         (xlib:draw-image-glyphs win gc
++                         (sxlib:draw-image-glyphs win gc
+                                                  (+ padx x)
+                                                  (+ pady (* i height)
+-                                                    (xlib:font-ascent (screen-font screen)))
++                                                    (sxlib:font-ascent (screen-font screen)))
+                                                  (subseq s st en)
+                                                  :translate #'translate-id
+                                                  :size 16))
+-                       (setf x (+ x (xlib:text-width (screen-font screen) (subseq s st en) :translate #'translate-id))))
++                       (setf x (+ x (sxlib:text-width (screen-font screen) (subseq s st en) :translate #'translate-id))))
+                      (when en
+                        (setf off (set-color screen cc s (1+ en))))
+                      (setf width (max width x)))
+@@ -202,7 +202,7 @@
+           when (find i highlights :test 'eql)
+           do (when draw (invert-rect screen win
+                                      0 (* i height)
+-                                     (xlib:drawable-width win)
++                                     (sxlib:drawable-width win)
+                                      height)))
+     (set-color screen cc "n" 0)
+     width))
+diff -Naur stumpwm-0.9.5.orig/core.lisp stumpwm-0.9.5/core.lisp
+--- stumpwm-0.9.5.orig/core.lisp	2008-10-21 23:07:48.000000000 +0200
++++ stumpwm-0.9.5/core.lisp	2008-12-23 05:08:54.000000000 +0100
+@@ -45,12 +45,12 @@
+ ;;; keyboard helper functions
+ 
+ (defun key-to-keycode+state (key)
+-  (let ((code (xlib:keysym->keycodes *display* (key-keysym key))))
+-    (cond ((eq (xlib:keycode->keysym *display* code 0) (key-keysym key))
++  (let ((code (sxlib:keysym->keycodes *display* (key-keysym key))))
++    (cond ((eq (sxlib:keycode->keysym *display* code 0) (key-keysym key))
+            (values code (x11-mods key)))
+-          ((eq (xlib:keycode->keysym *display* code 1) (key-keysym key))
+-           (values code (apply 'xlib:make-state-mask
+-                               (cons :shift (xlib:make-state-keys (x11-mods key))))))
++          ((eq (sxlib:keycode->keysym *display* code 1) (key-keysym key))
++           (values code (apply 'sxlib:make-state-mask
++                               (cons :shift (sxlib:make-state-keys (x11-mods key))))))
+           (t
+            ;; just warn them and go ahead as scheduled
+            (warn "Don't know how to encode ~s" key)
+@@ -59,7 +59,7 @@
+ (defun send-fake-key (win key)
+   "Send a fake key press event to win."
+   (multiple-value-bind (code state) (key-to-keycode+state key)
+-    (xlib:send-event (window-xwin win) :key-press (xlib:make-event-mask :key-press)
++    (sxlib:send-event (window-xwin win) :key-press (sxlib:make-event-mask :key-press)
+                      :display *display*
+                      :root (screen-root (window-screen win))
+                      ;; Apparently we need these in here, though they
+@@ -73,9 +73,9 @@
+   "Send a fake click (button press + button release) to win."
+   ;; I don't know why this doesn't work. Sadly CLX doesn't have the
+   ;; XTest extension like xlib does. With it this would be 2 lines.
+-  (multiple-value-bind (x y) (xlib:query-pointer (window-xwin win))
+-    (multiple-value-bind (rx ry) (xlib:query-pointer (screen-root (window-screen win)))
+-      (xlib:send-event (window-xwin win) :button-press (xlib:make-event-mask :button-press)
++  (multiple-value-bind (x y) (sxlib:query-pointer (window-xwin win))
++    (multiple-value-bind (rx ry) (sxlib:query-pointer (screen-root (window-screen win)))
++      (sxlib:send-event (window-xwin win) :button-press (sxlib:make-event-mask :button-press)
+                        :display *display*
+                        :root (screen-root (window-screen win))
+                        :window (window-xwin win) :event-window (window-xwin win)
+@@ -83,7 +83,7 @@
+                        :state 0
+                        :x x :y y :root-x rx :root-y ry
+                        :same-screen-p t)
+-      (xlib:send-event (window-xwin win) :button-release (xlib:make-event-mask :button-release)
++      (sxlib:send-event (window-xwin win) :button-release (sxlib:make-event-mask :button-release)
+                        :display *display*
+                        :root (screen-root (window-screen win))
+                        :window (window-xwin win) :event-window (window-xwin win)
+@@ -97,39 +97,39 @@
+ 
+ (defun grab-pointer (screen)
+   "Grab the pointer and set the pointer shape."
+-  (let* ((white (xlib:make-color :red 1.0 :green 1.0 :blue 1.0))
+-         (black (xlib:make-color :red 0.0 :green 0.0 :blue 0.0))
+-         (cursor-font (xlib:open-font *display* "cursor"))
+-         (cursor (xlib:create-glyph-cursor :source-font cursor-font
++  (let* ((white (sxlib:make-color :red 1.0 :green 1.0 :blue 1.0))
++         (black (sxlib:make-color :red 0.0 :green 0.0 :blue 0.0))
++         (cursor-font (sxlib:open-font *display* "cursor"))
++         (cursor (sxlib:create-glyph-cursor :source-font cursor-font
+                                            :source-char 64
+                                            :mask-font cursor-font
+                                            :mask-char 65
+                                            :foreground black
+                                            :background white)))
+-    (xlib:grab-pointer (screen-root screen) nil :owner-p nil
++    (sxlib:grab-pointer (screen-root screen) nil :owner-p nil
+                        :cursor cursor)))
+ 
+ (defun ungrab-pointer ()
+   "Remove the grab on the cursor and restore the cursor shape."
+-  (xlib:ungrab-pointer *display*)
+-  (xlib:display-finish-output *display*))
++  (sxlib:ungrab-pointer *display*)
++  (sxlib:display-finish-output *display*))
+ 
+ (defun grab-keyboard (xwin)
+-  (let ((ret (xlib:grab-keyboard xwin :owner-p nil
++  (let ((ret (sxlib:grab-keyboard xwin :owner-p nil
+                                  :sync-keyboard-p nil :sync-pointer-p nil)))
+     (dformat 5 "vvv Grab keyboard: ~s~%" ret)
+     ret))
+ 
+ (defun ungrab-keyboard ()
+-  (let ((ret (xlib:ungrab-keyboard *display*)))
++  (let ((ret (sxlib:ungrab-keyboard *display*)))
+     (dformat 5 "^^^ Ungrab keyboard: ~s~%" ret)
+     ret))
+ 
+ (defun warp-pointer (screen x y)
+   "Move the pointer to the specified location."
+   (let ((root (screen-root screen)))
+-    (xlib:warp-pointer root x y)))
++    (sxlib:warp-pointer root x y)))
+ 
+ (defun warp-pointer-relative (dx dy)
+   "Move the pointer by DX and DY relative to the current location."
+-  (xlib:warp-pointer-relative *display* dx dy))
++  (sxlib:warp-pointer-relative *display* dx dy))
+diff -Naur stumpwm-0.9.5.orig/events.lisp stumpwm-0.9.5/events.lisp
+--- stumpwm-0.9.5.orig/events.lisp	2008-10-21 23:07:48.000000000 +0200
++++ stumpwm-0.9.5/events.lisp	2008-12-23 05:08:54.000000000 +0100
+@@ -45,7 +45,7 @@
+   (declare (ignore width))
+   (let ((ml (find-mode-line-window xwin)))
+     (when ml
+-      (setf (xlib:drawable-height xwin) height)
++      (setf (sxlib:drawable-height xwin) height)
+       (update-mode-line-position ml x y)
+       (resize-mode-line ml)
+       (sync-mode-line ml))))
+@@ -60,24 +60,24 @@
+            (has-bw (mask) (= 16 (logand mask 16)))
+            ;; (has-stackmode (mask) (= 64 (logand mask 64)))
+            )
+-    (xlib:with-state (xwin)
++    (sxlib:with-state (xwin)
+       (when (has-x value-mask)
+-        (setf (xlib:drawable-x xwin) x))
++        (setf (sxlib:drawable-x xwin) x))
+       (when (has-y value-mask)
+-        (setf (xlib:drawable-y xwin) y))
++        (setf (sxlib:drawable-y xwin) y))
+       (when (has-h value-mask)
+-        (setf (xlib:drawable-height xwin) height))
++        (setf (sxlib:drawable-height xwin) height))
+       (when (has-w value-mask)
+-        (setf (xlib:drawable-width xwin) width))
++        (setf (sxlib:drawable-width xwin) width))
+       (when (has-bw value-mask)
+-        (setf (xlib:drawable-border-width xwin) border-width)))))
++        (setf (sxlib:drawable-border-width xwin) border-width)))))
+ 
+ (defun update-configuration (win)
+   ;; Send a synthetic configure-notify event so that the window
+   ;; knows where it is onscreen.
+   (xwin-send-configuration-notify (window-xwin win)
+-                                  (xlib:drawable-x (window-parent win))
+-                                  (xlib:drawable-y (window-parent win))
++                                  (sxlib:drawable-x (window-parent win))
++                                  (sxlib:drawable-y (window-parent win))
+                                   (window-width win) (window-height win) 0))
+ 
+ (defun handle-managed-window (window width height stack-mode value-mask)
+@@ -104,8 +104,8 @@
+         (let* ((group (window-group win))
+                (pos  (if (eq relative-to :parent)
+                          (list
+-                          (+ (xlib:drawable-x (window-parent win)) x)
+-                          (+ (xlib:drawable-y (window-parent win)) y))
++                          (+ (sxlib:drawable-x (window-parent win)) x)
++                          (+ (sxlib:drawable-y (window-parent win)) y))
+                          (list x y)))
+                (frame (apply #'find-frame group pos)))
+           (when frame
+@@ -162,7 +162,7 @@
+            (setf (screen-withdrawn-windows screen) (delete wwin (screen-withdrawn-windows screen))))
+          t)
+         (wwin (restore-window wwin))
+-        ((xlib:get-property window :_KDE_NET_WM_SYSTEM_TRAY_WINDOW_FOR)
++        ((sxlib:get-property window :_KDE_NET_WM_SYSTEM_TRAY_WINDOW_FOR)
+          ;; Do nothing if this is a systray window (the system tray
+          ;; will handle it, if there is one, and, if there isn't the
+          ;; user doesn't want this popping up as a managed window
+@@ -186,9 +186,9 @@
+   ;; ones where event-window and window are the same, and
+   ;; substructure unmap events when the event-window is the parent
+   ;; of window.
+-  (dformat 2 "UNMAP: ~s ~s ~a~%" send-event-p (not (xlib:window-equal event-window window)) (find-window window))
++  (dformat 2 "UNMAP: ~s ~s ~a~%" send-event-p (not (sxlib:window-equal event-window window)) (find-window window))
+   (unless (and (not send-event-p)
+-               (not (xlib:window-equal event-window window)))
++               (not (sxlib:window-equal event-window window)))
+     (let ((window (find-window window)))
+       ;; if we can't find the window then there's nothing we need to
+       ;; do.
+@@ -207,7 +207,7 @@
+ 
+ (define-stump-event-handler :destroy-notify (send-event-p event-window window)
+   (unless (or send-event-p
+-              (xlib:window-equal event-window window))
++              (sxlib:window-equal event-window window))
+     ;; Ignore structure destroy notifies and only
+     ;; use substructure destroy notifiers. This way
+     ;; event-window is the window's parent.
+@@ -297,17 +297,17 @@
+ (defun handle-rp-commands (root)
+   "Handle a ratpoison style command request."
+   (labels ((one-cmd ()
+-             (multiple-value-bind (win type format bytes-after) (xlib:get-property root :rp_command_request :end 4 :delete-p t)
++             (multiple-value-bind (win type format bytes-after) (sxlib:get-property root :rp_command_request :end 4 :delete-p t)
+                (declare (ignore type format))
+-               (setf win (xlib::lookup-window *display* (bytes-to-window win)))
+-               (when (xlib:window-p win)
+-                 (let* ((data (xlib:get-property win :rp_command))
++               (setf win (sxlib::lookup-window *display* (bytes-to-window win)))
++               (when (sxlib:window-p win)
++                 (let* ((data (sxlib:get-property win :rp_command))
+                         (interactive-p (car data))
+                         (cmd (map 'string 'code-char (nbutlast (cdr data)))))
+                    (declare (ignore interactive-p))
+                    (eval-command cmd)
+-                   (xlib:change-property win :rp_command_result (map 'list 'char-code "0TODO") :string 8)
+-                   (xlib:display-finish-output *display*)))
++                   (sxlib:change-property win :rp_command_result (map 'list 'char-code "0TODO") :string 8)
++                   (sxlib:display-finish-output *display*)))
+                bytes-after)))
+     (loop while (> (one-cmd) 0))))
+ 
+@@ -315,7 +315,7 @@
+   "Handle a StumpWM style command request."
+   (let* ((win root)
+          (screen (find-screen root))
+-         (data (xlib:get-property win :stumpwm_command :delete-p t))
++         (data (sxlib:get-property win :stumpwm_command :delete-p t))
+          (cmd (bytes-to-string data)))
+     (let ((msgs (screen-last-msg screen))
+           (hlts (screen-last-msg-highlights screen))
+@@ -323,12 +323,12 @@
+       (setf (screen-last-msg screen) '()
+             (screen-last-msg-highlights screen) '())
+       (eval-command cmd)
+-      (xlib:change-property win :stumpwm_command_result
++      (sxlib:change-property win :stumpwm_command_result
+                             (string-to-bytes (format nil "~{~{~a~%~}~}" (nreverse (screen-last-msg screen))))
+                             :string 8)
+       (setf (screen-last-msg screen) msgs
+             (screen-last-msg-highlights screen) hlts))
+-    (xlib:display-finish-output *display*)))
++    (sxlib:display-finish-output *display*)))
+ 
+ (defun maybe-set-urgency (window)
+   (when (and (window-urgent-p window)
+@@ -339,8 +339,8 @@
+ (defun safe-atom-name (n)
+   "Return the name of the atom with atom-id N or nil if there isn't one."
+   (handler-case
+-      (xlib:atom-name *display* n)
+-    (xlib:atom-error ()
++      (sxlib:atom-name *display* n)
++    (sxlib:atom-error ()
+       nil)))
+ 
+ (defun safe-bytes-to-atoms (list)
+@@ -376,7 +376,7 @@
+      ;; atom-name to fail, so filter out anything that can't be
+      ;; converted into an atom.
+      (dolist (p (safe-bytes-to-atoms
+-                 (xlib:get-property (window-xwin window) :_NET_WM_STATE)))
++                 (sxlib:get-property (window-xwin window) :_NET_WM_STATE)))
+        (case p
+          (:_NET_WM_STATE_FULLSCREEN
+           ;; Client is broken and sets this property itself instead of sending a
+@@ -408,7 +408,7 @@
+ (define-stump-event-handler :mapping-notify (request start count)
+   ;; We could be a bit more intelligent about when to update the
+   ;; modifier map, but I don't think it really matters.
+-  (xlib:mapping-notify *display* request start count)
++  (sxlib:mapping-notify *display* request start count)
+   (update-modifier-map)
+   (sync-keys))
+ 
+@@ -421,16 +421,16 @@
+ (defun find-message-window-screen (win)
+   "Return the screen, if any, that message window WIN belongs."
+   (dolist (screen *screen-list*)
+-    (when (xlib:window-equal (screen-message-window screen) win)
++    (when (sxlib:window-equal (screen-message-window screen) win)
+       (return screen))))
+ 
+ (defun draw-cross (screen window x y width height)
+-  (xlib:draw-line window
++  (sxlib:draw-line window
+                   (screen-frame-outline-gc screen)
+                   x y
+                   width height
+                   t)
+-  (xlib:draw-line window
++  (sxlib:draw-line window
+                   (screen-frame-outline-gc screen)
+                   x (+ y height)
+                   (+ x width) y))
+@@ -457,11 +457,11 @@
+ (define-stump-event-handler :reparent-notify (window parent)
+   (let ((win (find-window window)))
+     (when (and win
+-               (not (xlib:window-equal parent (window-parent win))))
++               (not (sxlib:window-equal parent (window-parent win))))
+       ;; reparent it back
+-      (unless (eq (xlib:window-map-state (window-xwin win)) :unmapped)
++      (unless (eq (sxlib:window-map-state (window-xwin win)) :unmapped)
+         (incf (window-unmap-ignores win)))
+-      (xlib:reparent-window (window-xwin win) (window-parent win) 0 0))))
++      (sxlib:reparent-window (window-xwin win) (window-parent win) 0 0))))
+ 
+ ;;; Fullscreen functions
+ 
+@@ -476,7 +476,7 @@
+   (setf (window-fullscreen window) nil)
+   (dformat 2 "client requests to leave fullscreen~%")
+   (remove-wm-state (window-xwin window) :_NET_WM_STATE_FULLSCREEN)
+-  (setf (xlib:drawable-border-width (window-parent window)) (default-border-width-for-type window))
++  (setf (sxlib:drawable-border-width (window-parent window)) (default-border-width-for-type window))
+   (maximize-window window)
+   (update-window-border window)
+   (update-mode-lines (current-screen)))
+@@ -593,7 +593,7 @@
+ 
+ (define-stump-event-handler :button-press (window code x y child time)
+   ;; Pass click to client
+-  (xlib:allow-events *display* :replay-pointer time)
++  (sxlib:allow-events *display* :replay-pointer time)
+   (let (screen ml win)
+     (cond
+       ((and (setf screen (find-screen window)) (not child))
+@@ -631,7 +631,7 @@
+       ;; events. It appears as though the hash table of XIDs and clx
+       ;; structures gets out of sync with X or perhaps X assigns a
+       ;; duplicate ID for a pixmap and a window.
+-      (when (and win (not (xlib:window-p win)))
++      (when (and win (not (sxlib:window-p win)))
+         (dformat 10 "Pixmap Workaround! ~s should be a window!~%" win)
+         (setf (getf event-slots :window) (make-xlib-window win)))
+       (handler-case
+@@ -643,8 +643,8 @@
+             ;; it, and put the restart here.
+             (with-simple-restart (top-level "Return to stumpwm's top level")
+               (apply eventfn event-slots))
+-            (xlib:display-finish-output *display*))
+-        ((or xlib:window-error xlib:drawable-error) (c)
++            (sxlib:display-finish-output *display*))
++        ((or sxlib:window-error sxlib:drawable-error) (c)
+           ;; Asynchronous errors are handled in the error
+           ;; handler. Synchronous errors like trying to get the window
+           ;; hints on a deleted window are caught and ignored here. We
+diff -Naur stumpwm-0.9.5.orig/frame.lisp stumpwm-0.9.5/frame.lisp
+--- stumpwm-0.9.5.orig/frame.lisp	2008-10-21 23:07:48.000000000 +0200
++++ stumpwm-0.9.5/frame.lisp	2008-12-23 05:08:54.000000000 +0100
+@@ -635,14 +635,14 @@
+           (w (frame-width f))
+           (h (frame-display-height group f)))
+       (when tl
+-        (xlib:draw-line win gc
++        (sxlib:draw-line win gc
+                         x (+ halfwidth y) w 0 t)
+-        (xlib:draw-line win gc
++        (sxlib:draw-line win gc
+                         (+ halfwidth x) y 0 h t))
+       (when br
+-        (xlib:draw-line win gc
++        (sxlib:draw-line win gc
+                         (+ x (- w halfwidth)) y 0 h t)
+-        (xlib:draw-line win gc
++        (sxlib:draw-line win gc
+                         x (+ y (- h halfwidth)) w 0 t)))))
+ 
+ (defun draw-frame-outlines (group &optional head)
+@@ -655,27 +655,27 @@
+ 
+ (defun clear-frame-outlines (group)
+   "Clear the outlines drawn with DRAW-FRAME-OUTLINES."
+-  (xlib:clear-area (screen-root (group-screen group))))
++  (sxlib:clear-area (screen-root (group-screen group))))
+ 
+ (defun draw-frame-numbers (group)
+   "Draw the number of each frame in its corner. Return the list of
+ windows used to draw the numbers in. The caller must destroy them."
+   (let ((screen (group-screen group)))
+     (mapcar (lambda (f)
+-              (let ((w (xlib:create-window
++              (let ((w (sxlib:create-window
+                         :parent (screen-root screen)
+                         :x (frame-x f) :y (frame-display-y group f) :width 1 :height 1
+                         :background (screen-fg-color screen)
+                         :border (screen-border-color screen)
+                         :border-width 1
+                         :event-mask '())))
+-                (xlib:map-window w)
+-                (setf (xlib:window-priority w) :above)
++                (sxlib:map-window w)
++                (setf (sxlib:window-priority w) :above)
+                 (echo-in-window w (screen-font screen)
+                                 (screen-fg-color screen)
+                                 (screen-bg-color screen)
+                                 (string (get-frame-number-translation f)))
+-                (xlib:display-finish-output *display*)
++                (sxlib:display-finish-output *display*)
+                 (dformat 3 "mapped ~S~%" (frame-number f))
+                 w))
+             (group-frames group))))
+@@ -834,7 +834,7 @@
+          (ch (read-one-char (group-screen group)))
+          (num (read-from-string (string ch) nil nil)))
+     (dformat 3 "read ~S ~S~%" ch num)
+-    (mapc #'xlib:destroy-window wins)
++    (mapc #'sxlib:destroy-window wins)
+     (clear-frame-outlines group)
+     (find ch (group-frames group)
+           :test 'char=
+diff -Naur stumpwm-0.9.5.orig/group.lisp stumpwm-0.9.5/group.lisp
+--- stumpwm-0.9.5.orig/group.lisp	2008-10-21 23:07:48.000000000 +0200
++++ stumpwm-0.9.5/group.lisp	2008-12-23 05:08:54.000000000 +0100
+@@ -91,7 +91,7 @@
+       (setf (screen-focus screen) nil)
+       (focus-frame new-group (tile-group-current-frame new-group))
+       (show-frame-indicator new-group) ; doesn't get called by focus-frame
+-      (xlib:change-property (screen-root screen) :_NET_CURRENT_DESKTOP
++      (sxlib:change-property (screen-root screen) :_NET_CURRENT_DESKTOP
+                             (list (netwm-group-id new-group))
+                             :cardinal 32)
+       (update-all-mode-lines)
+@@ -126,7 +126,7 @@
+                  ;; maybe show the window in its new frame
+                  (when (null (frame-window (window-frame window)))
+                    (really-raise-window window))
+-                 (xlib:change-property (window-xwin window) :_NET_WM_DESKTOP
++                 (sxlib:change-property (window-xwin window) :_NET_WM_DESKTOP
+                                        (list (netwm-group-id to-group))
+                                        :cardinal 32)))))
+     ;; When a modal window is moved, all the windows it shadows must be moved
+@@ -167,7 +167,7 @@
+   (loop for i from 0
+         for group in (sort-groups screen)
+         do (dolist (w (group-windows group))
+-             (xlib:change-property (window-xwin w) :_NET_WM_DESKTOP
++             (sxlib:change-property (window-xwin w) :_NET_WM_DESKTOP
+                                    (list i)
+                                    :cardinal 32))))
+ 
+@@ -183,16 +183,16 @@
+ Groups are known as \"virtual desktops\" in the NETWM standard."
+   (let ((root (screen-root screen)))
+     ;; _NET_NUMBER_OF_DESKTOPS
+-    (xlib:change-property root :_NET_NUMBER_OF_DESKTOPS
++    (sxlib:change-property root :_NET_NUMBER_OF_DESKTOPS
+                           (list (length (screen-groups screen)))
+                           :cardinal 32)
+     (unless *initializing*
+       ;; _NET_CURRENT_DESKTOP
+-      (xlib:change-property root :_NET_CURRENT_DESKTOP
++      (sxlib:change-property root :_NET_CURRENT_DESKTOP
+                             (list (netwm-group-id (screen-current-group screen)))
+                             :cardinal 32))
+     ;; _NET_DESKTOP_NAMES
+-    (xlib:change-property root :_NET_DESKTOP_NAMES
++    (sxlib:change-property root :_NET_DESKTOP_NAMES
+                           (let ((names (mapcan
+                                         (lambda (group)
+                                           (list (string-to-utf8 (group-name group))
+diff -Naur stumpwm-0.9.5.orig/input.lisp stumpwm-0.9.5/input.lisp
+--- stumpwm-0.9.5.orig/input.lisp	2008-10-21 23:07:48.000000000 +0200
++++ stumpwm-0.9.5/input.lisp	2008-12-23 05:08:54.000000000 +0100
+@@ -100,24 +100,24 @@
+   "Return t if keycode is a modifier"
+   (or (find keycode *all-modifiers* :test 'eql)
+       ;; Treat No Symbol keys as modifiers (and therefore ignorable)
+-      (= (xlib:keycode->keysym *display* keycode 0) 0)))
++      (= (sxlib:keycode->keysym *display* keycode 0) 0)))
+ 
+ (defun keycode->character (code mods)
+   (let ((idx (if (member :shift mods) 1 0)))
+-    (xlib:keysym->character *display* (xlib:keycode->keysym *display* code idx) 0)))
++    (sxlib:keysym->character *display* (sxlib:keycode->keysym *display* code idx) 0)))
+ 
+ ;;; line and key reading functions
+ 
+ (defun setup-input-window (screen prompt input)
+   "Set the input window up to read input"
+-  (let* ((height (+ (xlib:font-descent (screen-font screen))
+-                    (xlib:font-ascent (screen-font screen))))
++  (let* ((height (+ (sxlib:font-descent (screen-font screen))
++                    (sxlib:font-ascent (screen-font screen))))
+          (win (screen-input-window screen)))
+     ;; Window dimensions
+-    (xlib:with-state (win)
+-      (setf (xlib:window-priority win) :above
+-            (xlib:drawable-height win) height))
+-    (xlib:map-window win)
++    (sxlib:with-state (win)
++      (setf (sxlib:window-priority win) :above
++            (sxlib:drawable-height win) height))
++    (sxlib:map-window win)
+     ;; Draw the prompt
+     (draw-input-bucket screen prompt input)
+     ;; Ready to recieve input
+@@ -125,8 +125,8 @@
+ ))
+ 
+ (defun shutdown-input-window (screen)
+-  (xlib:ungrab-keyboard *display*)
+-  (xlib:unmap-window (screen-input-window screen)))
++  (sxlib:ungrab-keyboard *display*)
++  (sxlib:unmap-window (screen-input-window screen)))
+ 
+ (defun input-handle-key-press-event (&rest event-slots &key event-key root code state &allow-other-keys)
+   (declare (ignore event-slots root))
+@@ -136,7 +136,7 @@
+ (defun input-handle-selection-event (&key window selection property &allow-other-keys)
+   (declare (ignore selection))
+   (if property
+-      (xlib:get-property window property :type :string :result-type 'string :transform #'xlib:card8->char :delete-p t)
++      (sxlib:get-property window property :type :string :result-type 'string :transform #'sxlib:card8->char :delete-p t)
+       ""))
+ 
+ (defun read-key-handle-event (&rest event-slots &key display event-key &allow-other-keys)
+@@ -157,7 +157,7 @@
+ 
+ (defun read-key ()
+   "Return a dotted pair (code . state) key."
+-  (loop for ev = (xlib:process-event *display* :handler #'read-key-handle-event :timeout nil) do
++  (loop for ev = (sxlib:process-event *display* :handler #'read-key-handle-event :timeout nil) do
+        (when (and (consp ev)
+                   (eq (first ev) :key-press))
+            (return (cdr ev)))))
+@@ -169,7 +169,7 @@
+        finally (return k)))
+ 
+ (defun read-key-or-selection ()
+-  (loop for ev = (xlib:process-event *display* :handler #'read-key-or-selection-handle-event :timeout nil) do
++  (loop for ev = (sxlib:process-event *display* :handler #'read-key-or-selection-handle-event :timeout nil) do
+        (cond ((stringp ev)
+               (return ev))
+              ((and (consp ev)
+@@ -219,37 +219,37 @@
+   "Read a single character from the user."
+   (with-focus (screen-key-window screen)
+     (let ((k (read-key-no-modifiers)))
+-      (keycode->character (car k) (xlib:make-state-keys (cdr k))))))
++      (keycode->character (car k) (sxlib:make-state-keys (cdr k))))))
+ 
+ 
+ (defun draw-input-bucket (screen prompt input &optional errorp)
+   "Draw to the screen's input window the contents of input."
+   (let* ((gcontext (screen-message-gc screen))
+          (win (screen-input-window screen))
+-         (prompt-width (xlib:text-width (screen-font screen) prompt :translate #'translate-id))
++         (prompt-width (sxlib:text-width (screen-font screen) prompt :translate #'translate-id))
+          (string (input-line-string input))
+-         (string-width (xlib:text-width (screen-font screen) string :translate #'translate-id))
++         (string-width (sxlib:text-width (screen-font screen) string :translate #'translate-id))
+          (full-string-width (+ string-width
+-                               (xlib:text-width (screen-font screen) " " :translate #'translate-id)))
++                               (sxlib:text-width (screen-font screen) " " :translate #'translate-id)))
+          (pos (input-line-position input))
+          (width (+ prompt-width
+                    (max 100 full-string-width))))
+-    (xlib:with-state (win)
+-      (xlib:clear-area win :x (+ *message-window-padding*
++    (sxlib:with-state (win)
++      (sxlib:clear-area win :x (+ *message-window-padding*
+                                  prompt-width
+                                  string-width))
+-      (setf (xlib:drawable-width win) (+ width (* *message-window-padding* 2)))
++      (setf (sxlib:drawable-width win) (+ width (* *message-window-padding* 2)))
+       (setup-win-gravity screen win *input-window-gravity*))
+-    (xlib:with-state (win)
+-      (xlib:draw-image-glyphs win gcontext
++    (sxlib:with-state (win)
++      (sxlib:draw-image-glyphs win gcontext
+                               *message-window-padding*
+-                              (xlib:font-ascent (screen-font screen))
++                              (sxlib:font-ascent (screen-font screen))
+                               prompt
+                               :translate #'translate-id
+                               :size 16)
+-      (xlib:draw-image-glyphs win gcontext
++      (sxlib:draw-image-glyphs win gcontext
+                               (+ *message-window-padding* prompt-width)
+-                              (xlib:font-ascent (screen-font screen))
++                              (sxlib:font-ascent (screen-font screen))
+                               string
+                               :translate #'translate-id
+                               :size 16)
+@@ -257,25 +257,25 @@
+       (invert-rect screen win
+                    (+ *message-window-padding*
+                       prompt-width
+-                      (xlib:text-width (screen-font screen) (subseq string 0 pos) :translate #'translate-id))
++                      (sxlib:text-width (screen-font screen) (subseq string 0 pos) :translate #'translate-id))
+                    0
+-                   (xlib:text-width (screen-font screen) (if (>= pos (length string))
++                   (sxlib:text-width (screen-font screen) (if (>= pos (length string))
+                                                              " "
+                                                              (string (char string pos)))
+                                     :translate #'translate-id)
+-                   (+ (xlib:font-descent (screen-font screen))
+-                      (xlib:font-ascent (screen-font screen))))
++                   (+ (sxlib:font-descent (screen-font screen))
++                      (sxlib:font-ascent (screen-font screen))))
+       ;; draw the error
+       (when errorp
+-        (invert-rect screen win 0 0 (xlib:drawable-width win) (xlib:drawable-height win))
+-        (xlib:display-force-output *display*)
++        (invert-rect screen win 0 0 (sxlib:drawable-width win) (sxlib:drawable-height win))
++        (sxlib:display-force-output *display*)
+         (sleep 0.05)
+-        (invert-rect screen win 0 0 (xlib:drawable-width win) (xlib:drawable-height win))))))
++        (invert-rect screen win 0 0 (sxlib:drawable-width win) (sxlib:drawable-height win))))))
+ 
+ (defun code-state->key (code state)
+-  (let* ((mods    (xlib:make-state-keys state))
+-         (sym     (xlib:keycode->keysym *display* code 0))
+-         (upsym   (xlib:keycode->keysym *display* code 1))
++  (let* ((mods    (sxlib:make-state-keys state))
++         (sym     (sxlib:keycode->keysym *display* code 0))
++         (upsym   (sxlib:keycode->keysym *display* code 1))
+          (shift-p (and (find :shift mods) t)))
+     ;; If a keysym has a shift modifier, then use the uppercase keysym
+     ;; and remove remove the shift modifier.
+@@ -516,7 +516,7 @@
+                (input-line-position input) (length (input-line-string input))))))
+ 
+ (defun input-self-insert (input key)
+-  (let ((char (xlib:keysym->character *display* (key-keysym key))))
++  (let ((char (sxlib:keysym->character *display* (key-keysym key))))
+     (if (or (key-mods-p key) (null char)
+             (not (characterp char)))
+         :error
+@@ -527,7 +527,7 @@
+   ;; if we own the selection then just insert it.
+   (if *x-selection*
+       (input-insert-string input *x-selection*)
+-      (xlib:convert-selection :primary :string (screen-input-window (current-screen)) :stumpwm-selection)))
++      (sxlib:convert-selection :primary :string (screen-input-window (current-screen)) :stumpwm-selection)))
+ 
+ 
+ ;;; Misc functions
+@@ -565,7 +565,7 @@
+ (defun all-modifier-codes ()
+   (multiple-value-bind
+         (shift-codes lock-codes control-codes mod1-codes mod2-codes mod3-codes mod4-codes mod5-codes)
+-      (xlib:modifier-mapping *display*)
++      (sxlib:modifier-mapping *display*)
+     (append shift-codes
+             lock-codes
+             control-codes
+@@ -577,11 +577,11 @@
+ 
+ (defun get-modifier-map ()
+   (labels ((find-mod (mod codes)
+-             (find (xlib:keysym->keycodes *display* (keysym-name->keysym mod)) codes)))
++             (find (sxlib:keysym->keycodes *display* (keysym-name->keysym mod)) codes)))
+     (let ((modifiers (make-modifiers)))
+       (multiple-value-bind
+             (shift-codes lock-codes control-codes mod1-codes mod2-codes mod3-codes mod4-codes mod5-codes)
+-          (xlib:modifier-mapping *display*)
++          (sxlib:modifier-mapping *display*)
+         (declare (ignore shift-codes lock-codes control-codes))
+         (loop for mod in '(:mod-1 :mod-2 :mod-3 :mod-4 :mod-5)
+               for codes in (list mod1-codes mod2-codes mod3-codes mod4-codes mod5-codes)
+@@ -633,11 +633,11 @@
+ ;; (defun keycode->string (code state)
+ ;;   (concatenate 'string (mod->string state)
+ ;;             (string (keysym->character *display*
+-;;                                        (xlib:keycode->keysym *display* code 0)
++;;                                        (sxlib:keycode->keysym *display* code 0)
+ ;;                                        state))))
+ 
+ ;; (defun cook-keycode (code state)
+-;;   (values (xlib:keycode->keysym *display* code 0) (x11mod->stumpmod state)))
++;;   (values (sxlib:keycode->keysym *display* code 0) (x11mod->stumpmod state)))
+ 
+ (defun y-or-n-p (message)
+   "ask a \"y or n\" question on the current screen and return T if the
+diff -Naur stumpwm-0.9.5.orig/kmap.lisp stumpwm-0.9.5/kmap.lisp
+--- stumpwm-0.9.5.orig/kmap.lisp	2008-10-21 23:07:48.000000000 +0200
++++ stumpwm-0.9.5/kmap.lisp	2008-12-23 05:08:54.000000000 +0100
+@@ -91,7 +91,7 @@
+     (when (key-hyper key) (setf mods (append (modifiers-hyper *modifiers*) mods)))
+     (when (key-super key) (setf mods (append (modifiers-super *modifiers*) mods)))
+     (when with-numlock (setf mods (append (modifiers-numlock *modifiers*) mods)))
+-    (apply 'xlib:make-state-mask mods)))
++    (apply 'sxlib:make-state-mask mods)))
+ 
+ (defun report-kbd-parse-error (c stream)
+   (format stream "Failed to parse key string: ~s" (slot-value c 'string)))
+diff -Naur stumpwm-0.9.5.orig/menu.lisp stumpwm-0.9.5/menu.lisp
+--- stumpwm-0.9.5.orig/menu.lisp	2008-10-21 23:07:48.000000000 +0200
++++ stumpwm-0.9.5/menu.lisp	2008-12-23 05:08:54.000000000 +0100
+@@ -80,7 +80,7 @@
+ (defun get-input-char (key)
+   "If @var{key} is a character suitable for menu completion (e.g. not
+ backspace or F9), return it otherwise return nil"
+-  (let ((char (xlib:keysym->character *display* (key-keysym key))))
++  (let ((char (sxlib:keysym->character *display* (key-keysym key))))
+     (if (or (key-mods-p key) (null char)
+             (not (characterp char)))
+         nil
+diff -Naur stumpwm-0.9.5.orig/message-window.lisp stumpwm-0.9.5/message-window.lisp
+--- stumpwm-0.9.5.orig/message-window.lisp	2008-10-21 23:07:48.000000000 +0200
++++ stumpwm-0.9.5/message-window.lisp	2008-12-23 05:08:54.000000000 +0100
+@@ -32,7 +32,7 @@
+ (defun max-width (font l)
+   "Return the width of the longest string in L using FONT."
+   (loop for i in l
+-        maximize (xlib:text-width font i :translate #'translate-id)))
++        maximize (sxlib:text-width font i :translate #'translate-id)))
+ 
+ (defun get-gravity-coords (gravity width height minx miny maxx maxy)
+   "Return the x y coords for a window on with gravity etc"
+@@ -48,54 +48,54 @@
+ (defun setup-win-gravity (screen win gravity)
+   "Position the x, y of the window according to its gravity. This
+ function expects to be wrapped in a with-state for win."
+-  (xlib:with-state ((screen-root screen))
+-    (let ((w (xlib:drawable-width win))
+-          (h (xlib:drawable-height win))
++  (sxlib:with-state ((screen-root screen))
++    (let ((w (sxlib:drawable-width win))
++          (h (sxlib:drawable-height win))
+           (screen-width (head-width (current-head)))
+           (screen-height (head-height (current-head))))
+       (let ((x (case gravity
+                  ((:top-left :bottom-left) 0)
+-                 (:center (truncate (- screen-width w (* (xlib:drawable-border-width win) 2)) 2))
+-                 (t (- screen-width w (* (xlib:drawable-border-width win) 2)))))
++                 (:center (truncate (- screen-width w (* (sxlib:drawable-border-width win) 2)) 2))
++                 (t (- screen-width w (* (sxlib:drawable-border-width win) 2)))))
+             (y (case gravity
+-                 ((:bottom-right :bottom-left) (- screen-height h (* (xlib:drawable-border-width win) 2)))
+-                 (:center (truncate (- screen-height h (* (xlib:drawable-border-width win) 2)) 2))
++                 ((:bottom-right :bottom-left) (- screen-height h (* (sxlib:drawable-border-width win) 2)))
++                 (:center (truncate (- screen-height h (* (sxlib:drawable-border-width win) 2)) 2))
+                  (t 0))))
+-        (setf (xlib:drawable-y win) (max (head-y (current-head)) (+ (head-y (current-head)) y))
+-              (xlib:drawable-x win) (max (head-x (current-head)) (+ (head-x (current-head)) x)))))))
++        (setf (sxlib:drawable-y win) (max (head-y (current-head)) (+ (head-y (current-head)) y))
++              (sxlib:drawable-x win) (max (head-x (current-head)) (+ (head-x (current-head)) x)))))))
+ 
+ (defun setup-message-window (screen lines width)
+   (let ((height (* lines
+-                   (+ (xlib:font-ascent (screen-font screen))
+-                      (xlib:font-descent (screen-font screen)))))
++                   (+ (sxlib:font-ascent (screen-font screen))
++                      (sxlib:font-descent (screen-font screen)))))
+         (win (screen-message-window screen)))
+     ;; Now that we know the dimensions, raise and resize it.
+-    (xlib:with-state (win)
+-      (setf (xlib:drawable-height win) height
+-            (xlib:drawable-width win) (+ width (* *message-window-padding* 2))
+-            (xlib:window-priority win) :above)
++    (sxlib:with-state (win)
++      (setf (sxlib:drawable-height win) height
++            (sxlib:drawable-width win) (+ width (* *message-window-padding* 2))
++            (sxlib:window-priority win) :above)
+       (setup-win-gravity screen win *message-window-gravity*))
+-    (xlib:map-window win)
++    (sxlib:map-window win)
+     ;; Clear the window
+-    (xlib:clear-area win)
++    (sxlib:clear-area win)
+     (incf (screen-ignore-msg-expose screen))
+     ;; Have to flush this or the window might get cleared
+     ;; after we've already started drawing it.
+-    (xlib:display-finish-output *display*)))
++    (sxlib:display-finish-output *display*)))
+ 
+ (defun invert-rect (screen win x y width height)
+   "invert the color in the rectangular area. Used for highlighting text."
+-  (let ((gcontext (xlib:create-gcontext :drawable win
++  (let ((gcontext (sxlib:create-gcontext :drawable win
+                                         :foreground (screen-fg-color screen)
+                                         :function boole-xor)))
+-    (xlib:draw-rectangle win gcontext x y width height t)
+-    (setf (xlib:gcontext-foreground gcontext) (screen-bg-color screen))
+-    (xlib:draw-rectangle win gcontext x y width height t)))
++    (sxlib:draw-rectangle win gcontext x y width height t)
++    (setf (sxlib:gcontext-foreground gcontext) (screen-bg-color screen))
++    (sxlib:draw-rectangle win gcontext x y width height t)))
+ 
+ (defun unmap-message-window (screen)
+   "Unmap the screen's message window, if it is mapped."
+-  (unless (eq (xlib:window-map-state (screen-message-window screen)) :unmapped)
+-    (xlib:unmap-window (screen-message-window screen))))
++  (unless (eq (sxlib:window-map-state (screen-message-window screen)) :unmapped)
++    (sxlib:unmap-window (screen-message-window screen))))
+ 
+ (defun unmap-all-message-windows ()
+   (mapc #'unmap-message-window *screen-list*)
+@@ -105,8 +105,8 @@
+ 
+ (defun unmap-frame-indicator-window (screen)
+   "Unmap the screen's message window, if it is mapped."
+-;;  (unless (eq (xlib:window-map-state (screen-frame-window screen)) :unmapped)
+-    (xlib:unmap-window (screen-frame-window screen)))
++;;  (unless (eq (sxlib:window-map-state (screen-frame-window screen)) :unmapped)
++    (sxlib:unmap-window (screen-frame-window screen)))
+ 
+ (defun unmap-all-frame-indicator-windows ()
+   (mapc #'unmap-frame-indicator-window *screen-list*)
+@@ -161,30 +161,30 @@
+             (font (screen-font (current-screen))))
+         ;; If it's already mapped it'll appear briefly in the wrong
+         ;; place, so unmap it first.
+-        (xlib:unmap-window w)
+-        (xlib:with-state (w)
+-          (setf (xlib:drawable-x w) (+ (frame-x frame)
+-                                       (truncate (- (frame-width frame) (xlib:text-width font string)) 2))
+-                (xlib:drawable-y w) (+ (frame-display-y group frame)
++        (sxlib:unmap-window w)
++        (sxlib:with-state (w)
++          (setf (sxlib:drawable-x w) (+ (frame-x frame)
++                                       (truncate (- (frame-width frame) (sxlib:text-width font string)) 2))
++                (sxlib:drawable-y w) (+ (frame-display-y group frame)
+                                        (truncate (- (frame-height frame) (font-height font)) 2))
+-                (xlib:window-priority w) :above))
+-        (xlib:map-window w)
++                (sxlib:window-priority w) :above))
++        (sxlib:map-window w)
+         (echo-in-window w font (screen-fg-color (current-screen)) (screen-bg-color (current-screen)) string)
+         (reset-frame-indicator-timer)))))
+ 
+ (defun echo-in-window (win font fg bg string)
+   (let* ((height (font-height font))
+-         (gcontext (xlib:create-gcontext :drawable win
++         (gcontext (sxlib:create-gcontext :drawable win
+                                          :font font
+                                          :foreground fg
+                                          :background bg))
+-         (width (xlib:text-width font string)))
+-    (xlib:with-state (win)
+-      (setf (xlib:drawable-height win) height
+-            (xlib:drawable-width win) width))
+-    (xlib:clear-area win)
+-    (xlib:display-finish-output *display*)
+-    (xlib:draw-image-glyphs win gcontext 0 (xlib:font-ascent font) string)))
++         (width (sxlib:text-width font string)))
++    (sxlib:with-state (win)
++      (setf (sxlib:drawable-height win) height
++            (sxlib:drawable-width win) width))
++    (sxlib:clear-area win)
++    (sxlib:display-finish-output *display*)
++    (sxlib:draw-image-glyphs win gcontext 0 (sxlib:font-ascent font) string)))
+ 
+ (defun push-last-message (screen strings highlights)
+   ;; only push unique messages
+@@ -219,7 +219,7 @@
+             (screen-current-msg-highlights screen)
+             highlights))
+     (push-last-message screen strings highlights)
+-    (xlib:display-finish-output *display*)
++    (sxlib:display-finish-output *display*)
+     ;; Set a timer to hide the message after a number of seconds
+     (if *suppress-echo-timeout*
+         ;; any left over timers need to be canceled.
+diff -Naur stumpwm-0.9.5.orig/mode-line.lisp stumpwm-0.9.5/mode-line.lisp
+--- stumpwm-0.9.5.orig/mode-line.lisp	2008-10-21 23:07:48.000000000 +0200
++++ stumpwm-0.9.5/mode-line.lisp	2008-12-23 05:08:54.000000000 +0100
+@@ -249,27 +249,27 @@
+ 
+ (defun make-mode-line-window (parent screen)
+   "Create a window suitable for a modeline."
+-  (xlib:create-window
++  (sxlib:create-window
+    :parent parent
+    :x 0 :y 0 :width 1 :height 1
+    :background (alloc-color screen *mode-line-background-color*)
+    :border (alloc-color screen *mode-line-border-color*)
+    :border-width *mode-line-border-width*
+    ;; You can click the modeline
+-   :event-mask (xlib:make-event-mask :button-press :exposure)
++   :event-mask (sxlib:make-event-mask :button-press :exposure)
+    ;; these windows are not controlled by the window manager
+    :override-redirect :on))
+ 
+ (defun resize-mode-line (ml)
+   (when (eq (mode-line-mode ml) :stump)
+     ;; This is a StumpWM mode-line
+-    (setf (xlib:drawable-height (mode-line-window ml)) (+ (* (1+ (count #\Newline (mode-line-contents ml) :test #'equal)) (font-height (xlib:gcontext-font (mode-line-gc ml)))) (* *mode-line-pad-y* 2))))
+-  (setf (xlib:drawable-width (mode-line-window ml)) (- (frame-width (mode-line-head ml)) (* 2 (xlib:drawable-border-width (mode-line-window ml))))
+-        (xlib:drawable-height (mode-line-window ml)) (min (xlib:drawable-height (mode-line-window ml)) (/ (head-height (mode-line-head ml)) 4))
+-        (mode-line-height ml) (+ (xlib:drawable-height (mode-line-window ml)) (* 2 (xlib:drawable-border-width (mode-line-window ml))))
++    (setf (sxlib:drawable-height (mode-line-window ml)) (+ (* (1+ (count #\Newline (mode-line-contents ml) :test #'equal)) (font-height (sxlib:gcontext-font (mode-line-gc ml)))) (* *mode-line-pad-y* 2))))
++  (setf (sxlib:drawable-width (mode-line-window ml)) (- (frame-width (mode-line-head ml)) (* 2 (sxlib:drawable-border-width (mode-line-window ml))))
++        (sxlib:drawable-height (mode-line-window ml)) (min (sxlib:drawable-height (mode-line-window ml)) (/ (head-height (mode-line-head ml)) 4))
++        (mode-line-height ml) (+ (sxlib:drawable-height (mode-line-window ml)) (* 2 (sxlib:drawable-border-width (mode-line-window ml))))
+         (mode-line-factor ml) (/ 1 (/ (head-height (mode-line-head ml)) (- (head-height (mode-line-head ml)) (mode-line-height ml))))
+-        (xlib:drawable-x (mode-line-window ml)) (head-x (mode-line-head ml))
+-        (xlib:drawable-y (mode-line-window ml)) (if (eq (mode-line-position ml) :top)
++        (sxlib:drawable-x (mode-line-window ml)) (head-x (mode-line-head ml))
++        (sxlib:drawable-y (mode-line-window ml)) (if (eq (mode-line-position ml) :top)
+                                                     (head-y (mode-line-head ml))
+                                                     (- (+ (head-y (mode-line-head ml)) (head-height (mode-line-head ml))) (mode-line-height ml)))))
+ 
+@@ -333,7 +333,7 @@
+   (mode-line-format-elt (mode-line-format ml)))
+ 
+ (defun make-mode-line-gc (window screen)
+-  (xlib:create-gcontext :drawable window
++  (sxlib:create-gcontext :drawable window
+                         :font (screen-font screen)
+                         :foreground (alloc-color screen *mode-line-foreground-color*)
+                         :background (alloc-color screen *mode-line-background-color*)))
+@@ -356,8 +356,8 @@
+                     :position *mode-line-position*
+                     :cc (make-ccontext :gc gc
+                                        :win w
+-                                       :default-fg (xlib:gcontext-foreground gc)
+-                                       :default-bg (xlib:gcontext-background gc)))))
++                                       :default-fg (sxlib:gcontext-foreground gc)
++                                       :default-bg (sxlib:gcontext-background gc)))))
+ 
+ (defun mode-line-current-group (ml)
+   (screen-current-group (mode-line-screen ml)))
+@@ -370,7 +370,7 @@
+       (when (or force (not (string= (mode-line-contents ml) string)))
+         (setf (mode-line-contents ml) string)
+         (resize-mode-line ml)
+-        (xlib:clear-area (mode-line-window ml))
++        (sxlib:clear-area (mode-line-window ml))
+         (render-strings (mode-line-screen ml) (mode-line-cc ml)
+                         *mode-line-pad-x*     *mode-line-pad-y*
+                         (split-string string (string #\Newline)) '())))))
+@@ -388,15 +388,15 @@
+ 
+ (defun set-mode-line-window (ml xwin)
+   "Use an external window as mode-line."
+-  (xlib:destroy-window (mode-line-window ml))
++  (sxlib:destroy-window (mode-line-window ml))
+   (setf (mode-line-window ml) xwin
+         (mode-line-mode ml) :visible
+-        (xlib:window-priority (mode-line-window ml)) :above)
++        (sxlib:window-priority (mode-line-window ml)) :above)
+   (resize-mode-line ml)
+   (sync-mode-line ml))
+ 
+ (defun destroy-mode-line-window (ml)
+-  (xlib:destroy-window (mode-line-window ml))
++  (sxlib:destroy-window (mode-line-window ml))
+   (setf (head-mode-line (mode-line-head ml)) nil)
+   (sync-mode-line ml))
+ 
+@@ -436,10 +436,10 @@
+ 
+ (defun place-mode-line-window (screen xwin)
+   (let ((ml (make-mode-line :window xwin :screen screen :mode :visible :position *mode-line-position*)))
+-    (xlib:reparent-window xwin (screen-root screen) 0 0)
+-    (when (update-mode-line-position ml (xlib:drawable-x xwin) (xlib:drawable-y xwin))
++    (sxlib:reparent-window xwin (screen-root screen) 0 0)
++    (when (update-mode-line-position ml (sxlib:drawable-x xwin) (sxlib:drawable-y xwin))
+       (resize-mode-line ml)
+-      (xlib:map-window xwin)
++      (sxlib:map-window xwin)
+       (sync-mode-line ml))))
+ 
+ (defun update-mode-lines (screen)
+@@ -480,22 +480,22 @@
+           (:visible
+            ;; Hide it.
+            (setf (mode-line-mode ml) :hidden)
+-           (xlib:unmap-window (mode-line-window ml)))
++           (sxlib:unmap-window (mode-line-window ml)))
+           (:hidden
+            ;; Show it.
+            (setf (mode-line-mode ml) :visible)
+-           (xlib:map-window (mode-line-window ml)))
++           (sxlib:map-window (mode-line-window ml)))
+           (:stump
+            ;; Delete it
+-           (xlib:destroy-window (mode-line-window ml))
+-           (xlib:free-gcontext (mode-line-gc ml))
++           (sxlib:destroy-window (mode-line-window ml))
++           (sxlib:free-gcontext (mode-line-gc ml))
+            (setf (head-mode-line head) nil)
+            (maybe-cancel-mode-line-timer)))
+         (progn
+           (setf (head-mode-line head) (make-head-mode-line screen head format))
+           (update-mode-line-color-context (head-mode-line head))
+           (resize-mode-line (head-mode-line head))
+-          (xlib:map-window (mode-line-window (head-mode-line head)))
++          (sxlib:map-window (mode-line-window (head-mode-line head)))
+           (redraw-mode-line (head-mode-line head))
+           (dformat 3 "modeline: ~s~%" (head-mode-line head))
+           ;; setup the timer
+diff -Naur stumpwm-0.9.5.orig/package.lisp stumpwm-0.9.5/package.lisp
+--- stumpwm-0.9.5.orig/package.lisp	2008-10-21 23:07:48.000000000 +0200
++++ stumpwm-0.9.5/package.lisp	2008-12-23 05:08:54.000000000 +0100
+@@ -18,6 +18,16 @@
+ ;; the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+ ;; Boston, MA 02111-1307 USA
+ 
++(defpackage :stumpwm-xlib
++  (:nicknames :sxlib)
++  (:use :cl :xlib)
++  (:shadow #:get-wm-class))
++
++(eval-when (:compile-toplevel :load-toplevel :execute)
++  (export (loop :for s :being :the :external-symbols :of :xlib
++                :collect (intern (symbol-name s) :stumpwm-xlib))
++          :stumpwm-xlib))
++
+ (defpackage :stumpwm
+   (:use :cl)
+   (:shadow #:yes-or-no-p #:y-or-n-p))
+diff -Naur stumpwm-0.9.5.orig/primitives.lisp stumpwm-0.9.5/primitives.lisp
+--- stumpwm-0.9.5.orig/primitives.lisp	2008-10-21 23:07:48.000000000 +0200
++++ stumpwm-0.9.5/primitives.lisp	2008-12-23 05:08:54.000000000 +0100
+@@ -430,7 +430,7 @@
+   frame-outline-width
+   font
+   ;; A list of all mapped windows. These are the raw
+-  ;; xlib:window's. window structures are stored in groups.
++  ;; sxlib:window's. window structures are stored in groups.
+   mapped-windows
+   ;; A list of withdrawn windows. These are of type stumpwm::window
+   ;; and when they're mapped again they'll be put back in the group
+@@ -635,7 +635,7 @@
+ (defun screen-display-string (screen)
+   (format nil "DISPLAY=~a:~d.~d"
+           (screen-host screen)
+-          (xlib:display-display *display*)
++          (sxlib:display-display *display*)
+           (screen-id screen)))
+ 
+ (defun split-string (string &optional (separators "
+@@ -822,8 +822,8 @@
+   "Controls whether hidden groups are displayed by 'groups' and 'vgroups' commands")
+ 
+ (defun font-height (font)
+-  (+ (xlib:font-descent font)
+-     (xlib:font-ascent font)))
++  (+ (sxlib:font-descent font)
++     (sxlib:font-ascent font)))
+ 
+ (defvar *x-selection* nil
+   "This holds stumpwm's current selection. It is generally set
+diff -Naur stumpwm-0.9.5.orig/screen.lisp stumpwm-0.9.5/screen.lisp
+--- stumpwm-0.9.5.orig/screen.lisp	2008-10-21 23:07:48.000000000 +0200
++++ stumpwm-0.9.5/screen.lisp	2008-12-23 05:08:54.000000000 +0100
+@@ -41,10 +41,10 @@
+ ;; Screen helper functions
+ 
+ (defun translate-id (src src-start src-end font dst dst-start)
+-  "A simple replacement for xlib:translate-default.  just the
++  "A simple replacement for sxlib:translate-default.  just the
+ identity with a range check."
+-  (let ((min (xlib:font-min-char font))
+-        (max (xlib:font-max-char font)))
++  (let ((min (sxlib:font-min-char font))
++        (max (sxlib:font-max-char font)))
+     (decf src-end)
+     (if (stringp src)      ; clx does this test so i guess it's needed
+         (loop for i from src-start to src-end
+@@ -73,21 +73,21 @@
+ 
+ (defun screen-height (screen)
+   (let ((root (screen-root screen)))
+-    (xlib:drawable-height root)))
++    (sxlib:drawable-height root)))
+ 
+ (defun screen-true-height (screen)
+   "Return the height of the screen regardless of the modeline"
+   (let ((root (screen-root screen)))
+-    (xlib:drawable-height root)))
++    (sxlib:drawable-height root)))
+ 
+ (defun screen-width (screen)
+   (let ((root (screen-root screen)))
+-    (xlib:drawable-width root)))
++    (sxlib:drawable-width root)))
+ 
+ (defun find-screen (root)
+   "Return the screen containing the root window."
+   (find-if (lambda (s)
+-             (xlib:window-equal (screen-root s) root))
++             (sxlib:window-equal (screen-root s) root))
+            *screen-list*))
+ 
+ (defun screen-windows (screen)
+@@ -97,20 +97,20 @@
+ 
+ (defun netwm-update-client-list-stacking (screen)
+   (unless *initializing*
+-    (xlib:change-property (screen-root screen)
++    (sxlib:change-property (screen-root screen)
+                           :_NET_CLIENT_LIST_STACKING
+                           ;; Order is bottom to top.
+                           (reverse (mapcar 'window-xwin (all-windows)))
+                           :window 32
+-                          :transform #'xlib:drawable-id
++                          :transform #'sxlib:drawable-id
+                           :mode :replace)))
+ 
+ (defun netwm-update-client-list (screen)
+-  (xlib:change-property (screen-root screen)
++  (sxlib:change-property (screen-root screen)
+                         :_NET_CLIENT_LIST
+                         (screen-mapped-windows screen)
+                         :window 32
+-                        :transform #'xlib:drawable-id
++                        :transform #'sxlib:drawable-id
+                         :mode :replace)
+   (netwm-update-client-list-stacking screen))
+ 
+@@ -144,23 +144,23 @@
+   (when (and screen
+              (not (eq screen (current-screen))))
+     (if (screen-focus screen)
+-        (xlib:set-input-focus *display* (window-xwin (screen-focus screen)) :POINTER-ROOT)
+-        (xlib:set-input-focus *display* (screen-focus-window screen) :POINTER-ROOT))
++        (sxlib:set-input-focus *display* (window-xwin (screen-focus screen)) :POINTER-ROOT)
++        (sxlib:set-input-focus *display* (screen-focus-window screen) :POINTER-ROOT))
+     (move-screen-to-head screen)))
+ 
+ (defun screen-set-focus (screen window)
+   (when (eq (window-group window)
+             (screen-current-group screen))
+     ;;(format t "FOCUS TO: ~a ~a~%" window (window-xwin window))
+-    ;;(format t "FOCUS BEFORE: ~a~%" (multiple-value-list (xlib:input-focus *display*)))
+-    ;;(format t "FOCUS RET: ~a~%" (xlib:set-input-focus *display* (window-xwin window) :POINTER-ROOT))
+-    (xlib:set-input-focus *display* (window-xwin window) :POINTER-ROOT)
+-    ;;(xlib:display-finish-output *display*)
+-    ;;(format t "FOCUS IS: ~a~%" (multiple-value-list (xlib:input-focus *display*)))
+-    (xlib:change-property (screen-root screen) :_NET_ACTIVE_WINDOW
++    ;;(format t "FOCUS BEFORE: ~a~%" (multiple-value-list (sxlib:input-focus *display*)))
++    ;;(format t "FOCUS RET: ~a~%" (sxlib:set-input-focus *display* (window-xwin window) :POINTER-ROOT))
++    (sxlib:set-input-focus *display* (window-xwin window) :POINTER-ROOT)
++    ;;(sxlib:display-finish-output *display*)
++    ;;(format t "FOCUS IS: ~a~%" (multiple-value-list (sxlib:input-focus *display*)))
++    (sxlib:change-property (screen-root screen) :_NET_ACTIVE_WINDOW
+                           (list (window-xwin window))
+                           :window 32
+-                          :transform #'xlib:drawable-id
++                          :transform #'sxlib:drawable-id
+                           :mode :replace)
+     (setf (screen-focus screen) window)
+     (move-screen-to-head screen)))
+@@ -174,47 +174,47 @@
+   (screen-current-window (current-screen)))
+ 
+ (defun register-window (window)
+-  (setf (gethash (xlib:window-id (window-xwin window)) *xwin-to-window*) window))
++  (setf (gethash (sxlib:window-id (window-xwin window)) *xwin-to-window*) window))
+ 
+ (defun unregister-window (xwin)
+-  (remhash (xlib:window-id xwin) *xwin-to-window*))
++  (remhash (sxlib:window-id xwin) *xwin-to-window*))
+ 
+ (defun window-by-id (id)
+   (gethash id *xwin-to-window*))
+ 
+ (defun find-window (xwin)
+-  (window-by-id (xlib:window-id xwin)))
++  (window-by-id (sxlib:window-id xwin)))
+ 
+ (defun find-window-by-parent (xwin &optional (windows (all-windows)))
+   (dformat 3 "find-window-by-parent!~%")
+-  (find xwin windows :key 'window-parent :test 'xlib:window-equal))
++  (find xwin windows :key 'window-parent :test 'sxlib:window-equal))
+ 
+ (defun screen-root (screen)
+-  (xlib:screen-root (screen-number screen)))
++  (sxlib:screen-root (screen-number screen)))
+ 
+ (defun update-colors-for-screen (screen)
+   (let ((fg (screen-fg-color screen))
+         (bg (screen-bg-color screen)))
+-    (setf (xlib:gcontext-foreground (screen-message-gc screen)) fg
+-          (xlib:gcontext-background (screen-message-gc screen)) bg
+-          (xlib:gcontext-foreground (screen-frame-outline-gc screen)) fg
+-          (xlib:gcontext-background (screen-frame-outline-gc screen)) bg
++    (setf (sxlib:gcontext-foreground (screen-message-gc screen)) fg
++          (sxlib:gcontext-background (screen-message-gc screen)) bg
++          (sxlib:gcontext-foreground (screen-frame-outline-gc screen)) fg
++          (sxlib:gcontext-background (screen-frame-outline-gc screen)) bg
+           (ccontext-default-fg (screen-message-cc screen)) fg
+           (ccontext-default-bg (screen-message-cc screen)) bg))
+   (dolist (i (list (screen-message-window screen)
+                    (screen-input-window screen)
+                    (screen-frame-window screen)))
+-    (setf (xlib:window-border i) (screen-border-color screen)
+-          (xlib:window-background i) (screen-bg-color screen)))
++    (setf (sxlib:window-border i) (screen-border-color screen)
++          (sxlib:window-background i) (screen-bg-color screen)))
+   ;; update the backgrounds of all the managed windows
+   (dolist (g (screen-groups screen))
+     (dolist (w (group-windows g))
+       (unless (eq w (group-current-window g))
+-        (setf (xlib:window-background (window-parent w)) (screen-win-bg-color screen))
+-        (xlib:clear-area (window-parent w)))))
++        (setf (sxlib:window-background (window-parent w)) (screen-win-bg-color screen))
++        (sxlib:clear-area (window-parent w)))))
+   (dolist (i (screen-withdrawn-windows screen))
+-    (setf (xlib:window-background (window-parent i)) (screen-win-bg-color screen))
+-    (xlib:clear-area (window-parent i)))
++    (setf (sxlib:window-background (window-parent i)) (screen-win-bg-color screen))
++    (sxlib:clear-area (window-parent i)))
+   (update-screen-color-context screen))
+ 
+ (defun update-colors-all-screens ()
+@@ -222,8 +222,8 @@
+   (mapc 'update-colors-for-screen *screen-list*))
+ 
+ (defun update-border-for-screen (screen)
+-  (setf (xlib:drawable-border-width (screen-input-window screen)) (screen-msg-border-width screen)
+-        (xlib:drawable-border-width (screen-message-window screen)) (screen-msg-border-width screen)))
++  (setf (sxlib:drawable-border-width (screen-input-window screen)) (screen-msg-border-width screen)
++        (sxlib:drawable-border-width (screen-message-window screen)) (screen-msg-border-width screen)))
+ 
+ (defun update-border-all-screens ()
+   "After setting the border width call this to sync any existing windows."
+@@ -231,20 +231,20 @@
+ 
+ (defun internal-window-p (screen win)
+   "Return t if win is a window used by stumpwm"
+-  (or (xlib:window-equal (screen-message-window screen) win)
+-      (xlib:window-equal (screen-input-window screen) win)
+-      (xlib:window-equal (screen-focus-window screen) win)
+-      (xlib:window-equal (screen-key-window screen) win)))
++  (or (sxlib:window-equal (screen-message-window screen) win)
++      (sxlib:window-equal (screen-input-window screen) win)
++      (sxlib:window-equal (screen-focus-window screen) win)
++      (sxlib:window-equal (screen-key-window screen) win)))
+ 
+ (defun color-exists-p (color)
+   (handler-case
+       (loop for i in *screen-list*
+-            always (xlib:lookup-color (xlib:screen-default-colormap (screen-number i)) color))
+-    (xlib:name-error () nil)))
++            always (sxlib:lookup-color (sxlib:screen-default-colormap (screen-number i)) color))
++    (sxlib:name-error () nil)))
+ 
+ (defun font-exists-p (font-name)
+   ;; if we can list the font then it exists
+-  (plusp (length (xlib:list-font-names *display* font-name :max-fonts 1))))
++  (plusp (length (sxlib:list-font-names *display* font-name :max-fonts 1))))
+ 
+ (defmacro set-any-color (val color)
+   `(progn (dolist (s *screen-list*)
+@@ -300,7 +300,7 @@
+   (check-type width (integer 0))
+   (dolist (i *screen-list*)
+     (setf (screen-frame-outline-width i) (if (oddp width) (1+ width) width)
+-          (xlib:gcontext-line-width (screen-frame-outline-gc i)) (screen-frame-outline-width i)))
++          (sxlib:gcontext-line-width (screen-frame-outline-gc i)) (screen-frame-outline-width i)))
+   (update-border-all-screens)
+   t)
+ 
+@@ -308,15 +308,15 @@
+   "Set the font for the message bar and input bar."
+   (when (font-exists-p font)
+     (dolist (i *screen-list*)
+-      (let ((fobj (xlib:open-font *display* (first (xlib:list-font-names *display* font :max-fonts 1)))))
+-        (xlib:close-font (screen-font i))
++      (let ((fobj (sxlib:open-font *display* (first (sxlib:list-font-names *display* font :max-fonts 1)))))
++        (sxlib:close-font (screen-font i))
+         (setf (screen-font i) fobj
+-              (xlib:gcontext-font (screen-message-gc i)) fobj)
++              (sxlib:gcontext-font (screen-message-gc i)) fobj)
+         ;; update the modelines too
+         (dolist (h (screen-heads i))
+           (when (and (head-mode-line h)
+                      (eq (mode-line-mode (head-mode-line h)) :stump))
+-            (setf (xlib:gcontext-font (mode-line-gc (head-mode-line h))) fobj)
++            (setf (sxlib:gcontext-font (mode-line-gc (head-mode-line h))) fobj)
+             (resize-mode-line (head-mode-line h))
+             (sync-mode-line (head-mode-line h))))))
+     t))
+@@ -334,39 +334,39 @@
+   "Set NETWM properties on the root window of the specified screen.
+ FOCUS-WINDOW is an extra window used for _NET_SUPPORTING_WM_CHECK."
+   (let* ((screen-number (screen-number screen))
+-         (root (xlib:screen-root screen-number)))
++         (root (sxlib:screen-root screen-number)))
+     ;; _NET_SUPPORTED
+-    (xlib:change-property root :_NET_SUPPORTED
++    (sxlib:change-property root :_NET_SUPPORTED
+                           (mapcar (lambda (a)
+-                                    (xlib:intern-atom *display* a))
++                                    (sxlib:intern-atom *display* a))
+                                   (append +netwm-supported+
+                                           (mapcar #'car +netwm-window-types+)))
+                           :atom 32)
+ 
+     ;; _NET_SUPPORTING_WM_CHECK
+-    (xlib:change-property root :_NET_SUPPORTING_WM_CHECK
++    (sxlib:change-property root :_NET_SUPPORTING_WM_CHECK
+                           (list focus-window) :window 32
+-                          :transform #'xlib:drawable-id)
+-    (xlib:change-property focus-window :_NET_SUPPORTING_WM_CHECK
++                          :transform #'sxlib:drawable-id)
++    (sxlib:change-property focus-window :_NET_SUPPORTING_WM_CHECK
+                           (list focus-window) :window 32
+-                          :transform #'xlib:drawable-id)
+-    (xlib:change-property focus-window :_NET_WM_NAME
++                          :transform #'sxlib:drawable-id)
++    (sxlib:change-property focus-window :_NET_WM_NAME
+                           "stumpwm"
+-                          :string 8 :transform #'xlib:char->card8)
++                          :string 8 :transform #'sxlib:char->card8)
+ 
+     ;; _NET_CLIENT_LIST
+-    (xlib:change-property root :_NET_CLIENT_LIST
++    (sxlib:change-property root :_NET_CLIENT_LIST
+                           () :window 32
+-                          :transform #'xlib:drawable-id)
++                          :transform #'sxlib:drawable-id)
+ 
+     ;; _NET_DESKTOP_GEOMETRY
+-    (xlib:change-property root :_NET_DESKTOP_GEOMETRY
+-                          (list (xlib:screen-width screen-number)
+-                                (xlib:screen-height screen-number))
++    (sxlib:change-property root :_NET_DESKTOP_GEOMETRY
++                          (list (sxlib:screen-width screen-number)
++                                (sxlib:screen-height screen-number))
+                           :cardinal 32)
+ 
+     ;; _NET_DESKTOP_VIEWPORT
+-    (xlib:change-property root :_NET_DESKTOP_VIEWPORT
++    (sxlib:change-property root :_NET_DESKTOP_VIEWPORT
+                           (list 0 0) :cardinal 32)
+ 
+     (netwm-set-group-properties screen)))
+@@ -375,17 +375,17 @@
+   "Given a screen number, returns a screen structure with initialized members"
+   ;; Listen for the window manager events on the root window
+   (dformat 1 "Initializing screen: ~a ~a~%" host id)
+-  (setf (xlib:window-event-mask (xlib:screen-root screen-number))
++  (setf (sxlib:window-event-mask (sxlib:screen-root screen-number))
+         '(:substructure-redirect
+           :substructure-notify
+           :property-change
+           :structure-notify
+           :button-press
+           :exposure))
+-  (xlib:display-finish-output *display*)
++  (sxlib:display-finish-output *display*)
+   ;; Initialize the screen structure
+   (labels ((ac (color)
+-             (xlib:alloc-color (xlib:screen-default-colormap screen-number) color)))
++             (sxlib:alloc-color (sxlib:screen-default-colormap screen-number) color)))
+     (let* ((screen (make-screen))
+            (fg (ac +default-foreground-color+))
+            (bg (ac +default-background-color+))
+@@ -393,37 +393,37 @@
+            (focus (ac +default-focus-color+))
+            (unfocus (ac +default-unfocus-color+))
+            (win-bg (ac +default-window-background-color+))
+-           (input-window (xlib:create-window :parent (xlib:screen-root screen-number)
++           (input-window (sxlib:create-window :parent (sxlib:screen-root screen-number)
+                                              :x 0 :y 0 :width 20 :height 20
+                                              :background bg
+                                              :border border
+                                              :border-width 1
+-                                             :colormap (xlib:screen-default-colormap
++                                             :colormap (sxlib:screen-default-colormap
+                                                         screen-number)
+                                              :event-mask '(:key-press :key-release)))
+-           (focus-window (xlib:create-window :parent (xlib:screen-root screen-number)
++           (focus-window (sxlib:create-window :parent (sxlib:screen-root screen-number)
+                                              :x 0 :y 0 :width 1 :height 1))
+-           (key-window (xlib:create-window :parent (xlib:screen-root screen-number)
++           (key-window (sxlib:create-window :parent (sxlib:screen-root screen-number)
+                                            :x 0 :y 0 :width 1 :height 1
+                                            :event-mask '(:key-press :key-release)))
+-           (message-window (xlib:create-window :parent (xlib:screen-root screen-number)
++           (message-window (sxlib:create-window :parent (sxlib:screen-root screen-number)
+                                                :x 0 :y 0 :width 1 :height 1
+                                                :background bg
+                                                :bit-gravity :north-east
+                                                :border border
+                                                :border-width 1
+-                                               :colormap (xlib:screen-default-colormap
++                                               :colormap (sxlib:screen-default-colormap
+                                                           screen-number)
+                                                :event-mask '(:exposure)))
+-           (frame-window (xlib:create-window :parent (xlib:screen-root screen-number)
++           (frame-window (sxlib:create-window :parent (sxlib:screen-root screen-number)
+                                              :x 0 :y 0 :width 20 :height 20
+                                              :background bg
+                                              :border border
+                                              :border-width 1
+-                                             :colormap (xlib:screen-default-colormap
++                                             :colormap (sxlib:screen-default-colormap
+                                                         screen-number)
+                                              :event-mask '(:exposure)))
+-           (font (xlib:open-font *display*
++           (font (sxlib:open-font *display*
+                                  (if (font-exists-p +default-font-name+)
+                                      +default-font-name+
+                                      "*")))
+@@ -433,8 +433,8 @@
+                    :name *default-group-name*)))
+       ;; Create our screen structure
+       ;; The focus window is mapped at all times
+-      (xlib:map-window focus-window)
+-      (xlib:map-window key-window)
++      (sxlib:map-window focus-window)
++      (sxlib:map-window key-window)
+       (xwin-grab-keys focus-window)
+       (setf (screen-number screen) screen-number
+             (screen-id screen) id
+@@ -456,18 +456,18 @@
+             (screen-frame-window screen) frame-window
+             (screen-ignore-msg-expose screen) 0
+             (screen-message-cc screen) (make-ccontext :win message-window
+-                                                      :gc (xlib:create-gcontext
++                                                      :gc (sxlib:create-gcontext
+                                                            :drawable message-window
+                                                            :font font
+                                                            :foreground fg
+                                                            :background bg))
+-            (screen-frame-outline-gc screen) (xlib:create-gcontext :drawable (screen-root screen)
++            (screen-frame-outline-gc screen) (sxlib:create-gcontext :drawable (screen-root screen)
+                                                                    :font font
+                                                                    :foreground fg
+                                                                    :background fg
+                                                                    :line-style :double-dash
+                                                                    :line-width +default-frame-outline-width+))
+-      (setf (screen-heads screen) (make-screen-heads screen (xlib:screen-root screen-number))
++      (setf (screen-heads screen) (make-screen-heads screen (sxlib:screen-root screen-number))
+             (tile-group-frame-tree group) (copy-heads screen)
+             (tile-group-current-frame group) (first (tile-group-frame-tree group)))
+       (netwm-set-properties screen focus-window)
+@@ -494,7 +494,7 @@
+ 
+ (defun make-screen-heads (screen root)
+   "or use xdpyinfo to query the xinerama extension, if it's enabled."
+-  (or (and (xlib:query-extension *display* "XINERAMA")
++  (or (and (sxlib:query-extension *display* "XINERAMA")
+            (with-current-screen screen
+              ;; Ignore 'clone' heads.
+              (loop
+@@ -510,8 +510,8 @@
+                 collect h)))
+       (list (make-head :number 0
+                        :x 0 :y 0
+-                       :width (xlib:drawable-width root)
+-                       :height (xlib:drawable-height root)
++                       :width (sxlib:drawable-width root)
++                       :height (sxlib:drawable-height root)
+                        :window nil))))
+ 
+ (defun copy-heads (screen)
+diff -Naur stumpwm-0.9.5.orig/selection.lisp stumpwm-0.9.5/selection.lisp
+--- stumpwm-0.9.5.orig/selection.lisp	2008-10-21 23:07:48.000000000 +0200
++++ stumpwm-0.9.5/selection.lisp	2008-12-23 05:08:54.000000000 +0100
+@@ -32,11 +32,11 @@
+   (let* ((screen (current-screen))
+          (selwin (screen-focus-window (current-screen)))
+          (root (screen-root screen)))
+-    (xlib:set-selection-owner *display* :primary selwin)
+-    (unless (xlib:window-equal (xlib:selection-owner *display* :primary) selwin)
++    (sxlib:set-selection-owner *display* :primary selwin)
++    (unless (sxlib:window-equal (sxlib:selection-owner *display* :primary) selwin)
+       (error "Can't set selection owner"))
+     ;; also set the cut buffer for completeness
+-    (xlib:change-property root :cut-buffer0 *x-selection* :string 8 :transform #'xlib:char->card8
++    (sxlib:change-property root :cut-buffer0 *x-selection* :string 8 :transform #'sxlib:char->card8
+                           :mode :replace)))
+ 
+ (defun set-x-selection (text)
+@@ -49,21 +49,21 @@
+   (cond
+     ;; they're requesting what targets are available
+     ((eq target :targets)
+-     (xlib:change-property requestor property (list :targets :string) target 8 :mode :replace))
++     (sxlib:change-property requestor property (list :targets :string) target 8 :mode :replace))
+     ;; send them a string
+     ((find target '(:string ))
+-     (xlib:change-property requestor property *x-selection* :string 8 :mode :replace :transform #'xlib:char->card8))
++     (sxlib:change-property requestor property *x-selection* :string 8 :mode :replace :transform #'sxlib:char->card8))
+     ;; we don't know how to handle anything else
+     (t
+      (setf property nil)))
+-  (xlib:send-event requestor :selection-notify nil
++  (sxlib:send-event requestor :selection-notify nil
+                    :display *display*
+                    :window requestor
+                    :selection selection
+                    :property property
+                    :target target
+                    :time time)
+-  (xlib:display-finish-output *display*))
++  (sxlib:display-finish-output *display*))
+ 
+ (defun get-x-selection (&optional timeout)
+   "Return the x selection no matter what client own it."
+@@ -72,15 +72,15 @@
+              (when (eq event-key :selection-notify)
+                (destructuring-bind (&key window property &allow-other-keys) event-slots
+                  (if property
+-                     (xlib:get-property window property :type :string :result-type 'string :transform #'xlib:card8->char :delete-p t)
++                     (sxlib:get-property window property :type :string :result-type 'string :transform #'sxlib:card8->char :delete-p t)
+                      "")))))
+     (if *x-selection*
+         *x-selection*
+         (progn
+-          (xlib:convert-selection :primary :string (screen-input-window (current-screen)) :stumpwm-selection)
++          (sxlib:convert-selection :primary :string (screen-input-window (current-screen)) :stumpwm-selection)
+           ;; Note: this may spend longer than timeout in this loop but it will eventually return.
+           (let ((time (get-internal-real-time)))
+-            (loop for ret = (xlib:process-event *display* :handler #'wait-for-selection :timeout timeout :discard-p nil)
++            (loop for ret = (sxlib:process-event *display* :handler #'wait-for-selection :timeout timeout :discard-p nil)
+                   when (or ret
+                            (> (/ (- time (get-internal-real-time)) internal-time-units-per-second)
+                               timeout))
+diff -Naur stumpwm-0.9.5.orig/stumpwm.lisp stumpwm-0.9.5/stumpwm.lisp
+--- stumpwm-0.9.5.orig/stumpwm.lisp	2008-10-21 23:07:48.000000000 +0200
++++ stumpwm-0.9.5/stumpwm.lisp	2008-12-23 05:08:54.000000000 +0100
+@@ -56,9 +56,9 @@
+   (cond 
+     ;; ignore asynchronous window errors
+     ((and asynchronous
+-          (find error-key '(xlib:window-error xlib:drawable-error xlib:match-error)))
++          (find error-key '(sxlib:window-error sxlib:drawable-error sxlib:match-error)))
+      (dformat 4 "Ignoring error: ~s~%" error-key))
+-    ((eq error-key 'xlib:access-error)
++    ((eq error-key 'sxlib:access-error)
+      (write-line "Another window manager is running.")
+      (throw :top-level :quit))
+      ;; all other asynchronous errors are printed.
+@@ -144,7 +144,7 @@
+   (loop
+      (run-hook *internal-loop-hook*)
+      (handler-bind
+-         ((xlib:lookup-error (lambda (c)
++         ((sxlib:lookup-error (lambda (c)
+                                (if (lookup-error-recoverable-p)
+                                    (recover-from-lookup-error)
+                                    (error c))))
+@@ -169,16 +169,16 @@
+        (let ((timeout (get-next-timeout *timer-list*)))
+          (dformat 10 "timeout: ~a~%" timeout)
+          (if timeout
+-             (let* ((nevents (xlib:event-listen *display* (ceiling timeout))))
++             (let* ((nevents (sxlib:event-listen *display* (ceiling timeout))))
+                (setf *timer-list* (run-expired-timers *timer-list*))
+                (when nevents
+-                 (xlib:process-event *display* :handler #'handle-event)))
++                 (sxlib:process-event *display* :handler #'handle-event)))
+              ;; Otherwise, simply wait for an event
+-             (xlib:process-event *display* :handler #'handle-event))
++             (sxlib:process-event *display* :handler #'handle-event))
+          ;; flush any pending output. You'd think process-event would, but
+          ;; it seems not.
+-         (xlib:display-finish-output *display*)
+-         ;;(dformat 10 "toplevel focus: ~a~%" (multiple-value-list (xlib:input-focus *display*)))
++         (sxlib:display-finish-output *display*)
++         ;;(dformat 10 "toplevel focus: ~a~%" (multiple-value-list (sxlib:input-focus *display*)))
+          ))))
+ 
+ (defun parse-display-string (display)
+@@ -200,8 +200,8 @@
+ (defun stumpwm-internal (display-str)
+   (multiple-value-bind (host display screen protocol) (parse-display-string display-str)
+     (declare (ignore screen))
+-    (setf *display* (xlib:open-display host :display display :protocol protocol)
+-          (xlib:display-error-handler *display*) 'error-handler)
++    (setf *display* (sxlib:open-display host :display display :protocol protocol)
++          (sxlib:display-error-handler *display*) 'error-handler)
+     (with-simple-restart (quit-stumpwm "Quit Stumpwm")
+       ;; In the event of an error, we always need to close the display
+       (unwind-protect
+@@ -210,10 +210,10 @@
+                ;; we need to do this first because init-screen grabs keys
+                (update-modifier-map)
+                ;; Initialize all the screens
+-               (setf *screen-list* (loop for i in (xlib:display-roots *display*)
++               (setf *screen-list* (loop for i in (sxlib:display-roots *display*)
+                                       for n from 0
+                                       collect (init-screen i n host)))
+-               (xlib:display-finish-output *display*)
++               (sxlib:display-finish-output *display*)
+                ;; Load rc file
+                (let ((*package* (find-package *default-package*)))
+                  (multiple-value-bind (success err rc) (load-rc-file)
+@@ -239,7 +239,7 @@
+                          (focus-frame g (window-frame window))
+                          (focus-frame g (tile-group-current-frame g)))))
+                  ;; switch to the (old) current group.
+-                 (let ((netwm-id (first (xlib:get-property (screen-root s) :_NET_CURRENT_DESKTOP))))
++                 (let ((netwm-id (first (sxlib:get-property (screen-root s) :_NET_CURRENT_DESKTOP))))
+                    (when (and netwm-id (< netwm-id (length (screen-groups s))))
+                      (switch-to-group (elt (sort-groups s) netwm-id))))
+                  (redraw-current-message (current-screen))))
+@@ -247,7 +247,7 @@
+              (let ((*package* (find-package *default-package*)))
+                (run-hook *start-hook*)
+                (stumpwm-internal-loop)))
+-        (xlib:close-display *display*))))
++        (sxlib:close-display *display*))))
+   ;; what should the top level loop do?
+   :quit)
+ 
+diff -Naur stumpwm-0.9.5.orig/test-wm.lisp stumpwm-0.9.5/test-wm.lisp
+--- stumpwm-0.9.5.orig/test-wm.lisp	2008-10-21 23:07:48.000000000 +0200
++++ stumpwm-0.9.5/test-wm.lisp	2008-12-23 05:08:54.000000000 +0100
+@@ -16,145 +16,145 @@
+       (incf *current-test-num*))))
+ 
+ (define-test (dpy screen)
+-    (let ((w (xlib:create-window :parent (xlib:screen-root screen)
++    (let ((w (sxlib:create-window :parent (sxlib:screen-root screen)
+                                  :x 10 :y 10 :width 100 :height 100 :border-width 1)))
+-      (xlib:map-window w)
+-      (xlib:display-finish-output dpy)
+-      (xlib:destroy-window w)
+-      (xlib:display-finish-output dpy)))
++      (sxlib:map-window w)
++      (sxlib:display-finish-output dpy)
++      (sxlib:destroy-window w)
++      (sxlib:display-finish-output dpy)))
+ 
+ (define-test (dpy screen)
+-    (let ((w (xlib:create-window :parent (xlib:screen-root screen)
++    (let ((w (sxlib:create-window :parent (sxlib:screen-root screen)
+                                  :x 10 :y 10 :width 100 :height 100 :border-width 1)))
+-      (xlib:map-window w)
+-      (xlib:display-finish-output dpy)
++      (sxlib:map-window w)
++      (sxlib:display-finish-output dpy)
+       (sleep 1)
+-      (setf (xlib:window-priority w) :above)
+-      ;;       (setf (xlib:drawable-border-width w) 3)
+-      (xlib:display-finish-output dpy)
+-      (xlib:destroy-window w)
+-      (xlib:display-finish-output dpy)))
++      (setf (sxlib:window-priority w) :above)
++      ;;       (setf (sxlib:drawable-border-width w) 3)
++      (sxlib:display-finish-output dpy)
++      (sxlib:destroy-window w)
++      (sxlib:display-finish-output dpy)))
+ 
+ (define-test (dpy screen)
+     (let ((windows (loop for i from 0 to 100
+-                         collect (let ((w (xlib:create-window :parent (xlib:screen-root screen)
++                         collect (let ((w (sxlib:create-window :parent (sxlib:screen-root screen)
+                                                               :x 10 :y 10 :width 100 :height 100 :border-width 1)))
+-                                   (xlib:map-window w)
+-                                   (xlib:display-finish-output dpy)
+-                                   (setf (xlib:window-priority w) :above)
++                                   (sxlib:map-window w)
++                                   (sxlib:display-finish-output dpy)
++                                   (setf (sxlib:window-priority w) :above)
+                                    w))))
+-      (xlib:display-finish-output dpy)
++      (sxlib:display-finish-output dpy)
+       (loop for i in windows do
+-            (xlib:unmap-window i))
+-      (xlib:display-finish-output dpy)
++            (sxlib:unmap-window i))
++      (sxlib:display-finish-output dpy)
+       (sleep 3)
+       (loop for i in windows do
+-            (xlib:destroy-window i))))
++            (sxlib:destroy-window i))))
+ 
+ ;; (define-test (dpy screen)
+ ;;     (let ((windows (loop for i from 0 to 100
+-;;                    collect (let ((w (xlib:create-window :parent (xlib:screen-root screen)
++;;                    collect (let ((w (sxlib:create-window :parent (sxlib:screen-root screen)
+ ;;                                                         :x 10 :y 10 :width 100 :height 100 :border-width 1)))
+-;;                              (xlib:map-window w)
+-;;                              (xlib:display-finish-output dpy)
+-;;                              (setf (xlib:window-priority w) :above)
++;;                              (sxlib:map-window w)
++;;                              (sxlib:display-finish-output dpy)
++;;                              (setf (sxlib:window-priority w) :above)
+ ;;                              w))))
+-;;       (xlib:display-finish-output dpy)
++;;       (sxlib:display-finish-output dpy)
+ ;;       (loop for i in windows do
+-;;         (xlib:unmap-window i))
+-;;       (xlib:display-finish-output dpy)
++;;         (sxlib:unmap-window i))
++;;       (sxlib:display-finish-output dpy)
+ ;;       (sleep 3)
+ ;;       (loop for i in windows do
+-;;         (xlib:destroy-window i))))
++;;         (sxlib:destroy-window i))))
+ 
+ (define-test (dpy screen)
+-    (let ((w (xlib:create-window :parent (xlib:screen-root screen)
++    (let ((w (sxlib:create-window :parent (sxlib:screen-root screen)
+                                  :x 10 :y 10 :width 100 :height 100 :border-width 1)))
+-      (xlib:map-window w)
+-      (setf (xlib:window-priority w) :above)
+-      (xlib:display-finish-output dpy)
+-      (xlib:unmap-window w)
+-      (setf (xlib:drawable-x w) 5)
+-      (xlib:display-finish-output dpy)))
++      (sxlib:map-window w)
++      (setf (sxlib:window-priority w) :above)
++      (sxlib:display-finish-output dpy)
++      (sxlib:unmap-window w)
++      (setf (sxlib:drawable-x w) 5)
++      (sxlib:display-finish-output dpy)))
+ 
+ (define-test (dpy screen)
+     ;; create a window and set its role after being mapped
+-    (let ((w (xlib:create-window :parent (xlib:screen-root screen)
++    (let ((w (sxlib:create-window :parent (sxlib:screen-root screen)
+                                  :x 10 :y 10 :width 100 :height 100 :border-width 1)))
+-      (xlib:map-window w)
+-      (xlib:display-finish-output dpy)
++      (sxlib:map-window w)
++      (sxlib:display-finish-output dpy)
+       (sleep 1)
+-      (xlib:change-property w
++      (sxlib:change-property w
+                             :WM_WINDOW_ROLE
+                             (map 'list 'char-code "rad dude")
+                             :string
+                             8)
+-      (xlib:display-finish-output dpy)
++      (sxlib:display-finish-output dpy)
+       (sleep 10)))
+ 
+ (defun break-display-xid-cache ()
+   (labels ((make-win (dpy)
+-             (xlib:create-window :parent (xlib:screen-root (first (xlib:display-roots dpy))) :x 0 :y 0 :width 50 :height 50))
++             (sxlib:create-window :parent (sxlib:screen-root (first (sxlib:display-roots dpy))) :x 0 :y 0 :width 50 :height 50))
+            (make-pixmap (window)
+-             (xlib:create-pixmap :width (random 100) :height (random 100) :depth 8 :drawable window))
++             (sxlib:create-pixmap :width (random 100) :height (random 100) :depth 8 :drawable window))
+            (first-pass (dpy)
+              ;; Open a fresh connection. Create a window and a pixmap.
+-             (let* ((dpy2 (xlib:open-default-display))
++             (let* ((dpy2 (sxlib:open-default-display))
+                     (window (make-win dpy2))
+                     (pixmap (make-pixmap window)))
+                ;; make the pixmap the window's icon pixmap hint. 
+-               (setf (xlib:wm-hints window) (xlib:make-wm-hints :icon-pixmap pixmap))
+-               (format t "Window ID: ~s pixmap ID: ~s~%" (xlib:window-id window) (xlib:pixmap-id pixmap))
+-               (xlib:map-window window)
+-               (xlib:display-finish-output dpy2)
++               (setf (sxlib:wm-hints window) (sxlib:make-wm-hints :icon-pixmap pixmap))
++               (format t "Window ID: ~s pixmap ID: ~s~%" (sxlib:window-id window) (sxlib:pixmap-id pixmap))
++               (sxlib:map-window window)
++               (sxlib:display-finish-output dpy2)
+                (sleep 1)
+                ;; On the old connection, list the root window children
+                ;; and the icon pixmap hint to cache their XIDs.
+-               (loop for w in (xlib:query-tree (xlib:screen-root (first (xlib:display-roots dpy))))
+-                  for hints = (xlib:wm-hints w)
++               (loop for w in (sxlib:query-tree (sxlib:screen-root (first (sxlib:display-roots dpy))))
++                  for hints = (sxlib:wm-hints w)
+                   when hints
+-                  do (format t "top level window id: ~s | icon pixmap hint: ~s~%" (xlib:window-id w) (xlib:wm-hints-icon-pixmap hints)))
+-               (xlib:close-display dpy2)))
++                  do (format t "top level window id: ~s | icon pixmap hint: ~s~%" (sxlib:window-id w) (sxlib:wm-hints-icon-pixmap hints)))
++               (sxlib:close-display dpy2)))
+            (second-pass (dpy)
+              ;; Open a fresh connection and create 2 windows.
+-             (let* ((dpy2 (xlib:open-default-display))
++             (let* ((dpy2 (sxlib:open-default-display))
+                     (window1 (make-win dpy2))
+                     (window2 (make-win dpy2)))
+-               (format t "Window#1 ID: ~s Window#2 ID: ~s~%" (xlib:window-id window1) (xlib:window-id window2))
+-               (xlib:display-finish-output dpy2)
++               (format t "Window#1 ID: ~s Window#2 ID: ~s~%" (sxlib:window-id window1) (sxlib:window-id window2))
++               (sxlib:display-finish-output dpy2)
+                ;; On the old connection, list the root window children
+                ;; and note the second window is erroneously a pixmap
+                ;; due to too agressive caching in clx.
+-               (loop for w in (xlib:query-tree (xlib:screen-root (first (xlib:display-roots dpy))))
++               (loop for w in (sxlib:query-tree (sxlib:screen-root (first (sxlib:display-roots dpy))))
+                   do (format t "window: ~s~%" w))
+-               (xlib:close-display dpy2))))
+-    (let ((dpy (xlib:open-default-display)))
++               (sxlib:close-display dpy2))))
++    (let ((dpy (sxlib:open-default-display)))
+       (first-pass dpy)
+       (second-pass dpy)
+-      (xlib:close-display dpy))))
++      (sxlib:close-display dpy))))
+ 
+ (defun test-wm-class (map-p)
+   "Test the robustness of CLX's wm-class function. If MAP-P is T then
+ map the window. Useful if you want to test the running window
+ manager."
+   (labels ((test-it (w &rest strings)
+-             (xlib:change-property w :WM_CLASS
+-                                   (apply #'concatenate '(vector xlib:card8)
++             (sxlib:change-property w :WM_CLASS
++                                   (apply #'concatenate '(vector sxlib:card8)
+                                           strings)
+                                    :string 8)
+-             (print (multiple-value-list (xlib:get-wm-class w)))
++             (print (multiple-value-list (sxlib:get-wm-class w)))
+              ;; give the wm a chance to try out the value
+              (when map-p
+                (sleep 1)))
+            (convert (s)
+-             (map '(vector xlib:card8) #'xlib:char->card8 s)))
+-    (let* ((dpy (xlib:open-default-display))
+-           (screen (first (xlib:display-roots dpy)))
+-           (root (xlib:screen-root screen))
+-           (win (xlib:create-window :parent root :x 0 :y 0 :width 100 :height 100 :background (xlib:screen-white-pixel screen))))
++             (map '(vector sxlib:card8) #'sxlib:char->card8 s)))
++    (let* ((dpy (sxlib:open-default-display))
++           (screen (first (sxlib:display-roots dpy)))
++           (root (sxlib:screen-root screen))
++           (win (sxlib:create-window :parent root :x 0 :y 0 :width 100 :height 100 :background (sxlib:screen-white-pixel screen))))
+       (unwind-protect
+            (when map-p
+-             (xlib:map-window win))
++             (sxlib:map-window win))
+            (progn
+              (test-it win
+                       (convert "string 1")
+@@ -183,7 +183,7 @@
+                       #(0))
+              (test-it win
+                       (convert "Blinky The Cloon")))
+-        (xlib:close-display dpy))
++        (sxlib:close-display dpy))
+       (values))))
+ 
+ (defun get-wm-hints ()
+@@ -193,12 +193,12 @@
+ 
+ so run this function on clisp and sbcl and compare the numbers. This
+ assumes you're running a reparenting wm."
+-  (let ((dpy (xlib:open-default-display)))
++  (let ((dpy (sxlib:open-default-display)))
+     (write-line "you gotta have some windows open for this to work.")
+-    (dolist (top (xlib:query-tree (xlib:screen-root (first (xlib:display-roots dpy)))))
+-      (dolist (w (xlib:query-tree top))
+-        (format t "~s ~s: ~s~%" w (xlib:wm-name w) (xlib:get-property w :WM_HINTS :type :WM_HINTS :result-type 'vector))))
+-    (xlib:close-display dpy)))
++    (dolist (top (sxlib:query-tree (sxlib:screen-root (first (sxlib:display-roots dpy)))))
++      (dolist (w (sxlib:query-tree top))
++        (format t "~s ~s: ~s~%" w (sxlib:wm-name w) (sxlib:get-property w :WM_HINTS :type :WM_HINTS :result-type 'vector))))
++    (sxlib:close-display dpy)))
+ 
+ (defun parse-display-string (display)
+   "Parse an X11 DISPLAY string and return the host and display from it."
+@@ -213,13 +213,13 @@
+ 
+ (defun test-wm (display-str)
+   (multiple-value-bind (host display) (parse-display-string display-str)
+-    (setf *dpy* (xlib:open-display host :display display :protocol nil))
++    (setf *dpy* (sxlib:open-display host :display display :protocol nil))
+     (let* ((dpy *dpy*)
+-           (screen (first (xlib:display-roots dpy))))
++           (screen (first (sxlib:display-roots dpy))))
+       (unwind-protect
+            (progn
+              ;;              (dolist (i *tests*)
+              ;;                (funcall i dpy screen))
+              (funcall (car *tests*) dpy screen)
+              )
+-        (xlib:close-display *dpy*)))))
++        (sxlib:close-display *dpy*)))))
+diff -Naur stumpwm-0.9.5.orig/user.lisp stumpwm-0.9.5/user.lisp
+--- stumpwm-0.9.5.orig/user.lisp	2008-10-21 23:07:48.000000000 +0200
++++ stumpwm-0.9.5/user.lisp	2008-12-23 05:08:54.000000000 +0100
+@@ -81,8 +81,8 @@
+       (:window
+        (when window
+          (let ((win (window-parent window)))
+-           (setf x (1- (+ (xlib:drawable-x win) (xlib:drawable-width win)))
+-                 y (1- (+ (xlib:drawable-y win) (xlib:drawable-height win))))))))
++           (setf x (1- (+ (sxlib:drawable-x win) (sxlib:drawable-width win)))
++                 y (1- (+ (sxlib:drawable-y win) (sxlib:drawable-height win))))))))
+     (warp-pointer (group-screen group) x y)))
+ 
+ (defcommand banish (&optional where) (:rest)
+diff -Naur stumpwm-0.9.5.orig/window.lisp stumpwm-0.9.5/window.lisp
+--- stumpwm-0.9.5.orig/window.lisp	2008-10-21 23:07:48.000000000 +0200
++++ stumpwm-0.9.5/window.lisp	2008-12-23 05:08:54.000000000 +0100
+@@ -56,23 +56,23 @@
+ (defun window-clear-urgency (window)
+   "Clear the urgency bit and/or _NET_WM_STATE_DEMANDS_ATTENTION on
+ WINDOW"
+-  (let* ((hints (xlib:wm-hints (window-xwin window)))
+-         (flags (when hints (xlib:wm-hints-flags hints))))
++  (let* ((hints (sxlib:wm-hints (window-xwin window)))
++         (flags (when hints (sxlib:wm-hints-flags hints))))
+     (when flags
+-      (setf (xlib:wm-hints-flags hints)
++      (setf (sxlib:wm-hints-flags hints)
+             ;; XXX: as of clisp 2.46 flags is a list, not a number.
+             (if (listp flags)
+                 (remove :urgency flags)
+                 (logand (lognot 256) flags)))
+-      (setf (xlib:wm-hints (window-xwin window)) hints)))
++      (setf (sxlib:wm-hints (window-xwin window)) hints)))
+   (remove-wm-state (window-xwin window) :_NET_WM_STATE_DEMANDS_ATTENTION)
+   (unregister-urgent-window window))
+ 
+ (defun window-urgent-p (window)
+   "Returns T if WINDOW has the urgency bit and/or
+ _NET_WM_STATE_DEMANDS_ATTENTION set"
+-  (let* ((hints (xlib:wm-hints (window-xwin window)))
+-         (flags (when hints (xlib:wm-hints-flags hints))))
++  (let* ((hints (sxlib:wm-hints (window-xwin window)))
++         (flags (when hints (sxlib:wm-hints-flags hints))))
+     ;; XXX: as of clisp 2.46 flags is a list, not a number.
+     (or (and flags (if (listp flags)
+                        (find :urgency flags)
+@@ -131,8 +131,8 @@
+ 
+ (defun x-of (window filter)
+   (let* ((root (screen-root (window-screen window)))
+-         (root-id (xlib:drawable-id root))
+-         (win-id (xlib:window-id (window-xwin window))))
++         (root-id (sxlib:drawable-id root))
++         (win-id (sxlib:window-id (window-xwin window))))
+     (loop for w in (funcall filter (window-gang window))
+           as tr = (window-transient-for w)
+           when (or (not tr)             ; modal for group
+@@ -156,7 +156,7 @@
+ (defun shadows-of (window)
+   "Given modal window WINDOW return the list of windows in its shadow."
+   (let* ((root (screen-root (window-screen window)))
+-         (root-id (xlib:drawable-id root))
++         (root-id (sxlib:drawable-id root))
+          (tr (window-transient-for window)))
+     (cond
+       ((or (not tr)
+@@ -204,7 +204,7 @@
+       *default-window-name*))
+ 
+ (defun window-id (window)
+-  (xlib:window-id (window-xwin window)))
++  (sxlib:window-id (window-xwin window)))
+ 
+ (defun window-in-current-group-p (window)
+   (eq (window-group window)
+@@ -221,20 +221,20 @@
+                       (eq (group-current-window group) window))
+                  (screen-focus-color screen)
+                  (screen-unfocus-color screen))))
+-      (setf (xlib:window-border (window-parent window)) c
++      (setf (sxlib:window-border (window-parent window)) c
+             ;; windows that dont fill the entire screen have a transparent background.
+-            (xlib:window-background (window-parent window))
++            (sxlib:window-background (window-parent window))
+             (if (eq (window-type window) :normal)
+                 (if (eq *window-border-style* :thick)
+                     c
+                     (screen-win-bg-color screen))
+                 :none))
+       ;; get the background updated
+-      (xlib:clear-area (window-parent window)))))
++      (sxlib:clear-area (window-parent window)))))
+ 
+ (defun send-client-message (window type &rest data)
+   "Send a client message to a client's window."
+-  (xlib:send-event (window-xwin window)
++  (sxlib:send-event (window-xwin window)
+                    :client-message nil
+                    :window (window-xwin window)
+                    :type type
+@@ -262,9 +262,9 @@
+ ;;   ;; sorta grabbed. But i dunno how to properly draw them.
+ ;;   (let* ((screen (window-screen window)))
+ ;;     (if (window-marked window)
+-;;      (xlib:draw-rectangle (window-parent window) (screen-marked-gc (window-screen window))
++;;      (sxlib:draw-rectangle (window-parent window) (screen-marked-gc (window-screen window))
+ ;;                           0 0 300 200 t)
+-;;      (xlib:clear-area (window-parent window)))))
++;;      (sxlib:clear-area (window-parent window)))))
+ 
+ (defun get-normalized-normal-hints (xwin)
+   (macrolet ((validate-hint (fn)
+@@ -272,7 +272,7 @@
+                `(setf (,fn hints) (and (,fn hints)
+                                        (plusp (,fn hints))
+                                        (,fn hints)))))
+-    (let ((hints (xlib:wm-normal-hints xwin)))
++    (let ((hints (sxlib:wm-normal-hints xwin)))
+       (when hints
+         (validate-hint :min-width)
+         (validate-hint :min-height)
+@@ -288,14 +288,14 @@
+ 
+ (defun xwin-net-wm-name (win)
+   "Return the netwm wm name"
+-  (let ((name (xlib:get-property win :_NET_WM_NAME)))
++  (let ((name (sxlib:get-property win :_NET_WM_NAME)))
+     (when name
+       (utf8-to-string name))))
+ 
+ (defun xwin-name (win)
+   (or
+    (xwin-net-wm-name win)
+-   (xlib:wm-name win)))
++   (sxlib:wm-name win)))
+ 
+ ;; FIXME: should we raise the winodw or its parent?
+ (defun raise-window (win)
+@@ -306,23 +306,23 @@
+     (unhide-window win)
+     (update-configuration win))
+   (when (window-in-current-group-p win)
+-    (setf (xlib:window-priority (window-parent win)) :top-if)))
++    (setf (sxlib:window-priority (window-parent win)) :top-if)))
+ 
+ ;; some handy wrappers
+ 
+ (defun true-height (win)
+-  (xlib:with-state (win)
+-    (+ (xlib:drawable-height win) (* (xlib:drawable-border-width win) 2))))
++  (sxlib:with-state (win)
++    (+ (sxlib:drawable-height win) (* (sxlib:drawable-border-width win) 2))))
+ 
+ (defun true-width (win)
+-  (xlib:with-state (win)
+-    (+ (xlib:drawable-width win) (* (xlib:drawable-border-width win) 2))))
++  (sxlib:with-state (win)
++    (+ (sxlib:drawable-width win) (* (sxlib:drawable-border-width win) 2))))
+ 
+ (defun xwin-border-width (win)
+-  (xlib:drawable-border-width win))
++  (sxlib:drawable-border-width win))
+ 
+ (defun (setf xwin-border-width) (width win)
+-  (setf (xlib:drawable-border-width win) width))
++  (setf (sxlib:drawable-border-width win) width))
+ 
+ (defun default-border-width-for-type (window)
+   (or (and (xwin-maxsize-p (window-xwin window))
+@@ -333,18 +333,18 @@
+         ((:transient :dialog) *transient-border-width*))))
+ 
+ (defun xwin-class (win)
+-  (multiple-value-bind (res class) (xlib:get-wm-class win)
++  (multiple-value-bind (res class) (sxlib:get-wm-class win)
+     (declare (ignore res))
+     class))
+ 
+ (defun xwin-res-name (win)
+-  (multiple-value-bind (res class) (xlib:get-wm-class win)
++  (multiple-value-bind (res class) (sxlib:get-wm-class win)
+     (declare (ignore class))
+     res))
+ 
+ (defun xwin-role (win)
+   "Return WM_WINDOW_ROLE"
+-  (let ((name (xlib:get-property win :WM_WINDOW_ROLE)))
++  (let ((name (sxlib:get-property win :WM_WINDOW_ROLE)))
+     (dformat 10 "role: ~a~%" name)
+     (if name
+         (utf8-to-string name)
+@@ -376,7 +376,7 @@
+ 
+ (defun (setf xwin-state) (state xwin)
+   "Set the state (iconic, normal, withdrawn) of a window."
+-  (xlib:change-property xwin
++  (sxlib:change-property xwin
+                         :WM_STATE
+                         (list state)
+                         :WM_STATE
+@@ -384,31 +384,31 @@
+ 
+ (defun xwin-state (xwin)
+   "Get the state (iconic, normal, withdraw of a window."
+-  (first (xlib:get-property xwin :WM_STATE)))
++  (first (sxlib:get-property xwin :WM_STATE)))
+ 
+ (defun window-hidden-p (window)
+   (eql (window-state window) +iconic-state+))
+ 
+ (defun add-wm-state (xwin state)
+-  (xlib:change-property xwin :_NET_WM_STATE
+-                        (list (xlib:find-atom *display* state))
++  (sxlib:change-property xwin :_NET_WM_STATE
++                        (list (sxlib:find-atom *display* state))
+                         :atom 32
+                         :mode :append))
+ 
+ (defun remove-wm-state (xwin state)
+-  (xlib:change-property xwin :_NET_WM_STATE
+-                        (delete (xlib:find-atom *display* state) (xlib:get-property xwin :_NET_WM_STATE))
++  (sxlib:change-property xwin :_NET_WM_STATE
++                        (delete (sxlib:find-atom *display* state) (sxlib:get-property xwin :_NET_WM_STATE))
+                         :atom 32))
+ 
+ (defun window-property (window prop)
+-  (xlib:get-property (window-xwin window) prop))
++  (sxlib:get-property (window-xwin window) prop))
+ 
+ (defun find-wm-state (xwin state)
+-  (find (xlib:find-atom *display* state) (xlib:get-property xwin :_NET_WM_STATE) :test #'=))
++  (find (sxlib:find-atom *display* state) (sxlib:get-property xwin :_NET_WM_STATE) :test #'=))
+ 
+ (defun xwin-unhide (xwin parent)
+-  (xlib:map-subwindows parent)
+-  (xlib:map-window parent)
++  (sxlib:map-subwindows parent)
++  (sxlib:map-window parent)
+   (setf (xwin-state xwin) +normal-state+))
+ 
+ (defun unhide-window (window)
+@@ -419,14 +419,14 @@
+   (remove-wm-state (window-xwin window) :_NET_WM_STATE_HIDDEN))
+ 
+ ;; Despite the naming convention, this function takes a window struct,
+-;; not an xlib:window.
++;; not an sxlib:window.
+ (defun xwin-hide (window)
+   (declare (type window window))
+-  (unless (eq (xlib:window-map-state (window-xwin window)) :unmapped)
++  (unless (eq (sxlib:window-map-state (window-xwin window)) :unmapped)
+     (setf (xwin-state (window-xwin window)) +iconic-state+)
+     (incf (window-unmap-ignores window))
+-    (xlib:unmap-window (window-parent window))
+-    (xlib:unmap-subwindows (window-parent window))))
++    (sxlib:unmap-window (window-parent window))
++    (sxlib:unmap-subwindows (window-parent window))))
+ 
+ (defun hide-window (window)
+   (dformat 2 "hide window: ~s~%" window)
+@@ -448,22 +448,22 @@
+ (defun xwin-maxsize-p (win)
+   "Returns T if WIN specifies maximum dimensions."
+   (let ((hints (get-normalized-normal-hints win)))
+-    (and hints (or (xlib:wm-size-hints-max-width hints)
+-                   (xlib:wm-size-hints-max-height hints)
+-                   (xlib:wm-size-hints-min-aspect hints)
+-                   (xlib:wm-size-hints-max-aspect hints)))))
++    (and hints (or (sxlib:wm-size-hints-max-width hints)
++                   (sxlib:wm-size-hints-max-height hints)
++                   (sxlib:wm-size-hints-min-aspect hints)
++                   (sxlib:wm-size-hints-max-aspect hints)))))
+ 
+ (defun xwin-type (win)
+   "Return one of :desktop, :dock, :toolbar, :utility, :splash,
+ :dialog, :transient, and :normal.  Right now
+ only :dock, :dialog, :normal, and :transient are
+ actually returned; see +NETWM-WINDOW-TYPES+."
+-  (or (let ((net-wm-window-type (xlib:get-property win :_NET_WM_WINDOW_TYPE)))
++  (or (let ((net-wm-window-type (sxlib:get-property win :_NET_WM_WINDOW_TYPE)))
+         (when net-wm-window-type
+           (dolist (type-atom net-wm-window-type)
+-            (when (assoc (xlib:atom-name *display* type-atom) +netwm-window-types+)
+-              (return (cdr (assoc (xlib:atom-name *display* type-atom) +netwm-window-types+)))))))
+-      (and (xlib:get-property win :WM_TRANSIENT_FOR)
++            (when (assoc (sxlib:atom-name *display* type-atom) +netwm-window-types+)
++              (return (cdr (assoc (sxlib:atom-name *display* type-atom) +netwm-window-types+)))))))
++      (and (sxlib:get-property win :WM_TRANSIENT_FOR)
+            :transient)
+       :normal))
+ 
+@@ -472,10 +472,10 @@
+ Values are left, right, top, bottom, left_start_y, left_end_y,
+ right_start_y, right_end_y, top_start_x, top_end_x, bottom_start_x
+ and bottom_end_x."
+-  (let ((net-wm-strut-partial (xlib:get-property win :_NET_WM_STRUT_PARTIAL)))
++  (let ((net-wm-strut-partial (sxlib:get-property win :_NET_WM_STRUT_PARTIAL)))
+     (if (= (length net-wm-strut-partial) 12)
+         (apply 'values net-wm-strut-partial)
+-        (let ((net-wm-strut (xlib:get-property win :_NET_WM_STRUT)))
++        (let ((net-wm-strut (sxlib:get-property win :_NET_WM_STRUT)))
+           (if (= (length net-wm-strut) 4)
+               (apply 'values (concatenate 'list net-wm-strut
+                                           (list 0 (screen-height screen)
+@@ -487,7 +487,7 @@
+ ;; Stolen from Eclipse
+ (defun xwin-send-configuration-notify (xwin x y w h bw)
+   "Send a synthetic configure notify event to the given window (ICCCM 4.1.5)"
+-  (xlib:send-event xwin :configure-notify nil
++  (sxlib:send-event xwin :configure-notify nil
+                    :event-window xwin
+                    :window xwin
+                    :x x :y y
+@@ -534,23 +534,23 @@
+   (let* ((f (window-frame win))
+          (x (frame-x f))
+          (y (frame-display-y (window-group win) f))
+-         (border (xlib:drawable-border-width (window-parent win)))
++         (border (sxlib:drawable-border-width (window-parent win)))
+          (fwidth (- (frame-width f) (* 2 border)))
+          (fheight (- (frame-display-height (window-group win) f)
+                      (* 2 border)))
+          (width fwidth)
+          (height fheight)
+          (hints (window-normal-hints win))
+-         (hints-min-width (and hints (xlib:wm-size-hints-min-width hints)))
+-         (hints-min-height (and hints (xlib:wm-size-hints-min-height hints)))
+-         (hints-max-width (and hints (xlib:wm-size-hints-max-width hints)))
+-         (hints-max-height (and hints (xlib:wm-size-hints-max-height hints)))
+-         (hints-width (and hints (xlib:wm-size-hints-base-width hints)))
+-         (hints-height (and hints (xlib:wm-size-hints-base-height hints)))
+-         (hints-inc-x (and hints (xlib:wm-size-hints-width-inc hints)))
+-         (hints-inc-y (and hints (xlib:wm-size-hints-height-inc hints)))
+-         (hints-min-aspect (and hints (xlib:wm-size-hints-min-aspect hints)))
+-         (hints-max-aspect (and hints (xlib:wm-size-hints-max-aspect hints)))
++         (hints-min-width (and hints (sxlib:wm-size-hints-min-width hints)))
++         (hints-min-height (and hints (sxlib:wm-size-hints-min-height hints)))
++         (hints-max-width (and hints (sxlib:wm-size-hints-max-width hints)))
++         (hints-max-height (and hints (sxlib:wm-size-hints-max-height hints)))
++         (hints-width (and hints (sxlib:wm-size-hints-base-width hints)))
++         (hints-height (and hints (sxlib:wm-size-hints-base-height hints)))
++         (hints-inc-x (and hints (sxlib:wm-size-hints-width-inc hints)))
++         (hints-inc-y (and hints (sxlib:wm-size-hints-height-inc hints)))
++         (hints-min-aspect (and hints (sxlib:wm-size-hints-min-aspect hints)))
++         (hints-max-aspect (and hints (sxlib:wm-size-hints-max-aspect hints)))
+          (border (case *window-border-style*
+                    (:none 0)
+                    (t (default-border-width-for-type win))))
+@@ -565,7 +565,7 @@
+                y (frame-y head)
+                width (frame-width head)
+                height (frame-height head)
+-               (xlib:window-priority (window-parent win)) :above))
++               (sxlib:window-priority (window-parent win)) :above))
+        (return-from geometry-hints (values x y 0 0 width height 0 t)))
+       ;; Adjust the defaults if the window is a transient_for window.
+       ((find (window-type win) '(:transient :dialog))
+@@ -624,12 +624,12 @@
+                `(when ,v ;; (/= (,wfn win) ,v))
+                  (setf (,xfn (window-xwin win)) ,v)
+                  ,(when wfn `(setf (,wfn win) ,v)))))
+-    (xlib:with-state ((window-xwin win))
+-      (update xlib:drawable-x nil x)
+-      (update xlib:drawable-y nil y)
+-      (update xlib:drawable-width window-width width)
+-      (update xlib:drawable-height window-height height)
+-      (update xlib:drawable-border-width nil border-width)
++    (sxlib:with-state ((window-xwin win))
++      (update sxlib:drawable-x nil x)
++      (update sxlib:drawable-y nil y)
++      (update sxlib:drawable-width window-width width)
++      (update sxlib:drawable-height window-height height)
++      (update sxlib:drawable-border-width nil border-width)
+       )))
+ 
+ (defun maximize-window (win)
+@@ -639,30 +639,30 @@
+     (dformat 4 "maximize window ~a x: ~d y: ~d width: ~d height: ~d border: ~d stick: ~s~%" win x y width height border stick)
+     ;; This is the only place a window's geometry should change
+     (set-window-geometry win :x wx :y wy :width width :height height :border-width 0)
+-    (xlib:with-state ((window-parent win))
++    (sxlib:with-state ((window-parent win))
+       ;; FIXME: updating the border doesn't need to be run everytime
+       ;; the window is maximized, but only when the border style or
+       ;; window type changes. The overhead is probably minimal,
+       ;; though.
+-      (setf (xlib:drawable-x (window-parent win)) x
+-            (xlib:drawable-y (window-parent win)) y
+-            (xlib:drawable-border-width (window-parent win)) border)
++      (setf (sxlib:drawable-x (window-parent win)) x
++            (sxlib:drawable-y (window-parent win)) y
++            (sxlib:drawable-border-width (window-parent win)) border)
+       ;; the parent window should stick to the size of the window
+       ;; unless it isn't being maximized to fill the frame.
+       (if (or stick
+               (find *window-border-style* '(:tight :none)))
+-          (setf (xlib:drawable-width (window-parent win)) (window-width win)
+-                (xlib:drawable-height (window-parent win)) (window-height win))
++          (setf (sxlib:drawable-width (window-parent win)) (window-width win)
++                (sxlib:drawable-height (window-parent win)) (window-height win))
+           (let ((frame (window-frame win)))
+-            (setf (xlib:drawable-width (window-parent win)) (- (frame-width frame)
+-                                                               (* 2 (xlib:drawable-border-width (window-parent win))))
+-                  (xlib:drawable-height (window-parent win)) (- (frame-display-height (window-group win) frame)
+-                                                                (* 2 (xlib:drawable-border-width (window-parent win)))))))
++            (setf (sxlib:drawable-width (window-parent win)) (- (frame-width frame)
++                                                               (* 2 (sxlib:drawable-border-width (window-parent win))))
++                  (sxlib:drawable-height (window-parent win)) (- (frame-display-height (window-group win) frame)
++                                                                (* 2 (sxlib:drawable-border-width (window-parent win)))))))
+       ;; update the "extents"
+-      (xlib:change-property (window-xwin win) :_NET_FRAME_EXTENTS
++      (sxlib:change-property (window-xwin win) :_NET_FRAME_EXTENTS
+                             (list wx wy
+-                                  (- (xlib:drawable-width (window-parent win)) width wx)
+-                                  (- (xlib:drawable-height (window-parent win)) height wy))
++                                  (- (sxlib:drawable-width (window-parent win)) width wx)
++                                  (- (sxlib:drawable-height (window-parent win)) height wy))
+                             :cardinal 32))))
+ 
+ (defun find-free-window-number (group)
+@@ -673,11 +673,11 @@
+   ;; apparently we need to grab the server so the client doesn't get
+   ;; the mapnotify event before the reparent event. that's what fvwm
+   ;; says.
+-  (xlib:with-server-grabbed (*display*)
++  (sxlib:with-server-grabbed (*display*)
+     (let* ((screen (window-screen window))
+-           (master-window (xlib:create-window
++           (master-window (sxlib:create-window
+                            :parent (screen-root screen)
+-                           :x (xlib:drawable-x (window-xwin window)) :y (xlib:drawable-y (window-xwin window))
++                           :x (sxlib:drawable-x (window-xwin window)) :y (sxlib:drawable-y (window-xwin window))
+                            :width (window-width window)
+                            :height (window-height window)
+                            :background (if (eq (window-type window) :normal)
+@@ -686,32 +686,32 @@
+                            :border (screen-unfocus-color screen)
+                            :border-width (default-border-width-for-type window)
+                            :event-mask *window-parent-events*)))
+-      (unless (eq (xlib:window-map-state (window-xwin window)) :unmapped)
++      (unless (eq (sxlib:window-map-state (window-xwin window)) :unmapped)
+         (incf (window-unmap-ignores window)))
+-      (xlib:reparent-window (window-xwin window) master-window 0 0)
++      (sxlib:reparent-window (window-xwin window) master-window 0 0)
+       (xwin-grab-buttons master-window)
+       ;;     ;; we need to update these values since they get set to 0,0 on reparent
+       ;;     (setf (window-x window) 0
+       ;;          (window-y window) 0)
+-      (xlib:add-to-save-set (window-xwin window))
++      (sxlib:add-to-save-set (window-xwin window))
+       (setf (window-parent window) master-window))))
+ 
+ (defun process-existing-windows (screen)
+   "Windows present when stumpwm starts up must be absorbed by stumpwm."
+-  (let ((children (xlib:query-tree (screen-root screen)))
++  (let ((children (sxlib:query-tree (screen-root screen)))
+         (*processing-existing-windows* t)
+-        (stacking (xlib:get-property (screen-root screen) :_NET_CLIENT_LIST_STACKING :type :window)))
++        (stacking (sxlib:get-property (screen-root screen) :_NET_CLIENT_LIST_STACKING :type :window)))
+     (when stacking
+       (dformat 3 "Using window stacking: ~{~X ~}~%" stacking)
+       ;; sort by _NET_CLIENT_LIST_STACKING
+       (setf children (stable-sort children #'< :key
+                                   (lambda (xwin)
+-                                    (or (position (xlib:drawable-id xwin) stacking :test #'=) 0)))))
++                                    (or (position (sxlib:drawable-id xwin) stacking :test #'=) 0)))))
+     (dolist (win children)
+-      (let ((map-state (xlib:window-map-state win))
++      (let ((map-state (sxlib:window-map-state win))
+             (wm-state (xwin-state win)))
+         ;; Don't process override-redirect windows.
+-        (unless (or (eq (xlib:window-override-redirect win) :on)
++        (unless (or (eq (sxlib:window-override-redirect win) :on)
+                     (internal-window-p screen win))
+           (if (eq (xwin-type win) :dock)
+               (progn
+@@ -728,23 +728,23 @@
+ 
+ (defun xwin-grab-keys (win)
+   (labels ((grabit (w key)
+-             (loop for code in (multiple-value-list (xlib:keysym->keycodes *display* (key-keysym key))) do
++             (loop for code in (multiple-value-list (sxlib:keysym->keycodes *display* (key-keysym key))) do
+                ;; some keysyms aren't mapped to keycodes so just ignore them.
+                (when code
+                  ;; Some keysyms, such as upper case letters, need the
+                  ;; shift modifier to be set in order to grab properly.
+-                 (when (and (not (eql (key-keysym key) (xlib:keycode->keysym *display* code 0)))
+-                            (eql (key-keysym key) (xlib:keycode->keysym *display* code 1)))
++                 (when (and (not (eql (key-keysym key) (sxlib:keycode->keysym *display* code 0)))
++                            (eql (key-keysym key) (sxlib:keycode->keysym *display* code 1)))
+                    ;; don't butcher the caller's structure
+                    (setf key (copy-structure key)
+                          (key-shift key) t))
+-                 (xlib:grab-key w code
++                 (sxlib:grab-key w code
+                                 :modifiers (x11-mods key) :owner-p t
+                                 :sync-pointer-p nil :sync-keyboard-p nil)
+                  ;; Ignore numlock by also grabbing the keycombo with
+                  ;; numlock on.
+                  (when (modifiers-numlock *modifiers*)
+-                   (xlib:grab-key w code
++                   (sxlib:grab-key w code
+                                   :modifiers (x11-mods key t) :owner-p t
+                                   :sync-pointer-p nil :sync-keyboard-p nil))))))
+     (maphash (lambda (k v)
+@@ -756,7 +756,7 @@
+   (xwin-grab-keys (window-xwin win)))
+ 
+ (defun xwin-ungrab-keys (win)
+-  (xlib:ungrab-key win :any :modifiers :any))
++  (sxlib:ungrab-key win :any :modifiers :any))
+ 
+ (defun ungrab-keys-on-window (win)
+   (xwin-ungrab-keys (window-xwin win)))
+@@ -766,7 +766,7 @@
+   ;; grab them one by one instead.
+   (xwin-ungrab-buttons win)
+   (loop for i from 1 to 7
+-        do (xlib:grab-button win i '(:button-press)
++        do (sxlib:grab-button win i '(:button-press)
+                              :modifiers :any
+                              :owner-p nil
+                              :sync-pointer-p t
+@@ -774,7 +774,7 @@
+ 
+ 
+ (defun xwin-ungrab-buttons (win)
+-  (xlib:ungrab-button win :any :modifiers :any))
++  (sxlib:ungrab-button win :any :modifiers :any))
+ 
+ (defun sync-keys ()
+   "Any time *top-map* is modified this must be called."
+@@ -782,11 +782,11 @@
+         do (xwin-ungrab-keys (screen-focus-window i))
+         do (loop for j in (screen-mapped-windows i)
+                  do (xwin-ungrab-keys j))
+-        do (xlib:display-finish-output *display*)
++        do (sxlib:display-finish-output *display*)
+         do (loop for j in (screen-mapped-windows i)
+                  do (xwin-grab-keys j))
+         do (xwin-grab-keys (screen-focus-window i)))
+-  (xlib:display-finish-output *display*))
++  (sxlib:display-finish-output *display*))
+ 
+ 
+ ;;; Window placement routines
+@@ -795,8 +795,8 @@
+   "Build a window for XWIN"
+   (make-window
+    :xwin xwin
+-   :width (xlib:drawable-width xwin) :height (xlib:drawable-height xwin)
+-   :x (xlib:drawable-x xwin) :y (xlib:drawable-y xwin)
++   :width (sxlib:drawable-width xwin) :height (sxlib:drawable-height xwin)
++   :x (sxlib:drawable-x xwin) :y (sxlib:drawable-y xwin)
+    :title (xwin-name xwin)
+    :class (xwin-class xwin)
+    :res (xwin-res-name xwin)
+@@ -875,12 +875,12 @@
+ (defun place-existing-window (screen xwin)
+   "Called for windows existing at startup."
+   (let* ((window (xwin-to-window xwin))
+-         (netwm-id (first (xlib:get-property xwin :_NET_WM_DESKTOP)))
++         (netwm-id (first (sxlib:get-property xwin :_NET_WM_DESKTOP)))
+          (group (if (and netwm-id (< netwm-id (length (screen-groups screen))))
+                     (elt (sort-groups screen) netwm-id)
+                     (screen-current-group screen))))
+     (dformat 3 "Assigning pre-existing window ~S to group ~S~%" (window-name window) (group-name group))
+-    (assign-window window group (find-frame group (xlib:drawable-x xwin) (xlib:drawable-y xwin)) :head)
++    (assign-window window group (find-frame group (sxlib:drawable-x xwin) (sxlib:drawable-y xwin)) :head)
+     (setf (frame-window (window-frame window)) window)
+     window))
+ 
+@@ -896,7 +896,7 @@
+             raise to-raise))
+     (assign-window window group frame)
+     (setf (xwin-state xwin) +iconic-state+)
+-    (xlib:change-property xwin :_NET_WM_DESKTOP
++    (sxlib:change-property xwin :_NET_WM_DESKTOP
+                           (list (netwm-group-id group))
+                           :cardinal 32)
+     (when frame
+@@ -954,7 +954,7 @@
+                      ;; these hints.
+                      (unless (find (window-type window) '(:transient :dialog))
+                        (let ((hints (window-normal-hints window)))
+-                         (when (and hints (xlib:wm-size-hints-user-specified-position-p hints))
++                         (when (and hints (sxlib:wm-size-hints-user-specified-position-p hints))
+                            (find-frame group (window-x window) (window-y window))))))
+                     (t                  ; :focused or not recognized keyword
+                      default))))
+@@ -971,13 +971,13 @@
+                        (place-window screen xwin))))
+ 
+ (defun netwm-remove-window (window)
+-  (xlib:delete-property (window-xwin window) :_NET_WM_DESKTOP))
++  (sxlib:delete-property (window-xwin window) :_NET_WM_DESKTOP))
+ 
+ (defun process-mapped-window (screen xwin)
+   "Add the window to the screen's mapped window list and process it as
+ needed."
+   (let ((window (add-window screen xwin)))
+-    (setf (xlib:window-event-mask (window-xwin window)) *window-events*)
++    (setf (sxlib:window-event-mask (window-xwin window)) *window-events*)
+     ;; windows always have border width 0. Their parents provide the
+     ;; border.
+     (set-window-geometry window :border-width 0)
+@@ -987,9 +987,9 @@
+     ;; quite often the modeline displays the window list, so update it
+     (update-all-mode-lines)
+     ;; Set allowed actions
+-    (xlib:change-property xwin :_NET_WM_ALLOWED_ACTIONS
++    (sxlib:change-property xwin :_NET_WM_ALLOWED_ACTIONS
+                           (mapcar (lambda (a)
+-                                    (xlib:intern-atom *display* a))
++                                    (sxlib:intern-atom *display* a))
+                                   +netwm-allowed-actions+)
+                           :atom 32)
+     ;; Run the new window hook on it.
+@@ -998,9 +998,9 @@
+ 
+ (defun find-withdrawn-window (xwin)
+   "Return the window and screen for a withdrawn window."
+-  (declare (type xlib:window xwin))
++  (declare (type sxlib:window xwin))
+   (dolist (i *screen-list*)
+-    (let ((w (find xwin (screen-withdrawn-windows i) :key 'window-xwin :test 'xlib:window-equal)))
++    (let ((w (find xwin (screen-withdrawn-windows i) :key 'window-xwin :test 'sxlib:window-equal)))
+       (when w
+         (return-from find-withdrawn-window (values w i))))))
+ 
+@@ -1031,7 +1031,7 @@
+             (window-frame window) (or frame (pick-preferred-frame window))))
+     (screen-add-mapped-window screen (window-xwin window))
+     (register-window window)
+-    (xlib:change-property (window-xwin window) :_NET_WM_DESKTOP
++    (sxlib:change-property (window-xwin window) :_NET_WM_DESKTOP
+                           (list (netwm-group-id (window-group window)))
+                           :cardinal 32)
+     (maximize-window window)
+@@ -1060,7 +1060,7 @@
+     (push window (screen-withdrawn-windows screen))
+     (setf (window-state window) +withdrawn-state+
+           (xwin-state (window-xwin window)) +withdrawn-state+)
+-    (xlib:unmap-window (window-parent window))
++    (sxlib:unmap-window (window-parent window))
+     ;; Clean up the window's entry in the screen and group
+     (screen-remove-mapped-window screen (window-xwin window))
+     (setf (group-windows group)
+@@ -1096,7 +1096,7 @@
+     (dformat 1 "destroy window ~a~%" screen)
+     (dformat 3 "destroying parent window~%")
+     (dformat 7 "parent window is ~a~%" (window-parent window))
+-    (xlib:destroy-window (window-parent window))))
++    (sxlib:destroy-window (window-parent window))))
+ 
+ (defun move-window-to-head (group window)
+   "Move window to the head of the group's window list."
+@@ -1111,7 +1111,7 @@
+   (dformat 3 "no-focus~%")
+   (let* ((screen (group-screen group)))
+     (when (eq group (screen-current-group screen))
+-      (xlib:set-input-focus *display* (screen-focus-window screen) :POINTER-ROOT)
++      (sxlib:set-input-focus *display* (screen-focus-window screen) :POINTER-ROOT)
+       (setf (screen-focus screen) nil)
+       (move-screen-to-head screen))
+     (when last-win
+@@ -1139,12 +1139,12 @@
+ (defun delete-window (window)
+   "Send a delete event to the window."
+   (dformat 3 "Delete window~%")
+-  (send-client-message window :WM_PROTOCOLS (xlib:intern-atom *display* :WM_DELETE_WINDOW)))
++  (send-client-message window :WM_PROTOCOLS (sxlib:intern-atom *display* :WM_DELETE_WINDOW)))
+ 
+ (defun xwin-kill (window)
+   "Kill the client associated with window."
+   (dformat 3 "Kill client~%")
+-  (xlib:kill-client *display* (xlib:window-id window)))
++  (sxlib:kill-client *display* (sxlib:window-id window)))
+ 
+ ;;; Window commands
+ 
+diff -Naur stumpwm-0.9.5.orig/workarounds.lisp stumpwm-0.9.5/workarounds.lisp
+--- stumpwm-0.9.5.orig/workarounds.lisp	2008-10-21 23:07:48.000000000 +0200
++++ stumpwm-0.9.5/workarounds.lisp	2008-12-23 05:08:54.000000000 +0100
+@@ -1,6 +1,6 @@
+ ;;; workarounds for bugs in clx
+ 
+-(in-package :xlib)
++(in-package :sxlib)
+ 
+ ;;; SBCL workaround for a clx caching bug. This is taken from portable-clx's display.lisp.
+ 
+diff -Naur stumpwm-0.9.5.orig/wrappers.lisp stumpwm-0.9.5/wrappers.lisp
+--- stumpwm-0.9.5.orig/wrappers.lisp	2008-10-21 23:07:48.000000000 +0200
++++ stumpwm-0.9.5/wrappers.lisp	2008-12-23 05:08:54.000000000 +0100
+@@ -41,7 +41,7 @@
+     ;; variable so it's inherited by the child process.
+     (setf (getenv "DISPLAY") (format nil "~a:~d.~d"
+                                      (screen-host (current-screen))
+-                                     (xlib:display-display *display*)
++                                     (sxlib:display-display *display*)
+                                      (screen-id (current-screen))))
+     (apply #'ext:run-program prog :arguments args :wait wait opts))
+   #+(and clisp (not lisp=cl))
+@@ -82,7 +82,7 @@
+             ;; variable so it's inherited by the child process.
+             (setf (getenv "DISPLAY") (format nil "~a:~d.~d"
+                                              (screen-host (current-screen))
+-                                             (xlib:display-display *display*)
++                                             (sxlib:display-display *display*)
+                                              (screen-id (current-screen))))
+             (let ((out (ext:run-program prog :arguments args :wait t :output :stream)))
+               (loop for i = (read-char out nil out)
+@@ -227,8 +227,8 @@
+ (defun make-xlib-window (xobject)
+   "For some reason the clx xid cache screws up returns pixmaps when
+ they should be windows. So use this function to make a window out of them."
+-  #+clisp (make-instance 'xlib:window :id (slot-value xobject 'xlib::id) :display *display*)
+-  #+sbcl (xlib::make-window :id (slot-value xobject 'xlib::id) :display *display*)
++  #+clisp (make-instance 'sxlib:window :id (slot-value xobject 'sxlib::id) :display *display*)
++  #+sbcl (sxlib::make-window :id (slot-value xobject 'sxlib::id) :display *display*)
+   #-(or sbcl clisp)
+   (error 'not-implemented :proc (list 'make-xlib-window xobject)))
+ 

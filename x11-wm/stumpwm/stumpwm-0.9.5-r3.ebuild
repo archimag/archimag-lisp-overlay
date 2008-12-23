@@ -12,33 +12,32 @@ SRC_URI="http://download.savannah.nongnu.org/releases/stumpwm/${P}.tgz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
-IUSE="emacs doc"
-#IUSE="sbcl clisp emacs doc"
+KEYWORDS="~amd64 ~ppc ~sparc ~x86"
+IUSE="sbcl clisp emacs doc"
 
 RESTRICT="strip"
 
 DEPEND="dev-lisp/cl-ppcre
 		dev-lisp/clx
 		>=dev-lisp/cl-launch-2.11-r1
-		>=dev-lisp/sbcl-1.0.22
+		!sbcl? ( !clisp? ( >=dev-lisp/sbcl-1.0.22 ) )
+		!sbcl? ( clisp? ( >=dev-lisp/clisp-2.44[X] ) )
+		sbcl?  ( >=dev-lisp/sbcl-1.0.22 )
 		emacs? ( app-emacs/slime )
 		doc? ( sys-apps/texinfo )"
-# 		!sbcl? ( !clisp? ( >=dev-lisp/sbcl-1.0.22 ) )
-# 		!sbcl? ( clisp? ( >=dev-lisp/clisp-2.44[X,-new-clx] ) )
-# 		sbcl?  ( >=dev-lisp/sbcl-1.0.22 )
 RDEPEND="${DEPEND}"
 
 WRAP_OPTS='
 SBCL_OPTIONS="--no-sysinit --no-userinit"
-# CLISP_OPTIONS="-ansi -K full -norc --verbose"
+CLISP_OPTIONS="-ansi -K full -norc --verbose"
 '
 
 src_unpack() {
 	unpack ${A}
 
 	epatch "${FILESDIR}"/${PV}-gentoo-fix-asd-deps.patch
-# 	epatch "${FILESDIR}"/${PV}-fix-clisp-syscalls-package.patch
+	epatch "${FILESDIR}"/${PV}-fix-clisp-syscalls-package.patch
+	epatch "${FILESDIR}"/${PV}-fix-xlib-workarounds.patch
 }
 
 src_configure() {
@@ -47,13 +46,13 @@ src_configure() {
 }
 
 src_compile() {
-# 	if use sbcl ; then
+	if use sbcl ; then
 		LISP=sbcl ; NORC="--no-sysinit --no-userinit" ; EVAL=--eval
-# 	elif use clisp ; then
-# 		LISP=clisp ; NORC=-norc ; EVAL=-x
-# 	else
-# 		LISP=sbcl ; NORC="--no-sysinit --no-userinit" ; EVAL=--eval
-# 	fi
+	elif use clisp ; then
+		LISP=clisp ; NORC=-norc ; EVAL=-x
+	else
+		LISP=sbcl ; NORC="--no-sysinit --no-userinit" ; EVAL=--eval
+	fi
 
 	addwrite /var/cache/cl-launch
 	LISP_FASL_CACHE=/var/cache/cl-launch \
