@@ -15,4 +15,7 @@ KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
 DEPEND="dev-lisp/cl-base64
-		dev-lisp/usocket"
+		dev-lisp/usocket
+		dev-lisp/trivial-gray-streams
+		dev-lisp/flexi-streams
+		dev-lisp/cl+ssl"
