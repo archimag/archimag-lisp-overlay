@@ -1,22 +1,26 @@
 Author: Stelian Ionescu <sionescu@common-lisp.net>
-Date: 2007-08-26
+Date: 2008-08-23
 Status: Gentoo-only
 Description: Patch SWANK:SWANK-REQUIRE to load contribs from the
  ASDF system directory
 
 diff --git a/swank.lisp b/swank.lisp
-index 8c6ef3a..3ef640a 100644
+index 529cb54..c6d9f60 100644
 --- a/swank.lisp
 +++ b/swank.lisp
-@@ -2270,10 +2270,13 @@ Record compiler notes signalled as `compiler-condition's."
+@@ -2542,12 +2542,15 @@ Record compiler notes signalled as `compiler-condition's."
    "Load the module MODULE."
    (dolist (module (if (listp modules) modules (list modules)))
      (unless (member (string module) *modules* :test #'string=)
--      (require module (or filename (module-filename module)))))
+-      (require module (if filename
+-                          (filename-to-pathname filename)
+-                          (module-filename module)))))
 +      (let ((*load-print* nil)
 +            (*load-verbose* nil)
 +            #+cmu (ext:*gc-verbose* nil))
-+        (require module (or filename (module-filename module))))))
++        (require module (if filename
++                            (filename-to-pathname filename)
++                            (module-filename module))))))
    *modules*)
  
 -(defvar *find-module* 'find-module
@@ -24,7 +28,7 @@ index 8c6ef3a..3ef640a 100644
    "Pluggable function to locate modules.
  The function receives a module name as argument and should return
  the filename of the module (or nil if the file doesn't exist).")
-@@ -2303,6 +2306,21 @@ the filename of the module (or nil if the file doesn't exist).")
+@@ -2577,6 +2580,21 @@ the filename of the module (or nil if the file doesn't exist).")
      (some (lambda (dir) (some #'probe-file (module-canditates name dir)))
            *load-path*)))
  

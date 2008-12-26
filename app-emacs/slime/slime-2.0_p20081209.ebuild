@@ -26,8 +26,6 @@ src_unpack() {
 	cd "${S}"
 
 	epatch "${FILESDIR}"/${PV}/fix-inspect-presentations.patch
-	epatch "${FILESDIR}"/${PV}/fix-ecl.patch
-	epatch "${FILESDIR}"/${PV}/fix-swank-listener-hooks-contrib.patch
 	epatch "${FILESDIR}"/${PV}/fix-slime-indentation.patch
 	epatch "${FILESDIR}"/${PV}/gentoo-module-load.patch
 	epatch "${FILESDIR}"/${PV}/gentoo-dont-call-init.patch
