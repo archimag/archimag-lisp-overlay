@@ -13,8 +13,8 @@
 
 glo_usev() {
 	if [[ $# < 1 || $# > 3 ]]; then
-		echo "Usage: glo_usev flag [if_yes [if_no]]"
-		die "glo_usev: wrong number of arguments: $#"
+		echo "Usage: ${0} flag [if_yes [if_no]]"
+		die "${0}: wrong number of arguments: $#"
 	fi
 	local if_yes="${2:-${1}}" if_no="${3}"
 	if useq ${1} ; then
