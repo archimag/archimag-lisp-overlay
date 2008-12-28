@@ -7,7 +7,7 @@ ECVS_PASS=anonymous
 ECVS_MODULE=src
 ECVS_LOCALNAME=${PN}
 
-inherit common-lisp-common-3 eutils cvs toolchain-funcs
+inherit common-lisp-common-3 cvs eutils glo-utils toolchain-funcs
 
 PATCHSET=200812
 YEAR=${PATCHSET:0:4}
@@ -31,58 +31,36 @@ PROVIDE="virtual/commonlisp"
 S="${WORKDIR}"
 
 src_unpack() {
-	unpack ${A} && cvs_src_unpack && cd "${S}"
-	mv cmucl src
-	epatch "${FILESDIR}"/use_default_build_params.patch
-	sed -i -e 's,"time","",g' src/tools/build.sh || die "sed failed"
+	unpack ${A} ; cvs_src_unpack ; cd "${S}"
+	mv cmucl src || die
+	epatch "${FILESDIR}"/fix-man-and-doc-installation.patch
 }
 
 src_compile() {
-	use X || local OPTS="-u"
-	if use sse2 ; then
-		export CMUFPU="sse2"
-	else
-		export CMUFPU="x87"
-	fi
-	local buildimage="bin/lisp -core lib/cmucl/lib/lisp-${CMUFPU}.core -batch -noinit -nositeinit"
-	env CC="$(tc-getCC)" src/tools/build.sh -C "" -o "${buildimage}" ${OPTS} -f ${CMUFPU} || die "Cannot build the compiler"
+	local CMUFPU=$(glo_usev sse2 sse2 x87)
+	local CMUOPTS="$(glo_usev !X -u) -f ${CMUFPU}"
+	local BUILDIMAGE="bin/lisp -core lib/cmucl/lib/lisp-${CMUFPU}.core -batch -noinit -nositeinit"
+	env CC="$(tc-getCC)" src/tools/build.sh -C "" -o "${BUILDIMAGE}" ${CMUOPTS} || die "Cannot build the compiler"
 }
 
 src_install() {
-	src/tools/make-dist.sh -g -G root -O root build-4 ${PV} x86 linux
-	dodir /usr/share/doc
-	for i in cmucl-${PV}-x86-linux.{,extra.}tar.gz; do
-		tar xzpf $i -C "${D}"/usr
-	done
-
-	mv "${D}"/usr/doc "${D}"/usr/share/doc/${PF}
-	mv "${D}"/usr/man "${D}"/usr/share/
+	src/tools/make-dist.sh -S -g -G root -O root build-4 ${PV} x86 linux || die "Cannot build installation archive"
+	dodir /usr
+	tar xzpf cmucl-${PV}-x86-linux.tar.gz -C "${D}"/usr || die "Cannot install main system"
+	if use X ; then
+		tar xzpf cmucl-${PV}-x86-linux.extra.tar.gz -C "${D}"/usr || die "Cannot install extra files"
+	fi
+	if use source; then
+		dodir /usr/share/common-lisp/source/${PN}
+		tar --strip-components 1 -xzpf cmucl-src-${PV}.tar.gz -C "${D}"/usr/share/common-lisp/source/${PN}
+	fi
 
 	# Install site config file
 	sed "s,@PF@,${PF},g ; s,@VERSION@,$(date +%F),g" \
 		< "${FILESDIR}"/site-init.lisp.in \
 		> "${D}"/usr/$(get_libdir)/cmucl/site-init.lisp
-	rm -f "${D}"/etc/lisp-config.lisp
-	dodir /etc/common-lisp/cmucl
-	dosym /etc/common-lisp/cmucl/site-init.lisp /etc/lisp-config.lisp
-	cat > "${D}"/etc/common-lisp/cmucl/site-init.lisp <<EOF
-(in-package :common-lisp-user)
-
-(if (probe-file "/etc/gentoo-init.lisp")
-	(load "/etc/gentoo-init.lisp")
-  (format t "~%;;; Warning: There is no /etc/gentoo-init.lisp file (which should be provided by dev-lisp/gentoo-init"))
-EOF
-
-	# Install sources
-	if use source; then
-		local basedir=/usr/share/common-lisp/source/cmucl
-		cd src
-		for f in $(find . -name \*.lisp -and -type f); do
-			local dir=${basedir}/$(dirname ${f})
-			dodir ${dir} ; insinto ${dir}
-			doins ${f}
-		done
-	fi
+	insinto /etc
+	doins "${FILESDIR}"/cmuclrc
 
 	impl-save-timestamp-hack cmucl || die
 }

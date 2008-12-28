@@ -16,9 +16,9 @@
   (defun lisp-implementation-version ()
     (format nil "~X-~A" c:byte-fasl-file-version "@VERSION@")))
 
-(if (probe-file "/etc/lisp-config.lisp")
-    (load "/etc/lisp-config.lisp")
-  (format t "~%;;; Warning: There is no /etc/lisp-config.lisp file (which should have been created during emerge"))
+(if (probe-file "/etc/cmuclrc")
+    (load "/etc/cmuclrc")
+  (format t "~%;;; Warning: There is no /etc/cmuclrc file (which should have been created during emerge"))
 
 ;;; If you have sources installed on your system, un-comment the following form
 ;;; and change it to point to the source location.  This will allow the Hemlock
@@ -33,8 +33,10 @@
 ;;; (setf (ext:search-list "library:") '("/usr/lib/cmucl/lib/"))
 ;;; for safety...
 
-;;; optional extentions to the lisp image: delete if you
-;;; don't like them :-).
+;;; Put your site name here...
+(setq *short-site-name* "Unknown")
+(setq *long-site-name* "Site name not initialized")
+
 (in-package :common-lisp-user)
 
 ;;; newbie functions, delete if you don't like them
@@ -51,8 +53,8 @@ If you think you found a bug, please use http://bugs.gentoo.org/
 
 Read the documentation in /usr/share/doc/@PF@.
 
-(quit)            exit Lisp
-(describe 'foo)   gives information about foo
-(inspect '*foo*)  interactively inspects *foo*
-(apropos \"foo\") briefly describe all symbols which match \"foo\"
+\(quit)            exit Lisp
+\(describe 'foo)   gives information about foo
+\(inspect '*foo*)  interactively inspects *foo*
+\(apropos \"foo\") briefly describe all symbols which match \"foo\"
 "))
