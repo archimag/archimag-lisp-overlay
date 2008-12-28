@@ -34,7 +34,7 @@ SLOT="0"
 KEYWORDS="-* ~amd64 ~ppc ~sparc ~x86"
 IUSE="ldb source +threads +unicode doc cobalt"
 
-DEPEND="doc? ( sys-apps/texinfo media-gfx/graphviz[png] )"
+DEPEND="doc? ( sys-apps/texinfo >=media-gfx/graphviz-2.20[png] )"
 PDEPEND="dev-lisp/gentoo-init"
 
 PROVIDE="virtual/commonlisp"
