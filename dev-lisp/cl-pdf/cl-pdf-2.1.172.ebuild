@@ -24,10 +24,9 @@ src_unpack() {
 }
 
 src_install() {
-	common-lisp-install *.{lisp,asd}
+	common-lisp-install *.{lisp,asd} contrib
 	common-lisp-symlink-asdf
 	insinto /usr/share/fonts/afm && doins afm/*.afm
-	insinto /usr/share/doc/${PF}/examples && doins examples/*
-	insinto /usr/share/doc/${PF}/contrib && doins contrib/*
 	dodoc *.txt
+	docinto examples && dodoc examples/*
 }

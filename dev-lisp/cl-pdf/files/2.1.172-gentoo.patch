@@ -1,6 +1,6 @@
-diff -Naur cl-pdf-2.1.115.old/cl-pdf.asd cl-pdf-2.1.115/cl-pdf.asd
---- cl-pdf-2.1.115.old/cl-pdf.asd	2007-11-27 00:02:13.000000000 +0100
-+++ cl-pdf-2.1.115/cl-pdf.asd	2007-11-27 00:34:34.000000000 +0100
+diff -Naur cl-pdf-2.1.172.old/cl-pdf.asd cl-pdf-2.1.172/cl-pdf.asd
+--- cl-pdf-2.1.172.old/cl-pdf.asd	2007-11-27 00:02:13.000000000 +0100
++++ cl-pdf-2.1.172/cl-pdf.asd	2007-11-27 00:34:34.000000000 +0100
 @@ -11,56 +11,29 @@
  
  (in-package #:cl-pdf-system)
@@ -32,7 +32,7 @@ diff -Naur cl-pdf-2.1.115.old/cl-pdf.asd cl-pdf-2.1.115/cl-pdf.asd
    :name "cl-pdf"
    :author "Marc Battyani <marc.battyani@fractalconcept.com>"
 -  :version "2.0"
-+  :version "2.1.115"
++  :version "2.1.172"
    :maintainer "Marc Battyani <marc.battyani@fractalconcept.com>"
    :licence "BSD like licence"
    :description "Common Lisp PDF Generation Library"
@@ -76,9 +76,9 @@ diff -Naur cl-pdf-2.1.115.old/cl-pdf.asd cl-pdf-2.1.115/cl-pdf.asd
 +               (:file "bar-codes" :depends-on ("pdf-geom"))
 +               (:file "chart" :depends-on ("text" "pdf-geom")))
 +  :depends-on (:iterate :salza))
-diff -Naur cl-pdf-2.1.115.old/cl-pdf-parser.asd cl-pdf-2.1.115/cl-pdf-parser.asd
---- cl-pdf-2.1.115.old/cl-pdf-parser.asd	2007-11-27 00:02:13.000000000 +0100
-+++ cl-pdf-2.1.115/cl-pdf-parser.asd	2007-11-27 00:35:49.000000000 +0100
+diff -Naur cl-pdf-2.1.172.old/cl-pdf-parser.asd cl-pdf-2.1.172/cl-pdf-parser.asd
+--- cl-pdf-2.1.172.old/cl-pdf-parser.asd	2007-11-27 00:02:13.000000000 +0100
++++ cl-pdf-2.1.172/cl-pdf-parser.asd	2007-11-27 00:35:49.000000000 +0100
 @@ -1,6 +1,9 @@
  ;;;; -*- Mode: LISP; Syntax: ANSI-Common-Lisp; Base: 10 -*-
  
@@ -90,9 +90,9 @@ diff -Naur cl-pdf-2.1.115.old/cl-pdf-parser.asd cl-pdf-2.1.115/cl-pdf-parser.asd
  
  (defsystem :cl-pdf-parser
    :name "cl-pdf-parser"
-diff -Naur cl-pdf-2.1.115.old/config.lisp cl-pdf-2.1.115/config.lisp
---- cl-pdf-2.1.115.old/config.lisp	2007-11-27 00:02:13.000000000 +0100
-+++ cl-pdf-2.1.115/config.lisp	2007-11-27 00:38:09.000000000 +0100
+diff -Naur cl-pdf-2.1.172.old/config.lisp cl-pdf-2.1.172/config.lisp
+--- cl-pdf-2.1.172.old/config.lisp	2007-11-27 00:02:13.000000000 +0100
++++ cl-pdf-2.1.172/config.lisp	2007-11-27 00:38:09.000000000 +0100
 @@ -40,7 +40,7 @@
  ;;  Neither of the versions of search-for-file can search the original value of
  ;;  *afm-files-directories* (#P"cl-pdf/afm/*.afm") as it contains wildcards!
@@ -120,9 +120,9 @@ diff -Naur cl-pdf-2.1.115.old/config.lisp cl-pdf-2.1.115/config.lisp
  ;a catchall for various kind of errors that can happen in the generation of a document.
  ; just catch 'max-number-of-pages-reached if you want to do something with this.
  (defvar *max-number-of-pages* 1000
-diff -Naur cl-pdf-2.1.115.old/zlib.lisp cl-pdf-2.1.115/zlib.lisp
---- cl-pdf-2.1.115.old/zlib.lisp	2007-11-27 00:02:13.000000000 +0100
-+++ cl-pdf-2.1.115/zlib.lisp	2007-11-27 00:37:27.000000000 +0100
+diff -Naur cl-pdf-2.1.172.old/zlib.lisp cl-pdf-2.1.172/zlib.lisp
+--- cl-pdf-2.1.172.old/zlib.lisp	2007-11-27 00:02:13.000000000 +0100
++++ cl-pdf-2.1.172/zlib.lisp	2007-11-27 00:37:27.000000000 +0100
 @@ -4,88 +4,12 @@
  
  (in-package #:pdf)
