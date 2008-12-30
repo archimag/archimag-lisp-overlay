@@ -2,15 +2,18 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit common-lisp-2
+WEBLOCKS_BRANCH=stable
+MY_P=${PN}-${WEBLOCKS_BRANCH}
+EHG_REPO_URI=http://bitbucket.org/skypher/${MY_P}/
+
+inherit common-lisp-2 mercurial
 
 DESCRIPTION="Weblocks is a continuations-based web framework written in Common Lisp."
 HOMEPAGE="http://common-lisp.net/project/cl-weblocks/"
-SRC_URI="http://common-lisp.net/~sionescu/files/${P}.tar.bz2"
 
 LICENSE="LLGPL-2.1"
 SLOT="0"
-KEYWORDS="~amd64 ~ppc ~sparc ~x86"
+KEYWORDS=""
 IUSE=""
 
 DEPEND="dev-lisp/closer-mop
@@ -41,6 +44,8 @@ CLSYSTEMS="${PN} ${PN}-test ${PN}-scripts ${PN}-store-test
 		   examples/${PN}-clsql-demo/${PN}-clsql-demo
 		   examples/${PN}-demo/${PN}-demo
 		   examples/${PN}-elephant-demo/${PN}-elephant-demo"
+
+S="${WORKDIR}"/${MY_P}
 
 src_install() {
 	dodir "${CLSOURCEROOT}"/${PN}/scripts
