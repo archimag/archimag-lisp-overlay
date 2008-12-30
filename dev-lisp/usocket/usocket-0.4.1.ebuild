@@ -4,7 +4,7 @@
 
 inherit common-lisp-2
 
-DESCRIPTION="${PN} is a universal socket library for Common Lisp."
+DESCRIPTION="Usocket is a universal socket library for Common Lisp."
 HOMEPAGE="http://common-lisp.net/project/usocket/"
 SRC_URI="http://common-lisp.net/project/${PN}/releases/${PN}-${PV}.tar.gz"
 
@@ -21,12 +21,11 @@ CLSYSTEMS="${PN} test/${PN}-test"
 
 src_unpack() {
 	unpack ${A}
-	rm "${S}"/{Makefile,test/${PN}.asd}
+	rm "${S}"/Makefile
 }
 
 src_install() {
-	common-lisp-install *.{lisp,asd} *.sh
-	common-lisp-install backend/*.lisp test/*.{in,lisp,asd}
+	common-lisp-install *.{lisp,asd} backend test/*.{lisp,asd}
 	common-lisp-symlink-asdf
 	dodoc TODO README doc/*.txt notes/*.txt
 }
