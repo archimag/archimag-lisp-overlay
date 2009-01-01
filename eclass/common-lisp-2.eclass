@@ -82,7 +82,7 @@ common-lisp-system-symlink() {
 common-lisp-2_src_install() {
 	common-lisp-install *.{lisp,asd}
 	common-lisp-symlink-asdf
-	for i in README HEADER TODO CHANGELOG ChangeLog BUGS CONTRIBUTORS *NEWS ; do
+	for i in README HEADER TODO CHANGELOG ChangeLog CHANGES BUGS CONTRIBUTORS *NEWS ; do
 		[[ -f ${i} ]] && dodoc ${i}
 	done
 }
