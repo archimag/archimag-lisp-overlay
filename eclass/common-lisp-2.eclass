@@ -14,6 +14,14 @@
 #
 # common-lisp-symlink-asdf [<paths>...]
 #   create symlinks in $CLSYSTEMROOT to asdf files
+#
+# common-lisp-export-impl-args lisp-implementation
+#   export a few variables containing the switches necessary
+#   to make the CL implementation perform basic functions:
+#   * CL_NORC: don't load initfiles
+#   * CL_LOAD: load a certain file
+#   * CL_EVAL: eval a certain expression at startup
+#
 
 inherit eutils
 
@@ -85,4 +93,42 @@ common-lisp-2_src_install() {
 	for i in README HEADER TODO CHANGELOG ChangeLog CHANGES BUGS CONTRIBUTORS *NEWS ; do
 		[[ -f ${i} ]] && dodoc ${i}
 	done
+}
+
+common-lisp-export-impl-args() {
+	if [[ $# != 1 ]]; then
+		eerror "Usage: ${0} lisp-implementation"
+		die "${0}: wrong number of arguments: $#"
+	fi
+	case ${1} in
+		clisp)
+			CL_NORC="-norc"
+			CL_LOAD="-i"
+			CL_EVAL="-x"
+			;;
+		clozure|ccl|openmcl)
+			CL_NORC="--no-init"
+			CL_LOAD="--load"
+			CL_EVAL="--eval"
+			;;
+		cmucl)
+			CL_NORC="-nositeinit -noinit"
+			CL_LOAD="-load"
+			CL_EVAL="-eval"
+			;;
+		ecl)
+			CL_NORC="-norc"
+			CL_LOAD="-load"
+			CL_EVAL="-eval"
+			;;
+		sbcl)
+			CL_NORC="--sysinit /dev/null --userinit /dev/null"
+			CL_LOAD="--load"
+			CL_EVAL="--eval"
+			;;
+		*)
+			die ${1} is not supported by ${0}
+			;;
+	esac
+	export CL_NOSYSRC CL_NORC CL_LOAD CL_EVAL
 }
