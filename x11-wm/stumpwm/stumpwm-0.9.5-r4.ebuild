@@ -4,7 +4,7 @@
 
 EAPI=2
 
-inherit common-lisp-2 eutils elisp
+inherit common-lisp-2 glo-utils eutils elisp
 
 DESCRIPTION="Stumpwm is a tiling, keyboard driven X11 Window Manager written entirely in Common Lisp."
 HOMEPAGE="http://www.nongnu.org/stumpwm/"
@@ -13,7 +13,7 @@ SRC_URI="http://download.savannah.nongnu.org/releases/stumpwm/${P}.tgz"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
-IUSE="sbcl clisp emacs doc"
+IUSE="sbcl clisp source emacs"
 
 RESTRICT="strip"
 
@@ -24,7 +24,7 @@ DEPEND="dev-lisp/cl-ppcre
 		!sbcl? ( clisp? ( >=dev-lisp/clisp-2.44[X] ) )
 		sbcl?  ( >=dev-lisp/sbcl-1.0.22 )
 		emacs? ( app-emacs/slime )
-		doc? ( sys-apps/texinfo )"
+		sys-apps/texinfo"
 RDEPEND="${DEPEND}"
 
 WRAP_OPTS='
@@ -46,41 +46,36 @@ src_configure() {
 }
 
 src_compile() {
-	if use sbcl ; then
-		LISP=sbcl ; NORC="--no-sysinit --no-userinit" ; EVAL=--eval
-	elif use clisp ; then
-		LISP=clisp ; NORC=-norc ; EVAL=-x
-	else
-		LISP=sbcl ; NORC="--no-sysinit --no-userinit" ; EVAL=--eval
-	fi
-
 	addwrite /var/cache/cl-launch
 	LISP_FASL_CACHE=/var/cache/cl-launch \
-		cl-launch.sh --lisp ${LISP} --wrap "${WRAP_OPTS}" \
+		cl-launch.sh \
+		--lisp $(glo_best_flag sbcl clisp) \
+		--wrap "${WRAP_OPTS}" \
 		--path "${CLSYSTEMROOT}" --path-current \
 		--system stumpwm --dump stumpwm.bin \
 		|| die "Cannot create stumpwm binary"
-	cat >> stumpwm <<EOF
-#!/bin/sh
-
-exec stumpwm.bin ${NORC} ${EVAL} '(stumpwm:stumpwm ":0")'
-EOF
 	if use emacs ; then
 		elisp-compile contrib/*.el || die "Cannot compile contrib Elisp files"
 	fi
-	if use doc ; then
-		makeinfo stumpwm.texi || die "Cannot build info focs"
-	fi
+	makeinfo stumpwm.texi || die "Cannot build info focs"
 }
 
 src_install() {
-	dobin stumpwm{,.bin} contrib/stumpish
-	common-lisp-install *.{lisp,asd} contrib/*.lisp
-	common-lisp-symlink-asdf
+	dobin stumpwm.bin contrib/stumpish
+	common-lisp-export-impl-args $(glo_best_flag sbcl clisp)
+	make_wrapper stumpwm "/usr/bin/stumpwm.bin ${CL_NORC} ${CL_EVAL} '(stumpwm:stumpwm \":0\")'"
+	make_session_desktop StumpWM /usr/bin/stumpwm
+
+	if use source; then
+		common-lisp-install *.{lisp,asd} contrib/*.lisp
+		common-lisp-symlink-asdf
+	fi
+
 	if use emacs; then
 		elisp-install / contrib/*.el{,c} || die "Cannot install contrib Elisp files"
 	fi
+
 	cp "${FILESDIR}"/README.Gentoo . && sed -i "s:@VERSION@:${PV}:" README.Gentoo
 	dodoc README NEWS ChangeLog README.Gentoo
-	use doc && doinfo stumpwm.info
+	doinfo stumpwm.info
 }
