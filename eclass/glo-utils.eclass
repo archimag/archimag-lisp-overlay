@@ -10,6 +10,10 @@
 #   If $(use FLAGNAME) return true, echo IF_YES to standard output,
 #   otherwise echo IF_NO. IF_YES defaults to FLAGNAME if not specified
 #
+# glo_best_flag flag+
+#   Echo to stdout the first active USE flag among those supplied as parameters.
+#   If none are active, echo the first one
+#
 
 glo_usev() {
 	if [[ $# < 1 || $# > 3 ]]; then
@@ -24,4 +28,18 @@ glo_usev() {
 		printf "%s" "${if_no}"
 		return 1
 	fi
+}
+
+glo_best_flag() {
+	if [[ $# < 1 ]]; then
+		echo "Usage: ${0} flag+"
+		die "${0}: wrong number of arguments: $#"
+	fi
+	for flag in $@ ; do
+		if use ${flag} ; then
+			echo ${flag}
+			return
+		fi
+	done
+	echo ${1}
 }
