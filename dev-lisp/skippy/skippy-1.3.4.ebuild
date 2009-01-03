@@ -1,11 +1,11 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
 inherit common-lisp-2
 
 DESCRIPTION="A graphics library that reads and writes GIF files. It is pure Common Lisp. It supports normal GIFs and animated GIFs."
-HOMEPAGE="http://www.cliki.net/Skippy"
+HOMEPAGE="http://www.xach.com/lisp/skippy/"
 SRC_URI="http://common-lisp.net/~sionescu/files/${P}.tar.bz2"
 
 LICENSE="BSD-2"
