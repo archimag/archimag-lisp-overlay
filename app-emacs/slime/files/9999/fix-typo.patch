@@ -1,0 +1,13 @@
+diff --git a/slime.el b/slime.el
+index b7d55a6..8b61316 100644
+--- a/slime.el
++++ b/slime.el
+@@ -2448,7 +2448,7 @@ Debugged requests are ignored."
+     ch))
+ 
+ (defun slime-close-channel (channel)
+-  (setf (slime-channels.operations channel) 'closed-channel)
++  (setf (slime-channel.operations channel) 'closed-channel)
+   (let ((probe (assq (slime-channel.id channel) (slime-channels))))
+     (cond (probe (setf (slime-channels) (delete probe (slime-channels))))
+           (t (error "Invalid channel: %s" channel)))))

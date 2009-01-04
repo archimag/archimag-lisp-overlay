@@ -6,7 +6,7 @@
 
 (require 'slime-autoloads)
 (eval-after-load 'slime
-  (slime-setup '(slime-fancy slime-asdf slime-banner)))
+  (slime-setup '(slime-fancy slime-repl slime-asdf slime-banner)))
 
 ;; this allows us not to require dev-lisp/hyperspec
 ;; (which is non-free) as a hard dependency
