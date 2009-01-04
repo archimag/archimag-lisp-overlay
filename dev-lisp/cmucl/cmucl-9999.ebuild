@@ -44,7 +44,8 @@ src_compile() {
 }
 
 src_install() {
-	src/tools/make-dist.sh -S -g -G root -O root build-4 ${PV} x86 linux || die "Cannot build installation archive"
+	env MANDIR=share/man/man1 DOCDIR=share/doc/${PF} \
+		src/tools/make-dist.sh -S -g -G root -O root build-4 ${PV} x86 linux || die "Cannot build installation archive"
 	dodir /usr
 	tar xzpf cmucl-${PV}-x86-linux.tar.gz -C "${D}"/usr || die "Cannot install main system"
 	if use X ; then
