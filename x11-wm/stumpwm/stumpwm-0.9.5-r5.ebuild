@@ -27,9 +27,11 @@ DEPEND="dev-lisp/cl-ppcre
 		sys-apps/texinfo"
 RDEPEND="${DEPEND}"
 
+common-lisp-export-impl-args $(glo_best_flag sbcl clisp)
+
 WRAP_OPTS='
-SBCL_OPTIONS="--no-sysinit --no-userinit"
-CLISP_OPTIONS="-ansi -K full -norc --verbose"
+SBCL_OPTIONS="${CL_NORC}"
+CLISP_OPTIONS="-ansi -K full ${CL_NORC}"
 '
 
 src_unpack() {
@@ -37,7 +39,6 @@ src_unpack() {
 
 	epatch "${FILESDIR}"/${PV}-gentoo-fix-asd-deps.patch
 	epatch "${FILESDIR}"/${PV}-fix-clisp-syscalls-package.patch
-	epatch "${FILESDIR}"/${PV}-fix-xlib-workarounds.patch
 }
 
 src_configure() {
@@ -62,7 +63,6 @@ src_compile() {
 
 src_install() {
 	dobin stumpwm.bin contrib/stumpish
-	common-lisp-export-impl-args $(glo_best_flag sbcl clisp)
 	make_wrapper stumpwm "/usr/bin/stumpwm.bin ${CL_NORC} ${CL_EVAL} '(stumpwm:stumpwm \":0\")'"
 	make_session_desktop StumpWM /usr/bin/stumpwm
 
