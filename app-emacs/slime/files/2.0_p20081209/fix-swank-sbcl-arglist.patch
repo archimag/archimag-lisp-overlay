@@ -1,0 +1,23 @@
+commit f10d8cf3aa24980cd9ec985d92265dd253abb8e8
+Author: Tobias C. Rittweiler <trittweiler@common-lisp.net>
+Date:   Mon Jan 5 11:19:09 2009 +0000
+
+    	* swank-sbcl.lisp (function-arglist):
+    	SB-INTROSPECT:FUNCTION-ARGLIST is deprecated in bleeding edge sbcl.
+
+diff --git a/ChangeLog b/ChangeLog
+index 522e764..5cb2506 100644
+--- a/swank-sbcl.lisp
++++ b/swank-sbcl.lisp
+@@ -335,6 +335,11 @@
+ 
+ ;;; Utilities
+ 
++#+#.(swank-backend::sbcl-with-symbol 'function-lambda-list 'sb-introspect)
++(defimplementation arglist (fname)
++  (sb-introspect:function-lambda-list fname))
++
++#-#.(swank-backend::sbcl-with-symbol 'function-lambda-list 'sb-introspect)
+ (defimplementation arglist (fname)
+   (sb-introspect:function-arglist fname))
+ 
