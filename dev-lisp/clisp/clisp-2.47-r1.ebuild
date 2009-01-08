@@ -55,6 +55,9 @@ BUILDDIR="builddir"
 
 src_unpack() {
 	unpack ${A}
+	cd "${S}"
+
+	epatch "${FILESDIR}"/${PV}-fix-pari-module.patch
 
 	# More than -O1 breaks alpha/ia64
 	use alpha || use ia64 && sed -i -e 's/-O2//g' "${S}"/src/makemake.in
