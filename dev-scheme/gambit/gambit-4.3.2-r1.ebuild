@@ -1,6 +1,6 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-scheme/gambit/gambit-4.1.2.ebuild,v 1.1 2007/12/17 21:32:54 hkbst Exp $
+# $Header: $
 
 inherit eutils elisp-common check-reqs autotools multilib
 

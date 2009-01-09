@@ -1,3 +1,7 @@
+# Copyright 1999-2009 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 DESCRIPTION="Tiny (!) R4RS Scheme Interpreter, written in x86 Assembly, including its own Assembler (in Scheme)"
 HOMEPAGE="http://www.stripedgazelle.org/joey/dream.html"
 SRC_URI="http://www.stripedgazelle.org/cgi-bin/wiki_joey/${PN}${PV}.tar.gz"
