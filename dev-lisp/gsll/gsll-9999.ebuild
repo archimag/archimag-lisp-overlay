@@ -9,7 +9,7 @@ inherit common-lisp-2 git
 DESCRIPTION="Common Lisp interface to the GNU Scientific Library."
 HOMEPAGE="http://common-lisp.net/project/gsll/"
 
-LICENSE="LLGPL-2.1 FDL"
+LICENSE="LLGPL-2.1 FDL-1.2"
 SLOT="0"
 KEYWORDS=""
 IUSE=""
