@@ -130,5 +130,5 @@ common-lisp-export-impl-args() {
 			die ${1} is not supported by ${0}
 			;;
 	esac
-	export CL_NOSYSRC CL_NORC CL_LOAD CL_EVAL
+	export CL_NORC CL_LOAD CL_EVAL
 }
