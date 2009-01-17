@@ -20,8 +20,8 @@ DEPEND="sys-apps/texinfo"
 S="${WORKDIR}"/${MY_P}
 
 src_unpack() {
-	unpack ${A}
-	rm "${S}"/xml* "${S}"/*/custom-xml.lisp
+	unpack ${A} && cd "${S}"
+	rm xml* */custom-xml.lisp
 }
 
 src_compile() {
@@ -29,12 +29,9 @@ src_compile() {
 }
 
 src_install() {
-	common-lisp-install *.{lisp,asd}
-	for p in abcl acl clisp cmucl ecl lispworks openmcl sbcl ; do
-		common-lisp-install ${p}/*.lisp
-	done
+	common-lisp-install *.{lisp,asd} \
+		abcl acl clisp cmucl ecl lispworks mcl openmcl sbcl
 	common-lisp-symlink-asdf
 	dodoc ChangeLog
-	doinfo *.info*
-
+	doinfo ${PN}.info
 }
