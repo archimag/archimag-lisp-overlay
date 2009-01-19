@@ -114,12 +114,11 @@ src_configure() {
 	fi
 
 	# configure chokes on --infodir option
-	local configure="./configure \
-		--prefix=/usr --libdir=/usr/$(get_libdir) \
+	local opts="--prefix=/usr --libdir=/usr/$(get_libdir) \
 		$(use_with readline) $(use_with unicode) \
 		${myconf} --hyperspec=${CLHSROOT} ${BUILDDIR}"
-	einfo "${configure}"
-	${configure} || die "./configure failed"
+	einfo configure "${opts}"
+	./configure ${opts} || die "./configure failed"
 
 	cd ${BUILDDIR}
 	sed -i 's,"vi","nano",g' config.lisp
