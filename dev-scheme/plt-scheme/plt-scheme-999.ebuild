@@ -7,7 +7,7 @@ ESVN_REPO_URI="http://svn.plt-scheme.org/plt/trunk/"
 inherit eutils subversion
 
 DESCRIPTION="DrScheme programming environment. Includes mzscheme."
-HOMEPAGE="http://www.plt-scheme.org/software/drscheme/"
+HOMEPAGE="http://www.plt-scheme.org"
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS=""
@@ -25,10 +25,22 @@ RDEPEND="X? ( x11-libs/libICE
 			  opengl? ( virtual/opengl )
 			  media-libs/libpng )"
 
-DEPEND="${RDEPEND}"
+DEPEND="${RDEPEND} !dev-tex/slatex"
+
+S="${WORKDIR}/plt-${PV%%_p*}"
+
+pkg_setup() {
+	if use cairo && use X; then
+		if ! built_with_use x11-libs/cairo X; then
+			eerror "Cairo must be built with X use flag"
+			die "Cairo must be built with X use flag"
+		fi
+	fi
+}
 
 src_unpack() {
 	subversion_src_unpack
+
 	#remove non-Unix stuff
 	rm -rf src/{a-list,mac,mysterx,mzcom,srpersist,worksp,wxmac,wxwindow}
 	sed "s,docdir=\"\${datadir}/plt/doc,docdir=\"\${datadir}/doc/${PF}," -i src/configure
@@ -49,19 +61,22 @@ src_compile() {
 		$(use_enable opengl gl) \
 		$(use_enable profile gprof) \
 		$(use_enable xft) \
-		$(use_enable xrender) \
-		|| die "econf failed"
+		$(use_enable xrender)
 
 	if use cgc; then
-		emake -j1 both || die "emake both failed"
+		emake both || die "emake both failed"
 	else
-		emake -j1 || die "emake failed"
+		emake || die "emake failed"
 	fi
 }
 
 src_install() {
+	# deal with slatex
+	insinto /usr/share/texmf/tex/latex/slatex/
+	doins collects/slatex/slatex.sty
+
 	cd src
-	export MZSCHEME_DYNEXT_LINKER_FLAGS=$(raw-ldflags)
+#	export MZSCHEME_DYNEXT_LINKER_FLAGS=$(raw-ldflags)
 
 	if use cgc; then
 		emake DESTDIR="${D}" install-both || die "emake install-both failed"
@@ -71,6 +86,6 @@ src_install() {
 
 	if use X; then
 		newicon ../collects/icons/PLT-206.png drscheme.png
-		make_desktop_entry drscheme "DrScheme" drscheme.png "Development"
+		make_desktop_entry drscheme "DrScheme" drscheme "Development"
 	fi
 }
