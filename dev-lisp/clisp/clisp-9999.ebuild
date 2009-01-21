@@ -16,6 +16,8 @@ SLOT="2"
 KEYWORDS="-sparc"
 IUSE="-jit -threads +unicode X new-clx dbus fastcgi gdbm gtk pari +pcre postgres +readline svm +zlib hyperspec"
 
+RESTRICT="strip"
+
 RDEPEND="virtual/libiconv
 		 >=dev-libs/libsigsegv-2.4
 		 >=dev-libs/ffcall-1.10
@@ -136,11 +138,8 @@ src_install() {
 	pushd ${BUILDDIR}
 	make DESTDIR="${D}" prefix=/usr install-bin || die
 	doman clisp.1
-	dodoc SUMMARY README* NEWS MAGIC.add ANNOUNCE clisp.dvi clisp.html
-	chmod a+x "${D}"/usr/$(get_libdir)/clisp-${PV/_*/}/clisp-link
-	# stripping them removes common symbols (defined but unitialised variables)
-	# which are then needed to build modules...
-	export STRIP_MASK="*/usr/$(get_libdir)/clisp-${PV}/*/*"
+	dodoc SUMMARY README* NEWS MAGIC.add ANNOUNCE
+	chmod a+x "${D}"/usr/$(get_libdir)/clisp-*/clisp-link || die "clisp-link chmod"
 	popd
 	dohtml doc/impnotes.{css,html} doc/regexp.html doc/clisp.png
 	dodoc doc/{editors,CLOS-guide,LISP-tutorial}.txt
