@@ -61,6 +61,8 @@ src_unpack() {
 	git_src_unpack
 	cd "${S}"
 
+	epatch "${FILESDIR}"/0001-Fix-Linux-threaded-build.patch
+
 	# More than -O1 breaks alpha/ia64
 	use alpha || use ia64 && sed -i -e 's/-O2//g' "${S}"/src/makemake.in
 }
