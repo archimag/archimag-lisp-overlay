@@ -1,0 +1,20 @@
+--- src/wiliki2.cgi.orig	2009-01-09 18:27:10.000000000 -0500
++++ src/wiliki2.cgi	2009-01-09 18:30:57.000000000 -0500
+@@ -57,12 +57,12 @@
+ (define (main args)
+   (wiliki-main
+    (make <wiliki>
+-     :db-path "/home/shiro/data/wikidata.dbm"
+-     :top-page "WiLiKi"
+-     :title "MyWiliki2"
+-     :description "Shiro's Wiliki Site Sample 2"
++     :db-path "/var/www/localhost/wiliki-0.6/data/wikidata.dbm"
++     :top-page "Gentoo WiLiKi"
++     :title "Gentoo Wiliki"
++     :description "Gentoo Wiliki Site Sample"
+      :style-sheet "wiliki2.css"
+-     :language 'jp
++     :language 'en
+      :charsets '((jp . euc-jp) (en . euc-jp))
+      :image-urls '((#/^http:\/\/sourceforge.net\/sflogo/ allow))
+      :log-file "wikidata.log"
