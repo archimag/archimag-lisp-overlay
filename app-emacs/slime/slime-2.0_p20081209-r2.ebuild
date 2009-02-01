@@ -15,7 +15,8 @@ IUSE="doc"
 
 RDEPEND="virtual/commonlisp dev-lisp/asdf"
 DEPEND="${RDEPEND}
-	doc? ( virtual/texi2dvi )"
+	doc? ( virtual/texi2dvi
+		   dev-texlive/texlive-genericrecommended )"
 
 CLPACKAGE=swank
 CLSYSTEMS=swank
