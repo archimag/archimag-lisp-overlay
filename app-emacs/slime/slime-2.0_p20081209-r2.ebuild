@@ -36,6 +36,7 @@ src_unpack() {
 	SLIME_CHANGELOG_DATE=$(awk '/^[-0-9]+ / { print $1; exit; }' ChangeLog)
 	[ -n "${SLIME_CHANGELOG_DATE}" ] || die "cannot determine ChangeLog date"
 
+	sed -i '/^section :=/d' doc/Makefile || die "sed doc/Makefile failed"
 	sed -i "/(defvar \*swank-wire-protocol-version\*/s:nil:\"${SLIME_CHANGELOG_DATE}\":" swank.lisp \
 		|| die "sed swank.lisp failed"
 	sed -i "s:@SLIME-CHANGELOG-DATE@:${SLIME_CHANGELOG_DATE}:" slime.el \
