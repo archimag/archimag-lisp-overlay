@@ -18,8 +18,7 @@ IUSE="doc"
 
 RDEPEND="virtual/commonlisp dev-lisp/asdf"
 DEPEND="${RDEPEND}
-	doc? ( virtual/texi2dvi
-		   dev-texlive/texlive-genericrecommended )"
+	doc? ( virtual/texi2dvi )"
 
 S="${WORKDIR}"/${PN}
 
