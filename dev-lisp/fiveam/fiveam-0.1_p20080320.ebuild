@@ -13,7 +13,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86 ~sparc ~ppc"
 IUSE=""
 
-DEPEND="!dev-lisp/cl-${PN}
+RDEPEND="!dev-lisp/cl-${PN}
 		!dev-lisp/cl-${PN}-darcs
 		dev-lisp/arnesi"
 

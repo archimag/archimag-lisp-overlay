@@ -15,7 +15,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
-DEPEND="dev-lisp/closure-common
+RDEPEND="dev-lisp/closure-common
 		dev-lisp/flexi-streams"
 
 S="${WORKDIR}"/${PN}-${MY_PV}

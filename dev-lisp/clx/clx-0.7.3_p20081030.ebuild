@@ -13,8 +13,8 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
-DEPEND="!dev-lisp/cl-${PN}
-		sys-apps/texinfo"
+DEPEND="sys-apps/texinfo"
+RDEPEND="!dev-lisp/cl-${PN}"
 
 src_compile() {
 	makeinfo manual/clx.texinfo || die "Cannot compile documentation"

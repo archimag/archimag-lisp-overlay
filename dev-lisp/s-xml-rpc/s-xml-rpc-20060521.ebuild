@@ -14,7 +14,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
-DEPEND="!dev-lisp/cl-${PN}
+RDEPEND="!dev-lisp/cl-${PN}
 		dev-lisp/s-xml
 		dev-lisp/s-base64
 		dev-lisp/s-sysdeps"

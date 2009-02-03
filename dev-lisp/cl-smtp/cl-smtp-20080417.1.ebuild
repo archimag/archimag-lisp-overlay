@@ -14,7 +14,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
-DEPEND="dev-lisp/cl-base64
+RDEPEND="dev-lisp/cl-base64
 		dev-lisp/usocket
 		dev-lisp/trivial-gray-streams
 		dev-lisp/flexi-streams

@@ -15,7 +15,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
-DEPEND="dev-lisp/closer-mop
+RDEPEND="dev-lisp/closer-mop
 		dev-lisp/rt"
 
 CLSYSTEMS="${PN} ${PN}-test"

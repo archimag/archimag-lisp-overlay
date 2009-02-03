@@ -15,7 +15,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
-DEPEND="dev-lisp/lw-compat"
+RDEPEND="dev-lisp/lw-compat"
 
 CLSYSTEMS="mop-feature-tests"
 

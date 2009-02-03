@@ -14,10 +14,10 @@ SLOT="0"
 KEYWORDS=""
 IUSE="doc"
 
-DEPEND="!dev-lisp/cl-${PN}
+DEPEND="doc? ( virtual/latex-base )"
+RDEPEND="!dev-lisp/cl-${PN}
 		!dev-lisp/cl-${PN}-darcs
-		!dev-lisp/${PN}-darcs
-		doc? ( virtual/latex-base )"
+		!dev-lisp/${PN}-darcs"
 
 src_compile() {
 	if use doc ; then

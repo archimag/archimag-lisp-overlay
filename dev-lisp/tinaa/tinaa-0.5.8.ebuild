@@ -13,7 +13,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
-DEPEND=">=dev-lisp/defsystem-compatibility-0.1.2
+RDEPEND=">=dev-lisp/defsystem-compatibility-0.1.2
 		dev-lisp/metatilities
 		dev-lisp/lml2
 		dev-lisp/trivial-shell

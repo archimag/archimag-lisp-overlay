@@ -13,7 +13,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
-DEPEND="dev-lisp/split-sequence
+RDEPEND="dev-lisp/split-sequence
 		dev-lisp/usocket
 		dev-lisp/flexi-streams"
 

@@ -13,7 +13,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
-DEPEND="dev-lisp/salza2
+RDEPEND="dev-lisp/salza2
 		dev-lisp/flexi-streams
 		dev-lisp/trivial-gray-streams"
 

@@ -14,7 +14,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
-DEPEND="dev-lisp/fiveam"
+RDEPEND="dev-lisp/fiveam"
 
 src_install() {
 	common-lisp-install src t ${PN}.asd

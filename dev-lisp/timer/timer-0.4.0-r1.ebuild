@@ -13,4 +13,4 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
-DEPEND="dev-lisp/sbcl"
+RDEPEND="dev-lisp/sbcl"

@@ -13,8 +13,8 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE="doc"
 
-DEPEND="!dev-lisp/cl-${PN}
-		doc? ( sys-apps/texinfo )"
+DEPEND="doc? ( sys-apps/texinfo )"
+RDEPEND="!dev-lisp/cl-${PN}"
 
 src_compile() {
 	if use doc ; then

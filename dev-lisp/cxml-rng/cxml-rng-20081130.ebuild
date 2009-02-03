@@ -15,7 +15,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
-DEPEND=">=dev-lisp/cxml-${PV}
+RDEPEND=">=dev-lisp/cxml-${PV}
 		>=dev-lisp/cl-ppcre-2.0.0
 		>=dev-lisp/cl-yacc-0.2
 		>=dev-lisp/parse-number-1.0

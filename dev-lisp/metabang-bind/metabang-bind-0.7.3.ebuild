@@ -14,7 +14,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
-DEPEND="!dev-lisp/cl-bind
+RDEPEND="!dev-lisp/cl-bind
 		dev-lisp/lift"
 
 CLSYSTEMS="${PN} ${PN}-test"

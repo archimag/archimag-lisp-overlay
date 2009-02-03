@@ -13,7 +13,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
-DEPEND="dev-lisp/cl-mime
+RDEPEND="dev-lisp/cl-mime
 		dev-lisp/cl-base64
 		dev-lisp/xmls
 		dev-lisp/xmls-tools"

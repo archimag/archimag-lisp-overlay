@@ -13,7 +13,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE="doc"
 
-DEPEND=">=dev-lisp/flexichain-0.4.1
+RDEPEND=">=dev-lisp/flexichain-0.4.1
 		>=dev-lisp/mcclim-0.9.5_p20080209"
 
 src_compile() {

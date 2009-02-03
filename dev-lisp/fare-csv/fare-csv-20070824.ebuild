@@ -15,6 +15,6 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
-DEPEND="!dev-lisp/cl-csv"
+RDEPEND="!dev-lisp/cl-csv"
 
 S="${WORKDIR}"/${PN}

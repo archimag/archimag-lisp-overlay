@@ -15,11 +15,11 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE="doc"
 
-DEPEND="!dev-lisp/cl-${PN}
+DEPEND="doc? ( dev-lisp/sbcl virtual/texi2dvi )"
+RDEPEND="!dev-lisp/cl-${PN}
 		dev-lisp/alexandria
 		dev-lisp/babel
-		dev-lisp/trivial-features
-		doc? ( dev-lisp/sbcl virtual/texi2dvi )"
+		dev-lisp/trivial-features"
 
 CLSYSTEMS="${PN} ${PN}-tests ${PN}-examples ${PN}-grovel ${PN}-uffi-compat"
 

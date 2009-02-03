@@ -13,7 +13,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
-DEPEND="dev-lisp/closer-mop
+RDEPEND="dev-lisp/closer-mop
 		dev-lisp/metatilities
 		dev-lisp/hunchentoot
 		dev-lisp/cl-who

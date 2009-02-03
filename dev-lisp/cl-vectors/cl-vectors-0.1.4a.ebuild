@@ -13,7 +13,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
-DEPEND="dev-lisp/zpb-ttf"
+RDEPEND="dev-lisp/zpb-ttf"
 
 CLSYSTEMS="cl-aa-misc cl-aa cl-paths-ttf cl-paths cl-vectors"
 
