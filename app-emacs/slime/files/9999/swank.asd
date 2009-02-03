@@ -35,6 +35,7 @@
                   (:module "contrib"
                    :components ((:no-load-file "swank-arglists")
                                 (:no-load-file "swank-asdf")
+                                (:no-load-file "swank-clipboard")
                                 (:no-load-file "swank-c-p-c")
                                 (:no-load-file "swank-fancy-inspector")
                                 (:no-load-file "swank-fuzzy")
@@ -42,7 +43,8 @@
                                 (:no-load-file "swank-listener-hooks")
                                 (:no-load-file "swank-motd")
                                 (:no-load-file "swank-presentations")
-                                (:no-load-file "swank-presentation-streams"))))
+                                (:no-load-file "swank-presentation-streams")
+                                (:no-load-file "swank-sbcl-exts"))))
      :depends-on (#+sbcl sb-bsd-sockets)
      :perform (load-op :after (op swank)
                        (load-site-init-file)

@@ -1,0 +1,17 @@
+diff --git a/src/makemake.in b/src/makemake.in
+index dc6df1d..ffd4487 100644
+--- a/src/makemake.in
++++ b/src/makemake.in
+@@ -3232,6 +3232,9 @@ echotab "\$(RM) genclisph${HEXE} clisp-test-clisp${HEXE} clisp-test-lispbibl${HE
+ OBSOLETE="$OBSOLETE clisp-test.c"
+ echol
+ LINKKIT="modules.c clisp.h modprep.lisp"
++if [ "${with_threads}" != no ]; then
++  LINKKIT="${LINKKIT} xthread.c"
++fi
+ echol "linkkit : ${LINKKIT}"
+ echotab "-\$(RMRF) linkkit"
+ echotab "mkdir linkkit"
+-- 
+1.6.1
+
