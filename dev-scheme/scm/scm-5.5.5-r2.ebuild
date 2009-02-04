@@ -84,6 +84,36 @@ src_compile() {
 			-h system \
 			-t dll || die
 	fi
+	./build \
+		--compiler-options="${CFLAGS}" \
+		--linker-options="${LDFLAGS}" \
+		-c gsubr.c \
+		-h system \
+		-t dll || die
+	./build \
+		--compiler-options="${CFLAGS}" \
+		--linker-options="${LDFLAGS}" \
+		-c ioext.c \
+		-h system \
+		-t dll || die
+	./build \
+		--compiler-options="${CFLAGS}" \
+		--linker-options="${LDFLAGS}" \
+		-c posix.c \
+		-h system \
+		-t dll || die
+	./build \
+		--compiler-options="${CFLAGS}" \
+		--linker-options="${LDFLAGS}" \
+		-c socket.c \
+		-h system \
+		-t dll || die
+	./build \
+		--compiler-options="${CFLAGS}" \
+		--linker-options="${LDFLAGS}" \
+		-c unix.c \
+		-h system \
+		-t dll || die
 }
 
 src_test() {
