@@ -1,0 +1,51 @@
+--- Makefile.orig	2008-02-06 00:25:10.000000000 -0500
++++ Makefile	2009-02-03 15:28:11.000000000 -0500
+@@ -196,7 +196,6 @@
+ udscm5:	$(cfiles) $(ufiles) $(hfiles) build.scm build udscm5.opt
+ 	$(BUILD) -f udscm5.opt -o udscm5 -s $(IMPLPATH)
+ 	-rm $(ofiles) scmmain.o
+-	strip udscm5
+ dscm5:	udscm5 $(ifiles) require.scm
+ 	if [ -f /proc/sys/kernel/randomize_va_space -a\
+ 	     "`cat /proc/sys/kernel/randomize_va_space`" != "0" ]; then {\
+@@ -390,7 +389,7 @@
+ PREVDOCS = prevdocs/
+ html:	$(htmldir)scm_toc.html $(htmldir)Xlibscm_toc.html $(htmldir)hobbit_toc.html
+ 
+-TEXI2HTML = /usr/local/bin/texi2html -split -verbose
++TEXI2HTML = /usr/bin/texi2html -split -verbose
+ 
+ $(htmldir)scm_toc.html:	Makefile $(texifiles)
+ 	${TEXI2HTML} scm.texi
+@@ -427,14 +426,14 @@
+ 
+ rpm_prefix=$(HOME)/rpmbuild/
+ 
+-prefix = /usr/local/
++prefix = /usr/
+ exec_prefix = $(prefix)
+ # directory where `make install' will put executable.
+ bindir = $(exec_prefix)bin/
+ libdir = $(exec_prefix)lib/
+ libscmdir = $(libdir)scm/
+ # directory where `make install' will put manual page.
+-man1dir = $(prefix)man/man1/
++man1dir = $(prefix)share/man/man1/
+ infodir = $(prefix)info/
+ includedir = $(prefix)include/
+ 
+@@ -488,13 +487,12 @@
+ 
+ lsdfiles = $(ifiles) $(hobfiles) COPYING COPYING.LESSER r4rstest.scm \
+ 	build build.scm mkimpcat.scm $(SHOBJS) patchlvl.h \
+-	Iedline.scm $(xafiles) db.so wbtab.scm rwb-isam.scm
++	$(xafiles) wbtab.scm rwb-isam.scm
+ 
+ install:	scm.1
+ 	mkdir -p $(DESTDIR)$(bindir)
+ 	mkdir -p $(DESTDIR)$(man1dir)
+ 	-cp scm scmlit $(DESTDIR)$(bindir)
+-	-strip $(DESTDIR)$(bindir)scmlit
+ 	-cp scm.1 $(DESTDIR)$(man1dir)
+ 	mkdir -p $(DESTDIR)$(libscmdir)
+ 	test -f $(DESTDIR)$(libscmdir)require.scm || \
