@@ -14,7 +14,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
-DEPEND=">=dev-lisp/trivial-gray-streams-20060925"
+RDEPEND=">=dev-lisp/trivial-gray-streams-20060925"
 
 src_install() {
 	common-lisp-install *.{lisp,asd} test/

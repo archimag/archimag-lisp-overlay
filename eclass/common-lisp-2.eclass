@@ -36,7 +36,7 @@ CLSYSTEMROOT="${ROOT%/}"/usr/share/common-lisp/systems/
 CLPACKAGE="${PN}"
 CLSYSTEMS="${PN}"
 
-DEPEND="virtual/commonlisp"
+RDEPEND="virtual/commonlisp"
 
 EXPORT_FUNCTIONS src_install
 

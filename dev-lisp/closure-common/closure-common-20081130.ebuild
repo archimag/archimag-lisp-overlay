@@ -15,6 +15,6 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
-DEPEND="dev-lisp/trivial-gray-streams"
+RDEPEND="dev-lisp/trivial-gray-streams"
 
 S="${WORKDIR}"/${PN}-${MY_PV}

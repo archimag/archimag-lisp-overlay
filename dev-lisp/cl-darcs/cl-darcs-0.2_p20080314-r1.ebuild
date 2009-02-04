@@ -14,7 +14,8 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE="doc"
 
-DEPEND="dev-lisp/split-sequence
+DEPEND="doc? ( virtual/latex-base sys-apps/texinfo )"
+RDEPEND="dev-lisp/split-sequence
 		dev-lisp/drakma
 		dev-lisp/puri
 		dev-lisp/trivial-gray-streams
@@ -22,8 +23,7 @@ DEPEND="dev-lisp/split-sequence
 		dev-lisp/flexi-streams
 		dev-lisp/cl-fad
 		dev-lisp/cl-ppcre
-		dev-lisp/cl-difflib
-		doc? ( virtual/latex-base sys-apps/texinfo )"
+		dev-lisp/cl-difflib"
 
 src_compile() {
 	if use doc ; then

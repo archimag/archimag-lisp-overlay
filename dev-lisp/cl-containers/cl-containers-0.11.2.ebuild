@@ -13,7 +13,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
-DEPEND="dev-lisp/asdf-system-connections
+RDEPEND="dev-lisp/asdf-system-connections
 		>=dev-lisp/metatilities-base-0.6.6
 		dev-lisp/lift"
 

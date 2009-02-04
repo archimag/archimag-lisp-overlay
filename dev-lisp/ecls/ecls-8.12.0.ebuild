@@ -17,10 +17,11 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE="X cxx debug +threads +unicode"
 
-DEPEND="dev-libs/gmp
-		app-text/texi2html
+REPEND="dev-libs/gmp
 		>=dev-libs/boehm-gc-6.8
 		cxx? ( dev-libs/boehm-gc[-nocxx] )"
+DEPEND="${RDEPEND}
+		app-text/texi2html"
 
 PROVIDE="virtual/commonlisp"
 

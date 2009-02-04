@@ -14,7 +14,10 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE="emacs doc"
 
-DEPEND="!dev-lisp/cl-${PN}
+DEPEND="emacs? ( virtual/emacs )
+		doc? ( sys-apps/texinfo )"
+RDEPEND="emacs? ( virtual/emacs )
+		!dev-lisp/cl-${PN}
 		dev-lisp/spatial-trees
 		>=dev-lisp/flexichain-1.5.1
 		dev-lisp/clx
@@ -24,9 +27,7 @@ DEPEND="!dev-lisp/cl-${PN}
 		dev-lisp/zpb-ttf
 		dev-lisp/cl-vectors
 		dev-lisp/rt
-		dev-lisp/fiveam
-		emacs? ( virtual/emacs )
-		doc? ( sys-apps/texinfo )"
+		dev-lisp/fiveam"
 
 CLSYSTEMS="Apps/Functional-Geometry/functional-geometry
 		Apps/Scigraph/scigraph

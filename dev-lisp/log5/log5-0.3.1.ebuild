@@ -13,7 +13,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
-DEPENS="dev-lisp/lift"
+RDEPEND="dev-lisp/lift"
 
 CLSYSTEMS="${PN} ${PN}-test"
 

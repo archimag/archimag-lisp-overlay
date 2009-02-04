@@ -15,11 +15,11 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
-DEPEND="dev-lisp/iterate
+DEPEND="sys-apps/texinfo"
+RDEPEND="dev-lisp/iterate
 		dev-lisp/cl-ppcre
 		dev-lisp/cl-fad
-		dev-lisp/flexi-streams
-		sys-apps/texinfo"
+		dev-lisp/flexi-streams"
 
 S="${WORKDIR}"/${MY_P}
 

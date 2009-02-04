@@ -13,7 +13,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
-DEPEND="dev-lisp/metatilities-base
+RDEPEND="dev-lisp/metatilities-base
 		dev-lisp/lift"
 
 src_install() {

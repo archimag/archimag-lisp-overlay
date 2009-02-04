@@ -14,7 +14,8 @@ SLOT="0"
 KEYWORDS="~x86"
 IUSE="source X"
 
-DEPEND="x11-libs/openmotif
+RDEPEND="x11-libs/openmotif"
+DEPEND="${RDEPEND}
 		sys-devel/bc"
 PDEPEND="dev-lisp/gentoo-init"
 

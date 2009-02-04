@@ -17,7 +17,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
-DEPEND="dev-lisp/usocket
+RDEPEND="dev-lisp/usocket
 		dev-lisp/flexi-streams"
 
 S="${WORKDIR}"/${MY_P}

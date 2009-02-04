@@ -13,9 +13,9 @@ SLOT="0"
 KEYWORDS=""
 IUSE="jad"
 
+DEPEND=">=virtual/jdk-1.5"
 RDEPEND=">=virtual/jre-1.5
 	jad? ( dev-java/jad-bin )"
-DEPEND=">=virtual/jdk-1.5"
 
 src_compile() {
 	eant abcl.compile || die "Can't compile ABCL"

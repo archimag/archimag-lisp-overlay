@@ -17,11 +17,12 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE="postgres mysql sqlite sqlite3 odbc"
 
-DEPEND="!dev-lisp/cl-sql
+DEPEND="mysql? ( virtual/mysql )"
+RDEPEND="${DEPEND}
+		!dev-lisp/cl-sql
 		dev-lisp/md5
 		>=dev-lisp/uffi-1.5.7
 		postgres? ( dev-db/libpq )
-		mysql? ( virtual/mysql )
 		sqlite? ( dev-db/sqlite:0 )
 		sqlite3? ( dev-db/sqlite:3 )
 		odbc? ( dev-db/unixODBC )"
@@ -33,7 +34,7 @@ src_unpack() {
 }
 
 src_compile() {
-	make -C uffi || die
+	make -C uffi || die "Cannot build UFFI helper library"
 	if use mysql; then
 		make -C db-mysql || die "Cannot build foreign glue to libmysql"
 	fi

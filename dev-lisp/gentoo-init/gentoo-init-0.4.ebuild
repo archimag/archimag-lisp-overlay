@@ -10,7 +10,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
-DEPEND=">=dev-lisp/asdf-binary-locations-0.2.3"
+RDEPEND=">=dev-lisp/asdf-binary-locations-0.2.3"
 
 S="${WORKDIR}"
 

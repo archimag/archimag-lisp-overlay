@@ -15,7 +15,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
-DEPEND="dev-lisp/acl-compat
+RDEPEND="dev-lisp/acl-compat
 		dev-lisp/split-sequence"
 
 CLPACKAGE=ftp

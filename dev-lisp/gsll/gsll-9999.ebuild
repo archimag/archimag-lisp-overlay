@@ -14,7 +14,7 @@ SLOT="0"
 KEYWORDS=""
 IUSE=""
 
-DEPEND=">=sci-libs/gsl-1.9
+RDEPEND=">=sci-libs/gsl-1.9
 		>=dev-lisp/cffi-0.10.0
 		dev-lisp/trivial-garbage
 		dev-lisp/cl-utilities"

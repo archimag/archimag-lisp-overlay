@@ -13,9 +13,9 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
-DEPEND="dev-lisp/cl-fad
-		dev-lisp/fiveam
-		doc? ( sys-apps/texinfo )"
+DEPEND="doc? ( sys-apps/texinfo )"
+RDEPEND="dev-lisp/cl-fad
+		dev-lisp/fiveam"
 
 src_compile() {
 	use doc && texi2pdf documentation/${PN}.texinfo

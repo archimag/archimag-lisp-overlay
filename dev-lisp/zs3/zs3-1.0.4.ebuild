@@ -13,7 +13,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
-DEPEND="dev-lisp/cxml
+RDEPEND="dev-lisp/cxml
 		dev-lisp/drakma
 		dev-lisp/ironclad"
 

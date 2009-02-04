@@ -16,9 +16,10 @@ SLOT="0"
 KEYWORDS="~x86 ~sparc ~amd64 ~ppc"
 IUSE=""
 
-DEPEND=">=dev-lisp/cffi-0.9.2_p20080723
+RDEPEND=">=dev-lisp/cffi-0.9.2_p20080723
 		dev-lisp/trivial-gray-streams
-		dev-lisp/flexi-streams"
+		dev-lisp/flexi-streams
+		dev-libs/openssl"
 
 CLPACKAGE=${MY_PN}
 CLSYSTEMS=${MY_PN}

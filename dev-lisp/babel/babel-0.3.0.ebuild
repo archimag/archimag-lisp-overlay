@@ -15,7 +15,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
-DEPEND="dev-lisp/alexandria
+RDEPEND="dev-lisp/alexandria
 		dev-lisp/trivial-features
 		dev-lisp/trivial-gray-streams
 		dev-lisp/rt"

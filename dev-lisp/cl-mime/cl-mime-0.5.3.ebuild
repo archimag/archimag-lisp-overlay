@@ -13,7 +13,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
-DEPEND=">=dev-lisp/cl-ppcre-2.0.0
+RDEPEND=">=dev-lisp/cl-ppcre-2.0.0
 		dev-lisp/cl-base64
 		dev-lisp/cl-qprint"
 

@@ -15,7 +15,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
-DEPEND="dev-lisp/hunchentoot
+RDEPEND="dev-lisp/hunchentoot
 		dev-lisp/cl-who
 		dev-lisp/cl-store"
 

@@ -13,5 +13,5 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
-DEPEND="dev-lisp/s-xml
+RDEPEND="dev-lisp/s-xml
 		dev-lisp/trivial-http"

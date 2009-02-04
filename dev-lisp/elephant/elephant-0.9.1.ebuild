@@ -16,7 +16,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="doc postgres sqlite3"
 
-DEPEND="!dev-lisp/cl-${PN}
+RDEPEND="!dev-lisp/cl-${PN}
 		sys-libs/db:4.5
 		dev-lisp/uffi
 		dev-lisp/clsql

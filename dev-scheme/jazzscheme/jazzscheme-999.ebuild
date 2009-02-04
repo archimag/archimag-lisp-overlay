@@ -15,8 +15,8 @@ SLOT="0"
 KEYWORDS="~x86 ~amd64"
 IUSE=""
 
-DEPEND=""
-RDEPEND=""
+DEPEND="dev-scheme/gambit x11-libs/cairo"
+RDEPEND="${DEPEND}"
 
 src_compile() {
 	sed "s:gsc-script:gsc-gambit:" -i kernel/build.scm

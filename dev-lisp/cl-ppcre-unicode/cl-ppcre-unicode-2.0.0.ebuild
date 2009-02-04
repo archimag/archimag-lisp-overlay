@@ -16,7 +16,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
-DEPEND="dev-lisp/cl-ppcre
+RDEPEND="dev-lisp/cl-ppcre
 		dev-lisp/cl-unicode"
 
 S="${WORKDIR}"/${MY_P}

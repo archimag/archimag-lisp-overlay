@@ -13,7 +13,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~sparc ~ppc ~x86"
 IUSE=""
 
-DEPEND="dev-lisp/salza
+RDEPEND="dev-lisp/salza
 		dev-lisp/iterate"
 
 CLSYSTEMS="${PN} ${PN}-parser"

@@ -4,7 +4,7 @@
 
 inherit common-lisp-2
 
-DESCRIPTION="CL-GD is a library for Common Lisp which interfaces ti the GD Graphics Library"
+DESCRIPTION="CL-GD is a library for Common Lisp which interfaces to the GD Graphics Library"
 HOMEPAGE="http://weitz.de/cl-gd/
 		http://www.cliki.net/cl-gd/"
 SRC_URI="http://common-lisp.net/~sionescu/ediware/${PN}_${PV}.orig.tar.gz"
@@ -14,13 +14,14 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
-DEPEND=">=dev-lisp/uffi-1.3.4
-		dev-lisp/cffi
-		media-libs/libpng
+DEPEND="media-libs/libpng
 		media-libs/jpeg
 		media-libs/freetype
 		>=media-libs/gd-2.0.28
 		sys-libs/zlib"
+RDEPEND="${DEPEND}
+		>=dev-lisp/uffi-1.3.4
+		dev-lisp/cffi"
 
 CLSYSTEMS="${PN} ${PN}-test"
 

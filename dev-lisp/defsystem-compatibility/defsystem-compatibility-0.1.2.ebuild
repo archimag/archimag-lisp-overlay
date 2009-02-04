@@ -13,7 +13,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
-DEPEND=">=dev-lisp/metatilities-base-0.6.0
+RDEPEND=">=dev-lisp/metatilities-base-0.6.0
 		dev-lisp/lift"
 
 CLSYSTEMS="${PN} ${PN}-test"

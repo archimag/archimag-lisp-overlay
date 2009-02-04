@@ -13,7 +13,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
-DEPEND="dev-lisp/md5
+RDEPEND="dev-lisp/md5
 		dev-lisp/usocket
 		dev-lisp/ieee-floats
 		dev-lisp/trivial-utf8

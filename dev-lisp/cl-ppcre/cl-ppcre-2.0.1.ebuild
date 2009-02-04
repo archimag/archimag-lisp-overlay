@@ -14,7 +14,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
-DEPEND="dev-lisp/flexi-streams"
+RDEPEND="dev-lisp/flexi-streams"
 PDEPEND="dev-lisp/cl-ppcre-unicode"
 
 src_unpack() {
