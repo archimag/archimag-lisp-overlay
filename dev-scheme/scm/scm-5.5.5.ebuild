@@ -24,7 +24,6 @@ DEPEND="\
     app-arch/unzip
     >=dev-scheme/slib-3.1.5
     sys-libs/ncurses
-    sys-libs/readline
     sys-libs/libtermcap-compat"
 RDEPEND="${DEPEND}"
 
