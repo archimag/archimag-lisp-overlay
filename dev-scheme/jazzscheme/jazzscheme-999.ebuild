@@ -1,6 +1,6 @@
-# Copyright 2000-2008 Gentoo Foundation
+# Copyright 2000-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-scheme/tinyscheme/tinyscheme-1.39.ebuild,v 1.1 2008/05/08 10:07:42 hkbst Exp $
+# $Header: $
 
 inherit git
 
@@ -12,7 +12,7 @@ EGIT_REPO_URI="git://github.com/jazzscheme/jazz_dev.git"
 
 LICENSE="|| ( MPL-1.1 GPL-2 )"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="~x86 ~amd64"
 IUSE=""
 
 DEPEND=""
