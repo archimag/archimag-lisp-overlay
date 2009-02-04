@@ -17,7 +17,7 @@ HOMEPAGE="http://swiss.csail.mit.edu/~jaffer/SCM"
 SLOT="0"
 LICENSE="LGPL-3"
 KEYWORDS="~x86 ~amd64"
-IUSE="ncurses readline regex"
+IUSE="ncurses posix readline regex"
 
 #unzip for unpacking
 DEPEND="\
@@ -59,7 +59,6 @@ src_compile() {
 		-o scm || die
 
 	einfo "Building DLLs"	
-#	emake mydlls || die "failed to build DLLs"
 	if use readline; then
 		./build \
 			--compiler-options="${CFLAGS}" \
@@ -96,12 +95,14 @@ src_compile() {
 		-c ioext.c \
 		-h system \
 		-t dll || die
-	./build \
-		--compiler-options="${CFLAGS}" \
-		--linker-options="${LDFLAGS}" \
-		-c posix.c \
-		-h system \
-		-t dll || die
+	if use posix; then
+		./build \
+			--compiler-options="${CFLAGS}" \
+			--linker-options="${LDFLAGS}" \
+			-c posix.c \
+			-h system \
+			-t dll || die
+	fi
 	./build \
 		--compiler-options="${CFLAGS}" \
 		--linker-options="${LDFLAGS}" \
