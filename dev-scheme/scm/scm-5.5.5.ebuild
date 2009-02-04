@@ -16,15 +16,15 @@ HOMEPAGE="http://swiss.csail.mit.edu/~jaffer/SCM"
 
 SLOT="0"
 LICENSE="LGPL-3"
-KEYWORDS="~x86"
-IUSE=""
+KEYWORDS="~x86 ~amd64"
+IUSE="ncurses readline"
 
 #unzip for unpacking
 DEPEND="\
     app-arch/unzip
     >=dev-scheme/slib-3.1.5
-    sys-libs/ncurses
-    sys-libs/libtermcap-compat"
+    ncurses? ( sys-libs/ncurses )
+    readline? ( sys-libs/libtermcap-compat )"
 RDEPEND="${DEPEND}"
 
 src_unpack() {
@@ -55,18 +55,27 @@ src_compile() {
 		-F arrays bignums cautious \
 		-F dynamic-linking engineering-notation \
 		-F inexact macro \
-		-F edit-line \
 		-h system \
 		-o scm || die
 
 	einfo "Building DLLs"	
 #	emake mydlls || die "failed to build DLLs"
-	./build \
-		--compiler-options="${CFLAGS}" \
-		--linker-options="${LDFLAGS}" \
-		-F curses \
-		-h system \
-		-t dll || die
+	if use readline; then
+		./build \
+			--compiler-options="${CFLAGS}" \
+			--linker-options="${LDFLAGS}" \
+			-F edit-line \
+			-h system \
+			-t dll || die
+	fi
+	if use ncurses ; then
+		./build \
+			--compiler-options="${CFLAGS}" \
+			--linker-options="${LDFLAGS}" \
+			-F curses \
+			-h system \
+			-t dll || die
+	fi
 }
 
 src_test() {
