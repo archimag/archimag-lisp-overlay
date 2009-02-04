@@ -17,7 +17,7 @@ HOMEPAGE="http://swiss.csail.mit.edu/~jaffer/SCM"
 SLOT="0"
 LICENSE="LGPL-3"
 KEYWORDS="~x86 ~amd64"
-IUSE="ncurses readline"
+IUSE="ncurses readline regex"
 
 #unzip for unpacking
 DEPEND="\
@@ -73,6 +73,14 @@ src_compile() {
 			--compiler-options="${CFLAGS}" \
 			--linker-options="${LDFLAGS}" \
 			-F curses \
+			-h system \
+			-t dll || die
+	fi
+	if use regex ; then
+		./build \
+			--compiler-options="${CFLAGS}" \
+			--linker-options="${LDFLAGS}" \
+			-c rgx.c \
 			-h system \
 			-t dll || die
 	fi
