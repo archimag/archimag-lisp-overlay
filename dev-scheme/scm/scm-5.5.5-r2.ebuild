@@ -17,7 +17,8 @@ HOMEPAGE="http://swiss.csail.mit.edu/~jaffer/SCM"
 SLOT="0"
 LICENSE="LGPL-3"
 KEYWORDS="~x86 ~amd64"
-IUSE="ncurses posix readline regex"
+IUSE="arrays bignums cautious dynamic-linking engineering-notation gsubr inexact
+ioext macro ncurses posix readline regex sockets unix"
 
 #unzip for unpacking
 DEPEND="\
@@ -47,18 +48,33 @@ src_compile() {
 	emake -j1 scmlit clean || die "faild to build scmlit"
 
 	einfo "Building scm"
-#	emake scm5 || die "failed to build scm"
+	local features=""
+	use arrays && features="${features} arrays"
+	use bignums && features="${features} bignums"
+	use cautious && features="${features} cautious"
+	use engineering-notation && features="${features} engineering-notation"
+	use inexact && features="${features} inexact"
+	use macro && features="${features} macro"
+
+	( use readline ||
+	  use ncurses ||
+	  use regex ||
+	  use posix ||
+	  use ioext ||
+	  use gsubr ||
+	  use sockets ||
+	  use unix ||
+	  use dynamic-linking ) && features="${features} dynamic-linking"
+
 	./build \
 		--compiler-options="${CFLAGS}" \
 		--linker-options="${LDFLAGS}" \
 		-s /usr/lib/scm \
-		-F arrays bignums cautious \
-		-F dynamic-linking engineering-notation \
-		-F inexact macro \
+		-F ${features:="none"} \
 		-h system \
 		-o scm || die
 
-	einfo "Building DLLs"	
+	einfo "Building DLLs"
 	if use readline; then
 		./build \
 			--compiler-options="${CFLAGS}" \
@@ -83,18 +99,22 @@ src_compile() {
 			-h system \
 			-t dll || die
 	fi
-	./build \
-		--compiler-options="${CFLAGS}" \
-		--linker-options="${LDFLAGS}" \
-		-c gsubr.c \
-		-h system \
-		-t dll || die
-	./build \
-		--compiler-options="${CFLAGS}" \
-		--linker-options="${LDFLAGS}" \
-		-c ioext.c \
-		-h system \
-		-t dll || die
+	if use gsubr ; then
+		./build \
+			--compiler-options="${CFLAGS}" \
+			--linker-options="${LDFLAGS}" \
+			-c gsubr.c \
+			-h system \
+			-t dll || die
+	fi
+	if use ioext ; then
+		./build \
+			--compiler-options="${CFLAGS}" \
+			--linker-options="${LDFLAGS}" \
+			-c ioext.c \
+			-h system \
+			-t dll || die
+	fi
 	if use posix; then
 		./build \
 			--compiler-options="${CFLAGS}" \
@@ -103,18 +123,22 @@ src_compile() {
 			-h system \
 			-t dll || die
 	fi
-	./build \
-		--compiler-options="${CFLAGS}" \
-		--linker-options="${LDFLAGS}" \
-		-c socket.c \
-		-h system \
-		-t dll || die
-	./build \
-		--compiler-options="${CFLAGS}" \
-		--linker-options="${LDFLAGS}" \
-		-c unix.c \
-		-h system \
-		-t dll || die
+	if use sockets ; then
+		./build \
+			--compiler-options="${CFLAGS}" \
+			--linker-options="${LDFLAGS}" \
+			-c socket.c \
+			-h system \
+			-t dll || die
+	fi
+	if use unix ; then
+		./build \
+			--compiler-options="${CFLAGS}" \
+			--linker-options="${LDFLAGS}" \
+			-c unix.c \
+			-h system \
+			-t dll || die
+	fi
 }
 
 src_test() {
