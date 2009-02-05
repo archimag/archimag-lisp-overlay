@@ -28,13 +28,6 @@ DEPEND="${RDEPEND}
 		sys-apps/texinfo
 		doc? ( virtual/texi2dvi )"
 
-common-lisp-export-impl-args $(glo_best_flag sbcl clisp)
-
-WRAP_OPTS='
-SBCL_OPTIONS="${CL_NORC}"
-CLISP_OPTIONS="-ansi -K full ${CL_NORC}"
-'
-
 src_unpack() {
 	unpack ${A}
 
@@ -48,11 +41,16 @@ src_configure() {
 }
 
 src_compile() {
+	common-lisp-export-impl-args $(glo_best_flag sbcl clisp)
+	local wrap_opts='
+SBCL_OPTIONS="${CL_NORC}"
+CLISP_OPTIONS="-ansi -K full ${CL_NORC}"
+'
 	addwrite /var/cache/cl-launch
 	LISP_FASL_CACHE=/var/cache/cl-launch \
 		cl-launch.sh \
 		--lisp $(glo_best_flag sbcl clisp) \
-		--wrap "${WRAP_OPTS}" \
+		--wrap "${wrap_opts}" \
 		--path "${CLSYSTEMROOT}" --path-current \
 		--system stumpwm --dump stumpwm.bin \
 		|| die "Cannot create stumpwm binary"
