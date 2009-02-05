@@ -11,13 +11,19 @@ SRC_URI="http://common-lisp.net/~sionescu/files/${P}.tar.bz2"
 LICENSE="as-is"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
-IUSE=""
+IUSE="doc"
 
-DEPEND="sys-apps/texinfo"
+DEPEND="sys-apps/texinfo
+		doc? ( virtual/texi2dvi )"
 RDEPEND="!dev-lisp/cl-${PN}"
 
 src_compile() {
-	makeinfo manual/clx.texinfo || die "Cannot compile documentation"
+	cd manual
+	makeinfo ${PN}.texinfo -o ${PN}.info || die "Cannot compile info docs"
+	if use doc ; then
+		VARTEXFONTS="${T}"/fonts \
+			texi2pdf ${PN}.texinfo -o ${PN}.pdf || die "Cannot build PDF docs"
+	fi
 }
 
 src_install() {
@@ -26,5 +32,6 @@ src_install() {
 		NEWS CHANGES README README-R5
 	common-lisp-symlink-asdf
 	dodoc NEWS CHANGES README*
-	doinfo clx.info*
+	doinfo manual/${PN}.info
+	use doc && dodoc manual/${PN}.pdf
 }

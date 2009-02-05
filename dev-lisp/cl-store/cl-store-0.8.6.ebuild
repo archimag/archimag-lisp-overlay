@@ -13,9 +13,10 @@ SRC_URI="http://common-lisp.net/project/${PN}/files/${MY_P}.tgz"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
-IUSE=""
+IUSE="doc"
 
-DEPEND="sys-apps/texinfo"
+DEPEND="sys-apps/texinfo
+		doc? ( virtual/texi2dvi )"
 
 S="${WORKDIR}"/${MY_P}
 
@@ -25,7 +26,12 @@ src_unpack() {
 }
 
 src_compile() {
-	makeinfo doc/${PN}.texi -o ${PN}.info
+	cd doc
+	makeinfo ${PN}.texi -o ${PN}.info || die "Cannot build info docs"
+	if use doc ; then
+		VARTEXFONTS="${T}"/fonts \
+			texi2pdf ${PN}.texi -o ${PN}.pdf || die "Cannot build PDF docs"
+	fi
 }
 
 src_install() {
@@ -33,5 +39,6 @@ src_install() {
 		abcl acl clisp cmucl ecl lispworks mcl openmcl sbcl
 	common-lisp-symlink-asdf
 	dodoc ChangeLog
-	doinfo ${PN}.info
+	doinfo doc/${PN}.info
+	use doc && dodoc doc/${PN}.pdf
 }

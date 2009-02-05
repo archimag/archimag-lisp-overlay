@@ -15,7 +15,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE="doc"
 
-DEPEND="doc? ( sys-apps/texinfo )"
+DEPEND="doc? ( virtual/texi2dvi )"
 RDEPEND="!dev-lisp/cl-${PN}
 		app-misc/mime-types"
 
@@ -27,14 +27,19 @@ src_unpack() {
 }
 
 src_compile() {
+	cd docs/manual
+	# must fix userguide.texinfo
+	# makeinfo mel.texinfo -o ${PN}.info || die "Cannot build info docs"
 	if use doc ; then
-		cd docs/manual
-		texi2pdf mel.texinfo || die "Cannot build PDF docs"
+		VARTEXFONTS="${T}"/fonts \
+			texi2pdf mel.texinfo -o ${PN}.pdf || die "Cannot build PDF docs"
 	fi
 }
 
 src_install() {
 	common-lisp-install *.{lisp,asd} folders lisp-dep protocols
 	common-lisp-symlink-asdf
-	use doc && dodoc docs/manual/mel.pdf
+	# must fix userguide.texinfo
+	# doinfo docs/manual/${PN}.info
+	use doc && dodoc docs/manual/${PN}.pdf
 }

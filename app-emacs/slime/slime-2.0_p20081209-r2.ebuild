@@ -13,9 +13,10 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE="doc"
 
-RDEPEND="virtual/commonlisp dev-lisp/asdf"
-DEPEND="${RDEPEND}
-	doc? ( virtual/texi2dvi )"
+RDEPEND="virtual/commonlisp
+		dev-lisp/asdf"
+DEPEND="sys-apps/texinfo
+		doc? ( virtual/texi2dvi )"
 
 CLPACKAGE=swank
 CLSYSTEMS=swank
@@ -50,7 +51,7 @@ src_compile() {
 	emake -j1 -C doc slime.info || die "Cannot build info docs"
 	if use doc; then
 		VARTEXFONTS="${T}"/fonts \
-			emake -j1 -C doc slime.{ps,pdf} || die "emake doc failed"
+			emake -j1 -C doc slime.pdf || die "emake doc failed"
 	fi
 }
 
@@ -77,7 +78,7 @@ src_install() {
 	newdoc contrib/README README.contrib
 	newdoc contrib/ChangeLog ChangeLog.contrib
 	doinfo doc/slime.info
-	use doc && dodoc doc/slime.{ps,pdf}
+	use doc && dodoc doc/slime.pdf
 }
 
 pkg_postinst() {

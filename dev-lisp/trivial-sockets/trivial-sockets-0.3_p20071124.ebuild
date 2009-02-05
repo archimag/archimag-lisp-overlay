@@ -13,18 +13,22 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE="doc"
 
-DEPEND="doc? ( sys-apps/texinfo )"
+DEPEND="doc? ( virtual/texi2dvi )"
 RDEPEND="!dev-lisp/cl-${PN}"
 
 src_compile() {
+	# doesn't work
+	# makeinfo ${PN}.texi -o ${PN}.info || die "Cannot build info docs"
 	if use doc ; then
-		texi2pdf ${PN}.texi || die "Cannot build PDF docs"
+		VARTEXFONTS="${T}"/fonts \
+			texi2pdf ${PN}.texi -o ${PN}.pdf || die "Cannot build PDF docs"
 	fi
 }
 
 src_install() {
 	common-lisp-install *.{lisp,asd}
 	common-lisp-symlink-asdf
-	use doc && dodoc ${PN}.pdf
 	dodoc README
+	# doinfo ${PN}.info
+	use doc && dodoc ${PN}.pdf
 }

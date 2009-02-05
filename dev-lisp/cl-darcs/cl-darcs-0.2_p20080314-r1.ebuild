@@ -14,7 +14,8 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE="doc"
 
-DEPEND="doc? ( virtual/latex-base sys-apps/texinfo )"
+DEPEND="sys-apps/texinfo
+		doc? ( virtual/texi2dvi )"
 RDEPEND="dev-lisp/split-sequence
 		dev-lisp/drakma
 		dev-lisp/puri
@@ -26,15 +27,18 @@ RDEPEND="dev-lisp/split-sequence
 		dev-lisp/cl-difflib"
 
 src_compile() {
+	cd doc
+	makeinfo ${PN}.texi -o ${PN}.info || die "Cannot build info docs"
 	if use doc ; then
-		cd doc
-		texi2pdf ${PN}.texi
+		VARTEXFONTS="${T}"/fonts \
+			texi2pdf ${PN}.texi -o ${PN}.pdf || die "Cannot build PDF docs"
 	fi
 }
 
 src_install() {
 	common-lisp-install *.{lisp,asd}
 	common-lisp-symlink-asdf
-	use doc && dodoc doc/${PN}.pdf
 	dodoc README
+	dodoc doc/${PN}.info
+	use doc && dodoc doc/${PN}.pdf
 }

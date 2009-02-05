@@ -27,7 +27,8 @@ S="${WORKDIR}"/${MY_P}
 
 src_compile() {
 	if use doc ; then
-		make -C doc manual spec || die "Cannot build docs"
+		VARTEXFONTS="${T}"/fonts \
+			make -C doc manual spec || die "Cannot build docs"
 	fi
 }
 

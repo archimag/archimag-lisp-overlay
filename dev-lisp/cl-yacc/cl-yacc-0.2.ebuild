@@ -14,20 +14,25 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE="doc"
 
-DEPEND="doc? ( sys-apps/texinfo )"
+DEPEND="sys-apps/texinfo
+		doc? ( virtual/texi2dvi )"
 
 CLPACKAGE="yacc"
 CLSYSTEMS="yacc"
 
 src_compile() {
-	if use doc; then
-		makeinfo ${PN}.texi || die "Cannot build Texinfo docs"
+	cd doc
+	makeinfo ${PN}.texi -o ${PN}.info || die "Cannot build info docs"
+	if use doc ; then
+		VARTEXFONTS="${T}"/fonts \
+			texi2pdf ${PN}.texi -o ${PN}.pdf || die "Cannot build PDF docs"
 	fi
 }
 
 src_install() {
 	common-lisp-install *.{lisp,asd}
 	common-lisp-symlink-asdf
-	use doc && doinfo ${PN}.info
 	dodoc README
+	doinfo doc/${PN}.info
+	use doc && doc/${PN}.pdf
 }

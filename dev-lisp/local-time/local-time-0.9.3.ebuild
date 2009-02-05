@@ -11,19 +11,26 @@ SRC_URI="http://common-lisp.net/project/${PN}/${P}.tar.gz"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
-IUSE=""
+IUSE="doc"
 
-DEPEND="doc? ( sys-apps/texinfo )"
+DEPEND="sys-apps/texinfo
+		doc? ( virtual/texi2dvi )"
 RDEPEND="dev-lisp/cl-fad
 		dev-lisp/fiveam"
 
 src_compile() {
-	use doc && texi2pdf documentation/${PN}.texinfo
+	cd documentation
+	makeinfo ${PN}.texinfo -o ${PN}.info || die "Cannot compile info docs"
+	if use doc ; then
+		VARTEXFONTS="${T}"/fonts \
+			texi2pdf ${PN}.texinfo -o ${PN}.pdf || die "Cannot build PDF docs"
+	fi
 }
 
 src_install() {
 	common-lisp-install *.{lisp,asd} zoneinfo
 	common-lisp-symlink-asdf
 	dodoc CREDITS README TODO
-	use doc && dodoc ${PN}.pdf
+	doinfo doc/${PN}.info
+	use doc && dodoc doc/${PN}.pdf
 }

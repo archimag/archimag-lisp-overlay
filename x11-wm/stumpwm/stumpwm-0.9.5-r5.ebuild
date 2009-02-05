@@ -13,19 +13,20 @@ SRC_URI="http://download.savannah.nongnu.org/releases/stumpwm/${P}.tgz"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
-IUSE="sbcl clisp source emacs"
+IUSE="doc sbcl clisp source emacs"
 
 RESTRICT="strip"
 
-DEPEND="dev-lisp/cl-ppcre
+RDEPEND="dev-lisp/cl-ppcre
 		dev-lisp/clx
 		>=dev-lisp/cl-launch-2.11-r1
 		!sbcl? ( !clisp? ( >=dev-lisp/sbcl-1.0.22 ) )
 		!sbcl? ( clisp? ( >=dev-lisp/clisp-2.44[X] ) )
 		sbcl?  ( >=dev-lisp/sbcl-1.0.22 )
-		emacs? ( app-emacs/slime )
-		sys-apps/texinfo"
-RDEPEND="${DEPEND}"
+		emacs? ( app-emacs/slime )"
+DEPEND="${RDEPEND}
+		sys-apps/texinfo
+		doc? ( virtual/texi2dvi )"
 
 common-lisp-export-impl-args $(glo_best_flag sbcl clisp)
 
@@ -58,7 +59,11 @@ src_compile() {
 	if use emacs ; then
 		elisp-compile contrib/*.el || die "Cannot compile contrib Elisp files"
 	fi
-	makeinfo stumpwm.texi || die "Cannot build info focs"
+	makeinfo ${PN}.texi || die "Cannot build info focs"
+	if use doc ; then
+		VARTEXFONTS="${T}"/fonts \
+			texi2pdf ${PN}.texi || die "Cannot build PDF docs"
+	fi
 }
 
 src_install() {
@@ -77,5 +82,6 @@ src_install() {
 
 	cp "${FILESDIR}"/README.Gentoo . && sed -i "s:@VERSION@:${PV}:" README.Gentoo
 	dodoc README NEWS ChangeLog README.Gentoo
-	doinfo stumpwm.info
+	doinfo ${PN}.info
+	use doc && dodoc ${PN}.pdf
 }

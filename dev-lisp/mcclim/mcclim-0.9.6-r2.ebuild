@@ -14,10 +14,8 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE="emacs doc"
 
-DEPEND="emacs? ( virtual/emacs )
-		doc? ( sys-apps/texinfo )"
-RDEPEND="emacs? ( virtual/emacs )
-		!dev-lisp/cl-${PN}
+DEPEND="doc? ( virtual/texi2dvi )"
+RDEPEND="!dev-lisp/cl-${PN}
 		dev-lisp/spatial-trees
 		>=dev-lisp/flexichain-1.5.1
 		dev-lisp/clx
@@ -55,7 +53,8 @@ src_compile() {
 	fi
 	if use doc ; then
 		cd Spec/src
-		texi2pdf clim.tex || die "Cannot build PDF docs"
+		VARTEXFONTS="${T}"/fonts \
+			texi2pdf clim.tex -o clim.pdf || die "Cannot build PDF docs"
 	fi
 }
 
