@@ -68,7 +68,7 @@ common-lisp-install-single-system() {
 	[[ $# != 1 ]] && die "${FUNCNAME[0]} must receive exactly one argument"
 
 	local file="${CLSOURCEROOT%/}/${CLPACKAGE}/${1}.asd"
-	[[ -f ${D}/${file} ]] || die "${D}/${file} does not exist"
+	[[ -f "${D}"/${file} ]] || die "${D}/${file} does not exist"
 	dosym "${file}" "${CLSYSTEMROOT%/}/$(basename ${file})"
 }
 
