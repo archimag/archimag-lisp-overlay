@@ -72,7 +72,7 @@ src_install () {
 	diff -u Makefile.misc.old Makefile.misc
 
 	if use bee; then
-		emake install-bee || die
+		emake DESTDIR="${D}" install-bee || die
 	fi
 
 	if use emacs; then
