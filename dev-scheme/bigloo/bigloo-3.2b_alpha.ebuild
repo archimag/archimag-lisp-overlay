@@ -2,9 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-DATE="24Dec08"
+DATE="07Feb09"
 
-inherit elisp-common multilib
+inherit elisp-common multilib eutils
 
 MY_P=${PN}${PV/_p/-}
 MY_P=${MY_P/_alpha/-alpha}
@@ -28,10 +28,11 @@ S=${WORKDIR}/${MY_P%-*}
 
 SITEFILE="50bigloo-gentoo.el"
 
-IUSE="emacs java"
+IUSE="bee emacs java"
 # fullbee"
 
 src_compile() {
+	epatch "${FILESDIR}"/bigloo-compilebee.patch || die
 	if use emacs; then
 		elisp-compile etc/*.el || die "elisp-compile failed"
 	fi
@@ -49,12 +50,15 @@ src_compile() {
 		--sharedbde=no \
 		--sharedcompiler=no \
 		--customgc=no \
-		--coflags="" || die "configure failed"
+		--coflags="" \
+		--bee=$(if use bee; then echo full; else echo partial; fi)
 
-#		--bee=$(if use fullbee; then echo full; else echo partial; fi) \
+	emake || die "emake failed"
 
-	# parallel build is broken
-	emake -j1 || die "emake failed"
+	if use bee; then
+		einfo "Compiling bee..."
+		emake -j1 compile-bee || die "compiling bee failed"
+	fi
 }
 
 src_install () {
@@ -62,16 +66,19 @@ src_install () {
 #	echo "LDPATH=/usr/$(get_libdir)/bigloo/${PV}/" > ${D}/etc/env.d/25bigloo
 
 	# make the links created not point to DESTDIR, since that is only a temporary home
+	cp Makefile.misc Makefile.misc.old
 	sed 's/ln -s $(DESTDIR)/ln -s /' -i Makefile.misc
-	emake -j1 DESTDIR="${D}" install || die "install failed"
+	emake DESTDIR="${D}" install || die "install failed"
+	diff -u Makefile.misc.old Makefile.misc
+
+	if use bee; then
+		emake DESTDIR="${D}" install-bee || die
+	fi
 
 	if use emacs; then
 		elisp-install ${PN} etc/*.{el,elc} || die "elisp-install failed"
 		elisp-site-file-install "${FILESDIR}/${SITEFILE}"
 	fi
-
-#	einfo "Compiling bee..."
-#	emake compile-bee || die "compiling bee failed"
 }
 
 pkg_postinst() {

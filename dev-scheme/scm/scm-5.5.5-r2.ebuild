@@ -16,16 +16,16 @@ HOMEPAGE="http://swiss.csail.mit.edu/~jaffer/SCM"
 
 SLOT="0"
 LICENSE="LGPL-3"
-KEYWORDS="~x86 ~amd64"
+KEYWORDS="" #~x86 ~amd64"
 IUSE="arrays bignums cautious dynamic-linking engineering-notation gsubr inexact
 ioext macro ncurses posix readline regex sockets unix"
 
 #unzip for unpacking
 DEPEND="\
-    app-arch/unzip
-    >=dev-scheme/slib-3.1.5
-    ncurses? ( sys-libs/ncurses )
-    readline? ( sys-libs/libtermcap-compat )"
+	app-arch/unzip
+	>=dev-scheme/slib-3.1.5
+	ncurses? ( sys-libs/ncurses )
+	readline? ( sys-libs/libtermcap-compat )"
 RDEPEND="${DEPEND}"
 
 src_unpack() {
@@ -39,7 +39,7 @@ src_compile() {
 	# SLIB is required to build SCM.
 	local slibpath="/usr/share/slib/"
 	if [ -n "$SCHEME_LIBRARY_PATH" ]; then
-	    einfo using SLIB $SCHEME_LIBRARY_PATH
+		einfo using SLIB $SCHEME_LIBRARY_PATH
 	elif [ -d ${slibpath} ]; then
 		export SCHEME_LIBRARY_PATH=${slibpath}
 	fi
