@@ -22,6 +22,7 @@ REPEND="dev-libs/gmp
 		cxx? ( dev-libs/boehm-gc[-nocxx] )"
 DEPEND="${RDEPEND}
 		app-text/texi2html"
+PDEPEND="dev-lisp/gentoo-init"
 
 PROVIDE="virtual/commonlisp"
 
