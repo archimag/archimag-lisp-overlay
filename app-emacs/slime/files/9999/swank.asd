@@ -42,6 +42,7 @@
                                 (:no-load-file "swank-indentation")
                                 (:no-load-file "swank-listener-hooks")
                                 (:no-load-file "swank-motd")
+                                (:no-load-file "swank-package-fu")
                                 (:no-load-file "swank-presentations")
                                 (:no-load-file "swank-presentation-streams")
                                 (:no-load-file "swank-sbcl-exts"))))
