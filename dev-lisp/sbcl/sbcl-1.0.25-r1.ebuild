@@ -35,6 +35,7 @@ KEYWORDS="-* ~amd64 ~ppc ~sparc ~x86"
 IUSE="ldb source +threads +unicode doc cobalt"
 
 DEPEND="doc? ( sys-apps/texinfo >=media-gfx/graphviz-2.20[png] )"
+RDEPEND="elibc_glibc? ( || ( <sys-libs/glibc-2.6[nptl] >=sys-libs/glibc-2.6 ) )"
 PDEPEND="dev-lisp/gentoo-init"
 
 PROVIDE="virtual/commonlisp"
@@ -49,12 +50,6 @@ pkg_setup() {
 		eerror "So-called \"hardened\" compiler features are incompatible with SBCL. You"
 		eerror "must use gcc-config to select a profile with non-hardened features"
 		eerror "(the \"vanilla\" profile) and \"source /etc/profile\" before continuing."
-		die
-	fi
-	if ! built_with_use --missing true sys-libs/glibc nptl; then
-		eerror "Building SBCL without NPTL support on at least x86 and amd64"
-		eerror "architectures is not a supported configuration in Gentoo.  Please"
-		eerror "refer to Bug #119016 for more information."
 		die
 	fi
 }
