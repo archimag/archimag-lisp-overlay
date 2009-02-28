@@ -2,24 +2,16 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-ECVS_SERVER=common-lisp.net:/project/${PN}/cvsroot
-ECVS_PASS=anonymous
-ECVS_MODULE=src
-ECVS_LOCALNAME=${PN}
-
-inherit common-lisp-common-3 cvs eutils glo-utils toolchain-funcs
-
-PATCHSET=200812
-YEAR=${PATCHSET:0:4}
-MONTH=${PATCHSET:4:5}
+inherit common-lisp-common-3 eutils glo-utils toolchain-funcs
 
 DESCRIPTION="CMU Common Lisp is an implementation of ANSI Common Lisp"
 HOMEPAGE="http://www.cons.org/cmucl/"
-SRC_URI="http://common-lisp.net/project/${PN}/downloads/snapshots/${YEAR}/${MONTH}/${PN}-${YEAR}-${MONTH}-x86-linux.tar.bz2"
+SRC_URI="http://common-lisp.net/project/cmucl/downloads/release/${PV/_*/}/pre-release/cmucl-src-${PV/_/-}.tar.bz2
+	http://common-lisp.net/project/cmucl/downloads/release/${PV/_*/}/pre-release/cmucl-${PV/_/-}-x86-linux.tar.bz2"
 
 LICENSE="public-domain"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~x86"
 IUSE="X source sse2"
 
 RDEPEND="x11-libs/openmotif"
@@ -32,8 +24,7 @@ PROVIDE="virtual/commonlisp"
 S="${WORKDIR}"
 
 src_unpack() {
-	unpack ${A} ; cvs_src_unpack ; cd "${S}"
-	mv cmucl src || die
+	unpack ${A} ; cd "${S}"
 	epatch "${FILESDIR}"/fix-man-and-doc-installation.patch
 }
 

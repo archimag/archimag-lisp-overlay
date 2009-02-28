@@ -13,8 +13,7 @@ KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 SLOT="0"
 
-RDEPEND="!dev-lisp/cl-${PN}
-		dev-lisp/flexi-streams"
+RDEPEND="!dev-lisp/cl-${PN}"
 
 src_install() {
 	common-lisp-install *.{lisp,asd}

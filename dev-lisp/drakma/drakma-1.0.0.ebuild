@@ -14,10 +14,11 @@ KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
 RDEPEND="!dev-lisp/cl-${PN}
-		dev-lisp/chunga
-		dev-lisp/puri
+		>=dev-lisp/chunga-1.0.0
+		>=dev-lisp/puri-1.5.0
 		>=dev-lisp/cl-base64-3.3.2
-		dev-lisp/usocket
+		>=dev-lisp/flexi-streams-1.0.7
+		>=dev-lisp/usocket-0.4.0
 		dev-lisp/cl-plus-ssl"
 
 src_install() {
