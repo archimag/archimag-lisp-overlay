@@ -9,7 +9,7 @@ MY_P=${MY_PN}-${PV:0:4}-${PV:4:2}-${PV:6:2}
 
 DESCRIPTION="A simple Common Lisp interface to OpenSSL."
 HOMEPAGE="http://common-lisp.net/project/cl-plus-ssl/"
-SRC_URI="http://common-lisp.net/~sionescu/files/${MY_P}.tar.bz2"
+SRC_URI="http://common-lisp.net/project/cl-plus-ssl/download/${MY_P}.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
