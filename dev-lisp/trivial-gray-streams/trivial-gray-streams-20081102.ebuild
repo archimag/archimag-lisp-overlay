@@ -9,7 +9,7 @@ MY_P=${PN}-${MY_PV}
 
 DESCRIPTION="A thin compatibility layer between Gray Stream Common Lisp implementations"
 HOMEPAGE="http://common-lisp.net/project/cl-plus-ssl/#trivial-gray-streams"
-SRC_URI="mirror://gentoo/${PN}-${PV}.tar.gz"
+SRC_URI="http://common-lisp.net/project/cl-plus-ssl/download/${MY_P}.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
@@ -18,7 +18,7 @@ IUSE=""
 
 RDEPEND="!dev-lisp/cl-${PN}"
 
-S="${WORKDIR}"/${PN}
+S="${WORKDIR}"/${MY_P}
 
 src_unpack() {
 	unpack ${A}
