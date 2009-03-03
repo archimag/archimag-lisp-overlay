@@ -14,8 +14,8 @@ KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
 RDEPEND="dev-lisp/cxml
-		dev-lisp/drakma
-		dev-lisp/ironclad"
+		 >=dev-lisp/drakma-1.0.0
+		 dev-lisp/ironclad"
 
 src_install() {
 	common-lisp-install *.{lisp,asd}
