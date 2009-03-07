@@ -6,7 +6,7 @@ inherit common-lisp-2 eutils
 
 DESCRIPTION="A Common Lisp library for interacting with PostgreSQL databases."
 HOMEPAGE="http://common-lisp.net/project/postmodern/"
-SRC_URI="http://common-lisp.net/~sionescu/files/${P}.tar.bz2"
+SRC_URI="http://common-lisp.net/project/${PN}/${P}.tgz"
 
 LICENSE="ZLIB"
 SLOT="0"
