@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI="2"
-inherit eutils toolchain-funcs
+inherit eutils
 
 DESCRIPTION="High-level lexically-scoped implicitly-parallel dialect of Scheme and Common LISP"
 HOMEPAGE="http://schemik.sourceforge.net/"
@@ -15,17 +15,17 @@ KEYWORDS="~x86"
 
 IUSE=""
 
-DEPEND="dev-libs/boehm-gc
-	sys-devel/flex
-	sys-devel/bison
+RDEPEND="dev-libs/boehm-gc
 	sys-libs/readline"
-#	readline? sys-libs/readline"
-RDEPEND="${DEPEND}"
+
+DEPEND="${RDEPEND}
+	sys-devel/flex
+	sys-devel/bison"
 
 src_prepare() {
 	sed -i \
 	-e 's/\(COMP_ARGS=\)-g \(-Wall -Winline\) -O2/\1$(CFLAGS) \2/' \
-	-e 's/gcc/$(CC)/' Makefile
+	-e 's/gcc/$(CC)/' Makefile || die "patching Makefile failed"
 }
 
 src_compile() {
@@ -33,7 +33,7 @@ src_compile() {
 }
 
 src_install() {
-	dobin schemik
-	dodoc README
+	dobin schemik || die "dobin failed"
+	dodoc README || die "dodoc failed"
 }
 
