@@ -40,6 +40,7 @@
                                 (:no-load-file "swank-fancy-inspector")
                                 (:no-load-file "swank-fuzzy")
                                 (:no-load-file "swank-indentation")
+                                (:no-load-file "swank-indentation-fu")
                                 (:no-load-file "swank-listener-hooks")
                                 (:no-load-file "swank-motd")
                                 (:no-load-file "swank-package-fu")
