@@ -9,13 +9,13 @@ EGIT_REPO_URI="git://git.boinkor.net/sbcl.git"
 inherit common-lisp-common-3 eutils flag-o-matic git
 
 #same order as http://www.sbcl.org/platform-table.html
-BV_X86=1.0.22
-BV_AMD64=1.0.22
-BV_PPC=1.0.22
+BV_X86=1.0.23
+BV_AMD64=1.0.25
+BV_PPC=1.0.23
 BV_SPARC=1.0.22
 BV_ALPHA=0.9.12
-BV_MIPS=1.0.22
-BV_MIPSEL=1.0.22
+BV_MIPS=1.0.23
+BV_MIPSEL=1.0.23
 
 DESCRIPTION="Steel Bank Common Lisp (SBCL) is an implementation of ANSI Common Lisp."
 HOMEPAGE="http://sbcl.sourceforge.net/"
@@ -45,8 +45,7 @@ PROVIDE="virtual/commonlisp"
 
 #Disable warnings about executable stacks, as this won't be fixed soon, by
 #upstream
-QA_EXECSTACK="usr/bin/sbcl usr/lib/sbcl/src/runtime/sbcl \
-usr/lib/sbcl/src/runtime/*.o"
+QA_EXECSTACK="usr/bin/sbcl usr/lib/sbcl/src/runtime/sbcl usr/lib/sbcl/src/runtime/*.o"
 
 pkg_setup() {
 	if built_with_use sys-devel/gcc hardened && gcc-config -c | grep -qv vanilla; then
@@ -57,15 +56,15 @@ pkg_setup() {
 	fi
 }
 
-CONFIG="${S}"/customize-target-features.lisp
-ENVD="${T}"/50sbcl
+CONFIG="${S}/customize-target-features.lisp"
+ENVD="${T}/50sbcl"
 
 usep() {
 	use ${1} && echo "true" || echo "false"
 }
 
 sbcl_feature() {
-	echo "$( [[ ${1} == "true" ]] && echo "(enable ${2})" || echo "(disable ${2})")" >> "${CONFIG}"
+	echo "$( [[ $1 == "true" ]] && echo "(enable $2)" || echo "(disable $2)")" >> "${CONFIG}"
 }
 
 sbcl_apply_features() {
@@ -96,8 +95,8 @@ src_unpack() {
 #	epatch "${FILESDIR}/disable-tests-gentoo-${PV}.patch"
 	use source && sed 's%"$(BUILD_ROOT)%$(MODULE).lisp "$(BUILD_ROOT)%' -i contrib/vanilla-module.mk
 
-	sed "s,/lib,/$(get_libdir),g" -i install.sh
-	sed "s,/usr/local/lib,/usr/$(get_libdir),g" -i src/runtime/runtime.c # #define SBCL_HOME ...
+	sed "s,/lib,/$(get_libdir),g" -i "${S}/install.sh"
+	sed "s,/usr/local/lib,/usr/$(get_libdir),g" -i "${S}/src/runtime/runtime.c" # #define SBCL_HOME ...
 
 	find "${S}" -type f -name .cvsignore -print0 | xargs -0 rm -f
 	find "${S}" -depth -type d -name CVS -or -name .git -print0 | xargs -0 rm -rf
@@ -181,14 +180,4 @@ EOF
 	echo "SBCL_HOME=/usr/$(get_libdir)/${PN}" > "${ENVD}"
 	echo "SBCL_SOURCE_ROOT=/usr/$(get_libdir)/${PN}/src" >> "${ENVD}"
 	doenvd "${ENVD}"
-
-	impl-save-timestamp-hack sbcl
-}
-
-pkg_postinst() {
-	standard-impl-postinst sbcl
-}
-
-pkg_postrm() {
-	standard-impl-postrm sbcl /usr/bin/sbcl
 }
