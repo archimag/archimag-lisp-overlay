@@ -28,6 +28,8 @@ DEPEND="${RDEPEND}
 		sys-apps/texinfo
 		doc? ( virtual/texi2dvi )"
 
+SITEFILE=70${PN}-gentoo.el
+
 src_unpack() {
 	unpack ${A}
 
@@ -75,7 +77,9 @@ src_install() {
 	fi
 
 	if use emacs; then
-		elisp-install / contrib/*.el{,c} || die "Cannot install contrib Elisp files"
+		elisp-install ${PN} contrib/*.el{,c} || die "Cannot install contrib Elisp files"
+		elisp-site-file-install "${FILESDIR}"/${SITEFILE} \
+			|| die "elisp-site-file-install failed"
 	fi
 
 	cp "${FILESDIR}"/README.Gentoo . && sed -i "s:@VERSION@:${PV}:" README.Gentoo
