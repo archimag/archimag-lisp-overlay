@@ -131,6 +131,7 @@ src_configure() {
 }
 
 src_compile() {
+	export VARTEXFONTS="${T}"/fonts
 	cd ${BUILDDIR}
 	# parallel build fails
 	emake -j1 || die "emake failed"
