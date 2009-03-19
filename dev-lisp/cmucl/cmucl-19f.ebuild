@@ -6,8 +6,8 @@ inherit common-lisp-common-3 eutils glo-utils toolchain-funcs
 
 DESCRIPTION="CMU Common Lisp is an implementation of ANSI Common Lisp"
 HOMEPAGE="http://www.cons.org/cmucl/"
-SRC_URI="http://common-lisp.net/project/cmucl/downloads/release/${PV/_*/}/pre-release/cmucl-src-${PV/_/-}.tar.bz2
-	http://common-lisp.net/project/cmucl/downloads/release/${PV/_*/}/pre-release/cmucl-${PV/_/-}-x86-linux.tar.bz2"
+SRC_URI="http://common-lisp.net/project/cmucl/downloads/release/${PV}/cmucl-src-${PV}.tar.bz2
+	http://common-lisp.net/project/cmucl/downloads/release/${PV}/cmucl-${PV}-x86-linux.tar.bz2"
 
 LICENSE="public-domain"
 SLOT="0"
