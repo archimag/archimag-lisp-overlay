@@ -6,43 +6,36 @@ EAPI="2"
 
 inherit eutils multilib 
 
-MV="${PV%*.*}"
+MY_PV="${PV%*.*}"
 
 DESCRIPTION="Unix shell embedded in Scheme"
 HOMEPAGE="http://www.scsh.net/"
-SRC_URI="ftp://ftp.scsh.net/pub/scsh/${MV}/${P}.tar.gz"
+SRC_URI="ftp://ftp.scsh.net/pub/scsh/${MY_PV}/${P}.tar.gz"
 LICENSE="as-is BSD"
 SLOT="0"
 KEYWORDS="~amd64 ppc sparc x86"
 IUSE=""
 
 DEPEND="!dev-scheme/scheme48"
-RDEPEND=""
+RDEPEND="${DEPEND}"
 
-src_unpack() {
-	use amd64 && multilib_toolchain_setup x86
-	SCSH_LIB_DIRS="/usr/$(get_libdir)/scsh"
-	unpack ${A}
-	cd "${S}"
-}
 
 src_prepare() {
-	if ! use scsh; then
-		epatch "${FILESDIR}/${PV}-Makefile.in-doc-dir-gentoo.patch" || die
-	fi
+	epatch "${FILESDIR}/${PV}-Makefile.in-doc-dir-gentoo.patch"
 }
 
 src_configure() {
-	econf --prefix=/usr \
+	use amd64 && multilib_toolchain_setup x86
+	SCSH_LIB_DIRS="/usr/$(get_libdir)/scsh"
+	econf \
 		--libdir=/usr/$(get_libdir) \
 		--includedir=/usr/include \
 		--with-lib-dirs-list=${SCSH_LIB_DIRS}
 }
 
 src_install() {
-	make DESTDIR="${D}" install || die
-	dodir /etc/env.d
-	cat >"${D}/etc/env.d/50scsh" <<-EOF
-		SCSH_LIB_DIRS='${SCSH_LIB_DIRS}'
-EOF
+	local ENVD="${T}/50scsh"
+	make DESTDIR="${D}" install || die "make install failed."
+	echo "SCSH_LIB_DIRS=${SCSH_LIB_DIRS}" > ${ENVD}
+	doenvd "${ENVD}"
 }
