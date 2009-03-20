@@ -35,7 +35,7 @@ src_configure() {
 
 src_install() {
 	local ENVD="${T}/50scsh"
-	make DESTDIR="${D}" install || die "make install failed."
+	emake -j1 DESTDIR="${D}" install || die "make install failed."
 	echo "SCSH_LIB_DIRS=${SCSH_LIB_DIRS}" > ${ENVD}
 	doenvd "${ENVD}"
 }
