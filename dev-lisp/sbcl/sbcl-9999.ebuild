@@ -180,4 +180,14 @@ EOF
 	echo "SBCL_HOME=/usr/$(get_libdir)/${PN}" > "${ENVD}"
 	echo "SBCL_SOURCE_ROOT=/usr/$(get_libdir)/${PN}/src" >> "${ENVD}"
 	doenvd "${ENVD}"
+
+	impl-save-timestamp-hack sbcl || die
+}
+
+pkg_postinst() {
+	standard-impl-postinst sbcl
+}
+
+pkg_postrm() {
+	standard-impl-postrm sbcl /usr/bin/sbcl
 }
