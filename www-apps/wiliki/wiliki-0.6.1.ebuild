@@ -38,7 +38,6 @@ src_unpack() {
 	cd "${S}"
 	epatch "${FILESDIR}"/${PN}-po-gentoo.patch
 	epatch "${FILESDIR}"/${P}-cgi-gentoo.patch
-	epatch "${FILESDIR}"/${P}-cgi2-gentoo.patch
 }
 
 src_install() {
