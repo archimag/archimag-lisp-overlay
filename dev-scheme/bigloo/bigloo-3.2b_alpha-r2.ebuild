@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-DATE="07Feb09"
+DATE="24Mar09"
 
 inherit elisp-common multilib eutils
 
@@ -29,10 +29,9 @@ S=${WORKDIR}/${MY_P%-*}
 SITEFILE="50bigloo-gentoo.el"
 
 IUSE="bee emacs java"
-# fullbee"
 
 src_compile() {
-	epatch "${FILESDIR}"/bigloo-compilebee.patch || die
+#	epatch "${FILESDIR}"/bigloo-compilebee.patch || die
 	if use emacs; then
 		elisp-compile etc/*.el || die "elisp-compile failed"
 	fi
@@ -57,7 +56,7 @@ src_compile() {
 
 	if use bee; then
 		einfo "Compiling bee..."
-		emake -j1 compile-bee || die "compiling bee failed"
+		emake compile-bee || die "compiling bee failed"
 	fi
 }
 
