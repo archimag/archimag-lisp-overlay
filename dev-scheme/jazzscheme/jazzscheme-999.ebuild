@@ -7,8 +7,8 @@ inherit git
 DESCRIPTION="JazzScheme is an open source programming language based on Scheme."
 HOMEPAGE="http://www.jazzscheme.org/"
 #SRC_URI="http://www-etud.iro.umontreal.ca/~lasallej/${P}.tar.gz"
-EGIT_REPO_URI="git://github.com/jazzscheme/jazz_dev.git"
-#EGIT_REPO_URI="git://64.235.209.250/git/jazz_dev"
+EGIT_REPO_URI="git://github.com/jazzscheme/jazz.git"
+#EGIT_REPO_URI="git://64.235.209.250/git/jazz"
 
 LICENSE="|| ( MPL-1.1 GPL-2 )"
 SLOT="0"
@@ -19,12 +19,10 @@ DEPEND="dev-scheme/gambit x11-libs/cairo"
 RDEPEND="${DEPEND}"
 
 src_compile() {
-	sed "s:gsc-script:gsc-gambit:" -i kernel/build.scm
 	vecho ">>> Configuring..."
-	gsc-gambit configure || die
+	gsc configure || die
 	vecho ">>> Building..."
-	gsc-gambit make jedi || die
-	gsc-gambit make all || die
+	gsc make jedi jobs: 2 || die
 }
 
 src_install() {
