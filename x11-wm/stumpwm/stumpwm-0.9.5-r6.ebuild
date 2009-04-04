@@ -30,9 +30,7 @@ DEPEND="${RDEPEND}
 
 SITEFILE=70${PN}-gentoo.el
 
-src_unpack() {
-	unpack ${A}
-
+src_prepare() {
 	epatch "${FILESDIR}"/${PV}-gentoo-fix-asd-deps.patch
 	epatch "${FILESDIR}"/${PV}-fix-clisp-syscalls-package.patch
 }
