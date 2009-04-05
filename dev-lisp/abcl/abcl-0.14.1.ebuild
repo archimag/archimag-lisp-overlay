@@ -4,9 +4,11 @@
 
 inherit eutils java-pkg-2 java-ant-2
 
+MY_P=${PN}-src-${PV}
+
 DESCRIPTION="Armed Bear Common Lisp is a Common Lisp implementation for the JVM."
 HOMEPAGE="http://common-lisp.net/project/armedbear/"
-SRC_URI="mirror://sourceforge/armedbear-j/${P}.tgz"
+SRC_URI="mirror://sourceforge/armedbear-j/${MY_P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -16,6 +18,8 @@ IUSE="jad"
 DEPEND=">=virtual/jdk-1.5"
 RDEPEND=">=virtual/jre-1.5
 	jad? ( dev-java/jad-bin )"
+
+S="${WORKDIR}"/${MY_P}
 
 src_compile() {
 	eant abcl.compile || die "Can't compile ABCL"
