@@ -22,7 +22,7 @@ RDEPEND="${DEPEND}
 		!dev-lisp/cl-sql
 		dev-lisp/md5
 		>=dev-lisp/uffi-1.5.7
-		postgres? ( dev-db/libpq )
+		postgres? ( dev-db/postgresql-base )
 		sqlite? ( dev-db/sqlite:0 )
 		sqlite3? ( dev-db/sqlite:3 )
 		odbc? ( dev-db/unixODBC )"

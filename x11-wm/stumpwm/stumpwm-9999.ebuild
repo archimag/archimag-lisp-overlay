@@ -4,11 +4,12 @@
 
 EAPI=2
 
-inherit common-lisp-2 glo-utils eutils elisp
+EGIT_REPO_URI="git://git.savannah.nongnu.org/stumpwm.git"
+
+inherit common-lisp-2 glo-utils eutils elisp git
 
 DESCRIPTION="Stumpwm is a tiling, keyboard driven X11 Window Manager written entirely in Common Lisp."
 HOMEPAGE="http://www.nongnu.org/stumpwm/"
-SRC_URI="http://download.savannah.nongnu.org/releases/stumpwm/${P}.tgz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -31,6 +32,7 @@ DEPEND="${RDEPEND}
 SITEFILE=70${PN}-gentoo.el
 
 src_prepare() {
+	cd "${S}"
 	epatch "${FILESDIR}"/${PV}-gentoo-fix-asd-deps.patch
 	epatch "${FILESDIR}"/${PV}-fix-clisp-syscalls-package.patch
 }
@@ -81,7 +83,7 @@ src_install() {
 	fi
 
 	cp "${FILESDIR}"/README.Gentoo . && sed -i "s:@VERSION@:${PV}:" README.Gentoo
-	dodoc README NEWS ChangeLog README.Gentoo
+	dodoc README NEWS README.Gentoo
 	doinfo ${PN}.info
 	use doc && dodoc ${PN}.pdf
 }
