@@ -55,7 +55,7 @@ src_install() {
 	# install core image
 	cp ${CCL_RUNTIME}.image "${D}"/${install_dir} || die
 	# install optional libraries
-	dodir "${D}"/${install_dir}/tools || die
+	dodir ${install_dir}/tools
 	cp tools/*fsl "${D}"/${install_dir}/tools || die
 
 	make_wrapper ccl "${install_dir}/${CCL_RUNTIME}"
