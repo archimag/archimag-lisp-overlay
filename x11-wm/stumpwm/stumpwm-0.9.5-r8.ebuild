@@ -70,11 +70,6 @@ src_install() {
 	make_wrapper stumpwm "/usr/bin/stumpwm.bin ${CL_NORC} ${CL_EVAL} '(stumpwm:stumpwm \":0\")'"
 	make_session_desktop StumpWM /usr/bin/stumpwm
 
-	if use source; then
-		common-lisp-install *.{lisp,asd} contrib/*.lisp
-		common-lisp-symlink-asdf
-	fi
-
 	if use emacs; then
 		elisp-install ${PN} contrib/*.el{,c} || die "Cannot install contrib Elisp files"
 		elisp-site-file-install "${FILESDIR}"/${SITEFILE} \
@@ -85,4 +80,12 @@ src_install() {
 	dodoc README NEWS ChangeLog README.Gentoo
 	doinfo ${PN}.info
 	use doc && dodoc ${PN}.pdf
+
+	docinto examples ; dodoc sample-stumpwmrc.lisp
+
+	if use source; then
+		rm sample-stumpwmrc.lisp
+		common-lisp-install *.{lisp,asd} contrib/*.lisp
+		common-lisp-symlink-asdf
+	fi
 }
