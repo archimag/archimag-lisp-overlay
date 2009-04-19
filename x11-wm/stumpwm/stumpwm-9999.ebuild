@@ -19,7 +19,7 @@ IUSE="doc sbcl clisp source emacs"
 RESTRICT="strip"
 
 RDEPEND="dev-lisp/cl-ppcre
-		dev-lisp/clx
+		>=dev-lisp/clx-0.7.3_p20081030
 		>=dev-lisp/cl-launch-2.11-r1
 		!sbcl? ( !clisp? ( >=dev-lisp/sbcl-1.0.22 ) )
 		!sbcl? ( clisp? ( >=dev-lisp/clisp-2.44[X] ) )
@@ -32,9 +32,9 @@ DEPEND="${RDEPEND}
 SITEFILE=70${PN}-gentoo.el
 
 src_prepare() {
-	cd "${S}"
 	epatch "${FILESDIR}"/${PV}-gentoo-fix-asd-deps.patch
 	epatch "${FILESDIR}"/${PV}-fix-clisp-syscalls-package.patch
+	epatch "${FILESDIR}"/${PV}-gentoo-remove-superfluous-workarounds.patch
 }
 
 src_configure() {
