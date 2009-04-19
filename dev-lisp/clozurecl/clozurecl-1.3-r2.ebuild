@@ -35,13 +35,13 @@ src_prepare() {
 
 src_configure() {
 	if use x86; then
-		CCL_RUNTIME=lx86cl
+		CCL_RUNTIME=lx86cl; CCL_HEADERS=x86-headers
 	elif use amd64; then
-		CCL_RUNTIME=lx86cl64
+		CCL_RUNTIME=lx86cl64; CCL_HEADERS=x86-headers64
 	elif use ppc; then
-		CCL_RUNTIME=ppccl
+		CCL_RUNTIME=ppccl; CCL_HEADERS=headers
 	elif use ppc64; then
-		CCL_RUNTIME=ppccl64
+		CCL_RUNTIME=ppccl64; CCL_HEADERS=headers64
 	fi
 }
 
@@ -71,6 +71,7 @@ src_install() {
 	cp -a compiler level-0 level-1 lib library \
 		lisp-kernel scripts tools xdump \
 		"${D}"/${install_dir} || die
+	cp -a ${CCL_HEADERS} "${D}"/${install_dir} || die
 
 	make_wrapper ccl "${install_dir}/${CCL_RUNTIME}"
 
