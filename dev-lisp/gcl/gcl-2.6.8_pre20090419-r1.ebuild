@@ -37,7 +37,7 @@ src_prepare() {
 }
 
 src_configure() {
-	local myconfig=""
+	local myconfig
 	if use tk; then
 		myconfig="${myconfig} --enable-tkconfig=/usr/lib --enable-tclconfig=/usr/lib"
 	fi
@@ -109,13 +109,13 @@ src_install() {
 	# to install docs into the proper places
 	rm -rf "${D}"/usr/share/{doc,info,emacs,lib/info}
 
-	if use emacs ; then
+	if use emacs; then
 		mv elisp/add-default.el 50${PN}-gentoo.el
 		elisp-site-file-install 50${PN}-gentoo.el
 		elisp-install ${PN} elisp/*.el
 	fi
 
-	if use doc ; then
+	if use doc; then
 		dodoc info/*.dvi
 		dodoc xgcl-2/dwdoc.pdf
 		dohtml -r xgcl-2/dwdoc
