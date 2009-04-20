@@ -17,7 +17,7 @@ LICENSE="LLGPL-2.1"
 SLOT="0"
 # KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
 KEYWORDS="~amd64 ~x86"
-IUSE="source"
+IUSE="doc"
 
 DEPEND="!dev-lisp/openmcl"
 
@@ -27,19 +27,26 @@ S="${WORKDIR}"/ccl
 
 ENVD="${T}/50ccl"
 
+src_prepare() {
+	find "${S}" -type d -name .svn -exec rm -rf {} ';' &>/dev/null
+	find "${S}" -type f -name .cvsignore -delete &>/dev/null
+	epatch "${FILESDIR}"/fix_user-homedir-pathname.patch
+}
+
 src_configure() {
 	if use x86; then
-		CCL_RUNTIME=lx86cl
+		CCL_RUNTIME=lx86cl; CCL_HEADERS=x86-headers
 	elif use amd64; then
-		CCL_RUNTIME=lx86cl64
+		CCL_RUNTIME=lx86cl64; CCL_HEADERS=x86-headers64
 	elif use ppc; then
-		CCL_RUNTIME=ppccl
+		CCL_RUNTIME=ppccl; CCL_HEADERS=headers
 	elif use ppc64; then
-		CCL_RUNTIME=ppccl64
+		CCL_RUNTIME=ppccl64; CCL_HEADERS=headers64
 	fi
 }
 
 src_compile() {
+	unset CCL_DEFAULT_DIRECTORY
 	./${CCL_RUNTIME} -n -b -Q -e '(ccl:rebuild-ccl :full t)' -e '(ccl:quit)' || die "Compilation failed"
 
 	# remove non-owner write permissions on the full-image
@@ -55,21 +62,23 @@ src_install() {
 	# install core image
 	cp ${CCL_RUNTIME}.image "${D}"/${install_dir} || die
 	# install optional libraries
-	dodir "${D}"/${install_dir}/tools || die
+	dodir ${install_dir}/tools
 	cp tools/*fsl "${D}"/${install_dir}/tools || die
+
+	# until we figure out which source files are necessary for runtime
+	# optional features and which aren't, we install all sources
+	find . -type f -name '*fsl' -delete
+	cp -a compiler level-0 level-1 lib library \
+		lisp-kernel scripts tools xdump \
+		"${D}"/${install_dir} || die
+	cp -a ${CCL_HEADERS} "${D}"/${install_dir} || die
 
 	make_wrapper ccl "${install_dir}/${CCL_RUNTIME}"
 
 	echo "CCL_DEFAULT_DIRECTORY=${install_dir}" > "${ENVD}"
 	doenvd "${ENVD}"
 
-	if use source ; then
-		find . -type f -name '*fsl' -delete
-		cp -a cocoa-ide compiler examples level-0 level-1 lib library \
-			lisp-kernel objc-bridge scripts tools xdump \
-			"${D}"/${install_dir} || die
-	fi
-
 	dodoc doc/release-notes.txt
 	dohtml doc/ccl-documentation.html
+	use doc && dohtml -r examples
 }
