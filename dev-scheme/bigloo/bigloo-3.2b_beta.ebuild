@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-DATE="24Mar09"
+DATE="19Apr09"
 
 inherit elisp-common multilib eutils
 
@@ -31,11 +31,6 @@ SITEFILE="50bigloo-gentoo.el"
 IUSE="bee emacs java"
 
 src_compile() {
-#	epatch "${FILESDIR}"/bigloo-compilebee.patch || die
-	if use emacs; then
-		elisp-compile etc/*.el || die "elisp-compile failed"
-	fi
-
 	# Bigloo doesn't use autoconf and consequently a lot of options used by econf give errors
 	# Manuel Serrano says: "Please, dont talk to me about autoconf. I simply dont want to hear about it..."
 	./configure \
@@ -58,17 +53,14 @@ src_compile() {
 		einfo "Compiling bee..."
 		emake compile-bee || die "compiling bee failed"
 	fi
+
+	if use emacs; then
+		elisp-compile etc/*.el || die "elisp-compile failed"
+	fi
 }
 
 src_install () {
-#	dodir /etc/env.d
-#	echo "LDPATH=/usr/$(get_libdir)/bigloo/${PV}/" > ${D}/etc/env.d/25bigloo
-
-	# make the links created not point to DESTDIR, since that is only a temporary home
-	cp Makefile.misc Makefile.misc.old
-	sed 's/ln -s $(DESTDIR)/ln -s /' -i Makefile.misc
 	emake DESTDIR="${D}" install || die "install failed"
-	diff -u Makefile.misc.old Makefile.misc
 
 	if use bee; then
 		emake DESTDIR="${D}" install-bee || die
