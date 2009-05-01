@@ -55,11 +55,9 @@ BUILDDIR="builddir"
 #  * matlab, netica: not in portage
 #  * oracle: can't install oracle-instantclient
 
-src_unpack() {
-	unpack ${A}
-	cd "${S}"
-
+src_prepare() {
 	epatch "${FILESDIR}"/${PV}-fix-pari-module.patch
+	epatch "${FILESDIR}"/${PV}-gcc4.4.patch
 
 	# More than -O1 breaks alpha/ia64
 	use alpha || use ia64 && sed -i -e 's/-O2//g' "${S}"/src/makemake.in
