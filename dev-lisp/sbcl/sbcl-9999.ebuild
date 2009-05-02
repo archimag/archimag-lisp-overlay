@@ -98,10 +98,6 @@ src_prepare() {
 
 	sed "s,/lib,/$(get_libdir),g" -i install.sh
 	sed "s,/usr/local/lib,/usr/$(get_libdir),g" -i src/runtime/runtime.c # #define SBCL_HOME ...
-
-	find . -type f -name .cvsignore -print0 | xargs -0 rm -f
-	find . -depth -type d -name CVS -or -name .git -print0 | xargs -0 rm -rf
-	find . -type f -name '*.c' -print0 | xargs -0 chmod 644
 }
 
 src_configure() {
