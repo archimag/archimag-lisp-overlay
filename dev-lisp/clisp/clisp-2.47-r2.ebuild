@@ -60,7 +60,9 @@ src_prepare() {
 	epatch "${FILESDIR}"/${PV}-gcc4.4.patch
 
 	# More than -O1 breaks alpha/ia64
-	use alpha || use ia64 && sed -i -e 's/-O2//g' "${S}"/src/makemake.in
+	if use alpha || use ia64; then
+		sed -i -e 's/-O2//g' src/makemake.in
+	fi
 }
 
 src_configure() {
@@ -108,10 +110,10 @@ src_configure() {
 	fi
 
 	# configure chokes on --infodir option
-	local configure="./configure --prefix=/usr --libdir=/usr/$(get_libdir) \
+	local opts="--prefix=/usr --libdir=/usr/$(get_libdir) \
 		${myconf} --hyperspec=${CLHSROOT} ${BUILDDIR}"
-	einfo "${configure}"
-	${configure} || die "./configure failed"
+	einfo configure "${opts}"
+	./configure ${opts} || die "./configure failed"
 
 	cd ${BUILDDIR}
 	sed -i 's,"vi","nano",g' config.lisp

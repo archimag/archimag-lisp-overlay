@@ -57,12 +57,11 @@ BUILDDIR="builddir"
 #  * matlab, netica: not in portage
 #  * oracle: can't install oracle-instantclient
 
-src_unpack() {
-	git_src_unpack
-	cd "${S}"
-
+src_prepare() {
 	# More than -O1 breaks alpha/ia64
-	use alpha || use ia64 && sed -i -e 's/-O2//g' "${S}"/src/makemake.in
+	if use alpha || use ia64; then
+		sed -i -e 's/-O2//g' src/makemake.in
+	fi
 }
 
 src_configure() {
@@ -74,10 +73,10 @@ src_configure() {
 
 	# built-in features
 	local myconf="--with-ffcall --with-dynamic-modules"
-	if use jit ; then
+	if use jit; then
 		myconf="${myconf} --with-jit=lightning"
 	fi
-	if use threads ; then
+	if use threads; then
 		myconf="${myconf} --with-threads=POSIX_THREADS"
 	fi
 
