@@ -13,7 +13,9 @@
 
 (defun load-site-init-file ()
   (load (make-pathname :name "site-init" :type "lisp"
-                       :defaults *load-truename*)
+                       :defaults (truename
+                                  (asdf:system-definition-pathname
+                                   (asdf:find-system :swank))))
         :if-does-not-exist nil))
 
 (defclass no-load-file (cl-source-file) ())
