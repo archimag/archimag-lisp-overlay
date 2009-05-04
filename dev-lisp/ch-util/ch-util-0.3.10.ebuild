@@ -27,7 +27,7 @@ src_unpack() {
 }
 
 src_install() {
-	common-lisp-install *.{lisp,asd} test/*.cl version.lisp-expr
+	common-lisp-install *.{lisp,asd} test/ version.lisp-expr
 	common-lisp-symlink-asdf
 	dodoc README
 }
