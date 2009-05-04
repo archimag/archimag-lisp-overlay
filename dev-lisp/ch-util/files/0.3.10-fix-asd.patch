@@ -1,0 +1,13 @@
+diff -Naur ch-util_0.3.10.orig/ch-util.asd ch-util_0.3.10/ch-util.asd
+--- ch-util_0.3.10.orig/ch-util.asd	2008-01-11 23:43:26.000000000 +0100
++++ ch-util_0.3.10/ch-util.asd	2009-05-04 13:24:04.000000000 +0200
+@@ -23,8 +23,5 @@
+    (:cl-source-file "parser" :depends-on ("defpackage"))
+    (:cl-source-file "debug" :depends-on ("defpackage"))
+    (:cl-source-file "ch-asdf" :depends-on ("defpackage" "filesystem"))
+-   (:static-file "bootstrap" :pathname #p"bootstrap.lisp")
+-   (:static-file "COPYRIGHT")
+-   (:static-file "README")
+-   (:static-file "make-dist" :pathname #.(make-pathname :name "make-dist" :type "sh"))))
++   (:static-file "bootstrap" :pathname #p"bootstrap.lisp")))
+ 

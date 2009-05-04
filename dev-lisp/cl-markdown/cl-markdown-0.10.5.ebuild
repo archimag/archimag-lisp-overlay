@@ -16,7 +16,7 @@ IUSE=""
 RDEPEND=">=dev-lisp/metatilities-base-0.6.0
 		dev-lisp/metabang-bind
 		dev-lisp/dynamic-classes
-		dev-lisp/cl-containers
+		>=dev-lisp/cl-containers-0.11.5
 		dev-lisp/anaphora
 		dev-lisp/cl-ppcre
 		dev-lisp/trivial-shell

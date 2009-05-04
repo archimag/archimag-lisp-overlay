@@ -14,12 +14,11 @@ KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
 RDEPEND=">=dev-lisp/defsystem-compatibility-0.1.2
-		dev-lisp/metatilities
+		>=dev-lisp/metatilities-0.6.6
 		dev-lisp/lml2
 		dev-lisp/trivial-shell
 		dev-lisp/cl-graph
-		dev-lisp/anaphora
-		dev-lisp/cl-markdown"
+		dev-lisp/anaphora"
 
 src_install() {
 	common-lisp-install *.asd dev/{*.lisp,tinaa.css} unit-tests

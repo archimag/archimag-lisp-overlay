@@ -15,7 +15,7 @@ IUSE=""
 
 RDEPEND="dev-lisp/asdf-system-connections
 		>=dev-lisp/metatilities-base-0.6.6
-		dev-lisp/lift"
+		>=dev-lisp/lift-1.7.0"
 
 CLSYSTEMS="${PN} ${PN}-test"
 
