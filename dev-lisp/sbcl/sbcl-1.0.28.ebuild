@@ -152,8 +152,7 @@ EOF
 	dodir /usr/share/man
 	dodir /usr/share/doc/${PF}
 	unset SBCL_HOME
-	INSTALL_ROOT="${D}"/usr DOC_DIR="${D}"/usr/share/doc/${PF} \
-		sh install.sh || die "install.sh failed"
+	INSTALL_ROOT="${D}"/usr DOC_DIR="${D}"/usr/share/doc/${PF} sh install.sh || die "install.sh failed"
 
 	# rm empty directories lest paludis complain about this
 	rmdir "${D}"/usr/$(get_libdir)/sbcl/{site-systems,sb-posix/test-lab,sb-cover/test-output} 2>/dev/null
