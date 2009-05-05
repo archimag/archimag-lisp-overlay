@@ -7,7 +7,7 @@ inherit common-lisp-2
 DESCRIPTION='ODD-STREAMS is a library which implements binary streams with "odd" byte sizes.'
 HOMEPAGE="http://weitz.de/odd-streams/
 		http://www.cliki.net/odd-streams"
-SRC_URI="http://common-lisp.net/~sionescu/files/ediware/${P}.tar.bz2"
+SRC_URI="http://common-lisp.net/~sionescu/files/${P}.tar.bz2"
 
 LICENSE="BSD-2"
 SLOT="0"

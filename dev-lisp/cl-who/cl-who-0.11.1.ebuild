@@ -7,7 +7,7 @@ inherit common-lisp-2
 DESCRIPTION='CL-WHO (is yet another Lisp Markup Language).'
 HOMEPAGE="http://weitz.de/cl-who/
 		http://www.cliki.net/cl-who/"
-SRC_URI="http://common-lisp.net/~sionescu/files/ediware/${P}.tar.bz2"
+SRC_URI="http://common-lisp.net/~sionescu/files/${P}.tar.bz2"
 
 LICENSE="BSD-2"
 SLOT="0"

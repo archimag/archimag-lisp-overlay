@@ -6,7 +6,7 @@ inherit common-lisp-2
 
 DESCRIPTION="A library which provides Common Lisp implementations with knowledge about Unicode characters."
 HOMEPAGE="http://weitz.de/cl-unicode/"
-SRC_URI="http://common-lisp.net/~sionescu/files/ediware/${P}.tar.bz2"
+SRC_URI="http://common-lisp.net/~sionescu/files/${P}.tar.bz2"
 
 LICENSE="BSD-2"
 SLOT="0"
