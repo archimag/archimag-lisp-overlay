@@ -15,7 +15,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
-RDEPEND="dev-lisp/hunchentoot"
+RDEPEND="<dev-lisp/hunchentoot-1.0.0"
 
 S="${WORKDIR}"/${MY_P}
 
