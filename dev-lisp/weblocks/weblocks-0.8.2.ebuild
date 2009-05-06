@@ -26,6 +26,7 @@ RDEPEND="dev-lisp/closer-mop
 		dev-lisp/parenscript
 		dev-lisp/anaphora
 		dev-lisp/f-underscore
+		dev-lisp/bordeaux-threads
 		dev-lisp/cl-fad
 		dev-lisp/clsql
 		dev-lisp/elephant
