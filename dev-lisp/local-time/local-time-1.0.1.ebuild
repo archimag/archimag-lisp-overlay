@@ -11,15 +11,18 @@ SRC_URI="http://common-lisp.net/project/${PN}/${P}.tar.gz"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
-IUSE="doc"
+IUSE="doc postgres"
 
 DEPEND="sys-apps/texinfo
 		doc? ( virtual/texi2dvi )"
 RDEPEND="dev-lisp/cl-fad
 		dev-lisp/fiveam"
+PDEPEND="postgres? ( dev-lisp/postmodern )"
+
+S="${WORKDIR}"/${PN}
 
 src_compile() {
-	cd documentation
+	cd doc
 	makeinfo ${PN}.texinfo -o ${PN}.info || die "Cannot compile info docs"
 	if use doc ; then
 		VARTEXFONTS="${T}"/fonts \
@@ -28,7 +31,7 @@ src_compile() {
 }
 
 src_install() {
-	common-lisp-install *.{lisp,asd} zoneinfo
+	common-lisp-install ${PN}.asd src zoneinfo
 	common-lisp-symlink-asdf
 	dodoc CREDITS README TODO
 	doinfo doc/${PN}.info
