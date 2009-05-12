@@ -25,6 +25,10 @@
 
 inherit eutils
 
+# CL packages in the overlay don't have their tarballs on the mirrors
+# so it's useless to mirror them
+RESTRICT="mirror"
+
 CLSOURCEROOT="${ROOT%/}"/usr/share/common-lisp/source/
 CLSYSTEMROOT="${ROOT%/}"/usr/share/common-lisp/systems/
 
