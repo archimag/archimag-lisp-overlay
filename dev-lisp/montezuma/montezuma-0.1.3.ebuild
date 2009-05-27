@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI=2
+
 inherit common-lisp-2
 
 DESCRIPTION="A fast, useful text search engine library written entirely in pure Common Lisp."
@@ -17,8 +19,14 @@ RDEPEND="dev-lisp/cl-ppcre
 		 dev-lisp/cl-fad
 		 dev-lisp/babel"
 
+CLSYSTEMS="${PN} contrib/${PN}-indexfiles/${PN}-indexfiles"
+
+src_prepare() {
+	rm -rf "${S}"/contrib/montezuma-indexfiles/{COPYING,_darcs}
+}
+
 src_install() {
-	common-lisp-install ${PN}.asd src/ tests/
+	common-lisp-install ${PN}.asd src/ contrib/ tests/
 	common-lisp-symlink-asdf
 	dodoc BUGS.txt README.txt TUTORIAL.txt
 }
