@@ -4,10 +4,12 @@
 
 inherit common-lisp-2
 
+MY_P=${PN}_${PV}
+
 DESCRIPTION="A Lisp parser and generator for the JSON data-interchange format."
 HOMEPAGE="http://common-lisp.net/project/cl-json/
 		http://www.cliki.net/cl-json"
-SRC_URI="http://common-lisp.net/~sionescu/files/${P}.tar.bz2"
+SRC_URI="http://common-lisp.net/project/${PN}/${MY_P}.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
@@ -16,9 +18,11 @@ IUSE=""
 
 RDEPEND="dev-lisp/fiveam"
 
+S="${WORKDIR}"/${MY_P}
+
 src_install() {
 	common-lisp-install src t ${PN}.asd
 	common-lisp-symlink-asdf
-	dodoc TODO
+	dodoc CONTRIBUTORS
 	dohtml doc/{index.html,style.css}
 }
