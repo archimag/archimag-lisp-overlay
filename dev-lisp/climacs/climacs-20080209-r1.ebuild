@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit common-lisp-2 elisp eutils
+inherit common-lisp-2 elisp-common eutils
 
 DESCRIPTION="Climacs is an Emacs-like text editor written in Common Lisp."
 HOMEPAGE="http://common-lisp.net/project/climacs"
@@ -40,4 +40,12 @@ src_install() {
 	dodoc INSTALL* README TODO
 	doinfo Doc/${PN}-{internals,user}.info
 	use doc && dodoc Doc/${PN}-{internals,user}.pdf
+}
+
+pkg_postinst() {
+	use emacs && elisp-site-regen
+}
+
+pkg_postrm() {
+	use emacs && elisp-site-regen
 }
