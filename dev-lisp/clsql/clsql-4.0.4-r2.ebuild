@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=1
+EAPI=2
 
 inherit common-lisp-2 eutils multilib
 
@@ -27,8 +27,8 @@ RDEPEND="${DEPEND}
 		sqlite3? ( dev-db/sqlite:3 )
 		odbc? ( dev-db/unixODBC )"
 
-src_unpack() {
-	unpack ${A}
+src_prepare() {
+	epatch "${FILESDIR}"/${P}-mysql-5.1.patch
 	sed -i "s,/usr/lib,/usr/$(get_libdir),g" "${S}"/${PN}-{mysql,uffi}.asd
 	sed -i 's,"usr" "lib","usr" "'$(get_libdir)'",g' "${S}"/${PN}-{mysql,uffi}.asd
 }

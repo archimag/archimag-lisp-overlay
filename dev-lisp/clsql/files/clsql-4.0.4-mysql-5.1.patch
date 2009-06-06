@@ -1,0 +1,53 @@
+--- clsql-4.0.4/db-mysql/mysql-client-info.lisp.orig    2009-05-19 22:30:17.118989320 +0400
++++ clsql-4.0.4/db-mysql/mysql-client-info.lisp 2009-05-19 22:03:57.735923595 +0400
+@@ -42,6 +42,9 @@
+                   (string-equal "4.1" *mysql-client-info* :end2 3))
+          (pushnew :mysql-client-v4.1 cl:*features*)))
+       ((eql (schar *mysql-client-info* 0) #\5)
+-       (pushnew :mysql-client-v5 cl:*features*))
++       (pushnew :mysql-client-v5 cl:*features*)
++       (when (and (>= (length *mysql-client-info*) 3)
++                  (string= "5.1" *mysql-client-info* :end2 3))
++         (pushnew :mysql-client-v5.1 cl:*features*)))
+       (t
+        (error "Unknown mysql client version '~A'." *mysql-client-info*)))))
+
+--- clsql-4.0.4/db-mysql/mysql-api.lisp.orig    2009-05-19 22:30:32.362719738 +0400
++++ clsql-4.0.4/db-mysql/mysql-api.lisp 2009-05-19 22:22:26.755429426 +0400
+@@ -132,7 +132,7 @@
+   (decimals :unsigned-int)
+   (type mysql-field-types))
+
+-#+(or mysql-client-v4.1 mysql-client-v5)
++#+(or mysql-client-v4.1 (and mysql-client-v5 (not mysql-client-v5.1)))
+ (uffi:def-struct mysql-field
+     (name (* :char))
+   (org_name (* :char))
+@@ -155,6 +155,30 @@
+   (charsetnr :unsigned-int)
+   (type mysql-field-types))
+
++#+(and mysql-client-v5.1)
++(uffi:def-struct mysql-field
++    (name (* :char))
++  (org_name (* :char))
++  (table (* :char))
++  (org_table (* :char))
++  (db (* :char))
++  (catalog_db (* :char))
++  (def (* :char))
++  (length :unsigned-long)
++  (max-length :unsigned-long)
++  (name-length :unsigned-int)
++  (org-name-length :unsigned-int)
++  (table-length :unsigned-int)
++  (org-table-length :unsigned-int)
++  (db-length :unsigned-int)
++  (catalog-length :unsigned-int)
++  (def-length :unsigned-int)
++  (flags :unsigned-int)
++  (decimals :unsigned-int)
++  (charsetnr :unsigned-int)
++  (type mysql-field-types)
++  (ext :pointer-void))
++
