@@ -16,16 +16,19 @@ IUSE=""
 
 RDEPEND=">=sci-libs/gsl-1.9
 		>=dev-lisp/cffi-0.10.0
+		dev-lisp/fsbv
 		dev-lisp/trivial-garbage
-		dev-lisp/cl-utilities"
+		dev-lisp/cl-utilities
+		dev-lisp/iterate
+		dev-lisp/asdf-system-connections"
 
 CLSYSTEMS="${PN} ${PN}-tests"
 
 src_install() {
-	common-lisp-install *.{lisp,asd} data/ floating-point/ histogram/ init/ \
-		interpolation/ linear-algebra/ ordinary-differential-equations/ \
-		random/ solve-minimize-fit/ special-functions/ statistics/ \
-		tests/ test-unit/
+	common-lisp-install *.{lisp,asd} calculus/ data/ eigensystems/ \
+		floating-point/ histogram/ init/ interpolation/ linear-algebra/ \
+		mathematical/ ordinary-differential-equations/ random/ \
+		solve-minimize-fit/ special-functions/ statistics/ tests/ test-unit/
 	common-lisp-symlink-asdf
 	dohtml documentation/*.{html,css}
 	dodoc documentation/*.text
