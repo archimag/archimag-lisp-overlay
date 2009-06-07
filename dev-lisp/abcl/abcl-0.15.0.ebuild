@@ -9,6 +9,7 @@ MY_P=${PN}-src-${PV}
 DESCRIPTION="Armed Bear Common Lisp is a Common Lisp implementation for the JVM."
 HOMEPAGE="http://common-lisp.net/project/armedbear/"
 SRC_URI="mirror://sourceforge/armedbear-j/${MY_P}.tar.gz"
+RESTRICT="mirror"
 
 LICENSE="GPL-2"
 SLOT="0"
