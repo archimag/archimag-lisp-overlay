@@ -39,6 +39,7 @@ src_unpack() {
 src_configure() {
 	econf \
 		--with-system-gmp \
+		--enable-gengc \
 		--enable-boehm=system \
 		--enable-longdouble \
 		$(use_with cxx) \
