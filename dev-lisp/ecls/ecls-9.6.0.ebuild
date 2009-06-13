@@ -10,7 +10,8 @@ MY_P=ecl-${PV}
 
 DESCRIPTION="ECL is an embeddable Common Lisp implementation."
 HOMEPAGE="http://common-lisp.net/project/ecl/"
-SRC_URI="mirror://sourceforge/${PN}/${MY_P}.tar.gz"
+SRC_URI="mirror://sourceforge/${PN}/${MY_P}.tgz"
+RESTRICT="mirror"
 
 LICENSE="BSD LGPL-2"
 SLOT="0"
@@ -26,7 +27,7 @@ PDEPEND="dev-lisp/gentoo-init"
 
 PROVIDE="virtual/commonlisp"
 
-S="${WORKDIR}"/${MY_P}
+S="${WORKDIR}"/ecl-9.6.1
 
 src_unpack() {
 	unpack ${A} && cd "${S}"
@@ -43,6 +44,7 @@ src_configure() {
 	econf \
 		--with-system-gmp \
 		--enable-boehm=system \
+		--enable-gengc \
 		--enable-longdouble \
 		$(use_with cxx) \
 		$(use_enable debug) \
