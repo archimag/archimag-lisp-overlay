@@ -1,6 +1,6 @@
 diff -ur hunchentoot-vhost_0.1.7.orig/hunchentoot-vhost.asd hunchentoot-vhost_0.1.7/hunchentoot-vhost.asd
---- hunchentoot-vhost_0.1.7.orig/hunchentoot-vhost.asd	2007-10-07 07:09:47.000000000 +0200
-+++ hunchentoot-vhost_0.1.7/hunchentoot-vhost.asd	2008-01-20 13:42:21.000000000 +0100
+--- hunchentoot-vhost_0.2.orig/hunchentoot-vhost.asd	2007-10-07 07:09:47.000000000 +0200
++++ hunchentoot-vhost_0.2/hunchentoot-vhost.asd	2008-01-20 13:42:21.000000000 +0100
 @@ -40,8 +40,5 @@
    :depends-on (hunchentoot)
    :components
