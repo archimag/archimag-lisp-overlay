@@ -1,0 +1,13 @@
+diff -ur hunchentoot-cgi_0.2.orig/hunchentoot-cgi.asd hunchentoot-cgi_0.2/hunchentoot-cgi.asd
+--- hunchentoot-cgi_0.2.orig/hunchentoot-cgi.asd	2008-07-22 18:21:44.000000000 +0200
++++ hunchentoot-cgi_0.2/hunchentoot-cgi.asd	2009-06-14 18:43:51.000000000 +0200
+@@ -38,9 +38,6 @@
+   :depends-on (hunchentoot)
+   :components
+   ((:static-file "version" :pathname #p"version.lisp-expr")
+-   (:static-file "README")
+-   (:static-file "LICENSE")
+-   (:static-file "NEWS")
+    (:cl-source-file "defpackage")
+    (:cl-source-file "util" :depends-on ("defpackage"))
+    (:cl-source-file "hunchentoot-cgi" :depends-on ("defpackage" "util"))))
