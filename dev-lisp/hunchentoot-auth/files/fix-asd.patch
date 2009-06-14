@@ -1,0 +1,13 @@
+diff -ur hunchentoot-auth_0.2.orig/hunchentoot-auth.asd hunchentoot-auth_0.2/hunchentoot-auth.asd
+--- hunchentoot-auth_0.2.orig/hunchentoot-auth.asd	2008-07-10 23:35:40.000000000 +0200
++++ hunchentoot-auth_0.2/hunchentoot-auth.asd	2009-06-14 18:38:52.000000000 +0200
+@@ -40,9 +40,6 @@
+   :depends-on (hunchentoot cl-who cl-store bordeaux-threads)
+   :components
+   ((:static-file "version" :pathname #p"version.lisp-expr")
+-   (:static-file "README")
+-   (:static-file "LICENSE")
+-   (:static-file "NEWS")
+    (:cl-source-file "defpackage")
+    (:cl-source-file "realm" :depends-on ("defpackage"))
+    (:cl-source-file "hunchentoot-auth" :depends-on ("defpackage" "realm"))))

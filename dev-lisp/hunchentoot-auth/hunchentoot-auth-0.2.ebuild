@@ -15,15 +15,16 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
-RDEPEND="<dev-lisp/hunchentoot-1.0.0
+RDEPEND=">=dev-lisp/hunchentoot-1.0.0
 		dev-lisp/cl-who
-		dev-lisp/cl-store"
+		dev-lisp/cl-store
+		dev-lisp/bordeaux-threads"
 
 S="${WORKDIR}"/${MY_P}
 
 src_unpack() {
 	unpack ${A}
-	epatch "${FILESDIR}"/${PV}-fix-asd.patch
+	epatch "${FILESDIR}"/fix-asd.patch
 }
 
 src_install() {
