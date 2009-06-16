@@ -4,7 +4,7 @@
 
 EAPI=2
 
-inherit common-lisp-2 eutils
+inherit common-lisp-2 eutils toolchain-funcs
 
 DESCRIPTION="High-level Common Lisp wrapper around libxml2 and libxslt."
 HOMEPAGE="http://code.google.com/p/cl-libxml2/"
@@ -34,7 +34,7 @@ src_prepare() {
 }
 
 src_compile () {
-	make -C foreign || die "Cannot build helper library"
+	make -C foreign CC=$(tc-getCC) || die "Cannot build helper library"
 }
 
 src_install () {
