@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI=2
+
 inherit common-lisp-2
 
 DESCRIPTION="A CommonLisp interface to the SQLite embedded relational database engine."
@@ -14,9 +16,11 @@ KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
 RDEPEND="dev-lisp/cffi
-		 dev-lisp/iterate"
+		dev-lisp/iterate
+		dev-lisp/fiveam
+		dev-db/sqlite:3"
 
-CLSYSTEMS="sqlite"
+CLSYSTEMS="sqlite sqlite-tests"
 
 S="${WORKDIR}"/${PN}
 
