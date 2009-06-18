@@ -10,7 +10,7 @@ MY_P=ecl-${PV}
 
 DESCRIPTION="ECL is an embeddable Common Lisp implementation."
 HOMEPAGE="http://common-lisp.net/project/ecl/"
-SRC_URI="mirror://sourceforge/${PN}/${MY_P}.tgz"
+SRC_URI="mirror://sourceforge/${PN}/${MY_P}.tar.gz"
 RESTRICT="mirror"
 
 LICENSE="BSD LGPL-2"
@@ -27,7 +27,7 @@ PDEPEND="dev-lisp/gentoo-init"
 
 PROVIDE="virtual/commonlisp"
 
-S="${WORKDIR}"/ecl-9.6.1
+S="${WORKDIR}"/ecl-${PV}
 
 src_unpack() {
 	unpack ${A} && cd "${S}"
