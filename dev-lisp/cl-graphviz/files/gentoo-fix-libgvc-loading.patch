@@ -1,0 +1,14 @@
+diff -ur cl-graphviz-0.1_pre20081112.orig/package.lisp cl-graphviz-0.1_pre20081112/package.lisp
+--- cl-graphviz-0.1_pre20081112.orig/package.lisp	2009-06-20 00:16:35.000000000 +0200
++++ cl-graphviz-0.1_pre20081112/package.lisp	2009-06-20 00:24:06.000000000 +0200
+@@ -20,8 +20,8 @@
+ (defvar *graphviz-foreign-library-directories* (list "/usr/lib/graphviz/" "/usr/lib/"))
+ 
+ (define-foreign-library libgvc
+-  (:unix (:or "libgvc.so.4" "libgvc32.so.4"))
+-  (:darwin "libgvc.so")
++  (:unix (:or "libgvc.so" "libgvc32.so"))
++  (:darwin "libgvc.dylib")
+   (:windows ("libgvc.dll" "msvcrt.dll"))
+   (t "libgvc"))
+ 
