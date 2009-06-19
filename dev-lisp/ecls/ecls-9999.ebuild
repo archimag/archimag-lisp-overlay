@@ -25,9 +25,7 @@ PDEPEND="dev-lisp/gentoo-init"
 
 PROVIDE="virtual/commonlisp"
 
-src_unpack() {
-	git_src_unpack ; cd ${S}
-
+src_prepare() {
 	epatch "${FILESDIR}"/${PV}/headers-gentoo.patch
 
 	# change LISP-IMPLEMENTATION-VERSION because upstream version for

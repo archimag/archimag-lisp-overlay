@@ -29,15 +29,8 @@ PROVIDE="virtual/commonlisp"
 
 S="${WORKDIR}"/ecl-${PV}
 
-src_unpack() {
-	unpack ${A} && cd "${S}"
-
+src_prepare() {
 	epatch "${FILESDIR}"/${PV}/headers-gentoo.patch
-
-	# change LISP-IMPLEMENTATION-VERSION because upstream version for
-	# live builds contains spaces which ASDF-BINARY-LOCATIONS doesn't like
-	cat "${FILESDIR}"/${PV}/config.lsp.in | \
-		sed "s:@GENTOODATE@:$(date +%F):" > src/lsp/config.lsp.in
 }
 
 src_configure() {
