@@ -19,7 +19,7 @@ KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE="X cxx debug +threads +unicode"
 
 REPEND="dev-libs/gmp
-		>=dev-libs/boehm-gc-6.8
+		>=dev-libs/boehm-gc-6.8[threads?]
 		cxx? ( dev-libs/boehm-gc[-nocxx] )"
 DEPEND="${RDEPEND}
 		app-text/texi2html"
