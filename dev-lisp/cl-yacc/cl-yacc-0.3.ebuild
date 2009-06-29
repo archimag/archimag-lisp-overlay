@@ -7,7 +7,7 @@ inherit common-lisp-2
 DESCRIPTION="CL-YACC is a LALR(1) parser generator for Common Lisp"
 HOMEPAGE="http://www.pps.jussieu.fr/~jch/software/cl-yacc/
 		http://www.cliki.net/CL-Yacc"
-SRC_URI="http://www.pps.jussieu.fr/~jch/software/files/old/${P}.tar.gz"
+SRC_URI="http://www.pps.jussieu.fr/~jch/software/files/${P}.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
@@ -17,11 +17,9 @@ IUSE="doc"
 DEPEND="sys-apps/texinfo
 		doc? ( virtual/texi2dvi )"
 
-CLPACKAGE="yacc"
 CLSYSTEMS="yacc"
 
 src_compile() {
-	cd doc
 	makeinfo ${PN}.texi -o ${PN}.info || die "Cannot build info docs"
 	if use doc ; then
 		VARTEXFONTS="${T}"/fonts \
@@ -30,9 +28,10 @@ src_compile() {
 }
 
 src_install() {
-	common-lisp-install *.{lisp,asd}
+	common-lisp-install yacc{,-tests}.lisp yacc.asd
 	common-lisp-symlink-asdf
-	dodoc README
-	doinfo doc/${PN}.info
-	use doc && doc/${PN}.pdf
+	dodoc CHANGES README
+	doinfo ${PN}.info
+	use doc && dodoc ${PN}.pdf
+	docinto examples && dodoc calculator.lisp
 }
