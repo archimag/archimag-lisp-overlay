@@ -49,9 +49,6 @@ src_unpack() {
 }
 
 src_compile() {
-	elisp-compile *.el || die "Cannot compile core Elisp files"
-	BYTECOMPFLAGS="${BYTECOMPFLAGS} -L contrib -l slime" \
-		elisp-compile contrib/*.el || die "Cannot compile contrib Elisp files"
 	emake -j1 -C doc slime.info || die "Cannot build info docs"
 	if use doc; then
 		VARTEXFONTS="${T}"/fonts \
@@ -61,7 +58,7 @@ src_compile() {
 
 src_install() {
 	## install core
-	elisp-install ${PN} *.el{,c} "${FILESDIR}"/swank-loader.lisp \
+	elisp-install ${PN} *.el "${FILESDIR}"/swank-loader.lisp \
 		|| die "Cannot install SLIME core"
 	elisp-site-file-install "${FILESDIR}"/${PV}/${SITEFILE} \
 		|| die "elisp-site-file-install failed"
@@ -72,7 +69,7 @@ src_install() {
 	common-lisp-symlink-asdf
 
 	## install contribs
-	elisp-install ${PN}/contrib/ contrib/*.{el,elc,scm,goo} \
+	elisp-install ${PN}/contrib/ contrib/*.{el,scm,goo} \
 		|| die "Cannot install contribs"
 	insinto "${CLSOURCEROOT%/}"/swank/contrib
 	doins contrib/*.lisp
