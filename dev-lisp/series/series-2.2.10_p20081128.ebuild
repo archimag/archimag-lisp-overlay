@@ -6,7 +6,7 @@ inherit common-lisp-2 eutils
 
 DESCRIPTION="Common Lisp extension for general iteration"
 HOMEPAGE="http://series.sf.net"
-SRC_URI="mirror://sourceforge/${PN}/${P}.tar.bz2"
+SRC_URI="http://common-lisp.net/~sionescu/files/${P}.tar.bz2"
 
 LICENSE="MIT"
 SLOT="0"
