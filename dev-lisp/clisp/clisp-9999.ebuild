@@ -142,5 +142,5 @@ src_install() {
 	chmod a+x "${D}"/usr/$(get_libdir)/clisp-*/clisp-link || die "clisp-link chmod"
 	popd
 	dohtml doc/impnotes.{css,html} doc/regexp.html doc/clisp.png
-	dodoc doc/{editors,CLOS-guide,LISP-tutorial}.txt
+	dodoc doc/{CLOS-guide,LISP-tutorial}.txt
 }
