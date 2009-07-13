@@ -17,7 +17,7 @@ KEYWORDS=""
 IUSE="X cxx debug +threads +unicode"
 
 RDEPEND="dev-libs/gmp
-		>=dev-libs/boehm-gc-6.8[threads?]
+		>=dev-libs/boehm-gc-7.1[threads?]
 		cxx? ( dev-libs/boehm-gc[-nocxx] )"
 DEPEND="${RDEPEND}
 		app-text/texi2html"
