@@ -33,7 +33,6 @@ SITEFILE=70${PN}-gentoo.el
 
 src_prepare() {
 	epatch "${FILESDIR}"/${PV}-gentoo-fix-asd-deps.patch
-	epatch "${FILESDIR}"/${PV}-fix-clisp-syscalls-package.patch
 	epatch "${FILESDIR}"/${PV}-gentoo-remove-superfluous-workarounds.patch
 }
 
