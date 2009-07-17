@@ -35,7 +35,7 @@ SLOT="0"
 KEYWORDS=""
 IUSE="ldb source +threads +unicode doc cobalt"
 
-DEPEND="doc? ( sys-apps/texinfo >=media-gfx/graphviz-2.20[png] )"
+DEPEND="doc? ( sys-apps/texinfo || ( >=media-gfx/graphviz-2.24 >=media-gfx/graphviz-2.20[png] ) )"
 RDEPEND="elibc_glibc? ( >=sys-libs/glibc-2.3 || ( <sys-libs/glibc-2.6[nptl] >=sys-libs/glibc-2.6 ) )"
 PDEPEND="dev-lisp/gentoo-init"
 
