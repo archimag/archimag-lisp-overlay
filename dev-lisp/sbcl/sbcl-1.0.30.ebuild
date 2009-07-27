@@ -17,7 +17,7 @@ BV_MIPSEL=1.0.28
 
 DESCRIPTION="Steel Bank Common Lisp (SBCL) is an implementation of ANSI Common Lisp."
 HOMEPAGE="http://sbcl.sourceforge.net/"
-SRC_URI="mirror://sourceforge/sbcl/${P}-source.tar.lzma
+SRC_URI="http://common-lisp.net/~sionescu/files/${P}-source.tar.lzma
 	x86? ( mirror://sourceforge/sbcl/${PN}-${BV_X86}-x86-linux-binary.tar.bz2 )
 	amd64? ( mirror://sourceforge/sbcl/${PN}-${BV_AMD64}-x86-64-linux-binary.tar.bz2 )
 	ppc? ( mirror://sourceforge/sbcl/${PN}-${BV_PPC}-powerpc-linux-binary.tar.bz2 )
