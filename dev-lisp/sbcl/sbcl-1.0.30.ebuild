@@ -90,8 +90,6 @@ src_unpack() {
 }
 
 src_prepare() {
-	epatch "${FILESDIR}"/1.0.29.1-fix-fill.patch
-
 	use source && sed 's%"$(BUILD_ROOT)%$(MODULE).lisp "$(BUILD_ROOT)%' -i contrib/vanilla-module.mk
 	sed "s,/lib,/$(get_libdir),g" -i install.sh
 	sed "s,/usr/local/lib,/usr/$(get_libdir),g" -i src/runtime/runtime.c # #define SBCL_HOME ...
