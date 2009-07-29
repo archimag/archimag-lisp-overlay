@@ -4,17 +4,16 @@
 
 EAPI=2
 
-EGIT_REPO_URI="git://git.boinkor.net/clisp.git"
-
-inherit flag-o-matic eutils toolchain-funcs multilib git
+inherit flag-o-matic eutils toolchain-funcs multilib
 
 DESCRIPTION="A portable, bytecode-compiled implementation of Common Lisp"
 HOMEPAGE="http://clisp.sourceforge.net/"
+SRC_URI="mirror://sourceforge/clisp/${P}.tar.bz2"
 LICENSE="GPL-2"
 
 SLOT="2"
-KEYWORDS="-sparc"
-IUSE="hyperspec X new-clx dbus fastcgi gdbm gtk -jit pari +pcre postgres +readline svm -threads +unicode +zlib"
+KEYWORDS="~alpha ~amd64 ~ia64 ~ppc -sparc ~x86"
+IUSE="hyperspec X new-clx dbus fastcgi gdbm gtk pari +pcre postgres +readline svm -threads +unicode +zlib"
 
 RDEPEND="virtual/libiconv
 		 >=dev-libs/libsigsegv-2.4
