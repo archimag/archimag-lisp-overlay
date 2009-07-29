@@ -26,6 +26,7 @@ SRC_URI="x86? ( mirror://sourceforge/sbcl/${PN}-${BV_X86}-x86-linux-binary.tar.b
 	alpha? ( mirror://sourceforge/sbcl/${PN}-${BV_ALPHA}-alpha-linux-binary.tar.bz2 )
 	mips? ( !cobalt? ( mirror://sourceforge/sbcl/${PN}-${BV_MIPS}-mips-linux-binary.tar.bz2 ) )
 	mips? ( cobalt? ( mirror://sourceforge/sbcl/${PN}-${BV_MIPSEL}-mipsel-linux-binary.tar.bz2 ) )"
+RESTRICT="mirror"
 
 # SRC_URI is part of the metadata cache; it's evaluated contents must be independent of the system that creates the metadata cache.
 # ILLEGAL: mips? ( mirror://sourceforge/sbcl/${PN}-${BV_MIPS}-$([[$(tc-endian) = big]] && echo mips || echo mipsel)-linux-binary.tar.bz2 )

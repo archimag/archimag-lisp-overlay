@@ -17,7 +17,7 @@ BV_MIPSEL=1.0.28
 
 DESCRIPTION="Steel Bank Common Lisp (SBCL) is an implementation of ANSI Common Lisp."
 HOMEPAGE="http://sbcl.sourceforge.net/"
-SRC_URI="mirror://sourceforge/sbcl/${P}-source-r2.tar.bz2
+SRC_URI="mirror://sourceforge/sbcl/${P}-source.tar.bz2
 	x86? ( mirror://sourceforge/sbcl/${PN}-${BV_X86}-x86-linux-binary.tar.bz2 )
 	amd64? ( mirror://sourceforge/sbcl/${PN}-${BV_AMD64}-x86-64-linux-binary.tar.bz2 )
 	ppc? ( mirror://sourceforge/sbcl/${PN}-${BV_PPC}-powerpc-linux-binary.tar.bz2 )
@@ -25,6 +25,7 @@ SRC_URI="mirror://sourceforge/sbcl/${P}-source-r2.tar.bz2
 	alpha? ( mirror://sourceforge/sbcl/${PN}-${BV_ALPHA}-alpha-linux-binary.tar.bz2 )
 	mips? ( !cobalt? ( mirror://sourceforge/sbcl/${PN}-${BV_MIPS}-mips-linux-binary.tar.bz2 ) )
 	mips? ( cobalt? ( mirror://sourceforge/sbcl/${PN}-${BV_MIPSEL}-mipsel-linux-binary.tar.bz2 ) )"
+RESTRICT="mirror"
 
 # SRC_URI is part of the metadata cache; it's evaluated contents must be independent of the system that creates the metadata cache.
 # ILLEGAL: mips? ( mirror://sourceforge/sbcl/${PN}-${BV_MIPS}-$([[$(tc-endian) = big]] && echo mips || echo mipsel)-linux-binary.tar.bz2 )
@@ -89,8 +90,6 @@ src_unpack() {
 }
 
 src_prepare() {
-	epatch "${FILESDIR}"/1.0.29.1-fix-fill.patch
-
 	use source && sed 's%"$(BUILD_ROOT)%$(MODULE).lisp "$(BUILD_ROOT)%' -i contrib/vanilla-module.mk
 	sed "s,/lib,/$(get_libdir),g" -i install.sh
 	sed "s,/usr/local/lib,/usr/$(get_libdir),g" -i src/runtime/runtime.c # #define SBCL_HOME ...
