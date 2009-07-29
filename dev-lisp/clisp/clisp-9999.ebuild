@@ -10,13 +10,11 @@ inherit flag-o-matic eutils toolchain-funcs multilib git
 
 DESCRIPTION="A portable, bytecode-compiled implementation of Common Lisp"
 HOMEPAGE="http://clisp.sourceforge.net/"
-
 LICENSE="GPL-2"
+
 SLOT="2"
 KEYWORDS="-sparc"
-IUSE="-jit -threads +unicode X new-clx dbus fastcgi gdbm gtk pari +pcre postgres +readline svm +zlib hyperspec"
-
-RESTRICT="strip"
+IUSE="hyperspec X new-clx dbus fastcgi gdbm gtk pari +pcre postgres +readline svm -threads +unicode +zlib"
 
 RDEPEND="virtual/libiconv
 		 >=dev-libs/libsigsegv-2.4
@@ -35,7 +33,9 @@ RDEPEND="virtual/libiconv
 		 X? ( new-clx? ( x11-libs/libXpm ) )
 		 hyperspec? ( dev-lisp/hyperspec )"
 # 		 berkdb? ( sys-libs/db:4.5 )
+
 DEPEND="${RDEPEND} X? ( new-clx? ( x11-misc/imake x11-proto/xextproto ) )"
+
 PDEPEND="dev-lisp/gentoo-init"
 
 PROVIDE="virtual/commonlisp"
@@ -44,7 +44,7 @@ enable_modules() {
 	[[ $# = 0 ]] && die "${FUNCNAME[0]} must receive at least one argument"
 	for m in "$@" ; do
 		einfo "enabling module $m"
-		myconf="${myconf} --with-module=${m}"
+		myconf+=" --with-module=${m}"
 	done
 }
 
@@ -59,27 +59,24 @@ BUILDDIR="builddir"
 
 src_prepare() {
 	# More than -O1 breaks alpha/ia64
-	if use alpha || use ia64; then
-		sed -i -e 's/-O2//g' src/makemake.in
-	fi
+	use alpha || use ia64 && sed -i -e 's/-O2//g' src/makemake.in
 }
 
 src_configure() {
+	# built-in features
+	local myconf="--with-ffcall --with-dynamic-modules"
+	if use jit; then
+		myconf+=" --with-jitc=lightning"
+	fi
+	if use threads; then
+		myconf+=" --with-threads=POSIX_THREADS"
+	fi
+
 	# We need this to build on alpha/ia64
 	if use alpha || use ia64; then
 		replace-flags -O? -O1
 		append-flags '-D NO_MULTIMAP_SHM -D NO_MULTIMAP_FILE -D NO_SINGLEMAP -D NO_TRIVIALMAP'
 	fi
-
-	# built-in features
-	local myconf="--with-ffcall --with-dynamic-modules"
-	if use jit; then
-		myconf="${myconf} --with-jit=lightning"
-	fi
-	if use threads; then
-		myconf="${myconf} --with-threads=POSIX_THREADS"
-	fi
-
 	# default modules
 	enable_modules wildcard rawsock
 	# optional modules
@@ -114,32 +111,35 @@ src_configure() {
 		CLHSROOT="http://www.lispworks.com/reference/HyperSpec/"
 	fi
 
-	# configure chokes on --infodir option
-	local opts="--prefix=/usr --libdir=/usr/$(get_libdir) \
+	# configure chokes on --sysconfdir option
+	local configure="./configure --prefix=/usr --libdir=/usr/$(get_libdir) \
 		$(use_with readline) $(use_with unicode) \
 		${myconf} --hyperspec=${CLHSROOT} ${BUILDDIR}"
-	einfo configure "${opts}"
-	./configure ${opts} || die "./configure failed"
+	einfo "${configure}"
+	${configure} || die "./configure failed"
 
-	cd ${BUILDDIR}
-	sed -i 's,"vi","nano",g' config.lisp
+	sed -i 's,"vi","nano",g' "${BUILDDIR}"/config.lisp
+
 	IMPNOTES="file://${ROOT%/}/usr/share/doc/${PN}-${PVR}/html/impnotes.html"
-	sed -i "s,http://clisp.cons.org/impnotes/,${IMPNOTES},g" config.lisp
+	sed -i "s,http://clisp.cons.org/impnotes/,${IMPNOTES},g" "${BUILDDIR}"/config.lisp
 }
 
 src_compile() {
 	export VARTEXFONTS="${T}"/fonts
-	cd ${BUILDDIR}
+	cd "${BUILDDIR}"
 	# parallel build fails
 	emake -j1 || die "emake failed"
 }
 
 src_install() {
-	pushd ${BUILDDIR}
+	pushd "${BUILDDIR}"
 	make DESTDIR="${D}" prefix=/usr install-bin || die
 	doman clisp.1
 	dodoc SUMMARY README* NEWS MAGIC.add ANNOUNCE
-	chmod a+x "${D}"/usr/$(get_libdir)/clisp-*/clisp-link || die "clisp-link chmod"
+	chmod a+x "${D}"/usr/$(get_libdir)/clisp-${PV/_*/}/clisp-link
+	# stripping them removes common symbols (defined but uninitialised variables)
+	# which are then needed to build modules...
+	export STRIP_MASK="*/usr/$(get_libdir)/clisp-${PV}/*/*"
 	popd
 	dohtml doc/impnotes.{css,html} doc/regexp.html doc/clisp.png
 	dodoc doc/{CLOS-guide,LISP-tutorial}.txt
