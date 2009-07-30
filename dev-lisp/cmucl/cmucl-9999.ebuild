@@ -7,15 +7,17 @@ ECVS_PASS=anonymous
 ECVS_MODULE=src
 ECVS_LOCALNAME=${PN}
 
-inherit common-lisp-common-3 cvs eutils glo-utils toolchain-funcs
+EAPI=2
+inherit common-lisp-common-3 eutils glo-utils toolchain-funcs cvs
 
-PATCHSET=200812
-YEAR=${PATCHSET:0:4}
-MONTH=${PATCHSET:4:5}
+VER=200907
+YEAR=${VER:0:4}
+MONTH=${VER:4:2}
 
 DESCRIPTION="CMU Common Lisp is an implementation of ANSI Common Lisp"
 HOMEPAGE="http://www.cons.org/cmucl/"
-SRC_URI="http://common-lisp.net/project/${PN}/downloads/snapshots/${YEAR}/${MONTH}/${PN}-${YEAR}-${MONTH}-x86-linux.tar.bz2"
+SRC_URI="http://common-lisp.net/project/cmucl/downloads/snapshots/${YEAR}/${MONTH}/cmucl-unicode-${YEAR}-${MONTH}-x86-linux.tar.bz2"
+RESTRICT="mirror"
 
 LICENSE="public-domain"
 SLOT="0"
@@ -34,6 +36,9 @@ S="${WORKDIR}"
 src_unpack() {
 	unpack ${A} ; cvs_src_unpack ; cd "${S}"
 	mv cmucl src || die
+}
+
+src_prepare() {
 	epatch "${FILESDIR}"/fix-man-and-doc-installation.patch
 }
 
@@ -41,7 +46,7 @@ src_compile() {
 	local cmufpu=$(glo_usev sse2 sse2 x87)
 	local cmuopts="$(glo_usev !X -u) -f ${cmufpu}"
 	local buildimage="bin/lisp -core lib/cmucl/lib/lisp-${cmufpu}.core -batch -noinit -nositeinit"
-	env CC="$(tc-getCC)" src/tools/build.sh -C "" -o "${buildimage}" ${cmuopts} || die "Cannot build the compiler"
+	env CC="$(tc-getCC)" src/tools/build.sh -B boot-2009-07.lisp -C "" -o "${buildimage}" ${cmuopts} || die "Cannot build the compiler"
 }
 
 src_install() {

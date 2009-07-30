@@ -2,12 +2,14 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI=2
 inherit common-lisp-common-3 eutils glo-utils toolchain-funcs
 
 DESCRIPTION="CMU Common Lisp is an implementation of ANSI Common Lisp"
 HOMEPAGE="http://www.cons.org/cmucl/"
 SRC_URI="http://common-lisp.net/project/cmucl/downloads/release/${PV}/cmucl-src-${PV}.tar.bz2
 	http://common-lisp.net/project/cmucl/downloads/release/${PV}/cmucl-${PV}-x86-linux.tar.bz2"
+RESTRICT="mirror"
 
 LICENSE="public-domain"
 SLOT="0"
@@ -23,8 +25,7 @@ PROVIDE="virtual/commonlisp"
 
 S="${WORKDIR}"
 
-src_unpack() {
-	unpack ${A} ; cd "${S}"
+src_prepare() {
 	epatch "${FILESDIR}"/fix-man-and-doc-installation.patch
 }
 
