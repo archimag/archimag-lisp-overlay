@@ -1,4 +1,4 @@
-;;; -*- mode: lisp; syntax: common-lisp; package: common-lisp; indent-tabs-mode: nil -*-
+;;;; -*- Mode: Lisp; indent-tabs-mode: nil -*-
 
 (defpackage #:swank-system
   (:use #:common-lisp #:asdf))
@@ -59,7 +59,12 @@
   #+cmu (swank-source-path-parser swank-source-file-cache swank-cmucl)
   #+scl (swank-source-path-parser swank-source-file-cache swank-scl)
   #+sbcl (swank-source-path-parser swank-source-file-cache swank-sbcl swank-gray)
-  #+(or openmcl clozurecl) (metering swank-openmcl swank-gray)
+  #+(or openmcl clozurecl) (metering
+                            #.(if (and (find-package "CCL")
+                                       (fboundp (intern "COMPUTE-APPLICABLE-METHODS-USING-CLASSES" "CCL")))
+                                  'swank-ccl
+                                  'swank-openmcl)
+                            swank-gray)
   #+lispworks (swank-lispworks swank-gray)
   #+allegro (swank-allegro swank-gray)
   #+clisp (xref metering swank-clisp swank-gray)
