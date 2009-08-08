@@ -51,7 +51,9 @@ CLISP_OPTIONS='-ansi -K full ${CL_NORC}'
 		cl-launch.sh \
 		--lisp $(glo_best_flag sbcl clisp) \
 		--wrap "${wrap_opts}" \
-		--path "${CLSYSTEMROOT}" --path-current \
+		--path "${CLSOURCEROOT}/clx" \
+		--path "${CLSOURCEROOT}/cl-ppcre" \
+		--path-current \
 		--system stumpwm --dump stumpwm.bin \
 		|| die "Cannot create stumpwm binary"
 	if use emacs ; then
