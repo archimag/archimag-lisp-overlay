@@ -3,7 +3,6 @@
 # $Header: $
 
 EAPI=2
-
 inherit eutils multilib
 
 MY_P=ecl-${PV}
@@ -19,6 +18,7 @@ KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE="X cxx debug +threads +unicode"
 
 RDEPEND="dev-libs/gmp
+		dev-libs/libffi
 		>=dev-libs/boehm-gc-7.1[threads?]
 		cxx? ( dev-libs/boehm-gc[-nocxx] )"
 DEPEND="${RDEPEND}
