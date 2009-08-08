@@ -2,10 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=2
-
 EGIT_REPO_URI="git://git.savannah.nongnu.org/stumpwm.git"
 
+EAPI=2
 inherit common-lisp-2 glo-utils eutils elisp git
 
 DESCRIPTION="Stumpwm is a tiling, keyboard driven X11 Window Manager written entirely in Common Lisp."
@@ -43,10 +42,10 @@ src_configure() {
 
 src_compile() {
 	common-lisp-export-impl-args $(glo_best_flag sbcl clisp)
-	local wrap_opts='
-SBCL_OPTIONS="${CL_NORC}"
-CLISP_OPTIONS="-ansi -K full ${CL_NORC}"
-'
+	local wrap_opts="
+SBCL_OPTIONS='${CL_NORC}'
+CLISP_OPTIONS='-ansi -K full ${CL_NORC}'
+"
 	addwrite /var/cache/cl-launch
 	LISP_FASL_CACHE=/var/cache/cl-launch \
 		cl-launch.sh \
