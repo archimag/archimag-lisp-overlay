@@ -29,8 +29,8 @@ inherit eutils
 # so it's useless to mirror them
 RESTRICT="mirror"
 
-CLSOURCEROOT="${ROOT%/}"/usr/share/common-lisp/source/
-CLSYSTEMROOT="${ROOT%/}"/usr/share/common-lisp/systems/
+CLSOURCEROOT="${ROOT%/}"/usr/share/common-lisp/source
+CLSYSTEMROOT="${ROOT%/}"/usr/share/common-lisp/systems
 
 # Sources will be installed into ${CLSOURCEROOT}/${CLPACKAGE}/
 # Any asdf files will be symlinked in ${CLSYSTEMROOT}/${CLSYSTEM} as they may be
