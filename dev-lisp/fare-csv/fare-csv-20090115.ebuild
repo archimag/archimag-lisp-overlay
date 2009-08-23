@@ -8,7 +8,7 @@ MY_PV=${PV:0:4}-${PV:4:2}-${PV:6:2}
 
 DESCRIPTION="FARE-CSV is a Common Lisp library for importing CSV (Common Separated Values) formatted text files"
 HOMEPAGE="http://www.cliki.net/fare-csv"
-SRC_URI="http://fare.tunes.org/asdf-packages/${PN}-${MY_PV}.tar.gz"
+SRC_URI="http://fare.tunes.org/files/asdf-packages/${PN}-${MY_PV}.tar.gz"
 
 LICENSE="No-Problem-Bugroff"
 SLOT="0"
