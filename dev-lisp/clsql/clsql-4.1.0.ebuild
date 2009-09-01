@@ -3,7 +3,6 @@
 # $Header: $
 
 EAPI=2
-
 inherit common-lisp-2 eutils multilib
 
 DESCRIPTION="A multi-platform SQL interface for Common Lisp"
@@ -28,7 +27,6 @@ RDEPEND="${DEPEND}
 		odbc? ( dev-db/unixODBC )"
 
 src_prepare() {
-	epatch "${FILESDIR}"/${P}-mysql-5.1.patch
 	sed -i "s,/usr/lib,/usr/$(get_libdir),g" "${S}"/${PN}-{mysql,uffi}.asd
 	sed -i 's,"usr" "lib","usr" "'$(get_libdir)'",g' "${S}"/${PN}-{mysql,uffi}.asd
 }
