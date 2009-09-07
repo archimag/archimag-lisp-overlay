@@ -14,7 +14,7 @@ SRC_URI="http://files.b9.com/clsql/${P}.tar.gz"
 LICENSE="LLGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
-IUSE="postgres mysql sqlite sqlite3 odbc"
+IUSE="doc postgres mysql sqlite sqlite3 odbc"
 
 DEPEND="mysql? ( virtual/mysql )"
 RDEPEND="${DEPEND}
@@ -66,7 +66,7 @@ src_install() {
 	install_clsql_pkg oracle
 
 	dodoc BUGS CONTRIBUTORS ChangeLog INSTALL LATEST-TEST-RESULTS NEWS README TODO
-	dodoc doc/clsql.pdf
+	use doc && dodoc doc/clsql.pdf
 	tar xfz doc/html.tar.gz -C "${T}" && dohtml "${T}"/html/*
 	docinto examples && dodoc examples/*
 	docinto notes && dodoc notes/*
