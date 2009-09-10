@@ -8,7 +8,7 @@ DESCRIPTION="CL-FTP is a Common Lisp FTP client library."
 HOMEPAGE="http://www.mapcar.org/~mrd/cl-ftp/
 		http://packages.debian.org/unstable/devel/cl-ftp
 		http://www.cliki.net/CL-FTP"
-SRC_URI="mirror://debian/pool/main/c/${PN}/${PN}_${PV}.tar.gz"
+SRC_URI="mirror://debian/pool/main/c/${PN}/${PN}_${PV}.orig.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
