@@ -6,7 +6,7 @@ inherit common-lisp-2
 
 DESCRIPTION="A library of macros and functions by Fare Rideau."
 HOMEPAGE="http://www.cliki.net/meta"
-SRC_URI="http://fare.tunes.org/asdf-packages/${P}.tar.gz"
+SRC_URI="http://fare.tunes.org/files/asdf-packages/${P}.tar.gz"
 
 LICENSE="BSD-2"
 SLOT="0"
