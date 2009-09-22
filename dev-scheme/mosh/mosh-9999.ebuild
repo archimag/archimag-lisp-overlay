@@ -3,12 +3,12 @@
 # $Header: $
 
 EAPI=2
-inherit multilib eutils
+inherit subversion
 
 DESCRIPTION="A Fast R6RS Scheme interpreter."
 HOMEPAGE="http://code.google.com/p/mosh-scheme/"
-SRC_URI="http://mosh-scheme.googlecode.com/files/${P}.tar.gz"
-RESTRICT="mirror"
+ESVN_REPO_URI="http://mosh-scheme.googlecode.com/svn/trunk/"
+#mosh-scheme-read-only"
 
 SLOT="0"
 LICENSE="GPL-2"
