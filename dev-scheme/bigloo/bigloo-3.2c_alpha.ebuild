@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-DATE="07Jul09"
+DATE="18Sep09"
 
 inherit elisp-common multilib eutils
 
