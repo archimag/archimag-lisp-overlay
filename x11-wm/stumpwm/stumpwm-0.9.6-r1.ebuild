@@ -14,7 +14,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE="doc sbcl clisp source emacs"
 
-RESTRICT="strip"
+RESTRICT="strip mirror"
 
 RDEPEND="dev-lisp/cl-ppcre
 		>=dev-lisp/clx-0.7.3_p20081030
@@ -31,7 +31,6 @@ SITEFILE=70${PN}-gentoo.el
 
 src_prepare() {
 	epatch "${FILESDIR}"/${PV}-gentoo-fix-asd-deps.patch
-	epatch "${FILESDIR}"/${PV}-fix-clisp-syscalls-package.patch
 	epatch "${FILESDIR}"/${PV}-gentoo-remove-superfluous-workarounds.patch
 }
 
