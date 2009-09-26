@@ -6,7 +6,7 @@ inherit common-lisp-2 eutils
 
 DESCRIPTION="Parenscript is a small lispy language that can be compiled to JavaScript."
 HOMEPAGE="http://common-lisp.net/project/parenscript/"
-SRC_URI="http://common-lisp.net/~sionescu/files/${P}.tar.bz2"
+SRC_URI="http://common-lisp.net/project/parenscript/release/${P}.tgz"
 
 LICENSE="BSD"
 SLOT="0"
@@ -27,7 +27,7 @@ src_compile() {
 
 # TODO: install extras/js-expander.el
 src_install() {
-	common-lisp-install parenscript.asd src t
+	common-lisp-install parenscript.asd extras/*.lisp runtime src t
 	common-lisp-symlink-asdf
 	dodoc contributors docs/internal/notes-and-links.txt || die "Cannot install docs"
 	use doc && { dodoc docs/*.pdf || die "Cannot install docs" ; }
