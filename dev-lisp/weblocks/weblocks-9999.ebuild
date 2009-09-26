@@ -35,6 +35,7 @@ RDEPEND="dev-lisp/closer-mop
 		dev-lisp/elephant
 		dev-lisp/cl-prevalence
 		dev-lisp/trivial-timeout
+		dev-lisp/salza2
 		dev-lisp/rt
 		dev-lisp/lift"
 
