@@ -34,6 +34,7 @@ RDEPEND="dev-lisp/closer-mop
 		dev-lisp/clsql
 		dev-lisp/elephant
 		dev-lisp/cl-prevalence
+		dev-lisp/trivial-timeout
 		dev-lisp/rt
 		dev-lisp/lift"
 
