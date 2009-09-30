@@ -10,13 +10,15 @@ ECVS_LOCALNAME=${PN}
 EAPI=2
 inherit common-lisp-common-3 eutils glo-utils toolchain-funcs cvs
 
-VER=200907
-YEAR=${VER:0:4}
-MONTH=${VER:4:2}
+# VER=200907
+# YEAR=${VER:0:4}
+# MONTH=${VER:4:2}
+RELEASE=20a
 
 DESCRIPTION="CMU Common Lisp is an implementation of ANSI Common Lisp"
 HOMEPAGE="http://www.cons.org/cmucl/"
-SRC_URI="http://common-lisp.net/project/cmucl/downloads/snapshots/${YEAR}/${MONTH}/cmucl-unicode-${YEAR}-${MONTH}-x86-linux.tar.bz2"
+# SRC_URI="http://common-lisp.net/project/cmucl/downloads/snapshots/${YEAR}/${MONTH}/cmucl-unicode-${YEAR}-${MONTH}-x86-linux.tar.bz2"
+SRC_URI="http://common-lisp.net/project/cmucl/downloads/snapshots/${YEAR}/${MONTH}/cmucl-${RELEASE}-x86-linux.tar.bz2"
 RESTRICT="mirror"
 
 LICENSE="public-domain"
@@ -46,7 +48,7 @@ src_compile() {
 	local cmufpu=$(glo_usev sse2 sse2 x87)
 	local cmuopts="$(glo_usev !X -u) -f ${cmufpu}"
 	local buildimage="bin/lisp -core lib/cmucl/lib/lisp-${cmufpu}.core -batch -noinit -nositeinit"
-	env CC="$(tc-getCC)" src/tools/build.sh -B boot-2009-07.lisp -C "" -o "${buildimage}" ${cmuopts} || die "Cannot build the compiler"
+	env CC="$(tc-getCC)" src/tools/build.sh -C "" -o "${buildimage}" ${cmuopts} || die "Cannot build the compiler"
 }
 
 src_install() {
