@@ -1,10 +1,14 @@
-diff -Naur cmucl-19f-pre1.orig/src/tools/make-main-dist.sh cmucl-19f-pre1/src/tools/make-main-dist.sh
---- cmucl-19f-pre1.orig/src/tools/make-main-dist.sh	2009-01-10 03:40:45.000000000 +0100
-+++ cmucl-19f-pre1/src/tools/make-main-dist.sh	2009-02-19 16:45:45.000000000 +0100
+Index: tools/make-main-dist.sh
+===================================================================
+RCS file: /project/cmucl/cvsroot/src/tools/make-main-dist.sh,v
+retrieving revision 1.18
+diff -u -w -u -r1.18 make-main-dist.sh
+--- cmucl/src/tools/make-main-dist.sh	13 Aug 2009 14:22:56 -0000	1.18
++++ cmucl/src/tools/make-main-dist.sh	30 Sep 2009 14:26:41 -0000
 @@ -29,6 +29,7 @@
  fi
  
- DESTDIR=${INSTALL_DIR:-release}
+ DESTDIR=${INSTALL_DIR:-release-$$}
 +DOCDIR=${DOCDIR:-doc/cmucl}
  MANDIR=${MANDIR:-man/man1}
  TARGET="`echo $1 | sed 's:/*$::'`"
