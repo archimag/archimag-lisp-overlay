@@ -15,7 +15,9 @@ IUSE=""
 
 RDEPEND="dev-lisp/cxml
 		 >=dev-lisp/drakma-1.0.0
-		 dev-lisp/ironclad"
+		 dev-lisp/ironclad
+		 dev-lisp/puri
+		 dev-lisp/cl-base64"
 
 src_install() {
 	common-lisp-install *.{lisp,asd}
