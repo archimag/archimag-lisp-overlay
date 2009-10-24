@@ -11,7 +11,7 @@ HOMEPAGE="http://common-lisp.net/project/cl-gtk2/"
 SRC_URI=""
 EGIT_REPO_URI="git://repo.or.cz/cl-gtk2.git"
 
-LICENSE="public-domain"
+LICENSE="LLGPL"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
