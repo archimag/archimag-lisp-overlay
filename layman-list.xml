@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<layman>
+  <overlay contact="Kalyanov.Dmitry@gmail.com"
+           name="cl-gtk2"
+           src="git://github.com/dmitryvk/cl-gtk2-overlay.git"
+           status="unofficial"
+           type="git">
+    <description>Gentoo overlay that contains cl-gtk2 and required ebuilds that are not in lisp-overlay</description>
+  </overlay>
+</layman>
