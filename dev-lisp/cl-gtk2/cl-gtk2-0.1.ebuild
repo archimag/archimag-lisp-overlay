@@ -6,7 +6,7 @@ inherit common-lisp-2 eutils
 
 EAPI="2"
 
-DESCRIPTION="A CommonLisp interface to the Gtk+"
+DESCRIPTION="A Common Lisp interface to the Gtk+"
 HOMEPAGE="http://common-lisp.net/project/cl-gtk2/"
 SRC_URI="http://common-lisp.net/project/cl-gtk2/files/${P}.tar.gz"
 EGIT_REPO_URI="git://repo.or.cz/cl-gtk2.git"
