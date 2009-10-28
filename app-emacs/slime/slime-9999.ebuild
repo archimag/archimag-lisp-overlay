@@ -33,9 +33,11 @@ src_unpack() {
 
 	epatch "${FILESDIR}"/${PV}/fix-inspect-presentations.patch
 	epatch "${FILESDIR}"/${PV}/fix-slime-indentation.patch
+	epatch "${FILESDIR}"/${PV}/swank-asdf-fresh-line.patch
 	epatch "${FILESDIR}"/${PV}/gentoo-module-load.patch
 	epatch "${FILESDIR}"/${PV}/gentoo-dont-call-init.patch
 	epatch "${FILESDIR}"/${PV}/gentoo-changelog-date.patch
+	epatch "${FILESDIR}"/${PV}/gentoo-fix-swank-ccl.patch
 
 	# extract date of last update from ChangeLog, bug 233270
 	SLIME_CHANGELOG_DATE=$(awk '/^[-0-9]+ / { print $1; exit; }' ChangeLog)
