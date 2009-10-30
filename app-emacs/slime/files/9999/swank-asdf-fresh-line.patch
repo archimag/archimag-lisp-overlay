@@ -1,0 +1,12 @@
+diff --git a/contrib/swank-asdf.lisp b/contrib/swank-asdf.lisp
+index f829fa2..5379dbc 100644
+--- a/contrib/swank-asdf.lisp
++++ b/contrib/swank-asdf.lisp
+@@ -18,6 +18,7 @@ Record compiler notes signalled as `compiler-condition's."
+    (collect-notes
+     (lambda ()
+       (apply #'operate-on-system system-name operation keywords)
++      (fresh-line)
+       t)))
+ 
+ (defun operate-on-system (system-name operation-name &rest keyword-args)
