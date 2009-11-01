@@ -33,6 +33,7 @@
                                     (list :file component)
                                     component))
                             sysdep-files)
+                  (:file "swank-match")
                   (:file "swank")
                   (:module "contrib"
                    :components ((:no-load-file "swank-arglists")
@@ -48,7 +49,7 @@
                                 (:no-load-file "swank-package-fu")
                                 (:no-load-file "swank-presentations")
                                 (:no-load-file "swank-presentation-streams")
-                                (:no-load-file "swank-sbcl-exts"))))
+                                (:no-load-file "swank-sbcl-exts" :depends-on ("swank-arglists")))))
      :depends-on (#+sbcl sb-bsd-sockets)
      :perform (load-op :after (op swank)
                        (load-site-init-file)
