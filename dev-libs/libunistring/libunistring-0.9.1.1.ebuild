@@ -10,7 +10,7 @@ SRC_URI="http://ftp.gnu.org/gnu/libunistring/${P}.tar.gz"
 
 LICENSE="LGPL"
 SLOT="0"
-KEYWORDS="~x86"
+KEYWORDS="~x86 ~amd64"
 IUSE="doc"
 
 DEPEND=""
