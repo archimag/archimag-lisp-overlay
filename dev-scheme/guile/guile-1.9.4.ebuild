@@ -17,6 +17,7 @@ RESTRICT="!regex? ( test )"
 DEPEND=">=dev-libs/gmp-4.1
 	>=sys-devel/libtool-1.5.6
 	sys-devel/gettext
+	dev-libs/libunistring
 	emacs? ( virtual/emacs )"
 
 # Guile seems to contain some slotting support, /usr/share/guile/ is slotted,
@@ -32,10 +33,10 @@ src_unpack() {
 
 	sed "s_sleep 999_sleep 1_" -i test-suite/tests/popen.test
 
-	cp configure.in configure.in.old
+#    cp configure.in configure.in.old
 
 	#for libtool-2.2*, bug 212723
-	sed 's/AC_CONFIG_MACRO_DIR(\[m4\])/AC_CONFIG_MACRO_DIR(\[guile-config\])/' -i configure.in
+#    sed 's/AC_CONFIG_MACRO_DIR(\[m4\])/AC_CONFIG_MACRO_DIR(\[guile-config\])/' -i configure.in
 
 #	diff -u configure.in.old configure.in
 
@@ -62,15 +63,15 @@ src_compile() {
 		$(use_enable debug-malloc) \
 		$(use_enable debug guile-debug) \
 		$(use_with threads) \
-		--with-modules \
-		EMACS=no
+		--with-modules #\
+#        EMACS=no
 
 	emake || die "make failed"
 
 	# Above we have disabled the build system's Emacs support;
 	# for USE=emacs we compile (and install) the files manually
 	if use emacs; then
-		cd emacs
+		cd emacs/
 		elisp-compile *.el || die "elisp-compile failed"
 	fi
 }
