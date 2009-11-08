@@ -6,12 +6,15 @@ EAPI=2
 
 inherit common-lisp-common-3 eutils
 
+MY_PN=ccl
+MY_P=${MY_PN}-${PV}
+
 DESCRIPTION="ClozureCL is a Common Lisp implementation, derived from Digitool's MCL product"
 HOMEPAGE="http://ccl.clozure.com/"
-SRC_URI="x86?   ( ftp://ftp.clozure.com/pub/release/${PV}/${P}-linuxx86.tar.gz )
-		 amd64? ( ftp://ftp.clozure.com/pub/release/${PV}/${P}-linuxx86.tar.gz )"
-		 # ppc?   ( ftp://ftp.clozure.com/pub/release/${PV}/${P}-linuxppc.tar.gz )
-		 # ppc64? ( ftp://ftp.clozure.com/pub/release/${PV}/${P}-linuxppc.tar.gz )"
+SRC_URI="x86?   ( ftp://ftp.clozure.com/pub/release/${PV}/${MY_P}-linuxx86.tar.gz )
+		 amd64? ( ftp://ftp.clozure.com/pub/release/${PV}/${MY_P}-linuxx86.tar.gz )"
+		 # ppc?   ( ftp://ftp.clozure.com/pub/release/${PV}/${MY_P}-linuxppc.tar.gz )
+		 # ppc64? ( ftp://ftp.clozure.com/pub/release/${PV}/${MY_P}-linuxppc.tar.gz )"
 
 LICENSE="LLGPL-2.1"
 SLOT="0"
@@ -23,9 +26,9 @@ DEPEND="!dev-lisp/openmcl"
 
 PROVIDE="virtual/commonlisp"
 
-S="${WORKDIR}"/ccl
+S="${WORKDIR}"/${MY_PN}
 
-ENVD="${T}/50ccl"
+ENVD="${T}"/50ccl
 
 src_prepare() {
 	find "${S}" -type d -name .svn -exec rm -rf {} ';' &>/dev/null
