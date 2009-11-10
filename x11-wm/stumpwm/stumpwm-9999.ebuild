@@ -31,6 +31,8 @@ DEPEND="${RDEPEND}
 SITEFILE=70${PN}-gentoo.el
 
 src_prepare() {
+	# cl-launch doesn't like .git, don't know why
+	rm -rf .git
 	epatch "${FILESDIR}"/${PV}-gentoo-fix-asd-deps.patch
 	epatch "${FILESDIR}"/${PV}-gentoo-remove-superfluous-workarounds.patch
 }
