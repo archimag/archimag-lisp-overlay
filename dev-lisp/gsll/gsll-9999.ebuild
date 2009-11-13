@@ -26,8 +26,9 @@ CLSYSTEMS="${PN} ${PN}-tests"
 
 src_install() {
 	common-lisp-install *.{lisp,asd} calculus/ data/ eigensystems/ \
-		floating-point/ histogram/ init/ interpolation/ linear-algebra/ \
-		mathematical/ ordinary-differential-equations/ random/ \
+		fast-fourier-transforms/ floating-point/ histogram/ init/ \
+		interpolation/ linear-algebra/ mathematical/ \
+		ordinary-differential-equations/ physical-constants/ random/ \
 		solve-minimize-fit/ special-functions/ statistics/ tests/ test-unit/
 	common-lisp-symlink-asdf
 	dohtml documentation/*.{html,css}
