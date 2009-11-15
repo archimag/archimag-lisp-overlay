@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI=2
-inherit common-lisp-2 glo-utils eutils elisp
+inherit common-lisp-2 glo-utils eutils elisp-common
 
 DESCRIPTION="Stumpwm is a tiling, keyboard driven X11 Window Manager written entirely in Common Lisp."
 HOMEPAGE="http://www.nongnu.org/stumpwm/"
@@ -19,10 +19,10 @@ RESTRICT="strip mirror"
 RDEPEND="dev-lisp/cl-ppcre
 		>=dev-lisp/clx-0.7.3_p20081030
 		>=dev-lisp/cl-launch-2.11-r1
-		!sbcl? ( !clisp? ( >=dev-lisp/sbcl-1.0.22 ) )
+		!sbcl? ( !clisp? ( >=dev-lisp/sbcl-1.0.28 ) )
 		!sbcl? ( clisp? ( >=dev-lisp/clisp-2.44[X] ) )
-		sbcl?  ( >=dev-lisp/sbcl-1.0.22 )
-		emacs? ( app-emacs/slime )"
+		sbcl?  ( >=dev-lisp/sbcl-1.0.28 )
+		emacs? ( virtual/emacs app-emacs/slime )"
 DEPEND="${RDEPEND}
 		sys-apps/texinfo
 		doc? ( virtual/texi2dvi )"
@@ -32,6 +32,8 @@ SITEFILE=70${PN}-gentoo.el
 src_prepare() {
 	epatch "${FILESDIR}"/${PV}-gentoo-fix-asd-deps.patch
 	epatch "${FILESDIR}"/${PV}-gentoo-remove-superfluous-workarounds.patch
+	epatch "${FILESDIR}"/${PV}-gentoo-ignore-conditions.patch
+	epatch "${FILESDIR}"/${PV}-gentoo-fix-gravity-command.patch
 }
 
 src_configure() {
@@ -88,4 +90,12 @@ src_install() {
 		common-lisp-install *.{lisp,asd} contrib/*.lisp
 		common-lisp-symlink-asdf
 	fi
+}
+
+pkg_postinst() {
+	use emacs && elisp-site-regen
+}
+
+pkg_postrm() {
+	use emacs && elisp-site-regen
 }

@@ -1,0 +1,25 @@
+diff -ur stumpwm.orig/wrappers.lisp stumpwm/wrappers.lisp
+--- stumpwm.orig/wrappers.lisp	2009-08-03 20:54:07.000000000 +0200
++++ stumpwm/wrappers.lisp	2009-11-15 17:12:43.000000000 +0100
+@@ -195,7 +195,9 @@
+ (defun bytes-to-string (data)
+   "Convert a list of bytes into a string."
+   #+sbcl (handler-bind
+-             ((sb-impl::octet-decoding-error #'(lambda (c) (invoke-restart 'use-value "?"))))
++             ((sb-impl::octet-decoding-error #'(lambda (c)
++                                                 (declare (ignore c))
++                                                 (invoke-restart 'use-value "?"))))
+           (sb-ext:octets-to-string
+            (make-array (length data) :element-type '(unsigned-byte 8) :initial-contents data)))
+   #+clisp
+@@ -217,7 +219,9 @@
+ (defun utf8-to-string (octets)
+   "Convert the list of octets to a string."
+   #+sbcl (handler-bind
+-             ((sb-impl::octet-decoding-error #'(lambda (c) (invoke-restart 'use-value "?"))))
++             ((sb-impl::octet-decoding-error #'(lambda (c)
++                                                 (declare (ignore c))
++                                                 (invoke-restart 'use-value "?"))))
+            (sb-ext:octets-to-string 
+             (coerce octets '(vector (unsigned-byte 8)))
+             :external-format :utf-8))
