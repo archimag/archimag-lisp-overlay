@@ -33,7 +33,6 @@ src_unpack() {
 
 	epatch "${FILESDIR}"/${PV}/fix-inspect-presentations.patch
 	epatch "${FILESDIR}"/${PV}/fix-slime-indentation.patch
-	epatch "${FILESDIR}"/${PV}/swank-asdf-fresh-line.patch
 	epatch "${FILESDIR}"/${PV}/gentoo-module-load.patch
 	epatch "${FILESDIR}"/${PV}/gentoo-dont-call-init.patch
 	epatch "${FILESDIR}"/${PV}/gentoo-changelog-date.patch
