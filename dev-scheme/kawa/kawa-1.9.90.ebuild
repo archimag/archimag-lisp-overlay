@@ -23,7 +23,7 @@ IUSE="+awt echo2 +frontend jemacs krl +sax servlets +swing swt +xml xqtests"
 
 COMMON_DEPEND="( >=virtual/jdk-1.5 )
 			   frontend? ( sys-libs/readline:0 )
-			   sax2? ( dev-java/sax:0 )
+			   sax? ( dev-java/sax:0 )
 			   echo2? ( dev-java/echo2:0 )
 			   swt? ( dev-java/swt:3 )
 			   servlets? ( dev-java/servletapi:2.4 )"
