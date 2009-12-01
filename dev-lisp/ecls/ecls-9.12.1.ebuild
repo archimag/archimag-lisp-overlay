@@ -15,12 +15,12 @@ RESTRICT="mirror"
 LICENSE="BSD LGPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
-IUSE="X cxx debug +threads +unicode"
+IUSE="X debug +threads +unicode"
 
 RDEPEND="dev-libs/gmp
 		dev-libs/libffi
-		>=dev-libs/boehm-gc-7.1[threads?]
-		cxx? ( dev-libs/boehm-gc[-nocxx] )"
+		>=dev-libs/boehm-gc-7.1[threads?]"
+		# cxx? ( dev-libs/boehm-gc[-nocxx] )"
 DEPEND="${RDEPEND}
 		app-text/texi2html"
 PDEPEND="dev-lisp/gentoo-init"
@@ -34,12 +34,12 @@ src_prepare() {
 }
 
 src_configure() {
+	# $(use_with cxx)
 	econf \
 		--with-system-gmp \
 		--enable-boehm=system \
 		--enable-gengc \
 		--enable-longdouble \
-		$(use_with cxx) \
 		$(use_enable debug) \
 		$(use_enable threads) \
 		$(use_with threads __thread) \
