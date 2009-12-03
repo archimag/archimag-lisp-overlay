@@ -13,11 +13,12 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
-RDEPEND="!dev-lisp/cl-${PN}"
+RDEPEND="!dev-lisp/cl-${PN}
+		dev-lisp/trivial-gray-streams"
 
 src_install() {
 	common-lisp-install *.{lisp,asd}
 	common-lisp-symlink-asdf
-	dodoc CHANGELOG*
+	dodoc CHANGELOG.txt
 	dohtml doc/index.html
 }
