@@ -8,7 +8,7 @@ By default, symbols are case sensitive.
 
 It is completely written in Java. Scheme functions and files are automatically compiled into 
 Java byte-codes. Kawa does some optimizations, and the compiled code runs at reasonable speed.
-</longdesciption>
+</longdescription>
 <use>
 	<flag name='awt'>Assume AWT is available</flag>
 	<flag name='echo2'>Enable support for the Echo2 web toolkit with
