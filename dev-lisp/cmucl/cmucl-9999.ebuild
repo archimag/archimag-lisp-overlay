@@ -18,7 +18,7 @@ RELEASE=20a
 DESCRIPTION="CMU Common Lisp is an implementation of ANSI Common Lisp"
 HOMEPAGE="http://www.cons.org/cmucl/"
 # SRC_URI="http://common-lisp.net/project/cmucl/downloads/snapshots/${YEAR}/${MONTH}/cmucl-unicode-${YEAR}-${MONTH}-x86-linux.tar.bz2"
-SRC_URI="http://common-lisp.net/project/cmucl/downloads/snapshots/${YEAR}/${MONTH}/cmucl-${RELEASE}-x86-linux.tar.bz2"
+SRC_URI="http://common-lisp.net/project/cmucl/downloads/release/cmucl-${RELEASE}-x86-linux.tar.bz2"
 RESTRICT="mirror"
 
 LICENSE="public-domain"
