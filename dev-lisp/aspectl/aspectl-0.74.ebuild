@@ -16,11 +16,13 @@ KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
 RDEPEND="!dev-lisp/cl-${PN}
+		dev-lisp/lw-compat
+		dev-lisp/closer-mop
 		dev-lisp/contextl"
 
 S="${WORKDIR}"/${MY_P}
 
 src_install() {
-	common-lisp-install *.{lisp,asd} tests/
+	common-lisp-install *.{lisp,asd} tests/*.lisp
 	common-lisp-symlink-asdf
 }
