@@ -4,7 +4,7 @@
 
 inherit common-lisp-2
 
-MY_P=${PN}_${PV}
+MY_P=${PN}_${PV:0:3}
 
 DESCRIPTION="CLOS extension for context-oriented Programming"
 HOMEPAGE="http://common-lisp.net/project/closer/"
@@ -17,17 +17,9 @@ IUSE=""
 
 RDEPEND="!dev-lisp/cl-${PN}
 		dev-lisp/lw-compat
-		dev-lisp/closer-mop
-		dev-lisp/portable-threads"
+		>=dev-lisp/closer-mop-0.60"
 
 S="${WORKDIR}"/${MY_P}
-
-src_unpack() {
-	unpack ${A} && cd "${S}"
-
-	mv contextl-with-layer-gc.alternative-asd contextl-with-layer-gc.asd
-	mv contextl-without-layer-gc.alternative-asd contextl-without-layer-gc.asd
-}
 
 src_install() {
 	common-lisp-install *.{lisp,asd} test/*.lisp
