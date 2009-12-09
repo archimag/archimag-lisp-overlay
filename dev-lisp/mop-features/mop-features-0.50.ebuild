@@ -4,7 +4,7 @@
 
 inherit common-lisp-2
 
-MY_P=${PN}_${PV}
+MY_P=${PN}_${PV:0:3}
 
 DESCRIPTION="Provides a way to check what features a Common Lisp implementation supports."
 HOMEPAGE="http://common-lisp.net/project/closer/features.html"
@@ -22,7 +22,7 @@ CLSYSTEMS="mop-feature-tests"
 S="${WORKDIR}"/${MY_P}
 
 src_install() {
-	common-lisp-install *.{lisp,asd} tests/
+	common-lisp-install *.{lisp,asd} tests/*.lisp
 	common-lisp-symlink-asdf
 	dodoc release-notes.txt
 }
