@@ -4,7 +4,7 @@
 
 inherit common-lisp-2
 
-MY_P=${PN}_${PV}
+MY_P=${PN}_${PV:0:3}
 
 DESCRIPTION="Closer to MOP is a Common Lisp Metaobject Protocol compatibility layer."
 HOMEPAGE="http://common-lisp.net/project/closer/closer-mop.html"
@@ -20,7 +20,7 @@ RDEPEND="!dev-lisp/cl-${PN}"
 S="${WORKDIR}"/${MY_P}
 
 src_install() {
-	common-lisp-install *.{asd,lisp} allegro clisp ecl lispworks mcl pcl test
+	common-lisp-install *.{asd,lisp} test/
 	common-lisp-symlink-asdf
 	dodoc *.txt
 }
