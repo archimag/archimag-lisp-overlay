@@ -1,8 +1,10 @@
 # Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-scheme/bigloo/bigloo-3.1a.ebuild,v 1.2 2008/08/28 17:49:25 ulm Exp $
+# $Header: $
 
-inherit elisp-common multilib
+EAPI="2"
+
+inherit elisp-common multilib eutils
 
 MY_P=${PN}${PV/_p/-}
 MY_P=${MY_P/_alpha/-alpha}
@@ -26,7 +28,11 @@ SITEFILE="50bigloo-gentoo.el"
 IUSE="emacs java"
 # fullbee"
 
-src_compile() {
+src_prepare() {
+	epatch "${FILESDIR}/${P}-no_strip.patch"
+}
+
+src_configure() {
 	if use emacs; then
 		elisp-compile etc/*.el || die "elisp-compile failed"
 	fi
@@ -43,10 +49,14 @@ src_compile() {
 		--benchmark=yes \
 		--sharedbde=no \
 		--sharedcompiler=no \
+		--strip=no \
+		--customgc=no \
 		--coflags="" || die "configure failed"
 
 #		--bee=$(if use fullbee; then echo full; else echo partial; fi) \
+}
 
+src_compile() {
 	# parallel build is broken
 	emake -j1 || die "emake failed"
 }
