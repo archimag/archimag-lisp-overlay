@@ -18,12 +18,13 @@ RDEPEND=">=dev-lisp/restas-0.0.2
 		 dev-lisp/colorize
 		 dev-lisp/local-time
 		 dev-lisp/zip
+         >=dev-lisp/cl-pdf-20091211
 		 dev-lisp/cl-typesetting"
 
 CLSYSTEMS="${PN}"
 
 src_install() {
-	common-lisp-install *.asd src resource
+	common-lisp-install *.asd src resource fonts
 	common-lisp-symlink-asdf
 
 	dodoc COPYING
