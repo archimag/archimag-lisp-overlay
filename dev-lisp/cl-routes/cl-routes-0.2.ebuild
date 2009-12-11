@@ -5,7 +5,7 @@ inherit common-lisp-2 eutils
 
 DESCRIPTION="Common Lisp implementation routes for mapping URL"
 HOMEPAGE="http://code.google.com/p/cl-routes/"
-SRC_URI="http://cl-routes.googlecode.com/files/cl-routes-0.2.tar.bz2"
+SRC_URI="http://cl-routes.googlecode.com/files/${P}.tar.bz2"
 
 LICENSE="LLGPL-2.1"
 SLOT="0"
