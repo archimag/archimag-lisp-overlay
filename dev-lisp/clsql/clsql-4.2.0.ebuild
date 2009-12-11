@@ -14,13 +14,14 @@ SRC_URI="http://files.b9.com/clsql/${P}.tar.gz"
 LICENSE="LLGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
-IUSE="doc postgres mysql sqlite sqlite3 odbc"
+IUSE="doc oracle mysql postgres sqlite sqlite3 odbc"
 
 DEPEND="mysql? ( virtual/mysql )"
 RDEPEND="${DEPEND}
 		!dev-lisp/cl-sql
 		dev-lisp/md5
 		>=dev-lisp/uffi-1.5.7
+		oracle? ( dev-db/oracle-instantclient-basic )
 		postgres? ( dev-db/postgresql-base )
 		sqlite? ( dev-db/sqlite:0 )
 		sqlite3? ( dev-db/sqlite:3 )
@@ -57,13 +58,12 @@ src_install() {
 
 	install_clsql_pkg postgresql-socket
 	use postgres && install_clsql_pkg postgresql
-	for dbtype in mysql odbc sqlite sqlite3; do
+	for dbtype in mysql odbc oracle sqlite sqlite3; do
 		use ${dbtype} && install_clsql_pkg ${dbtype}
 	done
 	# TODO: figure out the dependencies
 	install_clsql_pkg aodbc
 	install_clsql_pkg db2
-	install_clsql_pkg oracle
 
 	dodoc BUGS CONTRIBUTORS ChangeLog INSTALL LATEST-TEST-RESULTS NEWS README TODO
 	use doc && dodoc doc/clsql.pdf
