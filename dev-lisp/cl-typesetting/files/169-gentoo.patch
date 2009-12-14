@@ -1,0 +1,88 @@
+diff -ur cl-typesetting-169.orig/cl-typegraph.asd cl-typesetting-169/cl-typegraph.asd
+--- cl-typesetting-169.orig/cl-typegraph.asd	2008-07-24 19:11:05.000000000 +0400
++++ cl-typesetting-169/cl-typegraph.asd	2008-07-25 10:01:59.000000000 +0400
+@@ -4,9 +4,11 @@
+ ;;; You can reach me at marc.battyani@fractalconcept.com or marc@battyani.net
+ ;;; The homepage of cl-typesetting is here: http://www.fractalconcept.com/asp/html/cl-typesetting.html
+ 
+-(in-package asdf)
++(defpackage #:cl-typegraph-system (:use #:common-lisp #:asdf))
++(in-package #:cl-typegraph-system)
+ 
+-(defsystem :cl-typegraph
++
++(defsystem #:cl-typegraph
+     :name "cl-typegraph"
+     :author "Marc Battyani <marc.battyani@fractalconcept.com>"
+     :version "0.5"
+@@ -14,8 +16,6 @@
+     :licence "BSD like licence"
+     :description "Common Lisp Graph Typesetting"
+     :long-description "The cl-typegraph package is a stand-alone Common Lisp graph typesetting system."
+-    :perform (load-op :after (op cl-typegraph)
+-		      (pushnew :cl-typegraph cl:*features*))
+     :components ((:file "graph"))
+-    :depends-on (:cl-typesetting))
++    :depends-on (#:cl-typesetting))
+ 
+diff -ur cl-typesetting-169.orig/cl-typesetting.asd cl-typesetting-169/cl-typesetting.asd
+--- cl-typesetting-169.orig/cl-typesetting.asd	2008-07-24 19:11:05.000000000 +0400
++++ cl-typesetting-169/cl-typesetting.asd	2008-07-25 10:02:54.000000000 +0400
+@@ -11,7 +11,7 @@
+ 
+ (in-package #:cl-typesetting-system)
+ 
+-(defsystem :cl-typesetting
++(defsystem #:cl-typesetting
+     :name "cl-typesetting"
+     :author "Marc Battyani <marc.battyani@fractalconcept.com>"
+     :version "0.8"
+@@ -19,8 +19,6 @@
+     :licence "BSD like licence"
+     :description "Common Lisp Typesetting system"
+     :long-description "The cl-typesetting package is a stand-alone Common Lisp typesetting system."
+-    :perform (load-op :after (op cl-typesetting)
+-		      (pushnew :cl-typesetting cl:*features*))
+     :components ((:file "defpackage")
+ 		 (:file "specials" :depends-on ("defpackage"))
+ 		 (:file "boxes" :depends-on ("specials"))
+@@ -39,5 +37,5 @@
+ ;		 (:file "test" :depends-on ("top-level" "tables" "math"))
+ 		 (:file "pprint" :depends-on ("top-level"))
+ 		 )
+-    :depends-on (:cl-pdf))
++    :depends-on (#:cl-pdf))
+ 
+diff -ur cl-typesetting-169.orig/graph.lisp cl-typesetting-169/graph.lisp
+--- cl-typesetting-169.orig/graph.lisp	2008-07-24 19:11:05.000000000 +0400
++++ cl-typesetting-169/graph.lisp	2008-07-25 10:04:19.000000000 +0400
+@@ -176,7 +176,8 @@
+ 	   (with-open-file (s dot-file :direction :output :if-exists :supersede)
+ 	     (gen-graph-dot-data graph s))
+ #+lispworks (sys:call-system (format nil "~a~{ ~s~} ~s -o ~s" *dot-command* *dot-command-args* dot-file result-file) :wait t)
+-#+(or cmu sbcl) (ext:run-program *dot-command* `(,@*dot-command-args* ,dot-file "-o" ,result-file) :wait t)
+++#+cmu (ext:run-program *dot-command* `(,@*dot-command-args* ,dot-file "-o" ,result-file) :wait t)
+++#+sbcl (sb-ext:run-program *dot-command* `(,@*dot-command-args* ,dot-file "-o" ,result-file) :wait t)
+ 	   (with-open-file (s result-file :direction :input)
+ 	     (iter (for line = (read-line s nil))
+ 		   (while line)
+diff -ur cl-typesetting-169.orig/hyphenation-fp.lisp cl-typesetting-169/hyphenation-fp.lisp
+--- cl-typesetting-169.orig/hyphenation-fp.lisp	2008-07-24 19:11:05.000000000 +0400
++++ cl-typesetting-169/hyphenation-fp.lisp	2008-07-25 10:05:13.000000000 +0400
+@@ -19,15 +19,8 @@
+ 
+ (in-package nix)
+ 
+-(defvar *cl-typesetting-base-directory*
+-   (make-pathname :name nil :type nil :version nil
+-     :defaults #.(or #-gcl *compile-file-truename* *load-truename*))
+-   "The base directory for cl-typesetting source and auxiliary data")
+-
+ (defvar *hyphen-patterns-directory*
+-  (merge-pathnames (make-pathname :name nil :type nil :version nil
+-                                  :directory '(:relative "hyphen-patterns"))
+-                   *cl-typesetting-base-directory*))
++  #p"/usr/share/cl-typesetting/hyphen-patterns/")
+ 
+ (defvar *language-hyphen-file-list*
+   '((:british        . "gbhyph")
