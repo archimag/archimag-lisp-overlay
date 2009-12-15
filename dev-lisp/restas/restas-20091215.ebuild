@@ -5,7 +5,7 @@ inherit common-lisp-2 eutils
 
 DESCRIPTION="Common Lisp application server"
 HOMEPAGE="http://github.com/archimag/restas"
-SRC_URI="http://restas.googlecode.com/files/${P}.tar.bz2"
+SRC_URI="http://cloud.github.com/downloads/archimag/restas/${P}.tar.bz2"
 
 LICENSE="LLGPL-2.1"
 SLOT="0"
@@ -20,8 +20,10 @@ RDEPEND="dev-lisp/asdf-system-connections
 CLSYSTEMS="${PN}"
 
 src_install() {
-	common-lisp-install *.asd src optional
+	common-lisp-install *.asd src optional contrib
 	common-lisp-symlink-asdf
+
+	doinitd "${FILESDIR}"/restas.lo || die "doinitd failed"
 
 	docinto example && dodoc example/*
 }
