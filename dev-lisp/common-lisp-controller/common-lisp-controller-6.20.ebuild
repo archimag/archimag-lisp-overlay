@@ -10,7 +10,7 @@ SRC_URI="http://ftp.de.debian.org/debian/pool/main/c/common-lisp-controller/${PN
 
 LICENSE="LLGPL-2.1"
 SLOT="0"
-KEYWORDS="alpha ~amd64 ia64 ~mips ~ppc ~ppc64 ~sparc ~x86"
+KEYWORDS="~alpha ~amd64 ~ia64 ~mips ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
 
 DEPEND="app-misc/realpath
