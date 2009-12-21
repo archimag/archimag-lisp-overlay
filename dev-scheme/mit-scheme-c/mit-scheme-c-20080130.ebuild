@@ -21,11 +21,11 @@ S="${WORKDIR}/${P}/src"
 
 RDEPEND="
 app-crypt/mhash
-dev-db/libpq
 dev-libs/libmcrypt
 dev-libs/openssl
 sys-libs/gdbm
 sys-libs/ncurses
+virtual/postgresql-base
 "
 
 DEPEND="${RDEPEND} !dev-scheme/mit-scheme"
