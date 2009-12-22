@@ -1,0 +1,13 @@
+diff -ur lispbuilder-sdl.orig/cffi/library.lisp lispbuilder-sdl/cffi/library.lisp
+--- lispbuilder-sdl.orig/cffi/library.lisp	2009-02-10 10:00:06.000000000 +0100
++++ lispbuilder-sdl/cffi/library.lisp	2009-12-22 15:47:29.000000000 +0100
+@@ -32,6 +32,6 @@
+ 
+ (cffi:use-foreign-library sdl)
+ 
+-(when (handler-case (cffi:use-foreign-library sdl-glue)
+-        (load-foreign-library-error () nil))
+-  (pushnew :lispbuilder-sdl-audio *features*))
++;; (when (handler-case (cffi:use-foreign-library sdl-glue)
++;;         (load-foreign-library-error () nil))
++;;   (pushnew :lispbuilder-sdl-audio *features*))
