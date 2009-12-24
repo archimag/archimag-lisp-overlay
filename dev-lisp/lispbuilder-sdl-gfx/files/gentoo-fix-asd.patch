@@ -1,0 +1,30 @@
+diff -ur lispbuilder-sdl-gfx.orig/lispbuilder-sdl-gfx.asd lispbuilder-sdl-gfx/lispbuilder-sdl-gfx.asd
+--- lispbuilder-sdl-gfx.orig/lispbuilder-sdl-gfx.asd	2008-09-25 05:04:19.000000000 +0200
++++ lispbuilder-sdl-gfx/lispbuilder-sdl-gfx.asd	2009-12-22 15:18:06.000000000 +0100
+@@ -28,12 +28,5 @@
+ 	     (:file "font" :depends-on ("package" "globals"))
+ 	     (:file "string-solid" :depends-on ("font"))
+ 	     (:file "string-shaded" :depends-on ("font"))
+-	     (:file "sdl-gfx-util" :depends-on ("package" "util" "globals"))))
+-   (:module "documentation"
+-	    :components
+-	    ((:html-file "lispbuilder-sdl-gfx")
+-	     (:html-file "header")
+-	     (:html-file "footer")
+-	     (:static-file "sdl-gfx-examples_width-height.png")
+-	     (:doc-file "README")))))
++	     (:file "sdl-gfx-util" :depends-on ("package" "util" "globals"))))))
+ 
+diff -ur lispbuilder-sdl-gfx.orig/lispbuilder-sdl-gfx-cffi.asd lispbuilder-sdl-gfx/lispbuilder-sdl-gfx-cffi.asd
+--- lispbuilder-sdl-gfx.orig/lispbuilder-sdl-gfx-cffi.asd	2008-12-08 10:54:12.000000000 +0100
++++ lispbuilder-sdl-gfx/lispbuilder-sdl-gfx-cffi.asd	2009-12-22 15:17:57.000000000 +0100
+@@ -23,8 +23,5 @@
+ 	      ((:file "package")
+ 	       (:file "library" :depends-on ("package"))
+ 	       (:file "gfx" :depends-on ("package" "library")))
+-	      :serial t)
+-     (:module "build"
+-	      :components
+-	      ((:static-file "sdlgfxswig.i")))))
++	      :serial t)))
+ 
