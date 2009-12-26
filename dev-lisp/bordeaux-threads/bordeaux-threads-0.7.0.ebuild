@@ -19,7 +19,7 @@ RDEPEND="dev-lisp/alexandria
 CLSYSTEMS="bordeaux-threads bordeaux-threads-test"
 
 src_install() {
-	common-lisp-install *.asd src test
+	common-lisp-install *.asd src test version.lisp-expr
 	common-lisp-symlink-asdf
 	dodoc CONTRIBUTORS
 }
