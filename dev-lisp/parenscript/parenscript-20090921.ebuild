@@ -14,7 +14,9 @@ KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE="doc"
 
 DEPEND="doc? ( virtual/latex-base )"
-RDEPEND="!dev-lisp/cl-${PN}
+RDEPEND="dev-lisp/cl-ppcre
+		 dev-lisp/anaphora
+		!dev-lisp/cl-${PN}
 		!dev-lisp/cl-${PN}-darcs
 		!dev-lisp/${PN}-darcs"
 
