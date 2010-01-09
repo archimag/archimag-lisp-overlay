@@ -7,7 +7,7 @@ inherit common-lisp-2 git eutils
 
 DESCRIPTION="Parenscript is a small lispy language that can be compiled to JavaScript."
 HOMEPAGE="http://common-lisp.net/project/parenscript/"
-EGIT_REPO_URI="http://common-lisp.net/project/parenscript/git/parenscript/"
+EGIT_REPO_URI="git://common-lisp.net/projects/parenscript/parenscript.git"
 
 LICENSE="BSD"
 SLOT="0"
