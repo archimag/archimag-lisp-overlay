@@ -1,39 +1,34 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit common-lisp-2 eutils git
-
 EAPI="2"
+inherit common-lisp-2 eutils git
 
 DESCRIPTION="Comon Lisp bindings for Cairo"
 HOMEPAGE="http://common-lisp.net/project/cl-cairo2/"
-SRC_URI=""
 EGIT_REPO_URI="git://github.com/tpapp/cl-cairo2.git"
 
-LICENSE="LLGPL"
+LICENSE="LLGPL-2.1"
+
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
-RDEPEND=">=dev-lisp/cl-utilities-1.2.4
-         >=dev-lisp/cffi-0.10.4
-         >=dev-lisp/cl-colors-9999
-         >=dev-lisp/trivial-garbage-0.18
-         >=dev-lisp/trivial-features-0.6"
+RDEPEND="dev-lisp/cl-utilities
+		 dev-lisp/cffi
+		 dev-lisp/cl-colors
+		 dev-lisp/trivial-garbage
+		 dev-lisp/trivial-features
+		 >=x11-libs/cairo-1.6"
 
-CLSYSTEMS="cl-cairo2"
+CLSYSTEMS="${PN} ${PN}-x11 ${PN}-mac ${PN}-win"
 
-S="${WORKDIR}"/${PN}
-
-src_compile() {
-    true
-}
+src_compile() {	true; }
 
 src_install() {
-    common-lisp-install *.lisp *.asd *.i
-        
-    common-lisp-symlink-asdf
-    dodoc README README.mac README.win TODO
-    find tutorial -exec dodoc {} \;
+	common-lisp-install *.{lisp,asd}
+	common-lisp-symlink-asdf
+	dodoc README* TODO
+	docinto tutorial && dodoc tutorial/*.{lisp,pdf}
 }

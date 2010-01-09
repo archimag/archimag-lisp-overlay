@@ -2,25 +2,27 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EGIT_REPO_URI="git://repo.or.cz/gsll.git"
-
+EAPI="2"
 inherit common-lisp-2 git
 
 DESCRIPTION="Common Lisp interface to the GNU Scientific Library."
 HOMEPAGE="http://common-lisp.net/project/gsll/"
+EGIT_REPO_URI="git://repo.or.cz/gsll.git"
 
-LICENSE="LLGPL-2.1 FDL-1.2"
+LICENSE="GPL-3 FDL-1.2"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
 RDEPEND=">=sci-libs/gsl-1.9
-		>=dev-lisp/cffi-0.10.0
+		>=dev-lisp/cffi-0.10.5
 		dev-lisp/fsbv
+		dev-lisp/gsd
 		dev-lisp/trivial-garbage
 		dev-lisp/cl-utilities
+		dev-lisp/asdf-system-connections
 		dev-lisp/iterate
-		dev-lisp/asdf-system-connections"
+		dev-lisp/lisp-unit"
 
 CLSYSTEMS="${PN} ${PN}-tests"
 

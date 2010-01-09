@@ -34,7 +34,7 @@ src_compile () {
 }
 
 src_install () {
-	common-lisp-install *.asd html tree xfactory xpath xslt xoverlay test
+	common-lisp-install *.asd html tree xfactory xoverlay xpath xslt test
 	common-lisp-symlink-asdf
 
 	dolib.so foreign/cllibxml2.so
