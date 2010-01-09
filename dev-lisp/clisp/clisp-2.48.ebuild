@@ -1,16 +1,15 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
 EAPI=2
-
 inherit flag-o-matic eutils toolchain-funcs multilib
 
 DESCRIPTION="A portable, bytecode-compiled implementation of Common Lisp"
 HOMEPAGE="http://clisp.sourceforge.net/"
 SRC_URI="mirror://sourceforge/clisp/${P}.tar.bz2"
-LICENSE="GPL-2"
 
+LICENSE="GPL-2"
 SLOT="2"
 KEYWORDS="~alpha ~amd64 ~ia64 ~ppc -sparc ~x86"
 IUSE="hyperspec X new-clx dbus fastcgi gdbm gtk pari +pcre postgres +readline svm -threads +unicode +zlib"

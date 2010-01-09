@@ -1,14 +1,13 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
-
-EGIT_REPO_URI="git://github.com/3b/sb-cga.git"
 
 EAPI=2
 inherit common-lisp-2 git
 
 DESCRIPTION="Computer graphics algebra library for SBCL."
 HOMEPAGE="http://github.com/3b/sb-cga"
+EGIT_REPO_URI="git://github.com/3b/sb-cga.git"
 
 LICENSE="MIT"
 SLOT="0"
