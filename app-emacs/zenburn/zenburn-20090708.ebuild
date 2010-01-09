@@ -8,13 +8,22 @@ DESCRIPTION="Zenburn color-theme for Emacs"
 HOMEPAGE="http://slinky.imukuppi.org/zenburnpage/"
 SRC_URI="http://brockman.se/2003/${PN}-el/${PN}.el"
 
-LICENSE="public-domain"
+LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-SITEFILE=60${PN}-gentoo.el
+DEPEND="app-emacs/color-theme"
+RDEPEND="${DEPEND}"
 
 src_unpack() {
 	cp ${DISTDIR}/${PN}.el ${WORKDIR}/color-theme-${PN}.el
+}
+
+pkg_postinst() {
+	einfo "Add to your ~/.emacs:"
+	einfo "(require 'color-theme)"
+	einfo "(color-theme-initialize)"
+	einfo "(color-theme-zenburn)"
+	einfo "to enable zenburn color-theme"
 }
