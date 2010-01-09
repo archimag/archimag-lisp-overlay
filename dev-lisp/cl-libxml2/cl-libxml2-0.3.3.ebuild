@@ -27,18 +27,14 @@ RDEPEND="${DEPEND}
 		 dev-lisp/metabang-bind
 		 dev-lisp/lift"
 
-CLSYSTEMS="${PN} cl-libxslt xfactory"
-
-src_prepare() {
-	epatch "${FILESDIR}"/gentoo-fix-foreign-helper-${PV}.patch
-}
+CLSYSTEMS="${PN} cl-libxslt xfactory xoverlay"
 
 src_compile () {
 	make -C foreign CC=$(tc-getCC) || die "Cannot build helper library"
 }
 
 src_install () {
-	common-lisp-install *.asd html tree xfactory xpath xslt test
+	common-lisp-install *.asd html tree xfactory xoverlay xpath xslt test
 	common-lisp-symlink-asdf
 
 	dolib.so foreign/cllibxml2.so
