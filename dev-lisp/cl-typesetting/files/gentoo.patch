@@ -1,0 +1,73 @@
+Index: hyphenation-fp.lisp
+===================================================================
+--- hyphenation-fp.lisp	(revision 178)
++++ hyphenation-fp.lisp	(working copy)
+@@ -19,15 +19,8 @@
+ 
+ (in-package "CL-TYPESETTING-HYPHEN")
+ 
+-(defvar *cl-typesetting-base-directory*
+-   (make-pathname :name nil :type nil :version nil
+-     :defaults #.(or #-gcl *compile-file-truename* *load-truename*))
+-   "The base directory for cl-typesetting source and auxiliary data")
+-
+ (defvar *hyphen-patterns-directory*
+-  (merge-pathnames (make-pathname :name nil :type nil :version nil
+-                                  :directory '(:relative "hyphen-patterns"))
+-                   *cl-typesetting-base-directory*))
++  #p"/usr/share/cl-typesetting/hyphen-patterns/")
+ 
+ (defvar *language-hyphen-file-list*
+   '((:british        . "gbhyph")
+Index: cl-typegraph.asd
+===================================================================
+--- cl-typegraph.asd	(revision 178)
++++ cl-typegraph.asd	(working copy)
+@@ -4,8 +4,13 @@
+ ;;; You can reach me at marc.battyani@fractalconcept.com or marc@battyani.net
+ ;;; The homepage of cl-typesetting is here: http://www.fractalconcept.com/asp/html/cl-typesetting.html
+ 
+-(in-package asdf)
++(in-package :common-lisp-user)
+ 
++(defpackage #:cl-typegrph-system
++  (:use #:cl #:asdf))
++
++(in-package #:cl-typegrph-system)
++
+ (defsystem :cl-typegraph
+     :name "cl-typegraph"
+     :author "Marc Battyani <marc.battyani@fractalconcept.com>"
+Index: graph.lisp
+===================================================================
+--- graph.lisp	(revision 178)
++++ graph.lisp	(working copy)
+@@ -176,7 +176,8 @@
+ 	   (with-open-file (s dot-file :direction :output :if-exists :supersede)
+ 	     (gen-graph-dot-data graph s))
+ #+lispworks (sys:call-system (format nil "~a~{ ~s~} ~s -o ~s" *dot-command* *dot-command-args* dot-file result-file) :wait t)
+-#+(or cmu sbcl) (ext:run-program *dot-command* `(,@*dot-command-args* ,dot-file "-o" ,result-file) :wait t)
+++#+cmu (ext:run-program *dot-command* `(,@*dot-command-args* ,dot-file "-o" ,result-file) :wait t)
+++#+sbcl (sb-ext:run-program *dot-command* `(,@*dot-command-args* ,dot-file "-o" ,result-file) :wait t)
+ 	   (with-open-file (s result-file :direction :input)
+ 	     (iter (for line = (read-line s nil))
+ 		   (while line)
+Index: cl-typesetting-test.asd
+===================================================================
+--- cl-typesetting-test.asd	(revision 178)
++++ cl-typesetting-test.asd	(working copy)
+@@ -4,8 +4,13 @@
+ ;;; You can reach me at marc.battyani@fractalconcept.com or marc@battyani.net
+ ;;; The homepage of cl-typesetting is here: http://www.fractalconcept.com/asp/html/cl-typesetting.html
+ 
+-(in-package asdf)
++(in-package :common-lisp-user)
+ 
++(defpackage #:cl-typesetting-test-system
++  (:use #:cl #:asdf))
++
++(in-package #:cl-typesetting-test-system)
++
+ (defsystem :cl-typesetting-test
+     :name "cl-typesetting-test"
+     :author "Marc Battyani <marc.battyani@fractalconcept.com>"
