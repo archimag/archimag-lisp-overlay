@@ -3,13 +3,11 @@
 # $Header: $
 
 EAPI=2
-
-EGIT_REPO_URI="http://ecls.sourceforge.net/git/ecl/.git"
-
 inherit eutils multilib git
 
 DESCRIPTION="ECL is an embeddable Common Lisp implementation."
 HOMEPAGE="http://common-lisp.net/project/ecl/"
+EGIT_REPO_URI="git://ecls.git.sourceforge.net/gitroot/ecls/ecl"
 
 LICENSE="BSD LGPL-2"
 SLOT="0"
