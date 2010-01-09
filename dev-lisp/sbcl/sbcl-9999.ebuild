@@ -1,11 +1,8 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
 EAPI=2
-
-EGIT_REPO_URI="git://git.boinkor.net/sbcl.git"
-
 inherit common-lisp-common-3 eutils flag-o-matic git
 
 #same order as http://www.sbcl.org/platform-table.html
@@ -19,6 +16,7 @@ BV_MIPSEL=1.0.28
 
 DESCRIPTION="Steel Bank Common Lisp (SBCL) is an implementation of ANSI Common Lisp."
 HOMEPAGE="http://sbcl.sourceforge.net/"
+EGIT_REPO_URI="git://git.boinkor.net/sbcl.git"
 SRC_URI="x86? ( mirror://sourceforge/sbcl/${PN}-${BV_X86}-x86-linux-binary.tar.bz2 )
 	amd64? ( mirror://sourceforge/sbcl/${PN}-${BV_AMD64}-x86-64-linux-binary.tar.bz2 )
 	ppc? ( mirror://sourceforge/sbcl/${PN}-${BV_PPC}-powerpc-linux-binary.tar.bz2 )

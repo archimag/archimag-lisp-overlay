@@ -1,17 +1,15 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
 EAPI=2
-
-EGIT_REPO_URI="git://git.boinkor.net/clisp.git"
-
 inherit flag-o-matic eutils toolchain-funcs multilib git
 
 DESCRIPTION="A portable, bytecode-compiled implementation of Common Lisp"
 HOMEPAGE="http://clisp.sourceforge.net/"
-LICENSE="GPL-2"
+EGIT_REPO_URI="git://git.boinkor.net/clisp.git"
 
+LICENSE="GPL-2"
 SLOT="2"
 KEYWORDS="-sparc"
 IUSE="hyperspec X new-clx dbus fastcgi gdbm gtk -jit pari +pcre postgres +readline svm -threads +unicode +zlib"
