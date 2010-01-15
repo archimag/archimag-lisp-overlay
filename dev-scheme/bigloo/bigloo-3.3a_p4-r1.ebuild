@@ -57,8 +57,8 @@ src_configure() {
 		--coflags="" \
 		--strip=no \
 		--bee=$(if use emacs; then echo full; else echo partial; fi) \
-		$(use threads && echo "--enable-pthread --enable-fthread" \
-					  || echo "--disable-pthread --disable-fthread") \
+		$(use_enable threads pthread) \
+		$(use_enable threads fthread) \
 		$(use_enable ssl) \
 		|| die "configure failed"
 }
