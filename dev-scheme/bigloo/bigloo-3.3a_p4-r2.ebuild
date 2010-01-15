@@ -49,7 +49,7 @@ src_configure() {
 		--infodir=/usr/share/info \
 		--libdir=/usr/$(get_libdir) \
 		--docdir=/usr/share/doc/${PF} \
-		--lispdir=${SITELISP}/bigloo \
+		--lispdir=${SITELISP} \
 		--benchmark=yes \
 		--sharedbde=no \
 		--sharedcompiler=no \
