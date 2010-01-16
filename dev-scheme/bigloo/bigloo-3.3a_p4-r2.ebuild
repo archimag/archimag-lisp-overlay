@@ -2,35 +2,44 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-DATE="18Sep09"
+EAPI="2"
 
-inherit elisp-common multilib eutils
+inherit elisp-common multilib eutils flag-o-matic
 
 MY_P=${PN}${PV/_p/-}
 MY_P=${MY_P/_alpha/-alpha}
 MY_P=${MY_P/_beta/-beta}
 
 DESCRIPTION="Bigloo is a Scheme implementation."
-HOMEPAGE="http://www-sop.inria.fr/mimosa/fp/Bigloo/bigloo.html"
-SRC_URI="ftp://ftp-sop.inria.fr/mimosa/fp/Bigloo/${MY_P}${DATE}.tar.gz"
+HOMEPAGE="http://www-sop.inria.fr/indes/fp/Bigloo/bigloo.html"
+SRC_URI="ftp://ftp-sop.inria.fr/indes/fp/Bigloo/${MY_P}.tar.gz"
 
 SLOT="0"
 LICENSE="GPL-2"
-KEYWORDS="~amd64 ~ppc ~x86"
+KEYWORDS="~amd64 ~x86"
 
-DEPEND="dev-libs/boehm-gc
+# bug 254916 for >=dev-libs/boehm-gc-7.1
+DEPEND=">=dev-libs/boehm-gc-7.1
 		emacs? ( virtual/emacs )
-		java? ( virtual/jdk app-arch/zip )"
+		java? ( virtual/jdk app-arch/zip )
+		ssl? ( dev-libs/openssl )
+		threads? ( dev-libs/boehm-gc[threads] )"
 
-RDEPEND="dev-libs/boehm-gc"
+RDEPEND="${DEPEND}"
 
-S=${WORKDIR}/${MY_P%-*}
+S=${WORKDIR}/${MY_P}
 
 SITEFILE="50bigloo-gentoo.el"
 
-IUSE="bee emacs java"
+IUSE="emacs java ssl threads"
 
-src_compile() {
+src_prepare() {
+	epatch "${FILESDIR}/${P}-no_strip.patch"
+}
+
+src_configure() {
+	filter-flags -fomit-frame-pointer
+
 	# Bigloo doesn't use autoconf and consequently a lot of options used by econf give errors
 	# Manuel Serrano says: "Please, dont talk to me about autoconf. I simply dont want to hear about it..."
 	./configure \
@@ -40,22 +49,26 @@ src_compile() {
 		--infodir=/usr/share/info \
 		--libdir=/usr/$(get_libdir) \
 		--docdir=/usr/share/doc/${PF} \
+		--lispdir=${SITELISP} \
 		--benchmark=yes \
 		--sharedbde=no \
 		--sharedcompiler=no \
 		--customgc=no \
 		--coflags="" \
-		--bee=$(if use bee; then echo full; else echo partial; fi)
+		--strip=no \
+		--bee=$(if use emacs; then echo full; else echo partial; fi) \
+		$(use_enable threads pthread) \
+		$(use_enable threads fthread) \
+		$(use_enable ssl) \
+		|| die "configure failed"
+}
 
+src_compile() {
 	emake || die "emake failed"
 
-	if use bee; then
-		einfo "Compiling bee..."
-		emake compile-bee || die "compiling bee failed"
-	fi
-
 	if use emacs; then
-		elisp-compile etc/*.el || die "elisp-compile failed"
+		einfo "Compiling bee..."
+		emake -j1 compile-bee || die "compiling bee failed"
 	fi
 }
 
@@ -68,18 +81,19 @@ src_test() {
 src_install() {
 	emake DESTDIR="${D}" install || die "install failed"
 
-	if use bee; then
-		emake DESTDIR="${D}" install-bee || die
-	fi
-
 	if use emacs; then
-		elisp-install ${PN} etc/*.{el,elc} || die "elisp-install failed"
+		emake DESTDIR="${D}" install-bee || die "install-bee failed"
 		elisp-site-file-install "${FILESDIR}/${SITEFILE}"
 	fi
 }
 
 pkg_postinst() {
 	use emacs && elisp-site-regen
+	if use emacs; then
+		elog "In order to use the bee-mode, add"
+		elog "  (require 'bmacs)"
+		elog "to your ~/.emacs file"
+	fi
 }
 
 pkg_postrm() {
