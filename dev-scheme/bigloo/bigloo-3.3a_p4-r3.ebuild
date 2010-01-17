@@ -49,7 +49,7 @@ src_configure() {
 		--infodir=/usr/share/info \
 		--libdir=/usr/$(get_libdir) \
 		--docdir=/usr/share/doc/${PF} \
-		--lispdir=${SITELISP} \
+		--lispdir="${SITELISP}/${PN}" \
 		--benchmark=yes \
 		--sharedbde=no \
 		--sharedcompiler=no \

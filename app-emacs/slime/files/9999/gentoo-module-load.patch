@@ -1,22 +1,57 @@
+diff --git a/contrib/swank-arglists.lisp b/contrib/swank-arglists.lisp
+index eb6d905..cacae50 100644
+--- a/contrib/swank-arglists.lisp
++++ b/contrib/swank-arglists.lisp
+@@ -9,8 +9,7 @@
+ 
+ (in-package :swank)
+ 
+-(eval-when (:compile-toplevel :load-toplevel :execute)
+-  (swank-require :swank-c-p-c))
++(swank-require :swank-c-p-c)
+ 
+ ;;;; Utilities
+ 
+diff --git a/contrib/swank-fuzzy.lisp b/contrib/swank-fuzzy.lisp
+index 736cf1a..9d47530 100644
+--- a/contrib/swank-fuzzy.lisp
++++ b/contrib/swank-fuzzy.lisp
+@@ -10,8 +10,7 @@
+ 
+ (in-package :swank)
+ 
+-(eval-when (:compile-toplevel :load-toplevel :execute)
+-  (swank-require :swank-c-p-c))
++(swank-require :swank-c-p-c)
+ 
+ ;;; For nomenclature of the fuzzy completion section, please read
+ ;;; through the following docstring.
+@@ -622,4 +621,4 @@ for interactive debugging purpose."
+           (format t "~&~VA  score ~8,2F  ~A"
+                   max-len (highlight-completion result sym) score result))))
+ 
+-(provide :swank-fuzzy)
+\ No newline at end of file
++(provide :swank-fuzzy)
 diff --git a/contrib/swank-sbcl-exts.lisp b/contrib/swank-sbcl-exts.lisp
-index 6db3457..29a20e3 100644
+index 6db3457..1d86594 100644
 --- a/contrib/swank-sbcl-exts.lisp
 +++ b/contrib/swank-sbcl-exts.lisp
-@@ -7,9 +7,6 @@
+@@ -7,8 +7,7 @@
  
  (in-package :swank)
  
 -(eval-when (:compile-toplevel :load-toplevel :execute)
 -  (swank-require :swank-arglists))
--
++(swank-require :swank-arglists)
+ 
  ;; We need to do this so users can place `slime-sbcl-exts' into their
  ;; ~/.emacs, and still use any implementation they want.
- #+sbcl
 diff --git a/swank.lisp b/swank.lisp
-index 2ca7bbe..4d6a23a 100644
+index 4ac26b6..99df013 100644
 --- a/swank.lisp
 +++ b/swank.lisp
-@@ -2881,12 +2881,15 @@ Record compiler notes signalled as `compiler-condition's."
+@@ -2922,12 +2922,15 @@ Record compiler notes signalled as `compiler-condition's."
    "Load the module MODULE."
    (dolist (module (if (listp modules) modules (list modules)))
      (unless (member (string module) *modules* :test #'string=)
@@ -36,7 +71,7 @@ index 2ca7bbe..4d6a23a 100644
    "Pluggable function to locate modules.
  The function receives a module name as argument and should return
  the filename of the module (or nil if the file doesn't exist).")
-@@ -2916,6 +2919,21 @@ the filename of the module (or nil if the file doesn't exist).")
+@@ -2957,6 +2960,21 @@ the filename of the module (or nil if the file doesn't exist).")
      (some (lambda (dir) (some #'probe-file (module-canditates name dir)))
            *load-path*)))
  
