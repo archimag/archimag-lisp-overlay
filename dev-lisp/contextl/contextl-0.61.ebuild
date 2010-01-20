@@ -1,10 +1,11 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI="2"
 inherit common-lisp-2
 
-MY_P=${PN}_${PV:0:3}
+MY_P=${PN}_${PV}
 
 DESCRIPTION="CLOS extension for context-oriented Programming"
 HOMEPAGE="http://common-lisp.net/project/closer/"
