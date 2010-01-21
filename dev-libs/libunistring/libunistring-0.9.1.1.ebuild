@@ -1,4 +1,4 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -8,7 +8,7 @@ DESCRIPTION="Library for manipulating Unicode strings and for manipulating C str
 HOMEPAGE="http://www.gnu.org/software/libunistring/"
 SRC_URI="http://ftp.gnu.org/gnu/libunistring/${P}.tar.gz"
 
-LICENSE="LGPL"
+LICENSE="LGPL-3 GPL-3"
 SLOT="0"
 KEYWORDS="~x86 ~amd64"
 IUSE="doc"
