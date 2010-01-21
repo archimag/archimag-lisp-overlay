@@ -20,7 +20,7 @@ RDEPEND="dev-lisp/asdf-system-connections
 CLSYSTEMS="${PN}"
 
 src_install() {
-	common-lisp-install *.asd src optional
+	common-lisp-install *.asd src optional contrib
 	common-lisp-symlink-asdf
 
 	docinto example && dodoc example/*
