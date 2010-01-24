@@ -1,8 +1,9 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit common-lisp-2
+EAPI=2
+inherit common-lisp-2 toolchain-funcs
 
 DESCRIPTION="CL-GD is a library for Common Lisp which interfaces to the GD Graphics Library"
 HOMEPAGE="http://weitz.de/cl-gd/
@@ -14,11 +15,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
-DEPEND="media-libs/libpng
-		media-libs/jpeg
-		media-libs/freetype
-		>=media-libs/gd-2.0.28
-		sys-libs/zlib"
+DEPEND=">=media-libs/gd-2.0.28[jpeg,png,xpm]"
 RDEPEND="${DEPEND}
 		>=dev-lisp/uffi-1.3.4
 		dev-lisp/cffi"
@@ -26,9 +23,9 @@ RDEPEND="${DEPEND}
 CLSYSTEMS="${PN} ${PN}-test"
 
 src_compile() {
-	gcc ${CFLAGS} -fPIC -c ${PN}-glue.c
-	ld -shared -lgd -lz -lpng -ljpeg -lfreetype -lm ${PN}-glue.o -o ${PN}-glue.so
-	rm ${PN}-glue.o
+	# I have no idea why it doesn't work with as-needed
+	echo $(tc-getCC) ${CFLAGS} ${LDFLAGS} -Wl,--no-as-needed -shared -fPIC -lgd ${PN}-glue.c -o ${PN}-glue.so
+	$(tc-getCC) ${CFLAGS} ${LDFLAGS} -Wl,--no-as-needed -shared -fPIC -lgd ${PN}-glue.c -o ${PN}-glue.so
 }
 
 src_install() {
