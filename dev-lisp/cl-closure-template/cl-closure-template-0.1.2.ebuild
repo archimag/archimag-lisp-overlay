@@ -25,10 +25,6 @@ RDEPEND=" dev-lisp/asdf-system-connections
 CLSYSTEMS="closure-template"
 SITEFILE="50${PN}-gentoo.el"
 
-src_prepare() {
-	epatch "${FILESDIR}"/gentoo-use-babel.patch
-}
-
 src_install() {
 	common-lisp-install ${CLSYSTEMS}.asd src t example
 	common-lisp-symlink-asdf
