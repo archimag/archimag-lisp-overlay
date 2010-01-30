@@ -26,7 +26,7 @@ CLSYSTEMS="${PN} ${PN}-x11 ${PN}-mac ${PN}-win"
 src_compile() {	true; }
 
 src_install() {
-	common-lisp-install *.{lisp,asd}
+	common-lisp-install *.asd src
 	common-lisp-symlink-asdf
 	dodoc README* TODO
 	docinto tutorial && dodoc tutorial/*.{lisp,pdf}
