@@ -1,4 +1,4 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -7,8 +7,8 @@ ECVS_PASS=anonymous
 ECVS_MODULE=src
 ECVS_LOCALNAME=${PN}
 
-EAPI=3
-inherit eutils glo-utils toolchain-funcs cvs
+EAPI=2
+inherit common-lisp-common-3 eutils glo-utils toolchain-funcs cvs
 
 # VER=200907
 # YEAR=${VER:0:4}
@@ -70,4 +70,14 @@ src_install() {
 		> "${D}"/usr/$(get_libdir)/cmucl/site-init.lisp
 	insinto /etc
 	doins "${FILESDIR}"/cmuclrc
+
+	impl-save-timestamp-hack cmucl || die
+}
+
+pkg_postinst() {
+	standard-impl-postinst cmucl
+}
+
+pkg_postrm() {
+	standard-impl-postrm cmucl /usr/bin/lisp
 }
