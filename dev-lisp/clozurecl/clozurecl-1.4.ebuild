@@ -1,9 +1,10 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=3
-inherit eutils
+EAPI=2
+
+inherit common-lisp-common-3 eutils
 
 MY_PN=ccl
 MY_P=${MY_PN}-${PV}
