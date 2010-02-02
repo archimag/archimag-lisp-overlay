@@ -1,7 +1,8 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI=3
 inherit common-lisp-2 multilib
 
 MY_P="uffi-${PV}"
@@ -19,13 +20,10 @@ S="${WORKDIR}"/${MY_P}
 
 CLSYSTEMS="${PN} ${PN}-tests"
 
-src_unpack() {
-	unpack ${A}
-	rm "${S}"/Makefile
-}
+src_compile() { true; }
 
 src_install() {
-	common-lisp-install *.asd src/*.lisp
+	common-lisp-install *.asd src tests
 	common-lisp-symlink-asdf
 
 	dodoc AUTHORS ChangeLog INSTALL NEWS README \
