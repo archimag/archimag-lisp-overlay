@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=3
-inherit eutils flag-o-matic
+EAPI=2
+inherit common-lisp-common-3 eutils flag-o-matic
 
 #same order as http://www.sbcl.org/platform-table.html
 BV_X86=1.0.28
@@ -90,7 +90,6 @@ src_unpack() {
 
 src_prepare() {
 	use source && sed 's%"$(BUILD_ROOT)%$(MODULE).lisp "$(BUILD_ROOT)%' -i contrib/vanilla-module.mk
-
 	sed "s,/lib,/$(get_libdir),g" -i install.sh
 	sed "s,/usr/local/lib,/usr/$(get_libdir),g" -i src/runtime/runtime.c # #define SBCL_HOME ...
 
@@ -152,8 +151,7 @@ EOF
 	dodir /usr/share/man
 	dodir /usr/share/doc/${PF}
 	unset SBCL_HOME
-	INSTALL_ROOT="${D}"/usr DOC_DIR="${D}"/usr/share/doc/${PF} \
-		sh install.sh || die "install.sh failed"
+	INSTALL_ROOT="${D}"/usr DOC_DIR="${D}"/usr/share/doc/${PF} sh install.sh || die "install.sh failed"
 
 	# rm empty directories lest paludis complain about this
 	rmdir "${D}"/usr/$(get_libdir)/sbcl/{site-systems,sb-posix/test-lab,sb-cover/test-output} 2>/dev/null
@@ -179,4 +177,14 @@ EOF
 	echo "SBCL_HOME=/usr/$(get_libdir)/${PN}" > "${ENVD}"
 	echo "SBCL_SOURCE_ROOT=/usr/$(get_libdir)/${PN}/src" >> "${ENVD}"
 	doenvd "${ENVD}"
+
+	impl-save-timestamp-hack sbcl || die
+}
+
+pkg_postinst() {
+	standard-impl-postinst sbcl
+}
+
+pkg_postrm() {
+	standard-impl-postrm sbcl /usr/bin/sbcl
 }
