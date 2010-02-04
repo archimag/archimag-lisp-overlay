@@ -1,8 +1,8 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=2
+EAPI=3
 inherit eutils multilib git
 
 DESCRIPTION="ECL is an embeddable Common Lisp implementation."
@@ -12,11 +12,12 @@ EGIT_REPO_URI="git://ecls.git.sourceforge.net/gitroot/ecls/ecl"
 LICENSE="BSD LGPL-2"
 SLOT="0"
 KEYWORDS=""
-IUSE="X cxx debug +threads +unicode"
+IUSE="X debug +threads +unicode"
 
 RDEPEND="dev-libs/gmp
-		>=dev-libs/boehm-gc-7.1[threads?]
-		cxx? ( dev-libs/boehm-gc[-nocxx] )"
+		dev-libs/libffi
+		>=dev-libs/boehm-gc-7.1[threads?]"
+		# cxx? ( dev-libs/boehm-gc[-nocxx] )"
 DEPEND="${RDEPEND}
 		app-text/texi2html"
 PDEPEND="dev-lisp/gentoo-init"
@@ -33,13 +34,13 @@ src_prepare() {
 }
 
 src_configure() {
+	# $(use_with cxx)
 	econf \
 		--with-system-gmp \
-		--enable-gengc \
 		--enable-boehm=system \
+		--enable-gengc \
 		--enable-longdouble \
-		$(use_with cxx) \
-		$(use_enable debug) \
+		$(use_with debug debug-cflags) \
 		$(use_enable threads) \
 		$(use_with threads __thread) \
 		$(use_enable unicode) \
