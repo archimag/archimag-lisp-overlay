@@ -57,7 +57,6 @@ src_compile() {
 src_install () {
 	emake DESTDIR="${D}" install || die "Could not build ECL"
 
-	dohtml doc/*.html
 	dodoc ANNOUNCEMENT Copyright
 	dodoc "${FILESDIR}"/README.Gentoo
 }
