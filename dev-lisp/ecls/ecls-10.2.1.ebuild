@@ -40,7 +40,7 @@ src_configure() {
 		--enable-boehm=system \
 		--enable-gengc \
 		--enable-longdouble \
-		$(use_enable debug) \
+		$(use_with debug debug-cflags) \
 		$(use_enable threads) \
 		$(use_with threads __thread) \
 		$(use_enable unicode) \
@@ -57,7 +57,6 @@ src_compile() {
 src_install () {
 	emake DESTDIR="${D}" install || die "Could not build ECL"
 
-	dohtml doc/*.html
 	dodoc ANNOUNCEMENT Copyright
 	dodoc "${FILESDIR}"/README.Gentoo
 }
