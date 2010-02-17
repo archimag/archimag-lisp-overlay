@@ -12,7 +12,7 @@ EGIT_REPO_URI="git://ecls.git.sourceforge.net/gitroot/ecls/ecl"
 LICENSE="BSD LGPL-2"
 SLOT="0"
 KEYWORDS=""
-IUSE="X debug +threads +unicode"
+IUSE="debug doc precisegc +threads +unicode X"
 
 RDEPEND="dev-libs/gmp
 		dev-libs/libffi
@@ -38,25 +38,37 @@ src_configure() {
 	econf \
 		--with-system-gmp \
 		--enable-boehm=system \
-		--enable-gengc \
 		--enable-longdouble \
+		--enable-gengc \
+		$(use_enable precisegc) \
 		$(use_with debug debug-cflags) \
 		$(use_enable threads) \
 		$(use_with threads __thread) \
 		$(use_enable unicode) \
 		$(use_with X x) \
-		$(use_with X clx) \
-		|| die "econf failed"
+		$(use_with X clx)
 }
 
 src_compile() {
 	#parallel fails
-	emake -j1 || die "make failed"
+	emake -j1 || die "Compilation failed"
+	if use doc; then
+		pushd build/doc
+		emake || die "Building docs failed"
+		popd
+	fi
 }
 
 src_install () {
-	emake DESTDIR="${D}" install || die "Could not build ECL"
+	emake DESTDIR="${D}" install || die "Installation failed"
 
 	dodoc ANNOUNCEMENT Copyright
 	dodoc "${FILESDIR}"/README.Gentoo
+	pushd build/doc
+	newman ecl.man ecl.1
+	newman ecl-config.man ecl-config.1
+	if use doc; then
+		doinfo ecl{,dev}.info || die "Installing info docs failed"
+	fi
+	popd
 }
