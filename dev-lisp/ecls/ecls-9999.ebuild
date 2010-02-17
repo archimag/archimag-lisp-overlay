@@ -12,7 +12,7 @@ EGIT_REPO_URI="git://ecls.git.sourceforge.net/gitroot/ecls/ecl"
 LICENSE="BSD LGPL-2"
 SLOT="0"
 KEYWORDS=""
-IUSE="X doc debug +threads +unicode"
+IUSE="debug doc precisegc +threads +unicode X"
 
 RDEPEND="dev-libs/gmp
 		dev-libs/libffi
@@ -40,7 +40,7 @@ src_configure() {
 		--enable-boehm=system \
 		--enable-longdouble \
 		--enable-gengc \
-		--enable-precisegc \
+		$(use_enable precisegc) \
 		$(use_with debug debug-cflags) \
 		$(use_enable threads) \
 		$(use_with threads __thread) \
