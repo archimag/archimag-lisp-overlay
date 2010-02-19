@@ -16,7 +16,7 @@ IUSE="emacs"
 
 RDEPEND=" dev-lisp/asdf-system-connections
 		dev-lisp/babel
-		dev-lisp/parenscript
+		>=dev-lisp/parenscript-20100219
 		dev-lisp/split-sequence
 		dev-lisp/wiki-parser
 		dev-lisp/lift
