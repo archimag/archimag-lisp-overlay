@@ -15,7 +15,7 @@ RESTRICT="mirror"
 LICENSE="BSD LGPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
-IUSE="debug doc precisegc +threads +unicode X"
+IUSE="debug doc gengc precisegc +threads +unicode X"
 
 RDEPEND="dev-libs/gmp
 		dev-libs/libffi
@@ -37,7 +37,7 @@ src_configure() {
 		--with-system-gmp \
 		--enable-boehm=system \
 		--enable-longdouble \
-		--enable-gengc \
+		$(use_enable gengc) \
 		$(use_enable precisegc) \
 		$(use_with debug debug-cflags) \
 		$(use_enable threads) \
