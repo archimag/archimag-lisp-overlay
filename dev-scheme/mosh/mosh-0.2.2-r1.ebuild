@@ -4,8 +4,6 @@
 
 EAPI="2"
 
-inherit flag-o-matic
-
 DESCRIPTION="A Fast R6RS Scheme interpreter."
 HOMEPAGE="http://code.google.com/p/mosh-scheme/"
 SRC_URI="http://mosh-scheme.googlecode.com/files/${P}.tar.gz"
@@ -16,10 +14,12 @@ KEYWORDS="~amd64 ~x86"
 
 IUSE=""
 
-src_compile() {
-	append-flags -Wa,--noexecstack
+src_prepare() {
+	echo ".section .note.GNU-stack,\"\",%progbits" >> src/ffi_stub_i386.S || die
+}
 
-	emake CFLAGS="-Wa,--noexecstack" || die
+src_compile() {
+	emake || die
 }
 
 src_install () {
