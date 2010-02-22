@@ -1,19 +1,20 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI=3
 inherit common-lisp-2
 
 DESCRIPTION="A WebDAV server written in Common Lisp."
 HOMEPAGE="http://weitz.de/cl-webdav"
-SRC_URI="http://common-lisp.net/~sionescu/ediware/${P}.tar.gz"
+SRC_URI="http://common-lisp.net/~sionescu/files/${P}.tar.bz2"
 
 LICENSE="BSD-2"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
-RDEPEND="<dev-lisp/hunchentoot-1.0.0
+RDEPEND=">=dev-lisp/hunchentoot-1.0.0
 		dev-lisp/cxml
 		dev-lisp/cl-fad"
 
