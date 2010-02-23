@@ -18,6 +18,8 @@ RDEPEND="dev-lisp/cffi
 
 CLSYSTEMS="cl-opengl cl-glu cl-glut cl-glut-examples"
 
+src_compile() { true; }
+
 src_install() {
 	common-lisp-install *.asd gl glu glut examples
 	common-lisp-symlink-asdf
