@@ -23,6 +23,8 @@ src_install() {
 	common-lisp-install *.asd src optional contrib
 	common-lisp-symlink-asdf
 
+    doinitd "${FILESDIR}"/restas.lo || die "doinitd failed"
+
 	docinto example && dodoc example/*
 }
 
