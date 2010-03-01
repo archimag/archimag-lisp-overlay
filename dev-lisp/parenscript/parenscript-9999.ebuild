@@ -11,7 +11,7 @@ EGIT_REPO_URI="git://common-lisp.net/projects/parenscript/parenscript.git"
 
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="~amd64 ~ppc ~sparc ~x86"
+KEYWORDS=""
 IUSE="doc"
 
 RDEPEND="!dev-lisp/cl-${PN}
