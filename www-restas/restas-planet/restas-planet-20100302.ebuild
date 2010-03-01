@@ -15,7 +15,7 @@ nIUSE=""
 RDEPEND="dev-lisp/net-telent-date
 		 dev-lisp/local-time
 		 dev-lisp/clon
-		 >=dev-lisp/restas-0.0.2
+		 >=dev-lisp/restas-0.0.4
 		 >=dev-lisp/cl-closure-template-0.1.1
 		 >=dev-lisp/cl-libxml2-0.3.2
 		 dev-lisp/ironclad"
