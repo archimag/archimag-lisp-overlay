@@ -19,9 +19,9 @@ RDEPEND="dev-lisp/iterate
 		dev-lisp/split-sequence
 		dev-lisp/lift"
 
-CLSYSTEMS="routes routes-test"
+CLSYSTEMS="routes"
 
 src_install() {
-	common-lisp-install *.asd routes unify test
+	common-lisp-install *.asd routes unify 
 	common-lisp-symlink-asdf
 }
