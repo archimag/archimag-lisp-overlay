@@ -12,7 +12,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 nIUSE=""
 
-RDEPEND="dev-lisp/restas
+RDEPEND=">=dev-lisp/restas-0.0.4
 		 dev-lisp/cl-closure-template
 		 dev-lisp/local-time"
 
