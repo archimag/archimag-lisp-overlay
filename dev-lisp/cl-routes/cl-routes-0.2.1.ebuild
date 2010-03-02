@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
+EAPI=2
 inherit common-lisp-2
 
 DESCRIPTION="Common Lisp implementation of the Rails routes system for mapping URLs."
@@ -22,6 +22,6 @@ RDEPEND="dev-lisp/iterate
 CLSYSTEMS="routes"
 
 src_install() {
-	common-lisp-install *.asd routes unify 
+	common-lisp-install *.asd routes unify t
 	common-lisp-symlink-asdf
 }
