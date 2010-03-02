@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=3
+EAPI=2
 inherit common-lisp-2 eutils
 
 DESCRIPTION="Parenscript is a small lispy language that can be compiled to JavaScript."
