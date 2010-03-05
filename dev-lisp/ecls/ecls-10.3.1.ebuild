@@ -9,7 +9,7 @@ MY_P=ecl-${PV}
 
 DESCRIPTION="ECL is an embeddable Common Lisp implementation."
 HOMEPAGE="http://common-lisp.net/project/ecl/"
-SRC_URI="http://common-lisp.net/~sionescu/files/${MY_P}.tar.bz2"
+SRC_URI="mirror://sourceforge/ecls/${MY_P}.tgz"
 RESTRICT="mirror"
 
 LICENSE="BSD LGPL-2"
@@ -69,4 +69,13 @@ src_install () {
 		doinfo ecl{,dev}.info || die "Installing info docs failed"
 	fi
 	popd
+}
+
+pkg_postinst () {
+	if use gengc || use precisegc ; then
+		ewarn "You have enabled the generational garbage collector or"
+		ewarn "the precise collection routines. These features are not very stable"
+		ewarn "at the moment and may cause crashes."
+		ewarn "Don't enable them unless you know what you're doing."
+	fi
 }
