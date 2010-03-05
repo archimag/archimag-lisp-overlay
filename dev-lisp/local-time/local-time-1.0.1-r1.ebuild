@@ -19,7 +19,7 @@ RDEPEND="dev-lisp/cl-fad
 		dev-lisp/fiveam"
 PDEPEND="postgres? ( dev-lisp/postmodern )"
 
-S="${WORKDIR}"/${PN}
+#S="${WORKDIR}"/${PN}
 
 src_compile() {
 	cd doc
