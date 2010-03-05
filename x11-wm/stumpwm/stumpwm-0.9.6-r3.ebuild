@@ -1,4 +1,4 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -17,11 +17,11 @@ IUSE="doc sbcl clisp source emacs"
 RESTRICT="strip mirror"
 
 RDEPEND="dev-lisp/cl-ppcre
-		>=dev-lisp/clx-0.7.3_p20081030
+		sbcl? ( >=dev-lisp/clx-0.7.3_p20081030 )
 		>=dev-lisp/cl-launch-2.11-r1
-		!sbcl? ( !clisp? ( >=dev-lisp/sbcl-1.0.28 ) )
-		!sbcl? ( clisp? ( >=dev-lisp/clisp-2.44[X] ) )
-		sbcl?  ( >=dev-lisp/sbcl-1.0.28 )
+		!sbcl? ( !clisp? ( >=dev-lisp/sbcl-1.0.32 ) )
+		!sbcl? ( clisp? ( >=dev-lisp/clisp-2.44[X,new-clx] ) )
+		sbcl?  ( >=dev-lisp/sbcl-1.0.32 )
 		emacs? ( virtual/emacs app-emacs/slime )"
 DEPEND="${RDEPEND}
 		sys-apps/texinfo
@@ -42,16 +42,13 @@ src_configure() {
 }
 
 src_compile() {
-	common-lisp-export-impl-args $(glo_best_flag sbcl clisp)
-	local wrap_opts="
-SBCL_OPTIONS='${CL_NORC}'
-CLISP_OPTIONS='-ansi -K full ${CL_NORC}'
-"
 	addwrite /var/cache/cl-launch
 	LISP_FASL_CACHE=/var/cache/cl-launch \
 		cl-launch.sh \
 		--lisp $(glo_best_flag sbcl clisp) \
-		--wrap "${wrap_opts}" \
+		--wrap '
+SBCL_OPTIONS="--noinform --userinit /dev/null"
+CLISP_OPTIONS="-ansi -K full -norc --quiet"' \
 		--path "${CLSOURCEROOT}/clx" \
 		--path "${CLSOURCEROOT}/cl-ppcre" \
 		--path-current \
@@ -68,6 +65,7 @@ CLISP_OPTIONS='-ansi -K full ${CL_NORC}'
 }
 
 src_install() {
+	common-lisp-export-impl-args $(glo_best_flag sbcl clisp)
 	dobin stumpwm.bin contrib/stumpish
 	make_wrapper stumpwm "/usr/bin/stumpwm.bin ${CL_NORC} ${CL_EVAL} '(stumpwm:stumpwm \":0\")'"
 	make_session_desktop StumpWM /usr/bin/stumpwm
