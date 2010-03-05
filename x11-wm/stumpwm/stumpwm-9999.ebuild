@@ -2,13 +2,12 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EGIT_REPO_URI="git://git.savannah.nongnu.org/stumpwm.git"
-
 EAPI=2
 inherit common-lisp-2 glo-utils eutils elisp-common git
 
 DESCRIPTION="Stumpwm is a tiling, keyboard driven X11 Window Manager written entirely in Common Lisp."
 HOMEPAGE="http://www.nongnu.org/stumpwm/"
+EGIT_REPO_URI="git://git.savannah.nongnu.org/stumpwm.git"
 
 LICENSE="GPL-2"
 SLOT="0"
