@@ -13,12 +13,13 @@ KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
 RDEPEND=">=dev-lisp/restas-0.0.4
-         >=dev-lisp/cl-libxml2-0.3.2
+		 >=dev-lisp/cl-libxml2-0.3.2
+		 >=dev-lisp/wiki-parser-0.1.1
 		 dev-lisp/cl-closure-template
 		 dev-lisp/colorize
 		 dev-lisp/local-time
 		 dev-lisp/zip
-         >=dev-lisp/cl-pdf-20091211
+		 >=dev-lisp/cl-pdf-20091211
 		 dev-lisp/cl-typesetting"
 
 CLSYSTEMS="${PN}"
