@@ -1,0 +1,27 @@
+Author: Ulrich Müller <ulm@gentoo.org>, Moskvitin Andrey <archimag@gmail.com>
+Date: 2008-08-01
+Status: Gentoo-only
+Description: Make slime-changelog-date return a fixed string replaced at
+ compile-time by the ebuild instead of computing it from the ChangeLog
+
+--- slime-2.0_p20100310-old/slime.el	2010-03-11 15:48:07.000000000 +0200
++++ slime-2.0_p20100310/slime.el	2010-03-11 15:51:15.000000000 +0200
+@@ -116,17 +116,7 @@ CONTRIBS is a list of contrib packages to load."
+   (defun slime-changelog-date (&optional interactivep)
+     "Return the datestring of the latest entry in the ChangeLog file.
+ Return nil if the ChangeLog file cannot be found."
+-    (interactive "p")
+-    (let ((changelog (concat slime-path "ChangeLog"))
+-          (date nil))
+-      (when (file-exists-p changelog)
+-        (with-temp-buffer 
+-          (insert-file-contents-literally changelog nil 0 100)
+-          (goto-char (point-min))
+-          (setq date (symbol-name (read (current-buffer))))))
+-      (when interactivep
+-        (message "Slime ChangeLog dates %s." date))
+-      date)))
++    "@SLIME-CHANGELOG-DATE@"))
+ 
+ (defvar slime-protocol-version nil)
+ (setq slime-protocol-version

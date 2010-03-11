@@ -6,7 +6,8 @@
 
 (require 'slime-autoloads)
 (slime-setup '(slime-fancy slime-repl slime-asdf slime-banner
-               slime-compiler-notes-tree slime-enclosing-context))
+               slime-compiler-notes-tree slime-enclosing-context
+               slime-sprof))
 
 ;; this allows us not to require dev-lisp/hyperspec
 ;; (which is non-free) as a hard dependency

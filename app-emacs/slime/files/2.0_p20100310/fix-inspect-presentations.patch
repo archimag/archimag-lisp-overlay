@@ -15,7 +15,7 @@ diff -Naur slime.old/contrib/slime-presentations.el slime/contrib/slime-presenta
 +        (multiple-value-bind (presentation start end)
 +            (slime-presentation-around-point (point))
 +          (when presentation
-+            ;; Point is within a presentation, so don't prompt, just 
++            ;; Point is within a presentation, so don't prompt, just
 +            ;; inspect the presented object; don't play DWIM.
 +            (slime-presentation-expression presentation)))))
 +
