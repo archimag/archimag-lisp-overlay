@@ -54,7 +54,7 @@ src_install() {
 
 	common-lisp-install uffi/*.lisp ${PN}-uffi.asd
 	common-lisp-symlink-asdf ${PN}-uffi
-	exeinto /usr/$(get_libdir)/${PN} ; doexe uffi/${PN}_uffi.so
+	exeinto /usr/$(get_libdir)/${PN} ; doexe uffi/${PN}_uffi*.so
 
 	install_clsql_pkg postgresql-socket
 	use postgres && install_clsql_pkg postgresql
