@@ -68,7 +68,7 @@ src_configure() {
 	fi
 
 	# built-in features
-	local myconf="--with-ffcall --with-dynamic-modules"
+	local myconf="--with-ffcall --without-dynamic-modules"
 	if use jit; then
 		myconf+=" --with-jitc=lightning"
 	fi
