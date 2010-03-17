@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
+EAPI=2
 inherit common-lisp-2 eutils git
 
 DESCRIPTION="Comon Lisp bindings for Cairo"
@@ -21,7 +21,7 @@ RDEPEND="dev-lisp/cl-utilities
 		 dev-lisp/trivial-features
 		 >=x11-libs/cairo-1.6"
 
-CLSYSTEMS="${PN} ${PN}-x11 ${PN}-mac ${PN}-win"
+CLSYSTEMS="${PN} ${PN}-xlib ${PN}-quartz ${PN}-win32"
 
 src_compile() {	true; }
 
