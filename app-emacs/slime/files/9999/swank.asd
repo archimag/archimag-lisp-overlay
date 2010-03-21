@@ -34,6 +34,7 @@
                                     component))
                             sysdep-files)
                   (:file "swank-match")
+                  (:file "swank-rpc")
                   (:file "swank")
                   (:module "contrib"
                    :components ((:no-load-file "swank-c-p-c")
