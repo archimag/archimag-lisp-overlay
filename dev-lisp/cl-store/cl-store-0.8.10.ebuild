@@ -1,7 +1,8 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI=2
 inherit common-lisp-2 eutils
 
 MY_P=${PN}_${PV}
@@ -18,10 +19,9 @@ IUSE="doc"
 DEPEND="sys-apps/texinfo
 		doc? ( virtual/texi2dvi )"
 
-S="${WORKDIR}"/${MY_P}
+S="${WORKDIR}"/${PN}
 
-src_unpack() {
-	unpack ${A} && cd "${S}"
+src_prepare() {
 	rm xml* */custom-xml.lisp
 }
 
@@ -36,7 +36,7 @@ src_compile() {
 
 src_install() {
 	common-lisp-install *.{lisp,asd} \
-		abcl acl clisp cmucl ecl lispworks mcl openmcl sbcl
+		abcl acl allegrocl clisp cmucl ecl lispworks mcl openmcl sbcl
 	common-lisp-symlink-asdf
 	dodoc ChangeLog
 	doinfo doc/${PN}.info
