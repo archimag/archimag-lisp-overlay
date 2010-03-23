@@ -15,7 +15,12 @@ KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
 RDEPEND="!dev-lisp/cl-${PN}
-		dev-lisp/ptester"
+		dev-lisp/ptester
+		dev-lisp/babel"
+
+src_prepare() {
+	epatch "${FILESDIR}"/${PV}-archimag-utf-8-support.patch
+}
 
 src_install() {
 	common-lisp-install *.{lisp,asd}
