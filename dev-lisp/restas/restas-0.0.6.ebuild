@@ -13,7 +13,7 @@ KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
 RDEPEND="dev-lisp/asdf-system-connections
-		 >=dev-lisp/cl-routes-0.2.1
+		 >=dev-lisp/cl-routes-0.2.1-r1
 		 >=dev-lisp/hunchentoot-1.0.0
 		 dev-lisp/garbage-pools"
 
@@ -23,7 +23,7 @@ src_install() {
 	common-lisp-install *.asd src optional contrib
 	common-lisp-symlink-asdf
 
-    doinitd "${FILESDIR}"/restas.lo || die "doinitd failed"
+	doinitd "${FILESDIR}"/restas.lo || die "doinitd failed"
 
 	docinto example && dodoc example/*
 }
