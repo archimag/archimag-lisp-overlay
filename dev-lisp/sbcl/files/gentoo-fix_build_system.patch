@@ -1,19 +1,24 @@
 diff --git a/contrib/asdf-module.mk b/contrib/asdf-module.mk
-index a9e55d7..2c2ced7 100644
+index a9e55d7..90df9b6 100644
 --- a/contrib/asdf-module.mk
 +++ b/contrib/asdf-module.mk
-@@ -7,6 +7,10 @@ CC=gcc
+@@ -1,3 +1,5 @@
++# -*- makefile -*- included by contribs built with ASDF
++
+ CC=gcc
+ 
+ # We need to extend flags to the C compiler and the linker
+@@ -7,6 +9,9 @@ CC=gcc
  # directly via ASDF from a non-C-aware module which has these tricky
  # ones as dependencies.
  
-+ifneq ($(MAKECMDGOALS),clean)
-+include ../../src/runtime/Config
-+endif
++# from src/runtime/
++-include platform.mk
 +
  UNAME:=$(shell uname -s)
  
  ifeq (SunOS,$(UNAME))
-@@ -20,7 +24,9 @@ ifeq (CYGWIN,$(findstring CYGWIN,$(UNAME)))
+@@ -20,7 +25,9 @@ ifeq (CYGWIN,$(findstring CYGWIN,$(UNAME)))
    CC:=$(shell cygpath -m $(shell readlink -fn $(shell which $(CC))))
  endif
  
@@ -24,6 +29,31 @@ index a9e55d7..2c2ced7 100644
  
  all: $(EXTRA_ALL_TARGETS)
  	$(MAKE) -C ../asdf
+diff --git a/contrib/vanilla-module.mk b/contrib/vanilla-module.mk
+index 41c1771..4c343ee 100644
+--- a/contrib/vanilla-module.mk
++++ b/contrib/vanilla-module.mk
+@@ -1,3 +1,7 @@
++# -*- makefile -*- included by contribs that don't use ASDF
++
++# from src/runtime/
++-include platform.mk
+ 
+ $(MODULE).fasl: $(MODULE).lisp ../../output/sbcl.core
+ 	$(SBCL) --eval '(compile-file (format nil "SYS:CONTRIB;~:@(~A~);~:@(~A~).LISP" "$(MODULE)" "$(MODULE)"))' </dev/null
+diff --git a/make-target-contrib.sh b/make-target-contrib.sh
+index bd9f640..c7c021e 100644
+--- a/make-target-contrib.sh
++++ b/make-target-contrib.sh
+@@ -62,7 +62,7 @@ for i in contrib/*; do
+     # export INSTALL_DIR=$SBCL_HOME/`basename $i `
+     test -f $i/test-passed && rm $i/test-passed
+     # hack to get exit codes right.
+-    if $GNUMAKE -C $i test 2>&1 && touch $i/test-passed ; then
++    if $GNUMAKE -C $i -I ../../src/runtime test 2>&1 && touch $i/test-passed ; then
+ 	:
+     else
+ 	exit $?
 diff --git a/src/runtime/Config.alpha-linux b/src/runtime/Config.alpha-linux
 index 42df1fc..ef140d3 100644
 --- a/src/runtime/Config.alpha-linux
@@ -340,18 +370,23 @@ index a7533b6..2b4b8bd 100644
  # use libthr (1:1 threading).  libpthread (m:n threading) does not work.
  ifdef LISP_FEATURE_SB_THREAD
 diff --git a/src/runtime/Config.x86-linux b/src/runtime/Config.x86-linux
-index d64a779..9fb164b 100644
+index d64a779..5c3bfe7 100644
 --- a/src/runtime/Config.x86-linux
 +++ b/src/runtime/Config.x86-linux
-@@ -27,7 +27,7 @@ OS_SRC = linux-os.c x86-linux-os.c
+@@ -27,11 +27,11 @@ OS_SRC = linux-os.c x86-linux-os.c
  # (You *are* encouraged to design and implement a coherent stable
  # interface, though.:-| As far as I (WHN 2002-05-19) know, no one is
  # working on one and it would be a nice thing to have.)
 -LINKFLAGS += -Wl,--export-dynamic
-+LDFLAGS += -Wl,--export-dynamic
++SBCL_LDFLAGS += -Wl,--export-dynamic
  OS_LIBS = -ldl
  
  ifdef LISP_FEATURE_LARGEFILE
+-  CFLAGS += -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64
++  SBCL_CFLAGS += -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64
+ endif
+ 
+ ifdef LISP_FEATURE_SB_THREAD
 diff --git a/src/runtime/Config.x86-netbsd b/src/runtime/Config.x86-netbsd
 index cd3782c..b0cd748 100644
 --- a/src/runtime/Config.x86-netbsd
@@ -429,15 +464,15 @@ index e1efb79..b17bfd4 100644
  
  ifdef LISP_FEATURE_LARGEFILE
 diff --git a/src/runtime/GNUmakefile b/src/runtime/GNUmakefile
-index cfaac20..f73d58b 100644
+index cfaac20..0e0963a 100644
 --- a/src/runtime/GNUmakefile
 +++ b/src/runtime/GNUmakefile
-@@ -18,14 +18,14 @@ TARGET=sbcl
+@@ -18,25 +18,17 @@ TARGET=sbcl
  # Config file. Most of them are same on most systems right now.
  # If you need to override one of these, do it in Config.
  LD = ld
 -LINKFLAGS = -g
-+LDFLAGS += -g
++SBCL_LDFLAGS = -g
  NM = nm -gp
  DEPEND_FLAGS = -MM
  GREP = grep
@@ -445,13 +480,26 @@ index cfaac20..f73d58b 100644
 -CFLAGS = -g -Wall -Wsign-compare -O3
 -ASFLAGS = $(CFLAGS)
 -CPPFLAGS = -I.
-+CFLAGS += -g -Wall -Wsign-compare -O3
-+ASFLAGS += $(CFLAGS)
-+CPPFLAGS += -I.
++SBCL_CFLAGS = -g -Wall -Wsign-compare -O3
++SBCL_ASFLAGS = $(SBCL_CFLAGS)
++SBCL_CPPFLAGS = -I.
  
- # Give make access to the target Lisp features.
- include genesis/Makefile.features
-@@ -56,7 +56,7 @@ LIBS = ${OS_LIBS} -lm
+-# Give make access to the target Lisp features.
+-include genesis/Makefile.features
+-
+-# The Config file is the preferred place for tweaking options which
+-# are appropriate for particular setups (OS, ARCH, whatever). Make a
+-# Config-foo file for setup foo, then arrange for Config to be a
+-# symlink to Config-foo.
+-# Commonly used variables in Config are: ARCH_SRC, ASSEM_SRC, GC_SRC,
+-# OS_SRC, OS_LIBS, OS_OBJS, OS_CLEAN_FILES
+-include Config
++# Also included by tools-for-build/Makefile
++-include platform.mk
+ 
+ COMMON_SRC = alloc.c backtrace.c breakpoint.c coreparse.c \
+ 	dynbind.c funcall.c gc-common.c globals.c interr.c interrupt.c \
+@@ -56,7 +48,7 @@ LIBS = ${OS_LIBS} -lm
  targets: $(TARGET) sbcl.nm
  
  $(TARGET): $(OBJS)
@@ -460,6 +508,48 @@ index cfaac20..f73d58b 100644
  
  sbcl.nm: $(TARGET)
  	$(NM) $(TARGET) | $(GREP) -v " [FUw] " > ,$@
+diff --git a/src/runtime/platform.mk b/src/runtime/platform.mk
+index e69de29..d2470cd 100644
+--- a/src/runtime/platform.mk
++++ b/src/runtime/platform.mk
+@@ -0,0 +1,17 @@
++# -*- makefile -*- for the C-level run-time support for SBCL
++
++# Give make access to the target Lisp features.
++-include genesis/Makefile.features
++
++# The Config file is the preferred place for tweaking options which
++# are appropriate for particular setups (OS, ARCH, whatever). Make a
++# Config-foo file for setup foo, then arrange for Config to be a
++# symlink to Config-foo.
++# Commonly used variables in Config are: ARCH_SRC, ASSEM_SRC, GC_SRC,
++# OS_SRC, OS_LIBS, OS_OBJS, OS_CLEAN_FILES
++-include Config
++
++CPPFLAGS := $(SBCL_CPPFLAGS) $(CPPFLAGS)
++CFLAGS   := $(SBCL_CFLAGS)   $(CFLAGS)
++ASFLAGS  := $(SBCL_ASFLAGS)  $(ASFLAGS)
++LDFLAGS  := $(SBCL_LDFLAGS)  $(LDFLAGS)
+diff --git a/tools-for-build/Makefile b/tools-for-build/Makefile
+index 2f10a8b..dc99ebc 100644
+--- a/tools-for-build/Makefile
++++ b/tools-for-build/Makefile
+@@ -7,11 +7,11 @@
+ # provided with absolutely no warranty. See the COPYING and CREDITS
+ # files for more information.
+ 
+--include genesis/Makefile.features
+--include Config
++SBCL_CPPFLAGS = -I../src/runtime
++SBCL_LDFLAGS = $(OS_LIBS)
+ 
+-CPPFLAGS:=-I../src/runtime
+-LDFLAGS:=$(LDFLAGS) $(OS_LIBS)
++# from src/runtime/
++-include platform.mk
+ 
+ all: grovel-headers determine-endianness where-is-mcontext \
+         modify-ldt-struct-name sigaction-sa-nodefer-works-test
 diff --git a/tools-for-build/ldso-stubs.lisp b/tools-for-build/ldso-stubs.lisp
 index bbb7e9e..617d527 100644
 --- a/tools-for-build/ldso-stubs.lisp

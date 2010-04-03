@@ -84,6 +84,7 @@ src_prepare() {
 	epatch "${FILESDIR}"/gentoo-fix_build_system.patch
 	epatch "${FILESDIR}"/gentoo-fix_install_man.patch
 	epatch "${FILESDIR}"/gentoo-fix_linux-os-c.patch
+	epatch "${FILESDIR}"/gentoo-fix_test_debug.impure.patch
 
 	use source && sed 's%"$(BUILD_ROOT)%$(MODULE).lisp "$(BUILD_ROOT)%' -i contrib/vanilla-module.mk
 
