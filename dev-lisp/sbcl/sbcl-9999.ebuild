@@ -161,12 +161,12 @@ EOF
 		doinfo doc/manual/*.info*
 		dohtml -r doc/internals/sbcl-internals
 		doinfo doc/internals/sbcl-internals.info
-		docinto internals-notes && dodoc internals-notes/*
+		docinto internals-notes && dodoc doc/internals-notes/*
 	else
 		rm -Rv "${D}/usr/share/doc/${PF}"
 	fi
 
-	dodoc BUGS CREDITS INSTALL NEWS OPTIMIZATIONS PRINCIPLES README STYLE SUPPORT TLA TODO
+	dodoc BUGS CREDITS INSTALL NEWS OPTIMIZATIONS PRINCIPLES README STYLE TLA TODO
 
 	# install the SBCL source
 	if use source; then
