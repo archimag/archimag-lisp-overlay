@@ -17,7 +17,7 @@ IUSE="+slime"
 
 RDEPEND="!dev-lisp/cl-${PN}
 		!dev-lisp/cl-${PN}-darcs
-		slime? ( app-emacs/slime )
+		slime? ( virtual/slime )
 		dev-lisp/cl-ppcre"
 
 src_install() {

@@ -21,7 +21,7 @@ RDEPEND="dev-lisp/cxml
 		dev-lisp/xuriella
 		dev-lisp/closer-mop
 		dev-lisp/cl-ppcre
-		app-emacs/slime"
+		virtual/slime"
 
 S="${WORKDIR}"/${MY_P}
 
