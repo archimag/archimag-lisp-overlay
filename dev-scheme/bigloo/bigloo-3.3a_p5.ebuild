@@ -19,11 +19,10 @@ LICENSE="GPL-2"
 KEYWORDS="~amd64 ~x86"
 
 # bug 254916 for >=dev-libs/boehm-gc-7.1
-DEPEND=">=dev-libs/boehm-gc-7.1
+DEPEND=">=dev-libs/boehm-gc-7.1[threads?]
 		emacs? ( virtual/emacs )
 		java? ( virtual/jdk app-arch/zip )
 		ssl? ( dev-libs/openssl )
-		threads? ( dev-libs/boehm-gc[threads] )
         gstreamer? ( media-libs/gstreamer 
 			media-libs/gst-plugins-base )"
 
@@ -37,6 +36,9 @@ IUSE="emacs java ssl threads gstreamer"
 
 src_prepare() {
 	epatch "${FILESDIR}/${P}-no_strip.patch"
+
+	# Removing bundled boehm-gc
+	rm -rf gc || die
 }
 
 src_configure() {
@@ -83,7 +85,7 @@ src_compile() {
 
 # default thinks that target doesn't exist
 src_test() {
-	vecho ">>> Test phase [test]: ${CATEGORY}/${PF}"
+	echo ">>> Test phase [test]: ${CATEGORY}/${PF}"
 	emake test || die
 }
 
