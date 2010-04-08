@@ -1,17 +1,17 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-scheme/guile/guile-1.8.6.ebuild,v 1.3 2009/08/30 19:52:39 klausman Exp $
+# $Header: $
 
-EAPI=1
+EAPI="3"
+
 inherit flag-o-matic elisp-common autotools
 
 DESCRIPTION="Scheme interpreter"
 HOMEPAGE="http://www.gnu.org/software/guile/"
-#SRC_URI="mirror://gnu/guile/${P}.tar.gz"
 SRC_URI=" ftp://alpha.gnu.org/gnu/guile/${P}.tar.gz"
 
 LICENSE="LGPL-2.1"
-KEYWORDS="alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~x86 ~x86-fbsd"
+KEYWORDS="~amd64 ~x86"
 RESTRICT="!regex? ( test )"
 
 DEPEND=">=dev-libs/gmp-4.1
@@ -26,24 +26,14 @@ DEPEND=">=dev-libs/gmp-4.1
 SLOT="12"
 MAJOR="1.8"
 
-IUSE="networking +regex discouraged +deprecated elisp emacs nls debug-freelist debug-malloc debug +threads"
+IUSE="networking +regex discouraged +deprecated elisp emacs nls debug-malloc debug +threads"
 
-src_unpack() {
-	unpack ${A}; cd "${S}"
+#src_prepare() {
+#    sed 's/AC_CONFIG_MACRO_DIR(\[m4\])/AC_CONFIG_MACRO_DIR(\[guile-config\])/' -i configure.ac || die
+#    eautoreconf
+#}
 
-	sed "s_sleep 999_sleep 1_" -i test-suite/tests/popen.test
-
-#    cp configure.in configure.in.old
-
-	#for libtool-2.2*, bug 212723
-#    sed 's/AC_CONFIG_MACRO_DIR(\[m4\])/AC_CONFIG_MACRO_DIR(\[guile-config\])/' -i configure.in
-
-#	diff -u configure.in.old configure.in
-
-	eautoreconf
-}
-
-src_compile() {
+src_configure() {
 	# see bug #178499
 	filter-flags -ftree-vectorize
 
@@ -59,13 +49,14 @@ src_compile() {
 		$(use_enable elisp) \
 		$(use_enable nls) \
 		--disable-rpath \
-		$(use_enable debug-freelist) \
 		$(use_enable debug-malloc) \
 		$(use_enable debug guile-debug) \
 		$(use_with threads) \
-		--with-modules #\
-#        EMACS=no
+		--with-modules \
+		EMACS=no
+}
 
+src_compile() {
 	emake || die "make failed"
 
 	# Above we have disabled the build system's Emacs support;
@@ -77,12 +68,12 @@ src_compile() {
 }
 
 src_install() {
-	einstall || die "install failed"
+	emake DESTDIR="${D}" install || die "install failed"
 
-	dodoc AUTHORS ChangeLog GUILE-VERSION HACKING NEWS README THANKS
+	dodoc AUTHORS ChangeLog GUILE-VERSION HACKING NEWS README THANKS || die
 
 	# texmacs needs this, closing bug #23493
-	dodir /etc/env.d
+	dodir /etc/env.d || die
 	echo "GUILE_LOAD_PATH=\"/usr/share/guile/${MAJOR}\"" > "${D}"/etc/env.d/50guile
 
 	# necessary for registering slib, see bug 206896
