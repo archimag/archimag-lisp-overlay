@@ -17,7 +17,7 @@ IUSE=""
 
 RDEPEND="!dev-lisp/cl-${PN}
 		>=dev-lisp/closure-common-${PV}
-		dev-lisp/puri
+		virtual/puri
 		dev-lisp/trivial-gray-streams"
 
 CLSYSTEMS="${PN} ${PN}-contrib"

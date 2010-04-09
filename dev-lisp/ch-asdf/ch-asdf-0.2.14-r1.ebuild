@@ -17,7 +17,7 @@ IUSE=""
 
 RDEPEND="!dev-lisp/cl-${PN}
 		dev-lisp/ch-util
-		dev-lisp/puri"
+		virtual/puri"
 
 S="${WORKDIR}"/${MY_P}
 

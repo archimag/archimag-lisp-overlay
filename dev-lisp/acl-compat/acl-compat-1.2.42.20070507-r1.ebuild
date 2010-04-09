@@ -18,7 +18,7 @@ KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
 RDEPEND="!dev-lisp/cl-${PN}
-		dev-lisp/puri
+		virtual/puri
 		dev-lisp/cl-ppcre"
 
 S="${WORKDIR}"/cl-portable-aserve-${MY_PV}+cvs.${CVS_PV}-dfsg.orig

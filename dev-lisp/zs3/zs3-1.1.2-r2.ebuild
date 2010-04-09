@@ -16,7 +16,7 @@ IUSE=""
 RDEPEND="dev-lisp/cxml
 		 >=dev-lisp/drakma-1.0.0
 		 dev-lisp/ironclad
-		 dev-lisp/puri
+		 virtual/puri
 		 dev-lisp/cl-base64"
 
 src_install() {

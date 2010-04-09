@@ -20,7 +20,7 @@ DEPEND="dev-libs/libxml2
 RDEPEND="${DEPEND}
 		 >=dev-lisp/cffi-0.10.2
 		 dev-lisp/iterate
-		 dev-lisp/puri
+		 virtual/puri
 		 dev-lisp/flexi-streams
 		 dev-lisp/alexandria
 		 >=dev-lisp/garbage-pools-0.1.2

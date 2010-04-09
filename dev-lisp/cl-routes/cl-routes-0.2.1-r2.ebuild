@@ -15,7 +15,7 @@ KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
 RDEPEND="dev-lisp/iterate
-		>=dev-lisp/puri-1.5.3-r2
+		virtual/puri
 		dev-lisp/split-sequence
 		dev-lisp/lift"
 

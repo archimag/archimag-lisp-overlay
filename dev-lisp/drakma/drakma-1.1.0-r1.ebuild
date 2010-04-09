@@ -15,7 +15,7 @@ IUSE=""
 
 RDEPEND="!dev-lisp/cl-${PN}
 		>=dev-lisp/chunga-1.1.0
-		>=dev-lisp/puri-1.5.0
+		>=virtual/puri-1.5.0
 		>=dev-lisp/cl-base64-3.3.2
 		>=dev-lisp/flexi-streams-1.0.7
 		>=dev-lisp/usocket-0.4.0

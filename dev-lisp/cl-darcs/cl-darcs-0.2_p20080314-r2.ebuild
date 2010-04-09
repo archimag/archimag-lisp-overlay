@@ -18,7 +18,7 @@ DEPEND="sys-apps/texinfo
 		doc? ( virtual/texi2dvi )"
 RDEPEND="dev-lisp/split-sequence
 		dev-lisp/drakma
-		dev-lisp/puri
+		virtual/puri
 		dev-lisp/trivial-gray-streams
 		dev-lisp/ironclad
 		dev-lisp/flexi-streams

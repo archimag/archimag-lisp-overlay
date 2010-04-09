@@ -19,7 +19,7 @@ RDEPEND="dev-lisp/closer-mop
 		dev-lisp/cl-who
 		dev-lisp/cl-ppcre
 		dev-lisp/cl-json
-		dev-lisp/puri
+		virtual/puri
 		dev-lisp/md5
 		dev-lisp/fare-matcher
 		dev-lisp/cl-cont
