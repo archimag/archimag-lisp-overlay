@@ -12,4 +12,4 @@ KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 
 IUSE=""
 DEPEND=""
-RDEPEND="|| ( ~dev-lisp/puri-unicode-1.0 ~dev-lisp/puri-${PV} )"
+RDEPEND="|| ( ~dev-lisp/puri-unicode-1.0.1 ~dev-lisp/puri-${PV} )"
