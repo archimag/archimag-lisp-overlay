@@ -16,8 +16,7 @@ IUSE=""
 
 RDEPEND="!dev-lisp/cl-${PN}
 		!dev-lisp/puri-unicode
-		dev-lisp/ptester
-		dev-lisp/babel"
+		dev-lisp/ptester"
 
 src_install() {
 	common-lisp-install *.{lisp,asd}
