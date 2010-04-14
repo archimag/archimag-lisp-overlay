@@ -6,7 +6,7 @@ inherit common-lisp-2 eutils
 
 DESCRIPTION="A Common Lisp library for interacting with PostgreSQL databases."
 HOMEPAGE="http://common-lisp.net/project/postmodern/"
-SRC_URI="http://common-lisp.net/project/${PN}/${P}.tgz"
+SRC_URI="http://github.com/downloads/archimag/gentoo-lisp-overlay/${P}.tgz"
 
 LICENSE="ZLIB"
 SLOT="0"
@@ -15,8 +15,6 @@ IUSE=""
 
 RDEPEND="dev-lisp/md5
 		dev-lisp/usocket
-		dev-lisp/ieee-floats
-		dev-lisp/trivial-utf8
 		dev-lisp/closer-mop
 		dev-lisp/bordeaux-threads
 		dev-lisp/fiveam"
