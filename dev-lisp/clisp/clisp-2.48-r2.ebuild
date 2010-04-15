@@ -11,7 +11,8 @@ SRC_URI="mirror://sourceforge/clisp/${P}.tar.bz2"
 
 LICENSE="GPL-2"
 SLOT="2"
-KEYWORDS="~alpha ~amd64 ~ia64 ~ppc -sparc ~x86"
+#KEYWORDS="~alpha ~amd64 ~ia64 ~ppc -sparc ~x86"
+KEYWORDS=""
 IUSE="hyperspec X new-clx dbus fastcgi gdbm gtk pari +pcre postgres +readline svm -threads +unicode +zlib"
 
 RDEPEND="virtual/libiconv
