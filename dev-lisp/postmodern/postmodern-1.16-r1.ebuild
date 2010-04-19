@@ -21,6 +21,12 @@ RDEPEND="dev-lisp/md5
 
 CLSYSTEMS="cl-postgres postmodern simple-date s-sql"
 
+src_unpack() {
+	unpack ${A}
+	cd "${S}"
+	epatch "${FILESDIR}"/fix-plist-format-query.patch
+}
+
 src_install() {
 	common-lisp-install *.asd ${CLSYSTEMS}
 	common-lisp-symlink-asdf
