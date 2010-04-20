@@ -1,0 +1,13 @@
+diff -u -r a/src/Makefile.in b/src/Makefile.in
+--- a/src/Makefile.in	2010-03-17 20:22:06.000000000 +0200
++++ b/src/Makefile.in	2010-04-18 22:23:49.000000000 +0300
+@@ -60,9 +60,6 @@
+ 	$(MAKE) install-@MAIN_VARIANT@
+ 
+ plain-install:
+-	if [ "$(DESTDIR)" != "" ]; then \
+-          echo "cannot use plain-install with DESTDIR=$(DESTDIR)"; exit 1; \
+-        fi
+ 	$(MAKE) plain-install-@MAIN_VARIANT@
+ 
+ install-common-first:
