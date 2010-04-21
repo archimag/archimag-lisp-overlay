@@ -12,7 +12,7 @@ LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS=""
 #KEYWORDS="~amd64"
-IUSE="-backtrace cairo cgc opengl profile X slatex sgc -futures -places +foreign static plain"
+IUSE="-backtrace cairo cgc opengl profile X slatex sgc -futures -places +foreign static -plain"
 # jit
 RDEPEND="X? ( x11-libs/libX11
 			x11-libs/libXaw
@@ -22,7 +22,7 @@ RDEPEND="X? ( x11-libs/libX11
 			media-libs/libpng
 			opengl? ( virtual/opengl )
 			cairo? ( x11-libs/cairo[X] ) )
-		slatex? ( virtual/tex-base )"
+		slatex? ( virtual/latex-base )"
 DEPEND="${RDEPEND}"
 S="${WORKDIR}/plt-${PV}/src/build"
 ECONF_SOURCE="${S}/.."
@@ -111,7 +111,7 @@ src_configure() {
 src_compile() {
 	time emake || die "emake default target(3m) failed"
 	if use cgc || use sgc ; then
-		time emake cgc || die "emake cgc target failed"
+		time emake cgc || die "emake cgc-install target failed"
 	fi
 }
 
