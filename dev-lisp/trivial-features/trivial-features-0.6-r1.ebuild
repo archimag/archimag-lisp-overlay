@@ -2,7 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit common-lisp-2 eutils
+EAPI=2
+inherit common-lisp-3 eutils
 
 MY_P=${PN}_${PV}
 
@@ -18,7 +19,6 @@ IUSE=""
 S="${WORKDIR}"/${MY_P}
 
 src_install() {
-	common-lisp-install *.asd src/ tests/
-	common-lisp-symlink-asdf
-	dodoc README SPEC
+	common-lisp-3_src_install
+	dodoc SPEC
 }
