@@ -45,7 +45,9 @@ CLPACKAGE="${PN}"
 
 RDEPEND="virtual/commonlisp"
 
-EXPORT_FUNCTIONS src_install
+EXPORT_FUNCTIONS src_compile src_install
+
+common-lisp-3_src_compile() { true; }
 
 absolute-path-p() {
 	[[ $# -eq 1 ]] || die "${FUNCNAME[0]} must receive one argument"
