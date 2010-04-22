@@ -2,7 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit common-lisp-2 eutils
+EAPI=2
+inherit common-lisp-3 eutils
 
 DESCRIPTION="A collection of public domain utilities."
 HOMEPAGE="http://common-lisp.net/project/alexandria/"
@@ -15,10 +16,8 @@ KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE="doc"
 
 src_install() {
-	common-lisp-install *.{lisp,asd}
-	common-lisp-symlink-asdf
+	common-lisp-3_src_install
 	if use doc ; then
 		dodoc "${DISTDIR}"/alexandria.pdf
 	fi
-	dodoc AUTHORS
 }
