@@ -2,9 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit common-lisp-2 eutils
+EAPI=2
+inherit common-lisp-3 eutils
 
-DEB_PV=2
+DEB_PV=3
 
 DESCRIPTION="Common Lisp regression tester from MIT"
 HOMEPAGE="http://www-2.cs.cmu.edu/afs/cs/project/ai-repository/ai/lang/lisp/code/testing/rt/
@@ -22,14 +23,13 @@ RDEPEND="!dev-lisp/cl-${PN}"
 
 S="${WORKDIR}/cl-${P}"
 
-src_unpack() {
-	unpack ${A}
-	epatch cl-${PN}_${PV}-${DEB_PV}.diff
+src_prepare() {
+	epatch "${WORKDIR}"/cl-${PN}_${PV}-${DEB_PV}.diff
 	cp "${FILESDIR}"/${PN}.asd "${S}"
 }
 
 src_install() {
-	common-lisp-install ${PN}.{lisp,asd}
-	common-lisp-symlink-asdf
-	dodoc rt-doc.txt rt-test.lisp || die "Cannot install tests"
+	common-lisp-install-sources ${PN}{,-test}.lisp
+	common-lisp-install-asdf ${PN}.asd
+	dodoc rt-doc.txt || die "Cannot install doc"
 }

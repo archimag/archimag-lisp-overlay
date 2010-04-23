@@ -2,7 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit common-lisp-2 eutils
+EAPI=2
+inherit common-lisp-3 eutils
 
 DESCRIPTION="An ASDF extension that manages Common Lisp binaries (FASL files)."
 HOMEPAGE="http://common-lisp.net/project/asdf-binary-locations/"
@@ -17,7 +18,6 @@ RDEPEND="!dev-lisp/cl-${PN}
 		dev-lisp/asdf"
 
 src_install() {
-	common-lisp-install *.asd dev/*.lisp test*
-	common-lisp-symlink-asdf
-	dodoc lift-standard.config
+	common-lisp-install-sources dev/
+	common-lisp-install-asdf ${PN}.asd
 }
