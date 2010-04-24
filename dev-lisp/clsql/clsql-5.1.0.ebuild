@@ -21,6 +21,7 @@ RDEPEND="${DEPEND}
 		!dev-lisp/cl-sql
 		dev-lisp/md5
 		>=dev-lisp/uffi-1.5.7
+		>=dev-lisp/uffi-0.10.5
 		oracle? ( dev-db/oracle-instantclient-basic )
 		postgres? ( dev-db/postgresql-base )
 		sqlite? ( dev-db/sqlite:0 )
@@ -52,7 +53,7 @@ src_install() {
 	common-lisp-install ${PN}.asd sql/*.lisp ${PN}-tests.asd tests
 	common-lisp-symlink-asdf ${PN} ${PN}-tests
 
-	common-lisp-install uffi/*.lisp ${PN}-uffi.asd
+	common-lisp-install uffi/*.lisp ${PN}-{uffi,cffi}.asd
 	common-lisp-symlink-asdf ${PN}-uffi
 	exeinto /usr/$(get_libdir)/${PN} ; doexe uffi/${PN}_uffi*.so
 
