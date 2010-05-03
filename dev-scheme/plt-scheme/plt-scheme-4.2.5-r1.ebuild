@@ -10,8 +10,9 @@ DESCRIPTION="DrScheme programming environment. Includes mzscheme."
 HOMEPAGE="http://www.plt-scheme.org"
 LICENSE="LGPL-2.1"
 SLOT="0"
-KEYWORDS=""
+#KEYWORDS=""
 #KEYWORDS="~amd64"
+KEYWORDS="~x86 ~amd64"
 IUSE="-backtrace cairo cgc opengl profile X slatex sgc -futures -places +foreign static -plain"
 # jit
 RDEPEND="X? ( x11-libs/libX11
