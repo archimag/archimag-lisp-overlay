@@ -64,6 +64,7 @@ src_prepare() {
 	sed -i -e "s/docdir=\"\${datadir}\/plt\/doc\"/docdir=\"\${datadir}\/doc\/${PF}\"/" ../configure || die "sed failed"
 	pushd ..
 	epatch "${FILESDIR}/${P}-hack_makefile_in_temp${MY_PNUM}.patch"
+	epatch "${FILESDIR}/${P}-libpng14.patch"
 	popd
 	#sed -i -e 's/#! \/bin\/sh/#! \/bin\/sh -x/g' ../configure \
 	#|| die "sed failed"
