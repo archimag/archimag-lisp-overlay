@@ -22,6 +22,6 @@ RDEPEND="dev-lisp/iterate
 CLSYSTEMS="routes"
 
 src_install() {
-	common-lisp-install *.asd routes unify t
+	common-lisp-install *.asd src t
 	common-lisp-symlink-asdf
 }
