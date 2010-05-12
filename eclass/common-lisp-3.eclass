@@ -1,59 +1,56 @@
 # Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
-#
-# Maintained by the Gentoo Common Lisp project
-# irc: #gentoo-lisp, herd: <common-lisp@gentoo.org>, list: <gentoo-lisp@gentoo.org>
-#
-# This eclass supports the installation of Common Lisp libraries
-#
-# Public functions:
-#
-# common-lisp-install-sources path [<other_paths>...]
-#   recursively install sources
-#   When given a directory, that will be recursively scanned
-#   for Lisp source files with common suffixes: .lisp , .lsp or .cl
-#
-# common-lisp-install-asdf path [<other_paths>...]
-#   install ASDF files and create symlinks in $CLSYSTEMROOT
-#   When given a directory, that will be recursively scanned
-#   for ASDF systems - files ending in .asd
-#
-# common-lisp-export-impl-args lisp-implementation
-#   export a few variables containing the switches necessary
-#   to make the CL implementation perform basic functions:
-#   * CL_NORC: don't load syste-wide or user-specific initfiles
-#   * CL_LOAD: load a certain file
-#   * CL_EVAL: eval a certain expression at startup
-#
+
+# @ECLASS: common-lisp-3.eclass
+# @MAINTAINER:
+# Common Lisp project <common-lisp@gentoo.org>
+# @BLURB: functions to support the installation of Common Lisp libraries
+# @DESCRIPTION:
+# Since Common Lisp libraries share similar structure, this eclass aims
+# to provide a simple way to write ebuilds with these characteristics.
 
 inherit eutils
 
-# CL packages in the overlay don't have their tarballs on the mirrors
-# so it's useless to mirror them
-RESTRICT="mirror"
-
+# @ECLASS-VARIABLE: CLSOURCEROOT
+# @DESCRIPTION:
+# Default path of Common Lisp libraries sources. Sources will 
+# be installed into ${CLSOURCEROOT}/${CLPACKAGE}.
 CLSOURCEROOT="${ROOT%/}"/usr/share/common-lisp/source
+
+# @ECLASS-VARIABLE: CLSYSTEMROOT
+# @DESCRIPTION:
+# Default path to find any asdf file. Any asdf files will be 
+# symlinked in ${CLSYSTEMROOT}/${CLSYSTEM} as they may be in 
+# an arbitrarily deeply nested directory under ${CLSOURCEROOT}/${CLPACKAGE}.
 CLSYSTEMROOT="${ROOT%/}"/usr/share/common-lisp/systems
 
-# Sources will be installed into ${CLSOURCEROOT}/${CLPACKAGE}/
-# Any asdf files will be symlinked in ${CLSYSTEMROOT}/${CLSYSTEM} as they may be
-# in an arbitrarily deeply nested directory under ${CLSOURCEROOT}/${CLPACKAGE}/
-
-# To override, set these after inheriting this eclass
+# @ECLASS-VARIABLE: CLPACKAGE
+# @DESCRIPTION:
+# Default package name. To override, set these after inheriting this eclass.
 CLPACKAGE="${PN}"
 
 RDEPEND="virtual/commonlisp"
 
 EXPORT_FUNCTIONS src_compile src_install
 
+# @FUNCTION: common-lisp-3_src_compile
+# @DESCRIPTION:
+# Since there's nothing to build in most cases, default doesn't do
+# anything.
 common-lisp-3_src_compile() { true; }
 
+# @FUNCTION: absolute-path-p
+# @DESCRIPTION:
+# Returns true if ${1} is an absolute path.
 absolute-path-p() {
 	[[ $# -eq 1 ]] || die "${FUNCNAME[0]} must receive one argument"
 	[[ ${1} == /* ]]
 }
 
+# @FUNCTION: common-lisp-install-one-source
+# @DESCRIPTION:
+# Installs ${2} source file in ${3} inside CLSOURCEROOT/CLPACKAGE.
 common-lisp-install-one-source() {
 	[[ $# -eq 3 ]] || die "${FUNCNAME[0]} must receive exactly three arguments"
 
@@ -71,12 +68,18 @@ common-lisp-install-one-source() {
 	fi
 }
 
+# @FUNCTION: lisp-file-p
+# @DESCRIPTION:
+# Returns true if ${1} is lisp source file.
 lisp-file-p() {
 	[[ $# -eq 1 ]] || die "${FUNCNAME[0]} must receive one argument"
 
 	[[ ${1} =~ \.(lisp|lsp|cl)$ ]]
 }
 
+# @FUNCTION: common-lisp-get-fpredicate
+# @DESCRIPTION:
+# Outputs the corresponding predicate to check files of type ${1}.
 common-lisp-get-fpredicate() {
 	[[ $# -eq 1 ]] || die "${FUNCNAME[0]} must receive one argument"
 
@@ -88,6 +91,12 @@ common-lisp-get-fpredicate() {
 	esac
 }
 
+# @FUNCTION: common-lisp-install-sources
+# @USAGE: common-lisp-install-sources path [<other_paths>...]
+# @DESCRIPTION:
+# Recursively install lisp sources of type ${2} if ${1} is -t or
+# Lisp by default. When given a directory, it will be recursively
+# scanned for Lisp source files with suffixes: .lisp, .lsp or .cl.
 common-lisp-install-sources() {
 	local ftype="lisp"
 	if [[ ${1} == "-t" ]] ; then
@@ -110,6 +119,10 @@ common-lisp-install-sources() {
 	done
 }
 
+# @FUNCTION: common-lisp-install-one-asdf
+# @DESCRIPTION:
+# Installs ${1} asdf file in CLSOURCEROOT/CLPACKAGE and symlinks it in 
+# CLSYSTEMROOT.
 common-lisp-install-one-asdf() {
 	[[ $# != 1 ]] && die "${FUNCNAME[0]} must receive exactly one argument"
 
@@ -122,6 +135,12 @@ common-lisp-install-one-asdf() {
 	dosym "${target}" "${CLSYSTEMROOT%/}/$(basename ${target})"
 }
 
+# @FUNCTION: common-lisp-install-asdf
+# @USAGE: common-lisp-install-asdf path [<other_paths>...]
+# @DESCRIPTION:
+# Installs all ASDF files and creates symlinks in CLSYSTEMROOT.
+# When given a directory, it will be recursively scanned for ASDF
+# files with extension .asd.
 common-lisp-install-asdf() {
 	dodir "${CLSYSTEMROOT}"
 
@@ -132,8 +151,10 @@ common-lisp-install-asdf() {
 	done
 }
 
+# @FUNCTION: common-lisp-3_src_install
+# @DESCRIPTION:
+# Recursively install Lisp sources, asdf files and most common doc files.
 common-lisp-3_src_install() {
-	# Recursively install Lisp sources
 	common-lisp-install-sources .
 	common-lisp-install-asdf
 	for i in AUTHORS README* HEADER TODO* CHANGELOG Change[lL]og CHANGES BUGS CONTRIBUTORS *NEWS* ; do
@@ -141,6 +162,14 @@ common-lisp-3_src_install() {
 	done
 }
 
+# @FUNCTION: common-lisp-export-impl-args
+# @USAGE: common-lisp-export-impl-args <lisp-implementation>
+# @DESCRIPTION:
+#   Export a few variables containing the switches necessary
+#   to make the CL implementation perform basic functions:
+#   * CL_NORC: don't load syste-wide or user-specific initfiles
+#   * CL_LOAD: load a certain file
+#   * CL_EVAL: eval a certain expression at startup
 common-lisp-export-impl-args() {
 	if [[ $# != 1 ]]; then
 		eerror "Usage: ${FUNCNAME[0]} lisp-implementation"
