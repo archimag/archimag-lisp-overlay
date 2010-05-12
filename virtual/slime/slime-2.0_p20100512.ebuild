@@ -12,4 +12,4 @@ KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 
 IUSE=""
 DEPEND=""
-RDEPEND="|| ( ~app-emacs/slime-2.0_p20100310 ~app-emacs/slime-archimag-${PV} )"
+RDEPEND="|| ( ~app-emacs/slime-${PV} ~app-emacs/slime-archimag-${PV} )"
