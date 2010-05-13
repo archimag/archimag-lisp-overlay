@@ -1,0 +1,12 @@
+diff --git a/babel.asd b/babel.asd
+index ea253c1..4308313 100644
+--- a/babel.asd
++++ b/babel.asd
+@@ -40,6 +40,7 @@
+      (:file "enc-ebcdic")
+      (:file "enc-iso-8859")
+      (:file "enc-unicode")
++     (:file "enc-cp1251")
+      (:file "external-format")
+      (:file "strings")
+      (:file "sharp-backslash")))))

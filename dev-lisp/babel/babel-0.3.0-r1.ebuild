@@ -22,6 +22,16 @@ RDEPEND="dev-lisp/alexandria
 
 S="${WORKDIR}"/${MY_P}
 
+CLSYSTEMS="babel babel-streams"
+
+src_unpack() {
+	unpack ${A}
+	cd "${S}"
+	epatch "${FILESDIR}"/${PV}/archimag-add-cp1251.patch
+	cp "${FILESDIR}"/${PV}/enc-cp1251.lisp src/
+}
+
+
 src_install() {
 	common-lisp-install *.asd src/ tests/
 	common-lisp-symlink-asdf
