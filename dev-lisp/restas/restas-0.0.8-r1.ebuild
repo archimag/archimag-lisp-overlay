@@ -16,10 +16,17 @@ RDEPEND="dev-lisp/asdf-system-connections
 		 >=dev-lisp/cl-routes-0.2.2
 		 >=dev-lisp/hunchentoot-1.1.0
 		 dev-lisp/garbage-pools
-		 slime? ( app-emacs/slime-archimag )"
+		 slime? ( app-emacs/slime-archimag dev-lisp/closer-mop )"
 
 CLSYSTEMS="${PN}"
 SITEFILE=70${PN}-gentoo.el
+
+src_unpack() {
+	unpack ${A}
+	cd "${S}"
+	epatch "${FILESDIR}"/${PV}/asdf-depends-fix.patch
+}
+
 
 src_compile () {
 	if use slime ; then
