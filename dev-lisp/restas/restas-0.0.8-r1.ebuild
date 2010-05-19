@@ -25,6 +25,10 @@ src_unpack() {
 	unpack ${A}
 	cd "${S}"
 	epatch "${FILESDIR}"/${PV}/asdf-depends-fix.patch
+
+	if not use slime; then
+		epatch "${FILESDIR}"/${PV}/remove-depends-from-slime.patch
+	fi
 }
 
 
