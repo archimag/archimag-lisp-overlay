@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI=2
-inherit common-lisp-2 eutils
+inherit common-lisp-3 eutils
 
 DESCRIPTION="Drakma is a Common Lisp HTTP client."
 HOMEPAGE="http://weitz.de/drakma/"
@@ -22,13 +22,7 @@ RDEPEND="!dev-lisp/cl-${PN}
 		>=dev-lisp/usocket-0.4.0
 		dev-lisp/cl-plus-ssl"
 
-src_prepare() {
-	epatch "${FILESDIR}"/fix-stray-paren.patch
-}
-
 src_install() {
-	common-lisp-install *.{lisp,asd}
-	common-lisp-symlink-asdf
-	dodoc CHANGELOG*
+	common-lisp-3_src_install
 	dohtml doc/index.html
 }
