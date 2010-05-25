@@ -7,7 +7,7 @@ inherit common-lisp-2
 DESCRIPTION="${PN} is a portable templating library for Common Lisp"
 HOMEPAGE="http://weitz.de/html-template/
 		http://www.cliki.net/html-template/"
-SRC_URI="http://common-lisp.net/~sionescu/ediware/${P}.tar.gz"
+SRC_URI="http://common-lisp.net/~sionescu/files/${P}.tar.gz"
 
 LICENSE="BSD-2"
 SLOT="0"
