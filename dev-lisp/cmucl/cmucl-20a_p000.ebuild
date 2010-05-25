@@ -42,21 +42,26 @@ src_compile() {
 src_install() {
 	env MANDIR=share/man/man1 DOCDIR=share/doc/${PF} \
 		src/tools/make-dist.sh -S -g -G root -O root build-4 ${MY_PV} x86 linux || die "Cannot build installation archive"
+	# Necessary otherwise tar will fail
 	dodir /usr
 	tar xzpf cmucl-${MY_PV}-x86-linux.tar.gz -C "${D}"/usr || die "Cannot install main system"
 	if use X ; then
 		tar xzpf cmucl-${MY_PV}-x86-linux.extra.tar.gz -C "${D}"/usr || die "Cannot install extra files"
 	fi
 	if use source; then
+		# Necessary otherwise tar will fail
 		dodir /usr/share/common-lisp/source/${PN}
-		tar --strip-components 1 -xzpf cmucl-src-${MY_PV}.tar.gz -C "${D}"/usr/share/common-lisp/source/${PN}
+		tar --strip-components 1 -xzpf cmucl-src-${MY_PV}.tar.gz -C "${D}"/usr/share/common-lisp/source/${PN} \
+			|| die "Cannot install sources"
 	fi
 
 	# Install site config file
 	sed "s,@PF@,${PF},g ; s,@VERSION@,$(date +%F),g" \
 		< "${FILESDIR}"/site-init.lisp.in \
-		> "${D}"/usr/$(get_libdir)/cmucl/site-init.lisp
+		> "${D}"/usr/$(get_libdir)/cmucl/site-init.lisp \
+		|| die "Cannot fix site-init.lisp"
 	insinto /etc
+
 	doins "${FILESDIR}"/cmuclrc
 
 	impl-save-timestamp-hack cmucl || die
