@@ -18,7 +18,7 @@ RDEPEND=" dev-lisp/asdf-system-connections
 		dev-lisp/babel
 		>=dev-lisp/parenscript-2.1
 		dev-lisp/split-sequence
-		dev-lisp/wiki-parser
+		>=dev-lisp/wiki-parser-0.1.2
 		dev-lisp/lift
 		emacs? ( virtual/emacs )"
 
