@@ -42,6 +42,7 @@ src_unpack() {
 
 src_prepare() {
 	epatch "${FILESDIR}"/fix-man-and-doc-installation.patch
+	epatch "${FILESDIR}"/20a-execstack-fixes.patch
 }
 
 src_compile() {
