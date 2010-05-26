@@ -1,0 +1,46 @@
+diff -ur cmucl.orig//src/code/macros.lisp cmucl/src/code/macros.lisp
+--- cmucl.orig//src/code/macros.lisp	2009-06-19 01:34:58.000000000 +0800
++++ cmucl/src/code/macros.lisp	2010-05-26 11:29:24.000000000 +0800
+@@ -138,24 +138,27 @@
+ 
+ 
+ ;;;; DEFINE-COMPILER-MACRO
+-
+ (defmacro define-compiler-macro (name lambda-list &body body)
+   "Define a compiler-macro for NAME."
+   (let ((whole (gensym "WHOLE-"))
+-	(environment (gensym "ENV-")))
+-    (multiple-value-bind
+-	(body local-decs doc)
+-	(parse-defmacro lambda-list whole body name 'define-compiler-macro
+-			:environment environment)
+-      (let ((def `(lambda (,whole ,environment)
+-		    ,@local-decs
+-		    (block ,name
+-		      ,body))))
+-	`(progn
+-	   (eval-when (:compile-toplevel)
+-	     (c::do-compiler-macro-compile-time ',name #',def))
+-	   (eval-when (:load-toplevel :execute)
+-	     (c::%define-compiler-macro ',name #',def ',lambda-list ,doc)))))))
++        (environment (gensym "ENV-")))
++    (multiple-value-bind (validp block-name)
++        (valid-function-name-p name)
++      (unless validp
++        (simple-program-error "~S is not a valid function name." name))
++      (multiple-value-bind
++            (body local-decs doc)
++          (parse-defmacro lambda-list whole body name 'define-compiler-macro
++                          :environment environment)
++        (let ((def `(lambda (,whole ,environment)
++                      ,@local-decs
++                      (block ,block-name
++                        ,body))))
++          `(progn
++             (eval-when (:compile-toplevel)
++               (c::do-compiler-macro-compile-time ',name #',def))
++             (eval-when (:load-toplevel :execute)
++               (c::%define-compiler-macro ',name #',def ',lambda-list ,doc))))))))
+ 
+ 
+ (defun c::%define-compiler-macro (name definition lambda-list doc)

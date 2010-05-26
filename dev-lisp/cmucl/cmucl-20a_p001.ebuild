@@ -1,29 +1,21 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-ECVS_SERVER=common-lisp.net:/project/${PN}/cvsroot
-ECVS_PASS=anonymous
-ECVS_MODULE=src
-ECVS_LOCALNAME=${PN}
+EAPI=3
+inherit eutils glo-utils toolchain-funcs
 
-EAPI=2
-inherit common-lisp-common-3 eutils glo-utils toolchain-funcs cvs
-
-# VER=200907
-# YEAR=${VER:0:4}
-# MONTH=${VER:4:2}
-RELEASE=20a
+MY_PV=${PV:0:3}
 
 DESCRIPTION="CMU Common Lisp is an implementation of ANSI Common Lisp"
 HOMEPAGE="http://www.cons.org/cmucl/"
-# SRC_URI="http://common-lisp.net/project/cmucl/downloads/snapshots/${YEAR}/${MONTH}/cmucl-unicode-${YEAR}-${MONTH}-x86-linux.tar.bz2"
-SRC_URI="http://common-lisp.net/project/cmucl/downloads/release/cmucl-${RELEASE}-x86-linux.tar.bz2"
+SRC_URI="http://common-lisp.net/project/cmucl/downloads/release/${MY_PV}/cmucl-src-${MY_PV}.tar.bz2
+	http://common-lisp.net/project/cmucl/downloads/release/${MY_PV}/cmucl-${MY_PV}-x86-linux.tar.bz2"
 RESTRICT="mirror"
 
 LICENSE="public-domain"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~x86"
 IUSE="X source sse2"
 
 RDEPEND="x11-libs/openmotif"
@@ -35,14 +27,11 @@ PROVIDE="virtual/commonlisp"
 
 S="${WORKDIR}"
 
-src_unpack() {
-	unpack ${A} ; cvs_src_unpack ; cd "${S}"
-	mv cmucl src || die
-}
-
 src_prepare() {
 	epatch "${FILESDIR}"/fix-man-and-doc-installation.patch
-	epatch "${FILESDIR}"/20a-execstack-fixes.patch
+	epatch "${FILESDIR}"/${MY_PV}-patch000.patch
+	epatch "${FILESDIR}"/${MY_PV}-patch001.patch
+	epatch "${FILESDIR}"/${MY_PV}-execstack-fixes.patch
 }
 
 src_compile() {
@@ -54,17 +43,17 @@ src_compile() {
 
 src_install() {
 	env MANDIR=share/man/man1 DOCDIR=share/doc/${PF} \
-		src/tools/make-dist.sh -S -g -G root -O root build-4 ${PV} x86 linux || die "Cannot build installation archive"
+		src/tools/make-dist.sh -S -g -G root -O root build-4 ${MY_PV} x86 linux || die "Cannot build installation archive"
 	# Necessary otherwise tar will fail
 	dodir /usr
-	tar xzpf cmucl-${PV}-x86-linux.tar.gz -C "${D}"/usr || die "Cannot install main system"
+	tar xzpf cmucl-${MY_PV}-x86-linux.tar.gz -C "${D}"/usr || die "Cannot install main system"
 	if use X ; then
-		tar xzpf cmucl-${PV}-x86-linux.extra.tar.gz -C "${D}"/usr || die "Cannot install extra files"
+		tar xzpf cmucl-${MY_PV}-x86-linux.extra.tar.gz -C "${D}"/usr || die "Cannot install extra files"
 	fi
 	if use source; then
 		# Necessary otherwise tar will fail
 		dodir /usr/share/common-lisp/source/${PN}
-		tar --strip-components 1 -xzpf cmucl-src-${PV}.tar.gz -C "${D}"/usr/share/common-lisp/source/${PN} \
+		tar --strip-components 1 -xzpf cmucl-src-${MY_PV}.tar.gz -C "${D}"/usr/share/common-lisp/source/${PN} \
 			|| die "Cannot install sources"
 	fi
 
@@ -74,16 +63,5 @@ src_install() {
 		> "${D}"/usr/$(get_libdir)/cmucl/site-init.lisp \
 		|| die "Cannot fix site-init.lisp"
 	insinto /etc
-
-	doins "${FILESDIR}"/cmuclrc
-
-	impl-save-timestamp-hack cmucl || die
-}
-
-pkg_postinst() {
-	standard-impl-postinst cmucl
-}
-
-pkg_postrm() {
-	standard-impl-postrm cmucl /usr/bin/lisp
+	doins "${FILESDIR}"/cmuclrc || die "Failed to install cmuclrc"
 }
