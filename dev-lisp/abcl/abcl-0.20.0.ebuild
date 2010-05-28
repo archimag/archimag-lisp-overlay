@@ -14,7 +14,7 @@ RESTRICT="mirror"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE="jad"
 
 DEPEND=">=virtual/jdk-1.5"
