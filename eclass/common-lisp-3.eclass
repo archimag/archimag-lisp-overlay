@@ -12,16 +12,20 @@
 
 inherit eutils
 
+# CL packages in the overlay don't have their tarballs on the mirrors
+# so it's useless to mirror them
+RESTRICT="mirror"
+
 # @ECLASS-VARIABLE: CLSOURCEROOT
 # @DESCRIPTION:
-# Default path of Common Lisp libraries sources. Sources will 
+# Default path of Common Lisp libraries sources. Sources will
 # be installed into ${CLSOURCEROOT}/${CLPACKAGE}.
 CLSOURCEROOT="${ROOT%/}"/usr/share/common-lisp/source
 
 # @ECLASS-VARIABLE: CLSYSTEMROOT
 # @DESCRIPTION:
-# Default path to find any asdf file. Any asdf files will be 
-# symlinked in ${CLSYSTEMROOT}/${CLSYSTEM} as they may be in 
+# Default path to find any asdf file. Any asdf files will be
+# symlinked in ${CLSYSTEMROOT}/${CLSYSTEM} as they may be in
 # an arbitrarily deeply nested directory under ${CLSOURCEROOT}/${CLPACKAGE}.
 CLSYSTEMROOT="${ROOT%/}"/usr/share/common-lisp/systems
 
@@ -121,7 +125,7 @@ common-lisp-install-sources() {
 
 # @FUNCTION: common-lisp-install-one-asdf
 # @DESCRIPTION:
-# Installs ${1} asdf file in CLSOURCEROOT/CLPACKAGE and symlinks it in 
+# Installs ${1} asdf file in CLSOURCEROOT/CLPACKAGE and symlinks it in
 # CLSYSTEMROOT.
 common-lisp-install-one-asdf() {
 	[[ $# != 1 ]] && die "${FUNCNAME[0]} must receive exactly one argument"
