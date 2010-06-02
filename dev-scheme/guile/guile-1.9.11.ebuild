@@ -26,7 +26,7 @@ DEPEND=">=dev-libs/gmp-4.1
 SLOT="12"
 MAJOR="1.8"
 
-IUSE="networking +regex discouraged +deprecated elisp emacs nls debug-malloc debug +threads"
+IUSE="networking +regex discouraged +deprecated emacs nls debug-malloc debug +threads"
 
 #src_prepare() {
 #    sed 's/AC_CONFIG_MACRO_DIR(\[m4\])/AC_CONFIG_MACRO_DIR(\[guile-config\])/' -i configure.ac || die
@@ -46,7 +46,6 @@ src_configure() {
 		$(use_enable regex) \
 		$(use deprecated || use_enable discouraged) \
 		$(use_enable deprecated) \
-		$(use_enable elisp) \
 		$(use_enable nls) \
 		--disable-rpath \
 		$(use_enable debug-malloc) \
