@@ -11,13 +11,13 @@ EGIT_REPO_URI="git://git.boinkor.net/clisp.git"
 
 LICENSE="GPL-2"
 SLOT="2"
-KEYWORDS="-sparc"
-IUSE="hyperspec X new-clx dbus fastcgi gdbm gtk -jit pari +pcre postgres +readline svm -threads +unicode +zlib"
+KEYWORDS=""
+IUSE="hyperspec X new-clx berkdb dbus fastcgi gdbm gtk pari +pcre postgres +readline svm -threads +unicode +zlib"
+# "jit" disabled ATM 
 
 RDEPEND="virtual/libiconv
 		 >=dev-libs/libsigsegv-2.4
 		 >=dev-libs/ffcall-1.10
-		 jit? ( >=dev-libs/lightning-1.2 )
 		 dbus? ( sys-apps/dbus )
 		 fastcgi? ( dev-libs/fcgi )
 		 gdbm? ( sys-libs/gdbm )
@@ -29,10 +29,12 @@ RDEPEND="virtual/libiconv
 		 svm? ( sci-libs/libsvm )
 		 zlib? ( sys-libs/zlib )
 		 X? ( new-clx? ( x11-libs/libXpm ) )
-		 hyperspec? ( dev-lisp/hyperspec )"
-# 		 berkdb? ( sys-libs/db:4.5 )
+		 hyperspec? ( dev-lisp/hyperspec )
+		 berkdb? ( sys-libs/db:4.5 )"
+#		 jit? ( >=dev-libs/lightning-1.2 )
 
-DEPEND="${RDEPEND} X? ( new-clx? ( x11-misc/imake x11-proto/xextproto ) )"
+DEPEND="${RDEPEND}
+	X? ( new-clx? ( x11-misc/imake x11-proto/xextproto ) )"
 
 PDEPEND="dev-lisp/gentoo-init"
 
@@ -57,7 +59,9 @@ BUILDDIR="builddir"
 
 src_prepare() {
 	# More than -O1 breaks alpha/ia64
-	use alpha || use ia64 && sed -i -e 's/-O2//g' src/makemake.in
+	if use alpha || use ia64; then
+		sed -i -e 's/-O2//g' src/makemake.in || die
+	fi
 }
 
 src_configure() {
@@ -67,11 +71,15 @@ src_configure() {
 		append-flags '-D NO_MULTIMAP_SHM -D NO_MULTIMAP_FILE -D NO_SINGLEMAP -D NO_TRIVIALMAP'
 	fi
 
+	# QA issue with lisp.run
+	append-flags -Wa,--noexecstack
+
 	# built-in features
 	local myconf="--with-ffcall --without-dynamic-modules"
-	if use jit; then
-		myconf+=" --with-jitc=lightning"
-	fi
+#    There's a problem with jit_allocai function
+#    if use jit; then
+#        myconf+=" --with-jitc=lightning"
+#    fi
 	if use threads; then
 		myconf+=" --with-threads=POSIX_THREADS"
 	fi
@@ -89,12 +97,12 @@ src_configure() {
 	fi
 	if use postgres; then
 		enable_modules postgresql
-		CPPFLAGS="-I $(pg_config --includedir)"
+		append-flags -I$(pg_config --includedir)
 	fi
-# 	if use berkdb; then
-# 		enable_modules berkley-db
-# 		CPPFLAGS="${CPPFLAGS} -I /usr/include/db4.5"
-# 	fi
+	if use berkdb; then
+		enable_modules berkeley-db
+		append-flags -I/usr/include/db4.5
+	fi
 	use dbus && enable_modules dbus
 	use fastcgi && enable_modules fastcgi
 	use gdbm && enable_modules gdbm
@@ -117,10 +125,11 @@ src_configure() {
 	einfo "${configure}"
 	${configure} || die "./configure failed"
 
-	sed -i 's,"vi","nano",g' "${BUILDDIR}"/config.lisp
+	sed -i 's,"vi","nano",g' "${BUILDDIR}"/config.lisp || die
 
 	IMPNOTES="file://${ROOT%/}/usr/share/doc/${PN}-${PVR}/html/impnotes.html"
-	sed -i "s,http://clisp.cons.org/impnotes/,${IMPNOTES},g" "${BUILDDIR}"/config.lisp
+	sed -i "s,http://clisp.cons.org/impnotes/,${IMPNOTES},g" \
+		"${BUILDDIR}"/config.lisp || die
 }
 
 src_compile() {
@@ -133,15 +142,15 @@ src_compile() {
 src_install() {
 	pushd "${BUILDDIR}"
 	make DESTDIR="${D}" prefix=/usr install-bin || die
-	doman clisp.1
-	dodoc SUMMARY README* NEWS MAGIC.add ANNOUNCE
-	chmod a+x "${D}"/usr/$(get_libdir)/clisp-${PV/_*/}/clisp-link
+	doman clisp.1 || die
+	dodoc SUMMARY README* NEWS MAGIC.add ANNOUNCE || die
+	fperms a+x /usr/$(get_libdir)/clisp-${PV/_*/}/clisp-link || die
 	# stripping them removes common symbols (defined but uninitialised variables)
 	# which are then needed to build modules...
 	export STRIP_MASK="*/usr/$(get_libdir)/clisp-${PV}/*/*"
 	popd
-	dohtml doc/impnotes.{css,html} doc/regexp.html doc/clisp.png
-	dodoc doc/{CLOS-guide,LISP-tutorial}.txt
+	dohtml doc/impnotes.{css,html} doc/regexp.html doc/clisp.png || die
+	dodoc doc/{CLOS-guide,LISP-tutorial}.txt || die
 }
 
 pkg_postinst() {
