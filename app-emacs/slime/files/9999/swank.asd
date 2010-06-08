@@ -23,8 +23,8 @@
 (defmethod perform ((op load-op) (c no-load-file)) nil)
 
 (defmacro define-swank-system (sysdep-files)
-  `(defsystem swank
-     :name "Swank is the Common Lips back-end to SLIME"
+  `(defsystem :swank
+     :description "Swank is the Common Lisp back-end to SLIME"
      :serial t
      :components ((:file "swank-backend")
                   (:file "nregex")
