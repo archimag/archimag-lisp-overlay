@@ -5,8 +5,7 @@
 (autoload 'slime-highlight-edits-mode "slime-highlight-edits")
 
 (require 'slime-autoloads)
-(slime-setup '(slime-fancy slime-repl slime-asdf slime-banner
-               slime-compiler-notes-tree))
+(slime-setup '(slime-fancy slime-asdf slime-banner))
 
 ;; this allows us not to require dev-lisp/hyperspec
 ;; (which is non-free) as a hard dependency
