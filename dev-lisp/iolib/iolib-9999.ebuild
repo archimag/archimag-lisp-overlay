@@ -11,7 +11,7 @@ EGIT_REPO_URI="git://gitorious.org/iolib/iolib.git"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~ppc ~sparc ~x86"
+KEYWORDS=""
 IUSE=""
 
 RDEPEND="dev-lisp/alexandria
