@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI=2
-inherit common-lisp-2 eutils
+inherit common-lisp-3 eutils
 
 MY_P=${PN}_${PV}
 
@@ -23,8 +23,8 @@ src_prepare() {
 }
 
 src_install() {
-	common-lisp-install *.{lisp,asd}
-	common-lisp-symlink-asdf
+	common-lisp-install-sources *.lisp
+	common-lisp-install-asdf
 	dodoc TODO NEWS
 	dohtml doc/{${PN}.html,style.css}
 }
