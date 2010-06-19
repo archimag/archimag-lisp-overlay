@@ -1,0 +1,38 @@
+diff -ur diff_0.4.orig/svndiff.lisp diff_0.4/svndiff.lisp
+--- diff_0.4.orig/svndiff.lisp	2006-09-09 05:30:23.000000000 +0800
++++ diff_0.4/svndiff.lisp	2010-06-19 13:46:01.643324682 +0800
+@@ -172,8 +172,6 @@
+ 
+ ;;; high level driver for the whole shebang
+ 
+-(defconstant +buffer-size+ 1024)
+-
+ (defun compare-files (source-filename target-filename)
+   "Return a list of svndiff windows describing the differences between
+ SOURCE-FILENAME and TARGET-FILENAME."
+@@ -269,4 +267,4 @@
+                                  (- address (fetch-copy-address-integer #|wherever|#))))
+       ((=
+         )))))
+-|#
+\ No newline at end of file
++|#
+diff -ur diff_0.4.orig/vdelta.lisp diff_0.4/vdelta.lisp
+--- diff_0.4.orig/vdelta.lisp	2006-09-09 05:30:23.000000000 +0800
++++ diff_0.4/vdelta.lisp	2010-06-19 13:46:01.643324682 +0800
+@@ -60,6 +60,8 @@
+ 
+ ;;; vdelta calculation
+ 
++(defconstant +buffer-size+ 1024)
++
+ (declaim (inline combine-bytes))
+ (defun combine-bytes (byteseq start)
+   (declare (type bytebuf byteseq))
+@@ -188,4 +190,4 @@
+                        (add-copy-insn index match-length)
+                        (incf i (1- match-length))))))))))
+       (add-data-insn)
+-      (nreverse instructions))))
+\ No newline at end of file
++      (nreverse instructions))))
