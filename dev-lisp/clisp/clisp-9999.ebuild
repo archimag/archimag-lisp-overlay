@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=2
+EAPI=3
 inherit flag-o-matic eutils toolchain-funcs multilib git
 
 DESCRIPTION="A portable, bytecode-compiled implementation of Common Lisp"
@@ -13,7 +13,7 @@ LICENSE="GPL-2"
 SLOT="2"
 KEYWORDS=""
 IUSE="hyperspec X new-clx berkdb dbus fastcgi gdbm gtk pari +pcre postgres +readline svm -threads +unicode +zlib"
-# "jit" disabled ATM 
+# "jit" disabled ATM
 
 RDEPEND="virtual/libiconv
 		 >=dev-libs/libsigsegv-2.4
@@ -151,19 +151,4 @@ src_install() {
 	popd
 	dohtml doc/impnotes.{css,html} doc/regexp.html doc/clisp.png || die
 	dodoc doc/{CLOS-guide,LISP-tutorial}.txt || die
-}
-
-pkg_postinst() {
-	if use threads || use jit; then
-		while read line; do elog ${line}; done <<EOF
-
-Upstream considers threads to be of Alpha quality, therefore
-it is likely that you will encounter bugs in using them. If you do,
-please report bugs upstream:
-
-Mailing list: https://lists.sourceforge.net/lists/listinfo/clisp-devel
-Bug tracker:  http://sourceforge.net/tracker/?atid=101355&group_id=1355
-
-EOF
-	fi
 }

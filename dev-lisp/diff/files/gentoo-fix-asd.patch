@@ -1,0 +1,24 @@
+--- diff_0.4.orig/diff.asd	2006-09-09 05:30:23.000000000 +0800
++++ diff_0.4/diff.asd	2010-06-19 13:46:28.149988571 +0800
+@@ -1,18 +1,10 @@
+ ;;;; diff.asd - the ASDF system definition for diff -*- lisp -*-
+-(defpackage #:diff-system
+-  (:use :cl :asdf))
+-
+-(in-package #:diff-system)
+ 
+ (defsystem :diff
+   :version "0.4"
+-  :depends-on (cl-ppcre)
++  :depends-on (:cl-ppcre)
+   :components ((:file "package")
+                (:file "diff" :depends-on ("package"))
+                (:file "patch" :depends-on ("diff"))
+                (:file "vdelta" :depends-on ("package"))
+-               (:file "svndiff" :depends-on ("package"))
+-               (:static-file "README")
+-               (:static-file "TODO")
+-               (:static-file "NEWS")
+-               (:static-file "LICENSE")))
+\ No newline at end of file
++               (:file "svndiff" :depends-on ("package" "vdelta"))))
