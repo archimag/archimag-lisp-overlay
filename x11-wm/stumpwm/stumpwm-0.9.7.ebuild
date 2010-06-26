@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI=2
-inherit common-lisp-2 glo-utils eutils elisp-common
+inherit common-lisp-2 glo-utils eutils elisp-common autotools
 
 DESCRIPTION="Stumpwm is a tiling, keyboard driven X11 Window Manager written entirely in Common Lisp."
 HOMEPAGE="http://www.nongnu.org/stumpwm/"
@@ -31,14 +31,12 @@ SITEFILE=70${PN}-gentoo.el
 
 src_prepare() {
 	epatch "${FILESDIR}"/${PV}-gentoo-fix-asd-deps.patch
-	epatch "${FILESDIR}"/${PV}-gentoo-remove-superfluous-workarounds.patch
-	epatch "${FILESDIR}"/${PV}-gentoo-ignore-conditions.patch
-	epatch "${FILESDIR}"/${PV}-gentoo-fix-gravity-command.patch
+	epatch "${FILESDIR}"/${PV}-gentoo-fix-configure.ac.patch
+	eautoreconf
 }
 
 src_configure() {
-	sed "s,@PACKAGE_VERSION@,${PV},g" version.lisp.in > version.lisp
-	mv stumpwm.texi.in stumpwm.texi
+	econf --with-lisp=$(glo_best_flag sbcl clisp)
 }
 
 src_compile() {

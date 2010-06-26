@@ -1,0 +1,12 @@
+diff --git a/configure.ac b/configure.ac
+index 640e41b..8a27e4e 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -122,4 +122,5 @@ fi
+ AC_OUTPUT(Makefile)
+ AC_OUTPUT(make-image.lisp)
+ AC_OUTPUT(version.lisp)
+-AC_OUTPUT(module.lisp)
+\ No newline at end of file
++AC_OUTPUT(module.lisp)
++AC_OUTPUT(stumpwm.texi)
