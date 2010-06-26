@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI=2
-inherit common-lisp-2 glo-utils eutils elisp-common autotools
+inherit common-lisp-3 glo-utils eutils elisp-common autotools
 
 DESCRIPTION="Stumpwm is a tiling, keyboard driven X11 Window Manager written entirely in Common Lisp."
 HOMEPAGE="http://www.nongnu.org/stumpwm/"
@@ -64,7 +64,7 @@ CLISP_OPTIONS="-ansi -K full -norc --quiet"' \
 }
 
 src_install() {
-	common-lisp-export-impl-args $(glo_best_flag sbcl clisp)
+	common-lisp-export-impl-args $(glo_best_flag sbcl clisp ecl)
 	dobin stumpwm.bin contrib/stumpish
 	make_wrapper stumpwm "/usr/bin/stumpwm.bin ${CL_NORC} ${CL_EVAL} '(stumpwm:stumpwm \":0\")'"
 	make_session_desktop StumpWM /usr/bin/stumpwm
@@ -84,8 +84,8 @@ src_install() {
 
 	if use source; then
 		rm sample-stumpwmrc.lisp
-		common-lisp-install *.{lisp,asd} contrib/*.lisp
-		common-lisp-symlink-asdf
+		common-lisp-install-sources *.lisp contrib/
+		common-lisp-install-asdf ${PN}.asd
 	fi
 }
 
