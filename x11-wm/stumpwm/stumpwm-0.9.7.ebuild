@@ -12,7 +12,7 @@ SRC_URI="http://download.savannah.nongnu.org/releases/stumpwm/${P}.tgz"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
-IUSE="doc clisp ecl +sbcl source emacs"
+IUSE="doc clisp ecl +sbcl emacs"
 
 RESTRICT="strip mirror"
 
@@ -31,13 +31,15 @@ DEPEND="${RDEPEND}
 SITEFILE=70${PN}-gentoo.el
 
 src_prepare() {
+	rm sample-stumpwmrc.lisp
 	epatch "${FILESDIR}"/${PV}-gentoo-fix-asd-deps.patch
 	epatch "${FILESDIR}"/${PV}-gentoo-fix-configure.ac.patch
 	eautoreconf
 }
 
 src_configure() {
-	econf --with-lisp=$(glo_best_flag sbcl clisp ecl)
+	econf --with-lisp=$(glo_best_flag sbcl clisp ecl) \
+		--with-contrib-dir="${CLSOURCEROOT}/${PN}/contrib"
 }
 
 src_compile() {
@@ -82,11 +84,9 @@ src_install() {
 
 	docinto examples ; dodoc sample-stumpwmrc.lisp
 
-	if use source; then
-		rm sample-stumpwmrc.lisp
-		common-lisp-install-sources *.lisp contrib/
-		common-lisp-install-asdf ${PN}.asd
-	fi
+	# No point in installing only contribs
+	common-lisp-install-sources *.lisp contrib/
+	common-lisp-install-asdf ${PN}.asd
 }
 
 pkg_postinst() {
