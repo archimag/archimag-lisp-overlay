@@ -12,15 +12,16 @@ SRC_URI="http://download.savannah.nongnu.org/releases/stumpwm/${P}.tgz"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
-IUSE="doc sbcl clisp source emacs"
+IUSE="doc clisp ecl +sbcl source emacs"
 
 RESTRICT="strip mirror"
 
 RDEPEND="dev-lisp/cl-ppcre
 		sbcl? ( >=dev-lisp/clx-0.7.3_p20081030 )
 		>=dev-lisp/cl-launch-2.11-r1
-		!sbcl? ( !clisp? ( >=dev-lisp/sbcl-1.0.32 ) )
-		!sbcl? ( clisp? ( >=dev-lisp/clisp-2.44[X,new-clx] ) )
+		!sbcl? ( !clisp? ( !ecl? ( >=dev-lisp/sbcl-1.0.32 ) ) )
+		!sbcl? ( !clisp? (  ecl? ( >=dev-lisp/ecls-10.4.1 ) ) )
+		!sbcl? (  clisp? ( >=dev-lisp/clisp-2.44[X,new-clx] ) )
 		sbcl?  ( >=dev-lisp/sbcl-1.0.32 )
 		emacs? ( virtual/emacs app-emacs/slime )"
 DEPEND="${RDEPEND}
@@ -36,7 +37,7 @@ src_prepare() {
 }
 
 src_configure() {
-	econf --with-lisp=$(glo_best_flag sbcl clisp)
+	econf --with-lisp=$(glo_best_flag sbcl clisp ecl)
 }
 
 src_compile() {
