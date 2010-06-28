@@ -6,7 +6,7 @@ inherit common-lisp-2 elisp eutils
 
 DESCRIPTION="SLIME, the Superior Lisp Interaction Mode (Extended)"
 HOMEPAGE="http://common-lisp.net/project/slime/"
-SRC_URI="http://github.com/downloads/archimag/gentoo-lisp-overlay/${P}.tar.bz2"
+SRC_URI="http://github.com/downloads/archimag/archimag-lisp-overlay/${P}.tar.bz2"
 
 LICENSE="GPL-2 xref.lisp"
 SLOT="0"
