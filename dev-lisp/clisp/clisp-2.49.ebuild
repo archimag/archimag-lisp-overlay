@@ -3,15 +3,15 @@
 # $Header: $
 
 EAPI=3
-inherit flag-o-matic eutils toolchain-funcs multilib git
+inherit flag-o-matic eutils toolchain-funcs multilib
 
 DESCRIPTION="A portable, bytecode-compiled implementation of Common Lisp"
 HOMEPAGE="http://clisp.sourceforge.net/"
-EGIT_REPO_URI="git://git.boinkor.net/clisp.git"
+SRC_URI="mirror://sourceforge/clisp/${P}.tar.bz2"
 
 LICENSE="GPL-2"
 SLOT="2"
-KEYWORDS=""
+KEYWORDS="~alpha ~amd64 ~ia64 ~ppc ~sparc ~x86"
 IUSE="hyperspec X new-clx berkdb dbus fastcgi gdbm gtk pari +pcre postgres +readline svm -threads +unicode +zlib"
 # "jit" disabled ATM
 
