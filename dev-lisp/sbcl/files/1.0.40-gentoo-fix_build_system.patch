@@ -125,7 +125,7 @@ index 9f32f3c..01f13bc 100644
  
  ASSEM_SRC = mips-assem.S ldso-stubs.S
 diff --git a/src/runtime/Config.ppc-darwin b/src/runtime/Config.ppc-darwin
-index fc94e87..868e52d 100644
+index 0d3d79a..ea3eaf7 100644
 --- a/src/runtime/Config.ppc-darwin
 +++ b/src/runtime/Config.ppc-darwin
 @@ -9,8 +9,8 @@
@@ -136,8 +136,8 @@ index fc94e87..868e52d 100644
 -LINKFLAGS += -mmacosx-version-min=10.4
 +CFLAGS += -O2 -fdollars-in-identifiers -mmacosx-version-min=10.4
 +LDFLAGS += -mmacosx-version-min=10.4
- OS_SRC = bsd-os.c darwin-os.c ppc-darwin-os.c darwin-dlshim.c darwin-langinfo.c
- OS_LIBS = -lSystem -lc
+ 
+ OS_SRC = bsd-os.c darwin-os.c ppc-darwin-os.c
  
 diff --git a/src/runtime/Config.ppc-linux b/src/runtime/Config.ppc-linux
 index d2fe76c..57fccb7 100644
@@ -213,48 +213,29 @@ index c5c89b8..7ca56e8 100644
  
  ASSEM_SRC = sparc-assem.S ldso-stubs.S
 diff --git a/src/runtime/Config.x86-64-darwin b/src/runtime/Config.x86-64-darwin
-index e6fffb9..18419a1 100644
+index 24965f5..efecb06 100644
 --- a/src/runtime/Config.x86-64-darwin
 +++ b/src/runtime/Config.x86-64-darwin
-@@ -9,8 +9,8 @@
+@@ -9,13 +9,15 @@
  # provided with absolutely no warranty. See the COPYING and CREDITS
  # files for more information.
  
--CFLAGS = -g -Wall -O2 -fdollars-in-identifiers -mmacosx-version-min=10.4
--LINKFLAGS += -mmacosx-version-min=10.4
-+CFLAGS += -O2 -fdollars-in-identifiers -arch x86_64 -mmacosx-version-min=10.4
-+LDFLAGS += -arch x86_64 -mmacosx-version-min=10.4
- OS_SRC = bsd-os.c x86-64-bsd-os.c darwin-os.c x86-64-darwin-os.c darwin-dlshim.c darwin-langinfo.c
- OS_LIBS = -lSystem -lc -ldl
- ifdef LISP_FEATURE_SB_THREAD
-@@ -20,9 +20,9 @@ endif
- ASSEM_SRC = x86-64-assem.S ldso-stubs.S
- ARCH_SRC = x86-64-arch.c
- 
--LINKFLAGS += -arch x86_64 -dynamic -twolevel_namespace -bind_at_load -pagezero_size 0x100000
-+LDFLAGS += -dynamic -twolevel_namespace -bind_at_load -pagezero_size 0x100000
- 
--CFLAGS += -arch x86_64 -fno-omit-frame-pointer -pagezero_size 0x100000
-+CFLAGS += -fno-omit-frame-pointer -pagezero_size 0x100000
- 
- GC_SRC = gencgc.c
- 
-diff --git a/src/runtime/Config.x86-64-darwin9+ b/src/runtime/Config.x86-64-darwin9+
-index 3da837d..cbecc19 100644
---- a/src/runtime/Config.x86-64-darwin9+
-+++ b/src/runtime/Config.x86-64-darwin9+
-@@ -9,8 +9,8 @@
- # provided with absolutely no warranty. See the COPYING and CREDITS
- # files for more information.
- 
--CFLAGS = -g -Wall -O2 -fdollars-in-identifiers -mmacosx-version-min=10.5 -D_DARWIN_USE_64_BIT_INODE
+-CFLAGS = -g -Wall -O2 -fdollars-in-identifiers
++CFLAGS += -arch x86_64 -O2 -fdollars-in-identifier
++LDFLAGS += -arch x86_64
++
+ ifdef LISP_FEATURE_DARWIN9_OR_BETTER
+ CFLAGS += -mmacosx-version-min=10.5
 -LINKFLAGS += -mmacosx-version-min=10.5
-+CFLAGS += -O2 -fdollars-in-identifiers -arch x86_64 -mmacosx-version-min=10.5 -D_DARWIN_USE_64_BIT_INODE
-+LDFLAGS += -arch x86_64 -mmacosx-version-min=10.5
- OS_SRC = bsd-os.c x86-64-bsd-os.c darwin-os.c x86-64-darwin-os.c darwin-dlshim.c darwin-langinfo.c
- OS_LIBS = -lSystem -lc -ldl
- ifdef LISP_FEATURE_SB_THREAD
-@@ -20,9 +20,9 @@ endif
++LDFLAGS += -mmacosx-version-min=10.5
+ else
+ CFLAGS += -mmacosx-version-min=10.4
+-LINKFLAGS += -mmacosx-version-min=10.4
++LDFLAGS += -mmacosx-version-min=10.4
+ endif
+ ifdef LISP_FEATURE_INODE64
+ CFLAGS += -D_DARWIN_USE_64_BIT_INODE
+@@ -31,9 +33,9 @@ endif
  ASSEM_SRC = x86-64-assem.S ldso-stubs.S
  ARCH_SRC = x86-64-arch.c
  
@@ -337,20 +318,29 @@ index 8441cef..208a4f7 100644
  ASSEM_SRC = x86-64-assem.S ldso-stubs.S
  ARCH_SRC = x86-64-arch.c
 diff --git a/src/runtime/Config.x86-darwin b/src/runtime/Config.x86-darwin
-index ff19612..bcc6927 100644
+index c1a3eb7..578f91a 100644
 --- a/src/runtime/Config.x86-darwin
 +++ b/src/runtime/Config.x86-darwin
-@@ -9,8 +9,8 @@
+@@ -9,14 +9,15 @@
  # provided with absolutely no warranty. See the COPYING and CREDITS
  # files for more information.
  
--CFLAGS = -arch i386 -g -Wall -O2 -fdollars-in-identifiers -mmacosx-version-min=10.4
--LINKFLAGS += -arch i386 -mmacosx-version-min=10.4
-+CFLAGS += -arch i386 -O2 -fdollars-in-identifiers -mmacosx-version-min=10.4
-+LDFLAGS += -arch i386 -mmacosx-version-min=10.4
- OS_SRC = bsd-os.c x86-bsd-os.c darwin-os.c x86-darwin-os.c darwin-dlshim.c darwin-langinfo.c
- OS_LIBS = -lSystem -lc -ldl
- ifdef LISP_FEATURE_SB_THREAD
+-CFLAGS = -arch i386 -g -Wall -O2 -fdollars-in-identifiers
+-LINKFLAGS += -arch i386
++CFLAGS += -arch i386 -g -Wall -O2 -fdollars-in-identifiers
++LDFLAGS += -arch i386
++
+ ifdef LISP_FEATURE_DARWIN9_OR_BETTER
+ CFLAGS += -mmacosx-version-min=10.5
+-LINKFLAGS += -mmacosx-version-min=10.5
++LDFLAGS += -mmacosx-version-min=10.5
+ else
+ CFLAGS += -mmacosx-version-min=10.4
+-LINKFLAGS += -mmacosx-version-min=10.4
++LDFLAGS += -mmacosx-version-min=10.4
+ endif
+ 
+ OS_SRC = bsd-os.c x86-bsd-os.c darwin-os.c x86-darwin-os.c
 diff --git a/src/runtime/Config.x86-freebsd b/src/runtime/Config.x86-freebsd
 index a7533b6..2b4b8bd 100644
 --- a/src/runtime/Config.x86-freebsd
@@ -509,8 +499,9 @@ index cfaac20..0e0963a 100644
  sbcl.nm: $(TARGET)
  	$(NM) $(TARGET) | $(GREP) -v " [FUw] " > ,$@
 diff --git a/src/runtime/platform.mk b/src/runtime/platform.mk
-index e69de29..d2470cd 100644
---- a/src/runtime/platform.mk
+new file mode 100644
+index 0000000..d2470cd
+--- /dev/null
 +++ b/src/runtime/platform.mk
 @@ -0,0 +1,17 @@
 +# -*- makefile -*- for the C-level run-time support for SBCL
@@ -551,7 +542,7 @@ index 2f10a8b..dc99ebc 100644
  all: grovel-headers determine-endianness where-is-mcontext \
          modify-ldt-struct-name sigaction-sa-nodefer-works-test
 diff --git a/tools-for-build/ldso-stubs.lisp b/tools-for-build/ldso-stubs.lisp
-index bbb7e9e..617d527 100644
+index 5d9e0d7..95a7d67 100644
 --- a/tools-for-build/ldso-stubs.lisp
 +++ b/tools-for-build/ldso-stubs.lisp
 @@ -294,6 +294,7 @@ ldso_stub__ ## fct: ;                  \\
