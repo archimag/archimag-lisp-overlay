@@ -17,6 +17,12 @@ RDEPEND="dev-lisp/salza2
 		dev-lisp/flexi-streams
 		dev-lisp/trivial-gray-streams"
 
+src_unpack() {
+	unpack ${A}
+	cd "${S}"
+	epatch "${FILESDIR}"/fix-asdf.patch
+}
+
 src_install() {
 	common-lisp-install *.{lisp,asd}
 	common-lisp-symlink-asdf
