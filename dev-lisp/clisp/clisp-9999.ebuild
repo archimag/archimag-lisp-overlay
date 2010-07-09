@@ -30,7 +30,7 @@ RDEPEND="virtual/libiconv
 		 zlib? ( sys-libs/zlib )
 		 X? ( new-clx? ( x11-libs/libXpm ) )
 		 hyperspec? ( dev-lisp/hyperspec )
-		 berkdb? ( sys-libs/db:4.5 )"
+		 berkdb? ( sys-libs/db:4.7 )"
 #		 jit? ( >=dev-libs/lightning-1.2 )
 
 DEPEND="${RDEPEND}
@@ -101,7 +101,7 @@ src_configure() {
 	fi
 	if use berkdb; then
 		enable_modules berkeley-db
-		append-cppflags -I/usr/include/db4.5
+		append-cppflags -I/usr/include/db4.7
 	fi
 	use dbus && enable_modules dbus
 	use fastcgi && enable_modules fastcgi
