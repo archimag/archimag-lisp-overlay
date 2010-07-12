@@ -23,8 +23,6 @@ SITEFILE=70${PN}-gentoo.el
 
 src_unpack() {
 	unpack ${A}
-	cd "${S}"
-	epatch "${FILESDIR}"/${PV}/asdf-depends-fix.patch
 
 	if !(use slime); then
 		epatch "${FILESDIR}"/${PV}/remove-depends-from-slime.patch
