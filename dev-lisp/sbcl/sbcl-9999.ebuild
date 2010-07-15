@@ -108,6 +108,12 @@ src_compile() {
 	strip-unsupported-flags ; filter-flags -fomit-frame-pointer
 	append-ldflags -Wl,--no-as-needed # see bug #132992
 
+	# To make the hardened compiler NOT compile with -fPIE -pie
+	if gcc-specs-pie ; then
+		filter-flags -fPIE
+		append-ldflags -nopie
+	fi
+
 	# clear the environment to get rid of non-ASCII strings, see bug 174702
 	# set HOME for paludis
 	env - HOME="${T}" \
