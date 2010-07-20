@@ -1,0 +1,14 @@
+<!DOCTYPE repositories SYSTEM "/dtd/repositories.dtd"> 
+<repositories xmlns="" version="1.0">
+    <repo quality="experimental" status="unofficial">
+        <name>archimag-lisp</name>
+        <description>archimag fork of gentoo-lisp-overlay</description>
+        <homepage>http://github.com/archimag/archimag-lisp-overlay</homepage>
+        <owner>
+            <name>Andrey Moskvitin</name>
+            <email>archimag@gmail.com</email>
+        </owner>
+        <source type="git">git://github.com/archimag/archimag-lisp-overlay.git</source>
+        <feed>http://github.com/archimag/archimag-lisp-overlay/commits/master.atom</feed>
+    </repo>
+</repositories>
