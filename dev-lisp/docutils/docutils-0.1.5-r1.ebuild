@@ -19,3 +19,10 @@ RDEPEND="dev-lisp/cl-ppcre
 		 dev-lisp/trivial-gray-streams
 		 dev-lisp/data-format-validation"
 
+src_install() {
+	common-lisp-install *.asd *.lisp extensions parsers transforms writers languages
+	common-lisp-symlink-asdf
+	dodoc LICENSE.txt README.txt
+}
+
+
