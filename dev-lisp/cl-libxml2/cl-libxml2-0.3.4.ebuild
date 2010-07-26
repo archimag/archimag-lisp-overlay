@@ -3,8 +3,7 @@
 # $Header: $
 
 EAPI=2
-
-inherit common-lisp-2 eutils toolchain-funcs
+inherit common-lisp-3 eutils toolchain-funcs
 
 DESCRIPTION="High-level Common Lisp wrapper around libxml2 and libxslt."
 HOMEPAGE="http://code.google.com/p/cl-libxml2/"
@@ -27,15 +26,13 @@ RDEPEND="${DEPEND}
 		 dev-lisp/metabang-bind
 		 dev-lisp/lift"
 
-CLSYSTEMS="${PN} cl-libxslt xfactory xoverlay"
-
 src_compile () {
 	make -C foreign CC=$(tc-getCC) || die "Cannot build helper library"
 }
 
 src_install () {
-	common-lisp-install *.asd html tree xfactory xoverlay xpath xslt test
-	common-lisp-symlink-asdf
+	common-lisp-install-sources html tree xfactory xoverlay xpath xslt test
+	common-lisp-install-asdf
 
 	dolib.so foreign/cllibxml2.so
 
