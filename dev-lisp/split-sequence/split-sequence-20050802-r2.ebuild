@@ -4,7 +4,7 @@
 
 inherit common-lisp-2 eutils
 
-DEB_PV=1
+DEB_PV=3
 
 DESCRIPTION="Functions to partition a Common Lisp sequence into multiple result sequences"
 HOMEPAGE="http://www.cliki.net/SPLIT-SEQUENCE
