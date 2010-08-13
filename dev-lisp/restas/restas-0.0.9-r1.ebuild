@@ -21,15 +21,6 @@ RDEPEND="dev-lisp/asdf-system-connections
 CLSYSTEMS="${PN}"
 SITEFILE=70${PN}-gentoo.el
 
-src_unpack() {
-	unpack ${A}
-
-	if !(use slime); then
-		epatch "${FILESDIR}"/${PV}/remove-depends-from-slime.patch
-	fi
-}
-
-
 src_compile () {
 	if use slime ; then
 		elisp-compile slime/${PN}.el || die "Cannot compile elisp files"
