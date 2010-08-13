@@ -2,7 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=2
+#EAPI=0
+
 inherit common-lisp-2 elisp-common eutils
 
 DESCRIPTION="Common Lisp implementation of Google's Closure Templates."
@@ -25,6 +26,13 @@ RDEPEND=" dev-lisp/asdf-system-connections
 CLSYSTEMS="closure-template"
 SITEFILE="50${PN}-gentoo.el"
 
+src_unpack() {
+	unpack ${A}
+	cd "${S}"
+
+	unlink example/float-controls/resources/jquery
+}
+
 src_install() {
 	common-lisp-install ${CLSYSTEMS}.asd src t
 	common-lisp-symlink-asdf
@@ -32,6 +40,9 @@ src_install() {
 	if use doc; then
 		insinto /usr/share/doc/${PF}/examples
 		doins -r example/* || die "Cannot install examples"
+		#docinto /usr/share/doc/${PF}/examples
+		#dodoc  example/* || die "Cannot install examples"
+
 	fi
 
 	if use emacs; then
