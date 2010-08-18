@@ -28,7 +28,7 @@ src_compile () {
 }
 
 src_install() {
-	common-lisp-install *.asd src optional contrib
+	common-lisp-install *.asd src optional contrib slime/restas-swank.lisp
 	common-lisp-symlink-asdf
 
 	doinitd "${FILESDIR}"/restas.lo || die "doinitd failed"
