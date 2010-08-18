@@ -3,15 +3,15 @@
 # $Header: $
 
 EAPI=2
-inherit common-lisp-3 git
+inherit common-lisp-3
 
 DESCRIPTION="A Comm Lisp I/O library."
 HOMEPAGE="http://common-lisp.net/project/iolib/"
-EGIT_REPO_URI="git://gitorious.org/iolib/iolib.git"
+SRC_URI="http://common-lisp.net/project/iolib/files/${P}.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
 RDEPEND="dev-lisp/alexandria

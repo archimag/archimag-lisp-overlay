@@ -116,8 +116,8 @@ src_compile() {
 	env - HOME="${T}" \
 		CC="$(tc-getCC)" AS="$(tc-getAS)" LD="$(tc-getLD)" \
 		CPPFLAGS="${CPPFLAGS}" CFLAGS="${CFLAGS}" ASFLAGS="${ASFLAGS}" LDFLAGS="${LDFLAGS}" \
-		PATH="${bindir}/src/runtime:${PATH}" SBCL_HOME="${bindir}/output" GNUMAKE=make ./make.sh \
-		"sbcl --no-sysinit --no-userinit --disable-debugger --core ${bindir}/output/sbcl.core" \
+		GNUMAKE=make ./make.sh \
+		"sh ${bindir}/run-sbcl.sh --no-sysinit --no-userinit --disable-debugger" \
 		|| die "make failed"
 
 	# need to set HOME because libpango(used by graphviz) complains about it
