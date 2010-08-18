@@ -1,0 +1,16 @@
+diff --git a/src/parse/html-parser.lisp b/src/parse/html-parser.lisp
+index 1160293..df46849 100644
+--- a/src/parse/html-parser.lisp
++++ b/src/parse/html-parser.lisp
+@@ -35,8 +35,9 @@
+   (let ((base
+ 	 (merge-pathnames
+ 	  "resources/"
+-	  (asdf:component-relative-pathname
+-	   (asdf:find-system :closure-html)))))
++          #-asdf2(asdf:component-relative-pathname
++                  (asdf:find-system :closure-html))
++          #+asdf2(asdf:system-source-directory :closure-html))))
+     (loop
+        :for (name . filename)
+        :in '(("-//W3O//DTD W3 HTML 3.0//EN" . "dtd/HTML-3.0")

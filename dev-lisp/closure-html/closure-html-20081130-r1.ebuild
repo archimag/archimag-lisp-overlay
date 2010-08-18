@@ -2,7 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit common-lisp-2
+EAPI=2
+inherit common-lisp-3
 
 MY_PV=${PV:0:4}-${PV:4:2}-${PV:6:2}
 
@@ -20,9 +21,13 @@ RDEPEND="dev-lisp/closure-common
 
 S="${WORKDIR}"/${PN}-${MY_PV}
 
+src_prepare() {
+	epatch "${FILESDIR}"/${PN}-asdf2.patch
+}
+
 src_install() {
-	common-lisp-install ${PN}.asd resources src
-	common-lisp-symlink-asdf
+	common-lisp-install-sources resources src
+	common-lisp-install-asdf
 	dodoc README
 	dohtml doc/*.{html,css}
 }
