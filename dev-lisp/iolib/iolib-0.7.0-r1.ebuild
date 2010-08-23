@@ -16,7 +16,7 @@ IUSE=""
 
 RDEPEND="dev-lisp/alexandria
 		 dev-lisp/cl-ppcre
-		 >=dev-lisp/cffi-9999
+		 >=dev-lisp/cffi-0.10.6
 		 dev-lisp/trivial-features
 		 dev-lisp/fiveam
 		 dev-lisp/trivial-garbage
