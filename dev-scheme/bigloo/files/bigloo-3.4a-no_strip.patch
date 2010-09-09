@@ -1,0 +1,39 @@
+--- configure.orig	2010-06-30 08:17:50.000000000 +0200
++++ configure	2010-06-30 08:37:01.796331868 +0200
+@@ -63,7 +63,7 @@
+ featureflags=
+ coflags=-O3
+ 
+-cstrip="-s"
++cstrip=""
+ cpicflags="demanded" # Possible values for cpicflags are:
+              #  - "no" not to use position independent code (recommended)
+              #  - "demanded" auto configuration but with a preference to "no"
+@@ -79,7 +79,7 @@
+ ld=
+ ldlibs=-lc
+ ldcomplibs=-lc
+-strip=       # left blank for autoconfiguration
++strip=""       # left blank for autoconfiguration
+ longlong=    # The C type to represent long long integers
+ havelonglong=
+ stringsplit="0"
+@@ -694,6 +694,10 @@
+       extralibs="";
+       cstrip="no";;
+ 
++    --strip=no)
++      cstrip="no";
++      strip="no";;
++
+     --pnet)
+       dotnetclrstyle=pnet;
+       dotnetcsccstyle=pnet;
+@@ -980,6 +984,7 @@
+       echo "Misc:"  >&2;
+       echo "   --finalization=yes|no [default no]" >&2;
+       echo "   --benchmark=yes|no [default no] (must use --arch too)" >&2;
++      echo "   --strip=no (disable stripping during linking)" >&2;
+       echo "   --debug[2] (configure for debugging)" >&2;
+       echo "   --stack-check=no" >&2;
+       echo "   --enable-thread-local-storage" >&2;

@@ -1,0 +1,97 @@
+diff -Naur bigloo3.4a-3.orig/autoconf/ccfortify bigloo3.4a-3/autoconf/ccfortify
+--- bigloo3.4a-3.orig/autoconf/ccfortify	1970-01-01 01:00:00.000000000 +0100
++++ bigloo3.4a-3/autoconf/ccfortify	2010-08-27 16:36:03.000000000 +0200
+@@ -0,0 +1,65 @@
++#!/bin/sh
++#*    Checking the C compiler fortify default value (only affects >= gcc-4.5) */
++
++cflags=
++
++#*---------------------------------------------------------------------*/
++#*    We parse the arguments                                           */
++#*---------------------------------------------------------------------*/
++while : ; do
++  case $1 in
++    "")
++      break;;
++
++    --cflags=*|-cflags=*)
++      cflags="`echo $1 | sed 's/^[-a-z]*=//'`";;
++
++    -*)
++      echo "Unknown option \"$1\", ignored" >&2;;
++  esac
++  shift
++done
++
++file=$TMP/actest$USER
++aout=$TMP/Xactest$USER
++
++#*---------------------------------------------------------------------*/
++#*    compile                                                          */
++#*---------------------------------------------------------------------*/
++compile="$CC $cflags $file.c -o $aout >/dev/null"
++
++#*---------------------------------------------------------------------*/
++#*    The test C file                                                  */
++#*---------------------------------------------------------------------*/
++if( test -f $file.c ); then
++   rm -f $file.c || exit $?
++fi
++
++#*---------------------------------------------------------------------*/
++#*    Test                                                             */
++#*---------------------------------------------------------------------*/
++cat > $file.c <<EOF
++#include <stdlib.h>
++#include <stdio.h>
++
++#ifndef _FORTIFY_SOURCE
++#define _FORTIFY_SOURCE 0
++#endif
++
++int main (void)
++{
++  printf( "%d\n", _FORTIFY_SOURCE);
++  return EXIT_SUCCESS;
++}
++EOF
++
++if eval "$BUILDSH $compile"; then
++    \rm -f $file.*
++    eval "$HOSTSH $aout"
++    ret_code=$?
++    \rm -f $aout
++    exit $ret_code
++fi
++
++echo "0"
++exit 0
+diff -Naur bigloo3.4a-3.orig/configure bigloo3.4a-3/configure
+--- bigloo3.4a-3.orig/configure	2010-07-01 16:17:58.000000000 +0200
++++ bigloo3.4a-3/configure	2010-08-27 16:35:37.000000000 +0200
+@@ -1315,6 +1315,24 @@
+   strip=`$autoconf strip --strip=$strip` || exit 1
+ fi
+ 
++
++#*---------------------------------------------------------------------*/
++#*    Test for fortify/abort                                           */
++#*    gcc-4.5 -D_FORTIFY_SOURCE=2 makes bigloo to fail at runtime      */
++#*---------------------------------------------------------------------*/
++fortify=`$autoconf ccfortify --cflags="$cflags"`
++if [ $fortify = "2" ]; then
++    # We first filter out -D_FORTIFY_SOURCE=2 if it is in cflags
++    tmp_new_cflags="";
++    for flag in $cflags; do
++	if [ "$flag " != "-D_FORTIFY_SOURCE=2 " ]; then
++	    tmp_new_cflags="$tmp_new_cflags $flag"
++	fi
++    done
++    # Then add the new flag at the end
++    cflags="$tmp_new_cflags -D_FORTIFY_SOURCE=1"
++fi
++
+ #*---------------------------------------------------------------------*/
+ #*    charset                                                          */
+ #*---------------------------------------------------------------------*/
