@@ -18,7 +18,7 @@ SRC_URI="ftp://ftp-sop.inria.fr/indes/fp/Bigloo/${MY_P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~ppc ~x86"
 IUSE="calendar crypto debug doc emacs gstreamer java mail multimedia packrat sqlite srfi1 srfi27 ssl text threads web"
 
 # bug 254916 for >=dev-libs/boehm-gc-7.1
@@ -82,8 +82,16 @@ src_prepare() {
 src_configure() {
 	filter-flags -fomit-frame-pointer
 
-	local myconf="--bee=$(if use emacs; then echo full; else echo partial; fi)"
+	local myconf=""
 
+	# Filter Zile emacs replacement. Bug #336717
+	if use emacs; then
+		myconf="--emacs=emacs --bee=full"
+	else
+		myconf="--emacs=false --bee-=partial"
+	fi
+
+	# Sqlite backend
 	myconf="${myconf} --sqlite-backend=$(if use sqlite; then echo sqlite; else echo sqltiny; fi)"
 
 	# Need fix for bglpkg, which depends on pkglib, pkgcomp, sqlite and web.
