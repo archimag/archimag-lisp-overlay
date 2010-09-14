@@ -14,8 +14,8 @@ BGL_RELEASE=${PV/_*/}
 
 DESCRIPTION="Bigloo is a Scheme implementation."
 HOMEPAGE="http://www-sop.inria.fr/indes/fp/Bigloo/bigloo.html"
-SRC_URI="ftp://ftp-sop.inria.fr/indes/fp/Bigloo/${MY_P}10Sep10.tar.gz
-		 ftp://ftp-sop.inria.fr/members/Cyprien.Nicolas/mirror/${MY_P}10Sep10.tar.gz"
+SRC_URI="ftp://ftp-sop.inria.fr/indes/fp/Bigloo/${MY_P}14Sep10.tar.gz
+		 ftp://ftp-sop.inria.fr/members/Cyprien.Nicolas/mirror/${MY_P}14Sep10.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
