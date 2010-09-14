@@ -63,8 +63,6 @@ src_prepare() {
 
 	# Fix for bug 318661
 	epatch "${patch_prefix}-gcc45_fortify.patch"
-	# as the patch add a new autoconf test, make it executable
-	chmod +x "${S}/autoconf/ccfortify"
 
 	# Force libbigloosqlite to be build if sqltiny is used
 	epatch "${patch_prefix}-sqltiny_support.patch"
