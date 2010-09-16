@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=3
+EAPI="3"
 
 inherit elisp-common multilib eutils flag-o-matic java-pkg-opt-2
 
@@ -89,49 +89,65 @@ src_configure() {
 
 	# Filter Zile emacs replacement. Bug #336717
 	if use emacs; then
-		myconf="--emacs=${EMACS} --bee=full --lispdir=${EPREFIX}${SITELISP}/${PN}"
+		myconf="--bee=full --emacs=${EMACS} --lispdir=${SITELISP}/${PN}"
 	else
 		myconf="--emacs=false"
 	fi
 
+	if use java; then
+		myconf="${myconf}
+		--jvm=yes --java=$(java-config --java) --javac=$(java-config --javac)"
+	fi
+
 	# Sqlite backend
-	myconf="${myconf} --sqlite-backend=$(if use system-sqlite; then echo sqlite; else echo sqltiny; fi)"
+	if use system-sqlite; then
+		myconf="${myconf}
+		--enable-sqlite --sqlite-backend=sqlite"
+	else
+		myconf="${myconf}
+		--enable-sqlite --sqlite-backend=sqltiny"
+	fi
 
 	# Need fix for bglpkg, which depends on pkglib, pkgcomp, sqlite and web.
 	# This cannot be disabled for now, working on a fix.
-	myconf="${myconf} --enable-pkgcomp --enable-pkglib --enable-web"
+	myconf="${myconf}
+		--enable-pkgcomp
+		--enable-pkglib
+		--enable-web"
+
+	# Put every non quoted configure opt into myconf, for the einfo below
+	myconf="
+		--prefix=/usr
+		--libdir=/usr/$(get_libdir)
+		--benchmark=yes
+		--coflags=
+		--customgc=no
+		--sharedbde=no
+		--sharedcompiler=no
+		--strip=no
+		$(use debug && echo --debug)
+		${myconf}
+		$(use_enable calendar)
+		$(use_enable crypto)
+		$(use_enable gmp)
+		$(use_enable gstreamer)
+		$(use_enable mail)
+		$(use_enable multimedia)
+		$(use_enable packrat)
+		$(use_enable openpgp)
+		$(use_enable srfi1)
+		$(use_enable srfi27)
+		$(use_enable ssl)
+		$(use_enable text)
+		$(use_enable threads)
+"
 
 	# Bigloo doesn't use autoconf and consequently a lot of options used by econf give errors
 	# Manuel Serrano says: "Please, dont talk to me about autoconf. I simply dont want to hear about it..."
+	einfo "Configuring bigloo with: ${myconf}"
 	./configure \
-		$(use java && echo "--jvm=yes --java=$(java-config --java) --javac=$(java-config --javac)") \
-		--prefix="${EPREFIX}/usr" \
-		--mandir=/usr/share/man \
-		--infodir=/usr/share/info \
-		--libdir=/usr/$(get_libdir) \
-		--docdir=/usr/share/doc/${PF} \
-		--benchmark=yes \
-		--sharedbde=no \
-		--sharedcompiler=no \
-		--customgc=no \
-		--coflags="" \
 		--ldflags="${LDFLAGS}" \
-		--strip=no \
-		$(use debug && echo "--debug") \
 		${myconf} \
-		$(use_enable calendar) \
-		$(use_enable crypto) \
-		$(use_enable gmp) \
-		$(use_enable gstreamer) \
-		$(use_enable mail) \
-		$(use_enable multimedia) \
-		$(use_enable packrat) \
-		$(use_enable openpgp) \
-		$(use_enable srfi1) \
-		$(use_enable srfi27) \
-		$(use_enable ssl) \
-		$(use_enable text) \
-		$(use_enable threads) \
 		|| die "configure failed"
 }
 
