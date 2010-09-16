@@ -23,17 +23,15 @@ KEYWORDS="~amd64 ~ppc ~x86"
 IUSE="calendar crypto debug doc emacs gmp gstreamer java mail multimedia openpgp packrat system-sqlite srfi1 srfi27 ssl text threads web"
 
 # bug 254916 for >=dev-libs/boehm-gc-7.1
-DEPEND_COMMON=">=dev-libs/boehm-gc-7.1[threads?]
+DEPEND=">=dev-libs/boehm-gc-7.1[threads?]
 	emacs? ( virtual/emacs )
 	gmp? ( dev-libs/gmp )
-	gstreamer? ( media-libs/gstreamer
-		media-libs/gst-plugins-base )
+	gstreamer? ( media-libs/gstreamer media-libs/gst-plugins-base )
+	java? ( >=virtual/jdk-1.5 app-arch/zip )
 	ssl? ( dev-libs/openssl )
 	system-sqlite? ( dev-db/sqlite:3 )
 "
-
-DEPEND="${DEPEND_COMMON}  java? ( >=virtual/jdk-1.5 app-arch/zip )"
-RDEPEND="${DEPEND_COMMON} java? ( >=virtual/jre-1.5 )"
+RDEPEND="${DEPEND}"
 
 S=${WORKDIR}/${MY_P/-[ab]*/}
 
@@ -65,7 +63,7 @@ pkg_setup() {
 		fi
 	fi
 
-	if ! use crypto && use openpgp; then
+	if use openpgp && ! use crypto; then
 		die "USE Dependency: 'openpgp' needs 'crypto'."
 	fi
 }
