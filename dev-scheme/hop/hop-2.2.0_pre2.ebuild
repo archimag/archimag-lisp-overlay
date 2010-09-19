@@ -10,7 +10,8 @@ inherit multilib eutils
 
 DESCRIPTION="Hop is a higher-order language for programming interactive web applications"
 HOMEPAGE="http://hop.inria.fr/"
-SRC_URI="ftp://ftp-sop.inria.fr/indes/fp/Hop/${MY_P}.tar.gz"
+SRC_URI="ftp://ftp-sop.inria.fr/members/Cyprien.Nicolas/mirror/${MY_P}.tar.gz
+	ftp://ftp-sop.inria.fr/indes/fp/Hop/${MY_P}.tar.gz"
 
 SLOT="0"
 LICENSE="GPL-2"
