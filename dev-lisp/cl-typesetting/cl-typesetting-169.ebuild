@@ -1,4 +1,4 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-lisp/cl-typesetting/cl-typesetting-110.ebuild,v 1.2 2006/04/14 10:03:27 swegener Exp $
 
