@@ -2,4 +2,4 @@
 
 find ./* -iname '*.ebuild' | \
 { [[ $@ ]] && grep $@ || cat; } | \
-xargs -P2 -I{} ebuild {} digest --force
+xargs -P2 -I{} ebuild {} digest --force >/dev/null
