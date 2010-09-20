@@ -5,9 +5,9 @@
 inherit common-lisp-2
 
 DESCRIPTION="Common Lisp package to read and write ${PN} image files"
-HOMEPAGE="http://www.ljosa.com/~ljosa/software/cl-${PN}/
+HOMEPAGE="http://www.ljosa.com/~ljosa/software/${PN}/
 	http://www.cliki.net/${PN}"
-SRC_URI="http://www.ljosa.com/~ljosa/software/cl-${PN}/download/cl-${P}.tar.gz"
+SRC_URI="http://www.ljosa.com/~ljosa/software/${PN}/download/a${P}.tar.gz"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
@@ -17,7 +17,7 @@ IUSE=""
 RDEPEND="!dev-lisp/cl-${PN}
 		dev-lisp/uffi"
 
-S="${WORKDIR}/cl-${P}"
+S="${WORKDIR}/${P}"
 
 src_unpack() {
 	unpack ${A}
