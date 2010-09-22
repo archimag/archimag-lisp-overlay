@@ -9,7 +9,7 @@ inherit common-lisp-2 eutils
 DESCRIPTION="Binary-types is a Library for accessing binary files with fixed bit-length code-words."
 HOMEPAGE="http://www.cliki.net/Binary-types
 		http://www.cs.uit.no/~frodef/sw/binary-types/"
-SRC_URI="http://www.cs.uit.no/~frodef/sw/${PN}/${P}.tar.gz"
+SRC_URI="http://download.github.com/frodef-${PN}-9ec4204.tar.gz"
 
 LICENSE="BSD"
 SLOT="0"

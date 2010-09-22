@@ -14,7 +14,6 @@ KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
 RDEPEND="!dev-lisp/cl-${PN}
-		dev-lisp/terminfo
 		dev-lisp/uffi
 		dev-lisp/osicat"
 
@@ -23,7 +22,7 @@ S="${WORKDIR}/${PN}_${PV}"
 src_unpack() {
 	unpack ${A}
 	# adds uffi-loader.lisp, removes building .so files
-	epatch "${FILESDIR}"/${PV}-${PN}.asd-uffi-glue-gentoo.patch
+#	epatch "${FILESDIR}"/${PV}-${PN}.asd-uffi-glue-gentoo.patch
 	cp "${FILESDIR}"/${PV}-Makefile "${S}"/Makefile
 }
 
