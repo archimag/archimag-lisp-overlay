@@ -11,15 +11,17 @@ MY_P=${MY_P/_alpha*/-alpha}
 MY_P=${MY_P/_beta*/-beta}
 
 BGL_RELEASE=${PV/_*/}
+PATCHSET="1"
 
 DESCRIPTION="Bigloo is a Scheme implementation."
 HOMEPAGE="http://www-sop.inria.fr/indes/fp/Bigloo/bigloo.html"
-SRC_URI="ftp://ftp-sop.inria.fr/indes/fp/Bigloo/${MY_P}.tar.gz"
+SRC_URI="ftp://ftp-sop.inria.fr/members/Cyprien.Nicolas/mirror/bigloo-${BGL_RELEASE}-patchset-${PATCHSET}.tbz2
+	ftp://ftp-sop.inria.fr/indes/fp/Bigloo/${MY_P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~x86"
-IUSE="calendar crypto debug doc emacs gmp gstreamer java mail multimedia packrat system-sqlite srfi1 srfi27 ssl text threads web"
+IUSE="bglpkg calendar crypto debug doc emacs gmp gstreamer java mail multimedia packrat sqlite srfi1 srfi27 ssl text threads web"
 
 # bug 254916 for >=dev-libs/boehm-gc-7.1
 DEPEND=">=dev-libs/boehm-gc-7.1[threads?]
@@ -27,8 +29,8 @@ DEPEND=">=dev-libs/boehm-gc-7.1[threads?]
 	gmp? ( dev-libs/gmp )
 	gstreamer? ( media-libs/gstreamer media-libs/gst-plugins-base )
 	java? ( >=virtual/jdk-1.5 app-arch/zip )
+	sqlite? ( dev-db/sqlite:3 )
 	ssl? ( dev-libs/openssl )
-	system-sqlite? ( dev-db/sqlite:3 )
 "
 RDEPEND="${DEPEND}"
 
@@ -52,27 +54,25 @@ pkg_setup() {
 	fi
 
 	if use srfi27; then
-		if ! use x86; then
-			ewarn "srfi27 is known to only work on x86 architectures. It is highly suggested that you disable it." \
-				" It is not supported by upstream, and tests *will* fail."
-		fi
-
-		if ! use gmp; then
+		# 'dev-scheme/bigloo srfi27' should be added in arch/amd64/package.use.mask
+		if use amd64; then
+			ewarn "srfi27 is known to only work on 32-bit architectures." \
+				"The USE is ignored on amd64."
+		elif ! use gmp; then
 			die "USE Dependency: 'srfi27' needs 'gmp'."
 		fi
 	fi
+
+	if use bglpkg && ! (use sqlite && use web); then
+		die "USE Dependency: 'bglpkg' needs both 'sqlite' and 'web'."
+	fi
+
+	java-pkg-opt-2_pkg_setup
 }
 
 src_prepare() {
-	local patch_prefix="${FILESDIR}/${PN}-${BGL_RELEASE}"
-	epatch "${patch_prefix}-no_strip.patch"
-	epatch "${patch_prefix}-fix_APIs_test_invocation.patch"
-
-	# Fix for bug 318661
-	epatch "${patch_prefix}-gcc45_fortify.patch"
-
-	# Force libbigloosqlite to be build if sqltiny is used
-	epatch "${patch_prefix}-sqltiny_support.patch"
+	EPATCH_SOURCE="${WORKDIR}/patches" EPATCH_SUFFIX="patch" \
+		EPATCH_FORCE="yes" epatch
 
 	# bglmem is not built according to the EFLAGS
 	#  (which forces LDFLAGS, see emake below)
@@ -96,26 +96,34 @@ src_configure() {
 		myconf="--emacs=false"
 	fi
 
+	# dev-java/ibm-jdk-bin fails during configure, bug #331279
+	# api/crypto java tests show failures, I'm looking into it
 	if use java; then
+		sed -e "s/^\(jcflags=\)\(.*\)/\\1\"\\2 $(java-pkg_javac-args)\"/" \
+			-e 's/jcflags=$jcflags/jcflags="$jcflags"/'\
+			-i configure
 		myconf="${myconf}
-		--jvm=yes --java=$(java-config --java) --javac=$(java-config --javac)"
+		--jvm=yes"
 	fi
 
-	# Sqlite backend
-	if use system-sqlite; then
+	# No pkglib/pkgcomp in IUSE, I don't see any need besides bglpkg
+	# One or the other could be added upon user request
+	if use bglpkg; then
 		myconf="${myconf}
-		--enable-sqlite --sqlite-backend=sqlite"
+		--enable-bglpkg --enable-pkgcomp --enable-pkglib"
 	else
 		myconf="${myconf}
-		--enable-sqlite --sqlite-backend=sqltiny"
+		--disable-bglpkg --disable-pkgcomp --disable-pkglib"
 	fi
 
-	# Need fix for bglpkg, which depends on pkglib, pkgcomp, sqlite and web.
-	# This cannot be disabled for now, working on a fix.
-	myconf="${myconf}
-		--enable-pkgcomp
-		--enable-pkglib
-		--enable-web"
+	# srfi27 management
+	if use amd64; then
+		myconf="${myconf}
+		--disable-srfi27"
+	else
+		myconf="${myconf}
+		$(use_enable srfi27)"
+	fi
 
 	# Put every non quoted configure opt into myconf, for the einfo below
 	myconf="
@@ -136,20 +144,20 @@ src_configure() {
 		$(use_enable mail)
 		$(use_enable multimedia)
 		$(use_enable packrat)
+		$(use_enable sqlite)
 		$(use_enable srfi1)
-		$(use_enable srfi27)
 		$(use_enable ssl)
 		$(use_enable text)
 		$(use_enable threads)
+		$(use_enable web)
 "
+
+	einfo "Configuring bigloo with:" \
+		"--ldflags=\"${LDFLAGS}\" $(echo ${myconf} | sed 's/\n\t\t/ /g')"
 
 	# Bigloo doesn't use autoconf and consequently a lot of options used by econf give errors
 	# Manuel Serrano says: "Please, dont talk to me about autoconf. I simply dont want to hear about it..."
-	einfo "Configuring bigloo with: ${myconf}"
-	./configure \
-		--ldflags="${LDFLAGS}" \
-		${myconf} \
-		|| die "configure failed"
+	./configure --ldflags="${LDFLAGS}" ${myconf} || die "configure failed"
 }
 
 src_compile() {
@@ -176,9 +184,9 @@ src_install() {
 		elisp-site-file-install "${FILESDIR}/${SITEFILE}"
 	else
 		# Fix EMACS*=false in Makefile.config
-		dosed 's:^\(EMACS=\).*$:\1:' /usr/$(get_libdir)/bigloo/${BGL_RELEASE}/Makefile.config \
+		sed -i 's:^\(EMACS=\).*$:\1:' "${D}"/usr/$(get_libdir)/bigloo/${BGL_RELEASE}/Makefile.config \
 			|| die "dosed EMACS failed"
-		dosed 's:^\(EMACSBRAND=\).*$:\1:' /usr/$(get_libdir)/bigloo/${BGL_RELEASE}/Makefile.config \
+		sed -i 's:^\(EMACSBRAND=\).*$:\1:' "${D}"/usr/$(get_libdir)/bigloo/${BGL_RELEASE}/Makefile.config \
 			|| die "dosed EMACSBRAND failed"
 	fi
 
