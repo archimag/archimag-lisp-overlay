@@ -2,12 +2,11 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit autotools eutils git
+inherit autotools eutils
 
 DESCRIPTION="Skribilo is a free document production tool."
 HOMEPAGE="http://www.nongnu.org/skribilo/"
-SRC_URI="http://savannah.inetbridge.net/${PN}/${P}.tar.gz"
-#EGIT_REPO_URI="git://git.sv.gnu.org/skribilo.git"
+SRC_URI="mirror://nongnu/${PN}/${P}.tar.gz"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
@@ -25,8 +24,6 @@ RDEPEND="${DEPEND}"
 #S="${WORKDIR}/${P}"
 
 src_unpack() {
-#	git_src_unpack
-#	eautoreconf -i
 	unpack ${A}
 	cd ${S}
 }
