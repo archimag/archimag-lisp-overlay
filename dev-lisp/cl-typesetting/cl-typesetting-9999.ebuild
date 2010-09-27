@@ -6,12 +6,12 @@ EAPI="2"
 inherit common-lisp-2 eutils subversion
 
 DESCRIPTION="CL-TYPESETTING is a complete typesetting system written in Common Lisp."
-HOMEPAGE="http://www.fractalconcept.com/asp/cl-typesetting"
-ESVN_REPO_URI="http://www.fractalconcept.com/public/open-source/cl-typesetting/"
+HOMEPAGE="http://www.fractalconcept.com:8000/asp/cl-typesetting"
+ESVN_REPO_URI="http://www.fractalconcept.com:8000/public/open-source/cl-typesetting/"
 
 LICENSE="BSD-2"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
 RDEPEND="dev-lisp/cl-pdf"
