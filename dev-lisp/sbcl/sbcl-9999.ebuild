@@ -87,6 +87,9 @@ src_prepare() {
 
 	use source && sed 's%"$(BUILD_ROOT)%$(MODULE).lisp "$(BUILD_ROOT)%' -i contrib/vanilla-module.mk
 
+	# Some shells(such as dash) don't have "time" as builtin
+	# and we don't want to DEPEND on sys-process/time
+	sed "s,^time ,," -i make.sh
 	sed "s,/lib,/$(get_libdir),g" -i install.sh
 	sed "s,/usr/local/lib,/usr/$(get_libdir),g" -i src/runtime/runtime.c # #define SBCL_HOME ...
 
