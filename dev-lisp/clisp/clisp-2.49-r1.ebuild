@@ -12,7 +12,7 @@ SRC_URI="mirror://sourceforge/clisp/${P}.tar.bz2"
 LICENSE="GPL-2"
 SLOT="2"
 KEYWORDS="~alpha ~amd64 ~ia64 ~ppc ~sparc ~x86"
-IUSE="hyperspec X new-clx berkdb dbus fastcgi gdbm gtk pari +pcre postgres +readline svm -threads +unicode +zlib"
+IUSE="hyperspec X berkdb dbus fastcgi gdbm gtk pari +pcre postgres +readline svm -threads +unicode +zlib"
 # "jit" disabled ATM
 
 RDEPEND="virtual/libiconv
@@ -28,13 +28,13 @@ RDEPEND="virtual/libiconv
 		 pcre? ( dev-libs/libpcre )
 		 svm? ( sci-libs/libsvm )
 		 zlib? ( sys-libs/zlib )
-		 X? ( new-clx? ( x11-libs/libXpm ) )
+		 X? ( x11-libs/libXpm )
 		 hyperspec? ( dev-lisp/hyperspec )
 		 berkdb? ( sys-libs/db:4.7 )"
 #		 jit? ( >=dev-libs/lightning-1.2 )
 
 DEPEND="${RDEPEND}
-	X? ( new-clx? ( x11-misc/imake x11-proto/xextproto ) )"
+	X? ( x11-misc/imake x11-proto/xextproto )"
 
 PDEPEND="dev-lisp/gentoo-init"
 
@@ -88,13 +88,7 @@ src_configure() {
 	enable_modules wildcard rawsock
 	# optional modules
 	use elibc_glibc && enable_modules bindings/glibc
-	if use X; then
-		if use new-clx; then
-			enable_modules clx/new-clx
-		else
-			enable_modules clx/mit-clx
-		fi
-	fi
+	use X && enable_modules clx/new-clx
 	if use postgres; then
 		enable_modules postgresql
 		append-cppflags -I$(pg_config --includedir)
