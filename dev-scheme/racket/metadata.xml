@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <herd>scheme</herd>
+  <longdescription lang="en">
+    Racket, formerly known as PLT Scheme(DrScheme) is an interactive,
+    integrated, graphical programming environment for the Scheme,
+    MzScheme, and MrEd programming languages. 
+
+    It provides source highlighting for syntax and run-time errors,
+    support for multiple language levels, an algebraic stepper, objects,
+    modules, a GUI library, TCP/IP, and much more. It includes an
+    extensive, hyper-linked help system called Help Desk.
+  </longdescription>
+  <use>
+    <flag name='slatex'> 
+      Add slatex mzscheme scripts and texmf file for slatex support
+    </flag>
+    <flag name='futures'> 
+      Enable futures support
+    </flag>
+    <flag name='places'> 
+      Enable places support
+    </flag>
+    <flag name='foreign'> 
+      Build with (unfortunately bundled) libffi
+    </flag>
+    <flag name='plain'> 
+      Do plain installation without rebuilding plt-scheme's
+      collects(experimental)
+    </flag>
+    <flag name='sgc'> 
+      Compile and install additional executables which use the conservative
+      garbage collector(Senora, instead of Boehm)
+    </flag>
+    <flag name='backtrace'> 
+      Support GC backtrace dumps
+    </flag>
+    <flag name='cgc'> 
+      Compile and install additional executables which use the conservative
+      garbage collector(Boehm)
+    </flag>
+  </use>
+</pkgmetadata>
