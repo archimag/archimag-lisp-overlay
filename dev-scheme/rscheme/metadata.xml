@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+        <herd>scheme</herd>
+        <longdescription lang="en">
+	  RScheme is an implementation of the Scheme language, with
+	  it's object-orientation approach adapted from the Dylan
+	  language. RScheme implements all of R4RS except
+	  transcript-on and transcript-off, and all of R5RS except
+	  define-syntax (RScheme still employs it's own the hygienic
+	  syntactic extension facility with analagous but not
+	  compatible metasyntax to R5RS's define-syntax).
+	</longdescription>
+</pkgmetadata>

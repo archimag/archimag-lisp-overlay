@@ -1,0 +1,12 @@
+diff --git a/src/rshell/Makefile b/src/rshell/Makefile
+--- a/src/rshell/Makefile
++++ b/src/rshell/Makefile
+@@ -23,7 +23,7 @@ OFILES=$(CFILES:.c=.o)
+ LIB_RS=$(INSTALL_DIR)/lib/librs.a
+ 
+ $(PRODUCT): $(OFILES) $(LIB_RS)
+-	$(CC) $(CFLAGS) $(OFILES) -o $(PRODUCT) $(LDX_FLAGS)
++	$(CC) $(CFLAGS) $(LDFLAGS) $(OFILES) -o $(PRODUCT) $(LDX_FLAGS)
+ 
+ install:: $(INSTALL_DIR)/bin
+ 	$(INSTALL) $(PRODUCT) $(INSTALL_DIR)/bin
