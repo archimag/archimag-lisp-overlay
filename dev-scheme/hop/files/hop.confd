@@ -1,4 +1,6 @@
 # /etc/conf.d/hop: config file for /etc/init.d/hop
 
+LOGFILE=/var/log/hop/access.log
+DEBUGFILE=/var/log/hop/debug.log
 # see `hop --help` # for valid cmdline options
-#HOP_OPTS=""
+HOP_OPTS="--log-file ${LOGFILE} --verbose-output file --verbose-file ${DEBUGFILE}"

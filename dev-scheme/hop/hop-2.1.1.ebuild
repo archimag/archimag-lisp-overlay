@@ -39,12 +39,23 @@ src_configure() {
 		|| die "configure failed"
 }
 
+src_compile () {
+	emake EFLAGS='-ldopt "${LDFLAGS}"' || die "emake failed"
+}
+
 src_install () {
 	emake DESTDIR="${D}" install || die "install failed"
 
-	dodoc ChangeLog README
-	newdoc LICENSE COPYING
+	# Create log dir
+	keepdir /var/log/hop
+	fowners root:hop /var/log/hop
+	fperms 0775 /var/log/hop
 
+	# Init scripts
 	newinitd "${FILESDIR}/hop.initd" hop || die
 	newconfd "${FILESDIR}/hop.confd" hop || die
+
+	# Documentation
+	dodoc ChangeLog README
+	newdoc LICENSE COPYING
 }

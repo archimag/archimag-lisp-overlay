@@ -4,33 +4,17 @@ HOPEXEC=/usr/bin/hop
 HOPUSER=hop
 HOPHOME=/var/lib/hop
 PIDFILE=/var/run/hop.pid
-LOGFILE=/var/log/hop.log
-
-# For user extensions through /etc/conf.d/hop
-HOP_OPTS="--log-file ${LOGFILE} ${HOP_OPTS}"
 
 depend() {
     need localmount net
 }
 
-logfile() {
-    if [ ! -f ${LOGFILE} ]
-    then
-	touch ${LOGFILE} || eerror "Cannot create logfile: ${LOGFILE}"
-    fi
-    chown ${HOPUSER} ${LOGFILE} || eerror "Cannot create logfile: ${LOGFILE}"
-    return 0
-}
-
 start() {
-    logfile || return 1
-
     ebegin "Starting Hop Web Broker"
-    start-stop-daemon --start --oknodo \
-	--background --chuid ${HOPUSER} \
+    start-stop-daemon --start --background \
 	--make-pidfile --pidfile ${PIDFILE} \
-        --exec ${HOPEXEC} --env HOME=${HOPHOME} \
-	-- ${HOP_OPTS}
+        --exec ${HOPEXEC} --chuid ${HOPUSER} \
+	--env HOME=${HOPHOME} -- ${HOP_OPTS}
     eend $?
 }
 
