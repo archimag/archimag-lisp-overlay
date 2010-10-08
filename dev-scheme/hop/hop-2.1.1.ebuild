@@ -4,26 +4,21 @@
 
 EAPI="2"
 
-MY_P=${P/_/-}
-
 inherit multilib eutils
 
 DESCRIPTION="Hop is a higher-order language for programming interactive web applications"
 HOMEPAGE="http://hop.inria.fr/"
-SRC_URI="ftp://ftp-sop.inria.fr/members/Cyprien.Nicolas/mirror/${MY_P}.tar.gz
-	ftp://ftp-sop.inria.fr/indes/fp/Hop/${MY_P}.tar.gz"
+SRC_URI="ftp://ftp-sop.inria.fr/indes/fp/Hop/${P}.tar.gz"
 
 SLOT="0"
 LICENSE="GPL-2"
 KEYWORDS="~amd64 ~x86"
 
-DEPEND=">=dev-scheme/bigloo-3.4a[ssl?,threads?,multimedia,sqlite,web]"
+DEPEND=">=dev-scheme/bigloo-3.4a[ssl?,threads?,multimedia,web]"
 
 RDEPEND="${DEPEND}"
 
 IUSE="ssl threads debug"
-
-S="${WORKDIR}/${MY_P}"
 
 pkg_setup() {
 	enewgroup hop
@@ -38,7 +33,6 @@ src_configure() {
 		--mandir=/usr/share/man \
 		--libdir=/usr/$(get_libdir) \
 		--etcdir=/etc/hop \
-		--webletsdir="/usr/share/${PN}/weblets" \
 		$(use_enable ssl) \
 		$(use_enable threads) \
 		$(use debug && echo "--debug") \
@@ -50,7 +44,7 @@ src_compile () {
 }
 
 src_install () {
-	emake -j1 DESTDIR="${D}" install || die "install failed"
+	emake DESTDIR="${D}" install || die "install failed"
 
 	# Create log dir
 	keepdir /var/log/hop
