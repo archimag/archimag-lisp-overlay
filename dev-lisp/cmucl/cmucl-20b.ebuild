@@ -29,8 +29,6 @@ S="${WORKDIR}"
 
 src_prepare() {
 	epatch "${FILESDIR}"/fix-man-and-doc-installation.patch
-	epatch "${FILESDIR}"/${MY_PV}-patch000.patch
-	epatch "${FILESDIR}"/${MY_PV}-patch001.patch
 	epatch "${FILESDIR}"/${MY_PV}-execstack-fixes.patch
 }
 
