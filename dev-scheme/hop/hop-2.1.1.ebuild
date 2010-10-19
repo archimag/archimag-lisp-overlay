@@ -14,7 +14,7 @@ SLOT="0"
 LICENSE="GPL-2"
 KEYWORDS="~amd64 ~x86"
 
-DEPEND=">=dev-scheme/bigloo-3.4a[ssl?,threads?,multimedia,web]"
+DEPEND=">=dev-scheme/bigloo-3.4a[ssl?,threads?,multimedia,sqlite,web]"
 
 RDEPEND="${DEPEND}"
 
@@ -33,6 +33,7 @@ src_configure() {
 		--mandir=/usr/share/man \
 		--libdir=/usr/$(get_libdir) \
 		--etcdir=/etc/hop \
+		--webletsdir="/usr/share/${PN}/weblets" \
 		$(use_enable ssl) \
 		$(use_enable threads) \
 		$(use debug && echo "--debug") \

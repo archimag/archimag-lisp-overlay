@@ -29,16 +29,15 @@ S="${WORKDIR}"
 
 src_prepare() {
 	epatch "${FILESDIR}"/fix-man-and-doc-installation.patch
-	epatch "${FILESDIR}"/${MY_PV}-patch000.patch
-	epatch "${FILESDIR}"/${MY_PV}-patch001.patch
 	epatch "${FILESDIR}"/${MY_PV}-execstack-fixes.patch
+	epatch "${FILESDIR}"/${MY_PV}-customize-lisp-implementation-version.patch
 }
 
 src_compile() {
 	local cmufpu=$(glo_usev sse2 sse2 x87)
 	local cmuopts="$(glo_usev !X -u) -f ${cmufpu}"
 	local buildimage="bin/lisp -core lib/cmucl/lib/lisp-${cmufpu}.core -batch -noinit -nositeinit"
-	env CC="$(tc-getCC)" src/tools/build.sh -C "" -o "${buildimage}" ${cmuopts} || die "Cannot build the compiler"
+	env CC="$(tc-getCC)" src/tools/build.sh -v "-gentoo-${PR}" -C "" -o "${buildimage}" ${cmuopts} || die "Cannot build the compiler"
 }
 
 src_install() {
