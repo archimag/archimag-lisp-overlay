@@ -1,0 +1,14 @@
+diff --git a/emacs/Makefile b/emacs/Makefile
+--- a/emacs/Makefile
++++ b/emacs/Makefile
+@@ -32,7 +32,9 @@ uninstall:
+ install-bigloo:
+ 	if [ "$(EMACSDIR) " != " " ]; then \
+           if [ -d $(EMACSDIR) ]; then \
+-	    cp skribe.el $(EMACSDIR) && chmod $(BMASK) $(EMACSDIR)/skribe.el; \
++	    mkdir -p $(DESTDIR)$(EMACSDIR) && \
++	    cp skribe.el $(DESTDIR)$(EMACSDIR) && \
++	    chmod $(BMASK) $(DESTDIR)$(EMACSDIR)/skribe.el; \
+           fi \
+         fi
+ uninstall-bigloo:
