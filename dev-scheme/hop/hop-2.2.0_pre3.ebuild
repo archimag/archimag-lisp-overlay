@@ -50,7 +50,7 @@ src_compile () {
 }
 
 src_install () {
-	emake -j1 DESTDIR="${D}" install || die "install failed"
+	emake DESTDIR="${D}" install || die "install failed"
 
 	# Create log dir
 	keepdir /var/log/hop

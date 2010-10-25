@@ -14,13 +14,13 @@ BGL_RELEASE=${PV/_*/}
 
 DESCRIPTION="Bigloo is a Scheme implementation."
 HOMEPAGE="http://www-sop.inria.fr/indes/fp/Bigloo/bigloo.html"
-SRC_URI="ftp://ftp-sop.inria.fr/members/Cyprien.Nicolas/mirror/${MY_P}18Oct10.tar.gz
-	ftp://ftp-sop.inria.fr/indes/fp/Bigloo/${MY_P}18Oct10.tar.gz"
+SRC_URI="ftp://ftp-sop.inria.fr/members/Cyprien.Nicolas/mirror/${MY_P}22Oct10.tar.gz
+	ftp://ftp-sop.inria.fr/indes/fp/Bigloo/${MY_P}22Oct10.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~x86"
-IUSE="bglpkg calendar crypto debug doc emacs gmp gstreamer mail multimedia openpgp packrat sqlite srfi1 srfi27 ssl text threads web"
+IUSE="bglpkg calendar crypto debug doc emacs gmp gstreamer java mail multimedia openpgp packrat sqlite srfi1 srfi27 ssl text threads web"
 
 # bug 254916 for >=dev-libs/boehm-gc-7.1
 DEPEND=">=dev-libs/boehm-gc-7.1[threads?]
@@ -64,8 +64,8 @@ pkg_setup() {
 		fi
 	fi
 
-	if use bglpkg && ! (use sqlite && use web); then
-		die "USE Dependency: 'bglpkg' needs both 'sqlite' and 'web'."
+	if use bglpkg && ! use web; then
+		die "USE Dependency: 'bglpkg' needs 'web'."
 	fi
 
 	if use openpgp && ! use crypto; then
@@ -78,9 +78,6 @@ pkg_setup() {
 src_prepare() {
 	# Allow the disabling of bglpkg
 	epatch "${FILESDIR}/${PN}-${BGL_RELEASE}-bglpkg.patch"
-
-	# Fix parallel compilation in compile-bee with USE="emacs java"
-	sed -i 's,(cd bdl && \$(MAKE)),$(MAKE) -C bdl/src,' Makefile
 
 	# Removing bundled boehm-gc
 	rm -rf gc || die
@@ -101,7 +98,7 @@ src_configure() {
 	fi
 
 	# dev-java/ibm-jdk-bin fails during configure, bug #331279
-	# api/crypto java tests show failures, I'm looking into it
+	# api/{crypto,openpgp} java tests show failures.
 	if use java; then
 		sed -e "s/^\(jcflags=\)\(.*\)/\\1\"\\2 $(java-pkg_javac-args)\"/" \
 			-e 's/jcflags=$jcflags/jcflags="$jcflags"/'\
@@ -149,6 +146,7 @@ src_configure() {
 		$(use_enable multimedia)
 		$(use_enable openpgp)
 		$(use_enable packrat)
+		--disable-phone
 		$(use_enable sqlite)
 		$(use_enable srfi1)
 		$(use_enable ssl)
