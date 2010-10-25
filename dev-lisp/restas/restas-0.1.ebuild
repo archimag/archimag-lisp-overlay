@@ -28,7 +28,7 @@ src_compile () {
 }
 
 src_install() {
-	common-lisp-install *.asd src optional contrib slime/restas-swank.lisp
+	common-lisp-install *.asd src contrib slime/restas-swank.lisp
 	common-lisp-symlink-asdf
 
 	doinitd "${FILESDIR}"/restas.lo || die "doinitd failed"
@@ -42,6 +42,8 @@ src_install() {
 
 	if use doc; then
 		docinto example && dodoc example/* || die "Cannot install examples"
+		insinto /usr/share/doc/${PF}/html
+		doins -r docs/html/en/* || die "Cannot install HTML documentation"
 	fi
 }
 
