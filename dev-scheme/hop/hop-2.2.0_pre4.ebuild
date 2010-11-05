@@ -16,12 +16,12 @@ SRC_URI="ftp://ftp-sop.inria.fr/members/Cyprien.Nicolas/mirror/${MY_P}.tar.gz
 SLOT="0"
 LICENSE="GPL-2"
 KEYWORDS="~amd64 ~x86"
+IUSE="debug ssl threads"
 
 DEPEND=">=dev-scheme/bigloo-3.4a[ssl?,threads?,multimedia,sqlite,web]"
-
 RDEPEND="${DEPEND}"
 
-IUSE="ssl threads debug"
+RESTRICT="mirror"
 
 S="${WORKDIR}/${MY_P}"
 
