@@ -1,5 +1,5 @@
 diff --git a/contrib/swank-arglists.lisp b/contrib/swank-arglists.lisp
-index eb6d905..cacae50 100644
+index d37ba83..7b3efc4 100644
 --- a/contrib/swank-arglists.lisp
 +++ b/contrib/swank-arglists.lisp
 @@ -9,8 +9,7 @@
@@ -13,7 +13,7 @@ index eb6d905..cacae50 100644
  ;;;; Utilities
  
 diff --git a/contrib/swank-fuzzy.lisp b/contrib/swank-fuzzy.lisp
-index 736cf1a..9d47530 100644
+index d254489..1c11aaf 100644
 --- a/contrib/swank-fuzzy.lisp
 +++ b/contrib/swank-fuzzy.lisp
 @@ -10,8 +10,7 @@
@@ -26,13 +26,6 @@ index 736cf1a..9d47530 100644
  
  ;;; For nomenclature of the fuzzy completion section, please read
  ;;; through the following docstring.
-@@ -622,4 +621,4 @@ for interactive debugging purpose."
-           (format t "~&~VA  score ~8,2F  ~A"
-                   max-len (highlight-completion result sym) score result))))
- 
--(provide :swank-fuzzy)
-\ No newline at end of file
-+(provide :swank-fuzzy)
 diff --git a/contrib/swank-sbcl-exts.lisp b/contrib/swank-sbcl-exts.lisp
 index 6db3457..1d86594 100644
 --- a/contrib/swank-sbcl-exts.lisp
@@ -48,12 +41,12 @@ index 6db3457..1d86594 100644
  ;; We need to do this so users can place `slime-sbcl-exts' into their
  ;; ~/.emacs, and still use any implementation they want.
 diff --git a/swank.lisp b/swank.lisp
-index 4ac26b6..99df013 100644
+index db666f6..8547cf0 100644
 --- a/swank.lisp
 +++ b/swank.lisp
-@@ -2922,12 +2922,15 @@ Record compiler notes signalled as `compiler-condition's."
+@@ -2912,12 +2912,15 @@ Record compiler notes signalled as `compiler-condition's."
    "Load the module MODULE."
-   (dolist (module (if (listp modules) modules (list modules)))
+   (dolist (module (ensure-list modules))
      (unless (member (string module) *modules* :test #'string=)
 -      (require module (if filename
 -                          (filename-to-pathname filename)
@@ -71,7 +64,7 @@ index 4ac26b6..99df013 100644
    "Pluggable function to locate modules.
  The function receives a module name as argument and should return
  the filename of the module (or nil if the file doesn't exist).")
-@@ -2957,6 +2960,21 @@ the filename of the module (or nil if the file doesn't exist).")
+@@ -2947,6 +2950,21 @@ the filename of the module (or nil if the file doesn't exist).")
      (some (lambda (dir) (some #'probe-file (module-canditates name dir)))
            *load-path*)))
  

@@ -38,19 +38,24 @@
                   (:file "swank")
                   (:module "contrib"
                    :components ((:no-load-file "swank-c-p-c")
-                                (:no-load-file "swank-arglists" :depends-on ("swank-c-p-c"))
+                                (:no-load-file "swank-arglists"
+                                 :depends-on ("swank-c-p-c"))
                                 (:no-load-file "swank-asdf")
                                 (:no-load-file "swank-clipboard")
                                 (:no-load-file "swank-fancy-inspector")
-                                (:no-load-file "swank-fuzzy" :depends-on ("swank-c-p-c"))
+                                (:no-load-file "swank-fuzzy"
+                                 :depends-on ("swank-c-p-c"))
                                 (:no-load-file "swank-hyperdoc")
                                 (:no-load-file "swank-indentation")
                                 (:no-load-file "swank-listener-hooks")
+                                (:no-load-file "swank-media")
                                 (:no-load-file "swank-motd")
                                 (:no-load-file "swank-package-fu")
                                 (:no-load-file "swank-presentations")
-                                (:no-load-file "swank-presentation-streams" :depends-on ("swank-presentations"))
-                                (:no-load-file "swank-sbcl-exts" :depends-on ("swank-arglists"))
+                                (:no-load-file "swank-presentation-streams"
+                                 :depends-on ("swank-presentations"))
+                                (:no-load-file "swank-sbcl-exts"
+                                 :depends-on ("swank-arglists"))
                                 (:no-load-file "swank-snapshot")
                                 (:no-load-file "swank-sprof"))))
      :depends-on (#+sbcl sb-bsd-sockets)

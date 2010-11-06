@@ -1,12 +1,13 @@
-Author: Stelian Ionescu <sionescu@common-lisp.net>
+Author: Stelian Ionescu <sionescu@cddr.org>
 Date: 2007-08-20
 Status: Rejected
 Description: Enables slime-inspect to work with presentations at point
 
-diff -Naur slime.old/contrib/slime-presentations.el slime/contrib/slime-presentations.el
---- slime.old/contrib/slime-presentations.el	2007-10-28 22:21:39.000000000 +0100
-+++ slime/contrib/slime-presentations.el	2007-10-28 22:22:31.000000000 +0100
-@@ -44,6 +44,15 @@
+diff --git a/contrib/slime-presentations.el b/contrib/slime-presentations.el
+index a462669..fd18edd 100644
+--- a/contrib/slime-presentations.el
++++ b/contrib/slime-presentations.el
+@@ -57,6 +57,15 @@
  (make-variable-buffer-local
   (defvar slime-presentation-start-to-point (make-hash-table)))
  
@@ -22,10 +23,11 @@ diff -Naur slime.old/contrib/slime-presentations.el slime/contrib/slime-presenta
  (defun slime-mark-presentation-start (id &optional target)
    "Mark the beginning of a presentation with the given ID.
  TARGET can be nil (regular process output) or :repl-result."
-diff -Naur slime.old/slime.el slime/slime.el
---- slime.old/slime.el	2007-10-28 22:21:38.000000000 +0100
-+++ slime/slime.el	2007-10-28 22:22:31.000000000 +0100
-@@ -7454,11 +7454,15 @@
+diff --git a/slime.el b/slime.el
+index a168c3f..2faaea9 100644
+--- a/slime.el
++++ b/slime.el
+@@ -6371,11 +6371,15 @@ was called originally."
  (defvar slime-inspector-mark-stack '())
  (defvar slime-saved-window-config)
  
@@ -42,4 +44,4 @@ diff -Naur slime.old/slime.el slime/slime.el
 +                                         (slime-sexp-at-point)))))
    (slime-eval-async `(swank:init-inspector ,string) 'slime-open-inspector))
  
- (define-derived-mode slime-inspector-mode fundamental-mode "Slime-Inspector"
+ (define-derived-mode slime-inspector-mode fundamental-mode
