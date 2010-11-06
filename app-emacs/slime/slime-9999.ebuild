@@ -6,7 +6,8 @@ ECVS_SERVER="common-lisp.net:/project/slime/cvsroot"
 ECVS_MODULE="slime"
 ECVS_PASS="anonymous"
 
-inherit common-lisp-2 elisp cvs eutils
+EAPI=3
+inherit common-lisp-3 elisp cvs eutils
 
 DESCRIPTION="SLIME, the Superior Lisp Interaction Mode (Extended)"
 HOMEPAGE="http://common-lisp.net/project/slime/"
@@ -28,9 +29,10 @@ CLSYSTEMS=swank
 SITEFILE=70${PN}-gentoo.el
 
 src_unpack() {
-	cvs_src_unpack
-	cd "${S}"
+	cvs_src_unpack ; cd "${S}"
+}
 
+src_prepare() {
 	epatch "${FILESDIR}"/${PV}/fix-inspect-presentations.patch
 	epatch "${FILESDIR}"/${PV}/fix-slime-indentation.patch
 	epatch "${FILESDIR}"/${PV}/gentoo-module-load.patch
@@ -65,14 +67,13 @@ src_install() {
 	cp "${FILESDIR}"/${PV}/swank.asd "${S}"
 	# remove upstream swank-loader, since it won't be used
 	rm "${S}"/swank-loader.lisp
-	common-lisp-install *.{lisp,asd}
-	common-lisp-symlink-asdf
+	common-lisp-install-sources *.lisp
+	common-lisp-install-asdf swank.asd
 
 	## install contribs
 	elisp-install ${PN}/contrib/ contrib/*.{el,scm,goo} \
 		|| die "Cannot install contribs"
-	insinto "${CLSOURCEROOT%/}"/swank/contrib
-	doins contrib/*.lisp
+	common-lisp-install-sources contrib/*.lisp
 
 	## install docs
 	dodoc README* ChangeLog HACKING NEWS PROBLEMS
