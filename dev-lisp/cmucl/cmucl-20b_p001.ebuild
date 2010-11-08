@@ -28,33 +28,41 @@ PROVIDE="virtual/commonlisp"
 S="${WORKDIR}"
 
 src_prepare() {
+	epatch "${FILESDIR}"/${MY_PV}-patch001.patch
 	epatch "${FILESDIR}"/fix-man-and-doc-installation.patch
 	epatch "${FILESDIR}"/${MY_PV}-execstack-fixes.patch
 	epatch "${FILESDIR}"/${MY_PV}-customize-lisp-implementation-version.patch
+	epatch "${FILESDIR}"/${MY_PV}-nositeinit-build.patch
 }
 
 src_compile() {
 	local cmufpu=$(glo_usev sse2 sse2 x87)
 	local cmuopts="$(glo_usev !X -u) -f ${cmufpu}"
-	local buildimage="bin/lisp -core lib/cmucl/lib/lisp-${cmufpu}.core -batch -noinit -nositeinit"
+	local buildimage="bin/lisp -core lib/cmucl/lib/lisp-${cmufpu}.core -noinit -nositeinit -batch"
 	env CC="$(tc-getCC)" src/tools/build.sh -v "-gentoo-${PR}" -C "" -o "${buildimage}" ${cmuopts} || die "Cannot build the compiler"
 }
 
 src_install() {
 	env MANDIR=share/man/man1 DOCDIR=share/doc/${PF} \
-		src/tools/make-dist.sh -S -g -G root -O root build-4 ${MY_PV} x86 linux || die "Cannot build installation archive"
+		src/tools/make-dist.sh -S -g -G root -O root build-4 ${MY_PV} x86 linux \
+		|| die "Cannot build installation archive"
 	# Necessary otherwise tar will fail
 	dodir /usr
-	tar xzpf cmucl-${MY_PV}-x86-linux.tar.gz -C "${D}"/usr || die "Cannot install main system"
+	pushd "${D}"/usr
+	tar xzpf "${WORKDIR}"/cmucl-${MY_PV}-x86-linux.tar.gz \
+		|| die "Cannot install main system"
 	if use X ; then
-		tar xzpf cmucl-${MY_PV}-x86-linux.extra.tar.gz -C "${D}"/usr || die "Cannot install extra files"
+		tar xzpf "${WORKDIR}"/cmucl-${MY_PV}-x86-linux.extra.tar.gz \
+			|| die "Cannot install extra files"
 	fi
 	if use source; then
 		# Necessary otherwise tar will fail
 		dodir /usr/share/common-lisp/source/${PN}
-		tar --strip-components 1 -xzpf cmucl-src-${MY_PV}.tar.gz -C "${D}"/usr/share/common-lisp/source/${PN} \
+		cd "${D}"/usr/share/common-lisp/source/${PN}
+		tar --strip-components 1 -xzpf "${WORKDIR}"/cmucl-src-${MY_PV}.tar.gz \
 			|| die "Cannot install sources"
 	fi
+	popd
 
 	# Install site config file
 	sed "s,@PF@,${PF},g ; s,@VERSION@,$(date +%F),g" \
