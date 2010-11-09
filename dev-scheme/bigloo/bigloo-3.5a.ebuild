@@ -14,8 +14,7 @@ BGL_RELEASE=${PV/_*/}
 
 DESCRIPTION="Bigloo is a Scheme implementation."
 HOMEPAGE="http://www-sop.inria.fr/indes/fp/Bigloo/bigloo.html"
-SRC_URI="ftp://ftp-sop.inria.fr/members/Cyprien.Nicolas/mirror/${MY_P}02Nov10.tar.gz
-	ftp://ftp-sop.inria.fr/indes/fp/Bigloo/${MY_P}02Nov10.tar.gz"
+SRC_URI="ftp://ftp-sop.inria.fr/indes/fp/Bigloo/${MY_P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -32,8 +31,6 @@ DEPEND=">=dev-libs/boehm-gc-7.1[threads?]
 	ssl? ( dev-libs/openssl )
 "
 RDEPEND="${DEPEND}"
-
-RESTRICT="mirror"
 
 S=${WORKDIR}/${MY_P/-[ab]*/}
 
@@ -97,8 +94,7 @@ src_configure() {
 		myconf="--emacs=false"
 	fi
 
-	# dev-java/ibm-jdk-bin fails during configure, bug #331279
-	# api/{crypto,openpgp} java tests show failures.
+	# api/{crypto,openpgp} jvm tests show failures.
 	if use java; then
 		sed -e "s/^\(jcflags=\)\(.*\)/\\1\"\\2 $(java-pkg_javac-args)\"/" \
 			-e 's/jcflags=$jcflags/jcflags="$jcflags"/'\
@@ -187,16 +183,17 @@ src_install() {
 		elisp-site-file-install "${FILESDIR}/${SITEFILE}"
 	else
 		# Fix EMACS*=false in Makefile.config
-		sed -i 's:^\(EMACS=\).*$:\1:' "${D}"/usr/$(get_libdir)/bigloo/${BGL_RELEASE}/Makefile.config \
-			|| die "dosed EMACS failed"
-		sed -i 's:^\(EMACSBRAND=\).*$:\1:' "${D}"/usr/$(get_libdir)/bigloo/${BGL_RELEASE}/Makefile.config \
-			|| die "dosed EMACSBRAND failed"
+		sed -i \
+			-e 's:^\(EMACS=\).*$:\1:' \
+			-e 's:^\(EMACSBRAND=\).*$:\1:' \
+			"${D}"/usr/$(get_libdir)/bigloo/${BGL_RELEASE}/Makefile.config \
+			|| die "sed !emacs in Makefile.config failed"
 	fi
 
 	dodoc ChangeLog README || die "dodoc failed"
 	newdoc LICENSE COPYING || die "newdoc failed"
 
-	cd "${S}/manuals"
+	pushd "${S}/manuals" &>/dev/null
 	if use doc; then
 		dohtml -r  . || die "dohtml failed"
 		doinfo *.info* || die "doinfo failed"
@@ -205,10 +202,12 @@ src_install() {
 	for man in *.man; do
 		newman ${man} ${man/.man/.1} || die "newman ${man} ${man/.man/.1} failed"
 	done
+	popd &>/dev/null
 
 	# Remove created directories which remains empty
-	cd "${D}/usr"
+	pushd "${D}/usr" &>/dev/null
 	rmdir -p doc/bigloo-${BGL_RELEASE} info man/man1 || die "rm empty dirs failed"
+	popd &>/dev/null
 }
 
 pkg_preinst() {
