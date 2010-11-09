@@ -18,7 +18,7 @@ LICENSE="GPL-2"
 KEYWORDS="~amd64 ~x86"
 IUSE="debug ssl threads"
 
-DEPEND=">=dev-scheme/bigloo-3.4a[ssl?,threads?,multimedia,sqlite,web]"
+DEPEND=">=dev-scheme/bigloo-3.5a[ssl?,threads?,multimedia,sqlite,web]"
 RDEPEND="${DEPEND}"
 
 RESTRICT="mirror"
