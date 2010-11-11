@@ -18,11 +18,11 @@ IUSE="doc" # emacs"
 #SITEFILE="50mitscheme-gentoo.el"
 
 RDEPEND="app-crypt/mhash
+	dev-db/postgresql-base
 	dev-libs/libmcrypt
 	dev-libs/openssl
 	sys-libs/gdbm
 	sys-libs/ncurses
-	virtual/postgresql-base
 	x11-libs/libX11"
 
 DEPEND="${RDEPEND}
