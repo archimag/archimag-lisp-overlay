@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
-inherit common-lisp-2
+EAPI=2
+inherit common-lisp-3
 
 DESCRIPTION="Common Lisp docuwiki parser."
 HOMEPAGE="http://github.com/archimag/wiki-parser"
@@ -19,6 +19,6 @@ RDEPEND="dev-lisp/alexandria
 		dev-lisp/cl-ppcre"
 
 src_install() {
-	common-lisp-install ${PN}.asd src
-	common-lisp-symlink-asdf
+	common-lisp-install-sources src
+	common-lisp-install-asdf ${PN}.asd
 }
