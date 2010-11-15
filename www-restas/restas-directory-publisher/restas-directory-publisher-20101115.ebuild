@@ -5,7 +5,7 @@ inherit common-lisp-2 eutils
 
 DESCRIPTION="Plugin for publish directories with RESTAS application server"
 HOMEPAGE="http://github.com/archimag/restas-directory-publisher"
-SRC_URI="http://cloud.github.com/downloads/archimag/restas-directory-publisher/${P}.tar.bz2"
+SRC_URI="http://archimag-lisp-overlay.googlecode.com/files/${P}.tar.bz2"
 
 LICENSE="LLGPL-2.1"
 SLOT="0"
@@ -15,7 +15,8 @@ nIUSE=""
 RDEPEND=">=dev-lisp/restas-0.0.4
 		 dev-lisp/hunchentoot-cgi
 		 dev-lisp/cl-closure-template
-		 dev-lisp/local-time"
+		 dev-lisp/local-time
+		 >=dev-lisp/iolib-0.7.0"
 
 CLSYSTEMS="${PN}"
 
