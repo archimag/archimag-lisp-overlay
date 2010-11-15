@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI=2
-inherit common-lisp-2 elisp-common eutils
+inherit common-lisp-3 elisp-common eutils
 
 DESCRIPTION="Common Lisp implementation of Google's Closure Templates."
 HOMEPAGE="http://code.google.com/p/cl-closure-template/"
@@ -26,8 +26,8 @@ CLSYSTEMS="closure-template"
 SITEFILE="50${PN}-gentoo.el"
 
 src_install() {
-	common-lisp-install ${CLSYSTEMS}.asd src t
-	common-lisp-symlink-asdf
+	common-lisp-install-sources -t all src t
+	common-lisp-install-asdf ${CLSYSTEMS}
 
 	if use doc; then
 		insinto /usr/share/doc/${PF}/examples
