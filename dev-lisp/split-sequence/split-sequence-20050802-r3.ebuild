@@ -2,7 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit common-lisp-2 eutils
+EAPI=3
+inherit common-lisp-3 eutils
 
 DEB_PV=3
 
@@ -21,7 +22,6 @@ RDEPEND="!dev-lisp/cl-${PN}"
 
 S="${WORKDIR}"/cl-${P}.orig
 
-src_unpack() {
-	unpack ${A}
-	epatch cl-${PN}_${PV}-${DEB_PV}.diff
+src_prepare() {
+	epatch "${WORKDIR}"/cl-${PN}_${PV}-${DEB_PV}.diff
 }
