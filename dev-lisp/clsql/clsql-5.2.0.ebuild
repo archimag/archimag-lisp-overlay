@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=2
-inherit common-lisp-2 eutils multilib
+EAPI=3
+inherit common-lisp-3 eutils multilib
 
 DESCRIPTION="A multi-platform SQL interface for Common Lisp"
 HOMEPAGE="http://clsql.b9.com/
@@ -42,19 +42,19 @@ src_compile() {
 
 install_clsql_pkg() {
 	cd "${S}"
-	common-lisp-install db-${1}/*.lisp ${PN}-${1}.asd
-	common-lisp-symlink-asdf ${PN}-${1}
+	common-lisp-install-sources db-${1}
+	common-lisp-install-asdf ${PN}-${1}
 	if [ -f db-${1}/${PN}_${1}.so ]; then
 		exeinto /usr/$(get_libdir)/${PN} ; doexe db-${1}/${PN}_${1}.so
 	fi
 }
 
 src_install() {
-	common-lisp-install ${PN}.asd sql/*.lisp ${PN}-tests.asd tests
-	common-lisp-symlink-asdf ${PN} ${PN}-tests
+	common-lisp-install-sources sql/*.lisp tests
+	common-lisp-install-asdf ${PN} ${PN}-tests
 
-	common-lisp-install uffi/*.lisp ${PN}-{uffi,cffi}.asd
-	common-lisp-symlink-asdf ${PN}-uffi
+	common-lisp-install-sources uffi/*.lisp
+	common-lisp-install-asdf ${PN}-{uffi,cffi}
 	exeinto /usr/$(get_libdir)/${PN} ; doexe uffi/${PN}_uffi*.so
 
 	install_clsql_pkg postgresql-socket

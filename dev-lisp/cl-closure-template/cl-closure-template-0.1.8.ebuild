@@ -2,9 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-#EAPI=0
-
-inherit common-lisp-2 elisp-common eutils
+EAPI=2
+inherit common-lisp-3 elisp-common eutils
 
 DESCRIPTION="Common Lisp implementation of Google's Closure Templates."
 HOMEPAGE="http://code.google.com/p/cl-closure-template/"
@@ -34,8 +33,8 @@ src_unpack() {
 }
 
 src_install() {
-	common-lisp-install ${CLSYSTEMS}.asd src t
-	common-lisp-symlink-asdf
+	common-lisp-install-sources -t all src t
+	common-lisp-install-asdf ${CLSYSTEMS}
 
 	if use doc; then
 		insinto /usr/share/doc/${PF}/examples
