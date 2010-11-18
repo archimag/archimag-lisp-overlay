@@ -2,7 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit common-lisp-2
+EAPI=3
+inherit common-lisp-3
 
 DESCRIPTION="General Utilities for Common Lisp Programs from Kevin Rosenberg"
 HOMEPAGE="http://www.cliki.net/kmrcl"
@@ -18,7 +19,4 @@ RDEPEND="!dev-lisp/cl-${PN}
 
 CLSYSTEMS="${PN} ${PN}-tests"
 
-src_unpack() {
-	unpack ${A}
-	rm "${S}"/Makefile
-}
+src_compile() { :; }
