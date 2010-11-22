@@ -16,7 +16,8 @@ IUSE=""
 RDEPEND="dev-db/freetds
 		dev-lisp/cffi
 		dev-lisp/iterate
-		dev-lisp/garbage-pools"
+		dev-lisp/garbage-pools
+		dev-lisp/parse-number"
 
 CLSYSTEMS="mssql"
 
