@@ -6,7 +6,7 @@ inherit common-lisp-2 eutils
 
 DESCRIPTION="Linedit is a readline-style library written in Common Lisp."
 HOMEPAGE="http://www.common-lisp.net/project/linedit/"
-SRC_URI="http://common-lisp.net/project/${PN}/files/${PN}_${PV}.tar.gz"
+SRC_URI="ftp://cnic.fr/gentoo-lisp-overlay/${PN}_${PV}.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
