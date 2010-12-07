@@ -23,7 +23,7 @@ RDEPEND="dev-lisp/cl-ppcre
 		!sbcl? ( !clisp? (  ecl? ( >=dev-lisp/ecls-10.4.1 ) ) )
 		!sbcl? (  clisp? ( >=dev-lisp/clisp-2.44[X,new-clx] ) )
 		sbcl?  ( >=dev-lisp/sbcl-1.0.32 )
-		emacs? ( virtual/emacs app-emacs/slime )"
+		emacs? ( virtual/emacs virtual/slime )"
 DEPEND="${RDEPEND}
 		sys-apps/texinfo
 		doc? ( virtual/texi2dvi )"
