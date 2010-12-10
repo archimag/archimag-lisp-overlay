@@ -2,7 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit common-lisp-2 eutils
+EAPI=3
+inherit common-lisp-3 eutils
 
 DESCRIPTION="Log5 is a Common Lisp logging framework."
 HOMEPAGE="http://common-lisp.net/project/log5"
@@ -18,7 +19,7 @@ RDEPEND="dev-lisp/lift"
 CLSYSTEMS="${PN} ${PN}-test"
 
 src_install() {
-	common-lisp-install *.asd dev unit-tests
-	common-lisp-symlink-asdf
+	common-lisp-install-sources dev unit-tests
+	common-lisp-install-asdf
 	dodoc todo.text
 }
