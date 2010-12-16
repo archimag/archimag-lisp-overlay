@@ -14,7 +14,10 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
-RDEPEND="media-libs/sdl-image
+RDEPEND="media-libs/libpng
+		media-libs/jpeg
+		media-libs/tiff
+		media-libs/sdl-image
 		dev-lisp/cffi
 		dev-lisp/lispbuilder-sdl"
 
