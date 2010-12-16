@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=2
-inherit common-lisp-2
+EAPI=3
+inherit common-lisp-3 eutils
 
 DESCRIPTION="Lisp Application Builder Interface to libSDL"
 HOMEPAGE="http://code.google.com/p/lispbuilder/"
@@ -23,21 +23,22 @@ RDEPEND="media-libs/libsdl
 
 S="${WORKDIR}/${PN}"
 
-CLSYSTEMS="lispbuilder-sdl lispbuilder-sdl-examples lispbuilder-sdl-assets \
-		lispbuilder-sdl-base lispbuilder-sdl-cffi \
+CLSYSTEMS="lispbuilder-sdl lispbuilder-sdl-assets lispbuilder-sdl-base \
+		lispbuilder-sdl-binaries lispbuilder-sdl-examples lispbuilder-sdl-cffi \
 		lispbuilder-sdl-cl-vectors lispbuilder-sdl-cl-vectors-examples \
 		lispbuilder-sdl-vecto lispbuilder-sdl-vecto-examples"
 
-src_prepare() {
-	rm -rf lispbuilder-sdl-binaries.asd trivial-garbage.asd
-	epatch "${FILESDIR}"/gentoo-dont-load-audio-glue.patch
+src_compile() {
+	emake
 }
 
 src_install() {
 	# TODO: install assets/ in /usr/share/
-	common-lisp-install *.asd assets/ base/ \
-		cffi/ examples/ glue-cl-vectors \
-		glue-sdl/ glue-vecto/ sdl/
-	common-lisp-symlink-asdf
+	common-lisp-install-sources base bin \
+		cffi examples glue glue-cl-vectors \
+		glue-vecto sdl sdl-image
+	common-lisp-install-sources -t all assets
+	common-lisp-install-asdf
+	dolib bin/liblispbuilder-sdl-glue.so
 	dohtml documentation/*.{html,png}
 }
