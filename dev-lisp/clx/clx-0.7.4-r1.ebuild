@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=2
-inherit common-lisp-2 eutils
+EAPI=3
+inherit common-lisp-3 eutils
 
 DESCRIPTION="CLX is the Common Lisp interface to the X11 protocol primarily for SBCL."
 HOMEPAGE="http://www.cliki.net/CLX"
@@ -18,17 +18,13 @@ DEPEND="sys-apps/texinfo
 		doc? ( virtual/texi2dvi )"
 RDEPEND="!dev-lisp/cl-${PN}"
 
-src_unpack() {
-	unpack ${A}
-	cd "${S}"
-	rm {exclcmac,sockcl,defsystem,provide,cmudep}.lisp
-}
-
 src_prepare() {
+	rm -v {exclcmac,sockcl,defsystem,provide,cmudep}.lisp || die
 	epatch "${FILESDIR}"/gentoo-fix-asd.patch
 	epatch "${FILESDIR}"/gentoo-fix-dep-openmcl.patch
 	epatch "${FILESDIR}"/gentoo-fix-unused-vars.patch
 	epatch "${FILESDIR}"/gentoo-fix-obsolete-eval-when.patch
+	epatch "${FILESDIR}"/gentoo-fix-dynamic-extent-sbcl-1.0.45.patch
 }
 
 src_compile() {
@@ -41,8 +37,8 @@ src_compile() {
 }
 
 src_install() {
-	common-lisp-install *.{lisp,asd} {debug,demo,test}/*.lisp
-	common-lisp-symlink-asdf
+	common-lisp-install-sources *.lisp debug demo test
+	common-lisp-install-asdf
 	dodoc NEWS CHANGES README*
 	doinfo manual/${PN}.info
 	use doc && dodoc manual/${PN}.pdf
