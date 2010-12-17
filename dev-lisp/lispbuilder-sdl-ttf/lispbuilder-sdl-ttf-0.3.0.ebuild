@@ -2,10 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
-inherit common-lisp-2
+EAPI=3
+inherit common-lisp-3
 
-DESCRIPTION="Lisp Application Builder Interface to libSDL"
+DESCRIPTION="Lisp Application Builder Interface to SDL_ttf"
 HOMEPAGE="http://code.google.com/p/lispbuilder/"
 SRC_URI="http://lispbuilder.googlecode.com/files/${P}.tgz"
 
@@ -14,20 +14,26 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
-RDEPEND="media-libs/sdl-image
+RDEPEND="media-libs/sdl-ttf
 		dev-lisp/cffi
 		dev-lisp/lispbuilder-sdl"
 
 S="${WORKDIR}/${PN}"
 
-CLSYSTEMS="lispbuilder-sdl-image lispbuilder-sdl-image-examples lispbuilder-sdl-image-cffi"
+CLSYSTEMS="lispbuilder-sdl-ttf lispbuilder-sdl-ttf-binaries \
+		lispbuilder-sdl-ttf-cffi lispbuilder-sdl-ttf-examples"
 
 src_prepare() {
-	rm -f lispbuilder-sdl-image-binaries.asd
 	epatch "${FILESDIR}"/gentoo-fix-asd.patch
 }
 
+src_compile() {
+	emake
+}
+
 src_install() {
-	common-lisp-install *.asd cffi/ examples/ sdl-image/
-	common-lisp-symlink-asdf
+	common-lisp-install-sources bin cffi examples sdl-ttf
+	common-lisp-install-asdf
+	dolib bin/liblispbuilder-sdl-ttf-glue.so
+	dodoc documentation/*.{html,png}
 }

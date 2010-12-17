@@ -1,0 +1,32 @@
+Only in lispbuilder-sdl-ttf/bin: liblispbuilder-sdl-ttf-glue.so
+Only in lispbuilder-sdl-ttf/build: liblispbuilder-sdl-ttf-glue.so
+Only in lispbuilder-sdl-ttf/glue: lispbuilder-sdl-ttf-glue.o
+diff -ur lispbuilder-sdl-ttf.orig/lispbuilder-sdl-ttf.asd lispbuilder-sdl-ttf/lispbuilder-sdl-ttf.asd
+--- lispbuilder-sdl-ttf.orig/lispbuilder-sdl-ttf.asd	2010-03-27 19:28:36.000000000 +0100
++++ lispbuilder-sdl-ttf/lispbuilder-sdl-ttf.asd	2010-12-16 23:12:19.805837263 +0100
+@@ -30,9 +30,4 @@
+              (:file "string-solid")
+ 	     (:file "string-shaded")
+ 	     (:file "string-blended"))
+-            :serial t)
+-   (:module "documentation"
+-	    :components
+-	    ((:html-file "header")
+-	     (:html-file "footer")
+-	     (:html-file "lispbuilder-sdl-ttf")))))
++            :serial t)))
+diff -ur lispbuilder-sdl-ttf.orig/lispbuilder-sdl-ttf-cffi.asd lispbuilder-sdl-ttf/lispbuilder-sdl-ttf-cffi.asd
+--- lispbuilder-sdl-ttf.orig/lispbuilder-sdl-ttf-cffi.asd	2009-12-29 09:34:52.000000000 +0100
++++ lispbuilder-sdl-ttf/lispbuilder-sdl-ttf-cffi.asd	2010-12-16 23:25:03.522379485 +0100
+@@ -20,9 +20,4 @@
+ 	      ((:file "package")
+ 	       (:file "library" :depends-on ("package"))
+ 	       (:file "ttf" :depends-on ("package" "library"))
+-	       (:file "translate" :depends-on ("ttf"))))
+-     (:module "glue"
+-	      :components
+-	      ((:static-file "Makefile")
+-               (:static-file "lispbuilder-sdl-ttf-glue.c")
+-               (:static-file "lispbuilder-sdl-ttf-glue.h")))))
++	       (:file "translate" :depends-on ("ttf"))))))
+Only in lispbuilder-sdl-ttf: Makefile.opts
