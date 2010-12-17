@@ -18,7 +18,7 @@ RDEPEND="media-libs/libpng
 		media-libs/jpeg
 		media-libs/tiff
 		media-libs/libsdl
-		media-libs/libsdl-image
+		media-libs/sdl-image
 		dev-lisp/cffi
 		dev-lisp/trivial-garbage
 		dev-lisp/cl-vectors
