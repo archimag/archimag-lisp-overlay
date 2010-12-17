@@ -32,6 +32,10 @@ CLSYSTEMS="lispbuilder-sdl lispbuilder-sdl-assets lispbuilder-sdl-base \
 		lispbuilder-sdl-cl-vectors lispbuilder-sdl-cl-vectors-examples \
 		lispbuilder-sdl-vecto lispbuilder-sdl-vecto-examples"
 
+src_prepare() {
+	epatch "${FILESDIR}"/${PV}-fix-unicode-comments.patch
+}
+
 src_compile() {
 	emake
 }
