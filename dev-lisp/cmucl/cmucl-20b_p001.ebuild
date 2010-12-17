@@ -23,8 +23,6 @@ DEPEND="${RDEPEND}
 		sys-devel/bc"
 PDEPEND="dev-lisp/gentoo-init"
 
-PROVIDE="virtual/commonlisp"
-
 S="${WORKDIR}"
 
 src_prepare() {
