@@ -24,8 +24,6 @@ DEPEND="${RDEPEND}
 		app-text/texi2html"
 PDEPEND="dev-lisp/gentoo-init"
 
-PROVIDE="virtual/commonlisp"
-
 S="${WORKDIR}"/${MY_P}
 
 src_prepare() {
