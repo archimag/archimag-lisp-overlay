@@ -38,8 +38,6 @@ DEPEND="${RDEPEND}
 
 PDEPEND="dev-lisp/gentoo-init"
 
-PROVIDE="virtual/commonlisp"
-
 enable_modules() {
 	[[ $# = 0 ]] && die "${FUNCNAME[0]} must receive at least one argument"
 	for m in "$@" ; do
