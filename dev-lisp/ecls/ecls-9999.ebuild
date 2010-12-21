@@ -22,8 +22,6 @@ DEPEND="${RDEPEND}
 		app-text/texi2html"
 PDEPEND="dev-lisp/gentoo-init"
 
-PROVIDE="virtual/commonlisp"
-
 src_prepare() {
 	epatch "${FILESDIR}"/${PV}/headers-gentoo.patch
 
