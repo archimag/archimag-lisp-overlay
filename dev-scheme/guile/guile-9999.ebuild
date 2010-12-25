@@ -5,7 +5,7 @@
 EAPI="3"
 #inherit eutils autotools flag-o-matic elisp-common
 #inherit eutils flag-o-matic elisp-common git
-inherit eutils autotools flag-o-matic git
+inherit eutils autotools flag-o-matic git elisp-common
 
 DESCRIPTION="Scheme interpreter"
 HOMEPAGE="http://www.gnu.org/software/guile/"
