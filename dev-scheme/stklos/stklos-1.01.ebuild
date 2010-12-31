@@ -29,9 +29,10 @@ src_configure() {
 	econf $(use_enable threads threads pthreads)
 }
 
-# call/cc & dynamic-wind test fails on amd64. already upstream
+# call/cc & dynamic-wind test fails on amd64 with sandbox
 
 src_install() {
 	emake DESTDIR="${D}" install || die "Install failed"
-	dodoc AUTHORS ChangeLog NEWS PACKAGES-USED PORTING-NOTES README SUPPORTED-SRFIS
+	dodoc AUTHORS ChangeLog NEWS PACKAGES-USED PORTING-NOTES README SUPPORTED-SRFIS \
+		|| die "dodocs failed"
 }
