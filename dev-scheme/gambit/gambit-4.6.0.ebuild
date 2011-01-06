@@ -1,6 +1,6 @@
-# Copyright 1999-2011 Gentoo Foundation
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# $Header: /var/cvsroot/gentoo-x86/dev-scheme/gambit/gambit-4.5.3.ebuild,v 1.1 2009/11/02 15:09:06 hkbst Exp $
 
 EAPI="3"
 

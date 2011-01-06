@@ -1,6 +1,6 @@
-# Copyright 1999-2011 Gentoo Foundation
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# $Header: /var/cvsroot/gentoo-x86/app-text/skribe/skribe-1.2l.ebuild,v 1.3 2010/09/15 21:47:28 chiiph Exp $
 
 EAPI="3"
 
