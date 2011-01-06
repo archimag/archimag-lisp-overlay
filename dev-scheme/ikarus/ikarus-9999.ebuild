@@ -1,6 +1,6 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-scheme/ikarus/ikarus-0.0.3.ebuild,v 1.3 2008/06/01 18:03:13 pchrist Exp $
+# $Header: $
 
 inherit eutils flag-o-matic autotools bzr
 
