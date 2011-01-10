@@ -1,8 +1,9 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit common-lisp-2
+EAPI=3
+inherit common-lisp-3
 
 MY_P=${PN}_${PV}
 
@@ -21,7 +22,8 @@ RDEPEND="!dev-lisp/cl-${PN}
 		dev-lisp/babel
 		dev-lisp/trivial-features"
 
-CLSYSTEMS="${PN} ${PN}-tests ${PN}-examples ${PN}-grovel ${PN}-uffi-compat"
+CLSYSTEMS="cffi.asd cffi-tests.asd cffi-examples.asd cffi-grovel.asd \
+		cffi-uffi-compat.asd"
 
 S="${WORKDIR}"/${MY_P}
 
@@ -33,8 +35,9 @@ src_compile() {
 }
 
 src_install() {
-	common-lisp-install *.asd examples/ grovel/ src/ tests/ uffi-compat/
-	common-lisp-symlink-asdf
+	common-lisp-install-sources examples/ src/ uffi-compat/
+	common-lisp-install-sources -t all grovel/ tests/
+	common-lisp-install-asdf
 	dodoc README TODO doc/*.txt
 	if use doc; then
 		doinfo doc/*.info
