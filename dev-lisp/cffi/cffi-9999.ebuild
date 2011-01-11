@@ -1,8 +1,8 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=2
+EAPI=3
 inherit common-lisp-3 git
 
 MY_P=${PN}_${PV}
@@ -35,8 +35,8 @@ src_compile() {
 }
 
 src_install() {
-	common-lisp-install-sources examples/ src/ tests/ uffi-compat/
-	common-lisp-install-sources -t all grovel/
+	common-lisp-install-sources examples/ src/ uffi-compat/
+	common-lisp-install-sources -t all grovel/ tests/
 	common-lisp-install-asdf
 	dodoc README TODO doc/*.txt
 	if use doc; then
