@@ -1,4 +1,4 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -26,7 +26,7 @@ RDEPEND="X? ( x11-libs/libX11
 		slatex? ( virtual/latex-base )
 		!dev-scheme/plt-scheme"
 DEPEND="${RDEPEND}"
-S="${WORKDIR}/plt-${PV}/src/build"
+S="${WORKDIR}/${P}/src/build"
 ECONF_SOURCE="${S}/.."
 MY_PNUM="01"
 
@@ -61,24 +61,20 @@ src_prepare() {
 	#|| die "failed to remove dir of bundled libraries"
 	#rm -Rv ../wxcommon/{jpeg,libpng,zlib} ../wxxt \
 	rm -Rv ../wxcommon/{jpeg,libpng,zlib} \
-	|| die "failed to remove dir of bundled libraries"
+		|| die "failed to remove dir of bundled libraries"
 	sed -i -e "s/docdir=\"\${datadir}\/racket\/doc\"/docdir=\"\${datadir}\/doc\/${PF}\"/" ../configure || die "sed failed"
 	pushd ..
 	epatch "${FILESDIR}/${P}-hack_makefile_in_temp${MY_PNUM}.patch"
-	epatch "${FILESDIR}/${P}-libpng14.patch"
 	popd
 	#sed -i -e 's/#! \/bin\/sh/#! \/bin\/sh -x/g' ../configure \
 	#|| die "sed failed"
+	sed -i -e 's:CFLAGS) -o ../starter:CFLAGS) @LDFLAGS@ -o ../starter:' \
+		../racket/dynsrc/Makefile.in || die 'sed starter LDFLAGS failed'
 }
 
 src_configure() {
-	local myconf=""
-	if use static; then
-		myconf="--disable-shared"
-	else
-		myconf="--enable-shared"
-	fi
 	econf \
+		$(use_enable !static shared) \
 		$(use_enable doc docs) \
 		$(use_enable X gracket) \
 		$(use_enable X xrender) \
@@ -102,9 +98,7 @@ src_configure() {
 		--disable-oskit \
 		--disable-wbuild \
 		--disable-perl \
-		$(use_with X x) \
-		${myconf} \
-		|| die "Configure script failed"
+		$(use_with X x)
 }
 
 src_compile() {
