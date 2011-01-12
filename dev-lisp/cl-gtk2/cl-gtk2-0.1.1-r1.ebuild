@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
-inherit common-lisp-2 eutils
+EAPI=3
+inherit common-lisp-3 eutils
 
 DESCRIPTION="A Common Lisp interface to Gtk+."
 HOMEPAGE="http://common-lisp.net/project/cl-gtk2/"
@@ -23,6 +23,7 @@ RDEPEND="dev-lisp/bordeaux-threads
 		dev-lisp/cl-cairo2
 		dev-lisp/cl-opengl
 		dev-lisp/iterate
+		dev-lisp/metabang-bind
 		dev-lisp/trivial-garbage
 		>=x11-libs/gtk+-2.16:2"
 
@@ -36,8 +37,8 @@ src_compile() {
 }
 
 src_install() {
-	common-lisp-install cairo gdk glib gtk gtk-glext pango
-	common-lisp-symlink-asdf
+	common-lisp-install-sources -t all cairo gdk glib gtk gtk-glext pango
+	common-lisp-install-asdf
 
 	use doc && dohtml -r doc/*
 }
