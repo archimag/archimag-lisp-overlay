@@ -113,7 +113,16 @@ src_install() {
 	if use plain; then
 		pla1n="plain-"
 	fi
-	time emake DESTDIR="${D}" "${pla1n}"install || die "emake install failed"
+
+	# From boost-1.42.0-r2.ebuild
+	local jobs=$( echo " ${MAKEOPTS} " | \
+		sed -e 's/ --jobs[= ]/ -j /g' \
+		-e 's/ -j \([1-9][0-9]*\)/ -j\1/g' \
+		-e 's/ -j\>/ -j1/g' | \
+		( while read -d ' ' j ; do if [[ "${j#-j}" = "$j" ]]; then continue; fi; jobs="${j#-j}"; done; echo ${jobs} ) )
+	if [[ "${jobs}" != "" ]]; then NUMJOBS="-j "${jobs}; fi;
+
+	time emake DESTDIR="${D}" PLT_SETUP_OPTIONS="${NUMJOBS}" "${pla1n}"install || die "emake install failed"
 	if use cgc || use sgc ; then
 		time emake DESTDIR="${D}" "${pla1n}"install-cgc || die "emake cgc target failed"
 	fi
