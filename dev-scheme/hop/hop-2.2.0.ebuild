@@ -1,4 +1,4 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -10,18 +10,15 @@ inherit multilib eutils
 
 DESCRIPTION="Hop is a higher-order language for programming interactive web applications"
 HOMEPAGE="http://hop.inria.fr/"
-SRC_URI="ftp://ftp-sop.inria.fr/members/Cyprien.Nicolas/mirror/${MY_P}.tar.gz
-	ftp://ftp-sop.inria.fr/indes/fp/Hop/${MY_P}.tar.gz"
+SRC_URI="ftp://ftp-sop.inria.fr/indes/fp/Hop/${MY_P}.tar.gz"
 
 SLOT="0"
 LICENSE="GPL-2"
 KEYWORDS="~amd64 ~x86"
 IUSE="debug ssl threads"
 
-DEPEND=">=dev-scheme/bigloo-3.5a[ssl?,threads?,multimedia,sqlite,web]"
+DEPEND=">=dev-scheme/bigloo-3.6a[ssl?,threads?,multimedia,sqlite,web]"
 RDEPEND="${DEPEND}"
-
-RESTRICT="mirror"
 
 S="${WORKDIR}/${MY_P}"
 
