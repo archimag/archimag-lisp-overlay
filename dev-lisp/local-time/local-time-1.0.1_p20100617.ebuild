@@ -1,12 +1,13 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit common-lisp-2
+EAPI=3
+inherit common-lisp-3
 
 DESCRIPTION="LOCAL-TIME is a development library for manipulating date and time information."
 HOMEPAGE="http://common-lisp.net/project/local-time/"
-SRC_URI="http://common-lisp.net/project/${PN}/${P}.tar.gz"
+SRC_URI="http://common-lisp.net/~sionescu/files/${P}.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
@@ -15,11 +16,13 @@ IUSE="doc postgres"
 
 DEPEND="sys-apps/texinfo
 		doc? ( virtual/texi2dvi )"
-RDEPEND="dev-lisp/cl-fad
-		dev-lisp/fiveam"
+RDEPEND="sys-libs/timezone-data
+		dev-lisp/cl-fad"
 PDEPEND="postgres? ( dev-lisp/postmodern )"
 
-#S="${WORKDIR}"/${PN}
+src_prepare() {
+	epatch "${FILESDIR}"/${PV}-gentoo-use-system-zonedata.patch
+}
 
 src_compile() {
 	cd doc
@@ -31,8 +34,12 @@ src_compile() {
 }
 
 src_install() {
-	common-lisp-install ${PN}.asd src zoneinfo
-	common-lisp-symlink-asdf
+	common-lisp-install-sources src/local-time.lisp test
+	common-lisp-install-asdf local-time.asd local-time.test.asd
+	if use postgres; then
+		common-lisp-install-sources src/integration/cl-postgres.lisp
+		common-lisp-install-asdf cl-postgres+local-time.asd
+	fi
 	dodoc CREDITS README TODO
 	doinfo doc/${PN}.info
 	use doc && dodoc doc/${PN}.pdf
