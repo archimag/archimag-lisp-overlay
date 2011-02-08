@@ -28,8 +28,7 @@ RESTRICT="mirror"
 
 LICENSE="MIT"
 SLOT="0"
-#KEYWORDS="~amd64 ~ppc ~sparc ~x86"
-KEYWORDS=""
+KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE="ldb source +threads +unicode debug doc cobalt"
 
 DEPEND="doc? ( sys-apps/texinfo >=media-gfx/graphviz-2.26.0 )"
