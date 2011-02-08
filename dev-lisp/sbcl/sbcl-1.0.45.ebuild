@@ -1,4 +1,4 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -28,7 +28,8 @@ RESTRICT="mirror"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~ppc ~sparc ~x86"
+#KEYWORDS="~amd64 ~ppc ~sparc ~x86"
+KEYWORDS=""
 IUSE="ldb source +threads +unicode debug doc cobalt"
 
 DEPEND="doc? ( sys-apps/texinfo >=media-gfx/graphviz-2.26.0 )"
