@@ -4,11 +4,9 @@
 
 inherit common-lisp-2
 
-MY_PV=${PV:0:4}-${PV:4:2}-${PV:6:2}
-
 DESCRIPTION="A Common Lisp XML library implementing namespaces, a validating SAX-like XML 1.0 parser and the DOM Level 1 Core interfaces."
 HOMEPAGE="http://common-lisp.net/project/cxml/"
-SRC_URI="http://common-lisp.net/project/${PN}/download/${PN}-${MY_PV}.tgz"
+SRC_URI="http://archimag-lisp-overlay.googlecode.com/files/${P}.tar.bz2"
 
 LICENSE="LLGPL-2.1"
 SLOT="0"
@@ -21,8 +19,6 @@ RDEPEND="!dev-lisp/cl-${PN}
 		dev-lisp/trivial-gray-streams"
 
 CLSYSTEMS="${PN} ${PN}-contrib"
-
-S="${WORKDIR}"/${PN}-${MY_PV}
 
 src_unpack() {
 	unpack ${A}
