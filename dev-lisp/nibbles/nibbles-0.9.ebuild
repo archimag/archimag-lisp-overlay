@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=2
-inherit common-lisp-3
+EAPI=3
+inherit common-lisp-3 eutils
 
 MY_P=${PN}_${PV}
 
@@ -19,6 +19,10 @@ IUSE=""
 RDEPEND="!dev-lisp/cl-${PN}"
 
 S="${WORKDIR}"/${MY_P}
+
+src_prepare() {
+	epatch "${FILESDIR}"/${PV}-gentoo-fix-asd.patch
+}
 
 src_install() {
 	common-lisp-install-sources .
