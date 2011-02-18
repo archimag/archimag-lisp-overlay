@@ -79,6 +79,9 @@ src_prepare() {
 	# Removing bundled boehm-gc
 	rm -rf gc || die
 
+	# bug 354751: Fix '[a-z]' sed range for non ascii LC_COLLATE order
+	sed 's/a-z/[:alpha:]/' -i configure autoconf/* || die 'sed s/a-z/[:alpha:]/ failed'
+
 	java-pkg-opt-2_src_prepare
 }
 
