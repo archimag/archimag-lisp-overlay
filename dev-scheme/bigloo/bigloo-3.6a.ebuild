@@ -55,6 +55,9 @@ src_prepare() {
 	# Removing bundled boehm-gc
 	rm -rf gc || die
 
+	# Fix some printf format warnings
+	epatch "${FILESDIR}/${PN}-${BGL_RELEASE}-fix_printf_format_warnings.patch"
+
 	# bug 354751: Fix '[a-z]' sed range for non ascii LC_COLLATE order
 	sed 's/a-z/[:alpha:]/' -i configure autoconf/* || die 'sed s/a-z/[:alpha:]/ failed'
 
