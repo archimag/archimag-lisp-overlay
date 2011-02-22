@@ -1,4 +1,4 @@
-# Copyright 1999-2011 Gentoo Foundation
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -34,6 +34,8 @@ IUSE="ldb source +threads +unicode debug doc cobalt"
 DEPEND="doc? ( sys-apps/texinfo >=media-gfx/graphviz-2.26.0 )"
 RDEPEND="elibc_glibc? ( >=sys-libs/glibc-2.3 || ( <sys-libs/glibc-2.6[nptl] >=sys-libs/glibc-2.6 ) )"
 PDEPEND="dev-lisp/gentoo-init"
+
+PROVIDE="virtual/commonlisp"
 
 # Disable warnings about executable stacks, as this won't be fixed soon by upstream
 QA_EXECSTACK="usr/bin/sbcl"
