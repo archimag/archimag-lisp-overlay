@@ -14,15 +14,15 @@ diff -u -r a/Makefile.in b/Makefile.in
 diff -u -r a/gracket/Makefile.in b/gracket/Makefile.in
 --- a/gracket/Makefile.in	2010-03-17 20:22:01.000000000 +0200
 +++ b/gracket/Makefile.in	2010-04-19 14:50:10.000000000 +0300
-@@ -280,8 +280,6 @@
- 	$(MAKE) install-@WXVARIANT@-post-collects
+@@ -164,8 +164,6 @@
  
- install-common:
+ install-wx_xt:
+ 	$(MAKE) install-common
 -	cd ..; rm -f "$(DESTDIR)$(bindir)/gracket@CGC_INSTALLED@"
 -	cd ..; rm -f "$(DESTDIR)$(bindir)/gracket@MMM_INSTALLED@"
- 	cd ..; echo 'CXX=@CXX@' >> $(BUILDINFO)
- 	cd ..; echo 'CXXFLAGS=@CXXFLAGS@ @PREFLAGS@ @COMPFLAGS@' >> $(BUILDINFO)
  	cd ..; echo 'MROPTIONS=@MROPTIONS@' >> $(BUILDINFO)
+ 	cd ..; echo "MRLIBS=$(GUILIBS_@WXVARIANT@)" >> $(BUILDINFO)
+ 	cd ..; echo "MRLDFLAGS=$(GRACKETLDFLAGS)" >> $(BUILDINFO)
 diff -u -r a/racket/Makefile.in b/racket/Makefile.in
 --- a/racket/Makefile.in	2010-03-17 20:22:06.000000000 +0200
 +++ b/racket/Makefile.in	2010-04-19 14:49:49.000000000 +0300
@@ -34,4 +34,4 @@ diff -u -r a/racket/Makefile.in b/racket/Makefile.in
 -	cd ..; rm -f "$(DESTDIR)$(bindir)/racket@MMM_INSTALLED@"
  	cd ..; cp racket/starter "$(DESTDIR)$(libpltdir)/starter"
  	cd ..; $(STRIP_DEBUG) "$(DESTDIR)$(libpltdir)/starter"
- 	cd ..; echo 'CC=@CC@' > "$(BUILDINFO)"
+ 	./racket@CGC@ -cu "$(srcdir)/collects-path.rkt" "$(DESTDIR)$(libpltdir)/starter" @COLLECTS_PATH@
