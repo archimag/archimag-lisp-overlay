@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="3"
+EAPI="4"
 
 inherit eutils
 
@@ -15,6 +15,8 @@ SLOT="0"
 KEYWORDS="~x86 ~amd64"
 IUSE="-backtrace cairo cgc doc opengl profile X slatex sgc -futures -places +foreign static -plain"
 # jit
+REQUIRED_USE="cgc? ( !sgc )"
+
 RDEPEND="X? ( x11-libs/libX11
 			x11-libs/libXaw
 			x11-libs/libXft
@@ -26,14 +28,11 @@ RDEPEND="X? ( x11-libs/libX11
 		slatex? ( virtual/latex-base )
 		!dev-scheme/plt-scheme"
 DEPEND="${RDEPEND}"
-S="${WORKDIR}/${P}/src/build"
-ECONF_SOURCE="${S}/.."
+
+S="${WORKDIR}/${P}/src"
 MY_PNUM="01"
 
 pkg_setup() {
-	if use cgc && use sgc ; then
-		die "You cannot use both cgc and sgc USE flags, you have to choose one of them"
-	fi
 	for my_flag in backtrace futures places
 	do
 		if use "${my_flag}" ; then
@@ -49,27 +48,12 @@ pkg_setup() {
 	fi
 }
 
-src_unpack() {
-	unpack ${A}
-	mkdir -v "${S}" || die "failed to create build dir"
-}
-
 src_prepare() {
-	#( cd .. && rm -Rv wxcommon && rm -Rv foreign ) \
-	#|| die "failed to remove dir of bundled libraries"
-	#rm -Rv ../wxcommon/{jpeg,libpng,zlib} ../../collects  \
-	#|| die "failed to remove dir of bundled libraries"
-	#rm -Rv ../wxcommon/{jpeg,libpng,zlib} ../wxxt \
-	rm -Rv ../wxcommon/{jpeg,libpng,zlib} \
-		|| die "failed to remove dir of bundled libraries"
-	sed -i -e "s/docdir=\"\${datadir}\/racket\/doc\"/docdir=\"\${datadir}\/doc\/${PF}\"/" ../configure || die "sed failed"
-	pushd ..
+	sed -i -e "s/docdir=\"\${datadir}\/racket\/doc\"/docdir=\"\${datadir}\/doc\/${PF}\"/" configure || die "sed failed"
+	# Fix LDFLAGS issue for the starter binary
+	sed -i -e 's:CFLAGS) -o ../starter:CFLAGS) @LDFLAGS@ -o ../starter:' racket/dynsrc/Makefile.in || die 'sed starter LDFLAGS failed'
+	# Patch for allowing plain-install, and some other fixes I don't know the origin
 	epatch "${FILESDIR}/${P}-hack_makefile_in_temp${MY_PNUM}.patch"
-	popd
-	#sed -i -e 's/#! \/bin\/sh/#! \/bin\/sh -x/g' ../configure \
-	#|| die "sed failed"
-	sed -i -e 's:CFLAGS) -o ../starter:CFLAGS) @LDFLAGS@ -o ../starter:' \
-		../racket/dynsrc/Makefile.in || die 'sed starter LDFLAGS failed'
 }
 
 src_configure() {
@@ -117,18 +101,20 @@ src_install() {
 	# From boost-1.42.0-r2.ebuild
 	local jobs=$( echo " ${MAKEOPTS} " | \
 		sed -e 's/ --jobs[= ]/ -j /g' \
-		-e 's/ -j \([1-9][0-9]*\)/ -j\1/g' \
-		-e 's/ -j\>/ -j1/g' | \
+			-e 's/ -j \([1-9][0-9]*\)/ -j\1/g' \
+			-e 's/ -j\>/ -j1/g' | \
 		( while read -d ' ' j ; do if [[ "${j#-j}" = "$j" ]]; then continue; fi; jobs="${j#-j}"; done; echo ${jobs} ) )
 	if [[ "${jobs}" != "" ]]; then NUMJOBS="-j "${jobs}; fi;
 
-	time emake DESTDIR="${D}" PLT_SETUP_OPTIONS="${NUMJOBS}" "${pla1n}"install || die "emake install failed"
+	time emake DESTDIR="${D}" PLT_SETUP_OPTIONS="${NUMJOBS}" \
+		"${pla1n}"install || die "emake install failed"
 	if use cgc || use sgc ; then
-		time emake DESTDIR="${D}" "${pla1n}"install-cgc || die "emake cgc target failed"
+		time emake DESTDIR="${D}" PLT_SETUP_OPTIONS="${NUMJOBS}" \
+			"${pla1n}"install-cgc || die "emake cgc target failed"
 	fi
 	if use X; then
-		newicon ../../collects/icons/PLT-206.png drscheme.png
-		make_desktop_entry drscheme "DrScheme" drscheme "Development"
+		newicon ../collects/icons/PLT-206.png drracket.png
+		make_desktop_entry drracket "DrRacket" drracket "Development"
 	fi
 	# deal with slatex
 	if use slatex; then
@@ -138,7 +124,7 @@ src_install() {
 			popd
 		fi
 		insinto /usr/share/texmf/tex/latex/slatex/
-		newins ../../collects/slatex/slatex.sty plt-slatex.sty
+		newins ../collects/slatex/slatex.sty plt-slatex.sty
 	else
 		if ! use plain; then
 			rm -Rfv "${D}"/usr/bin/*slatex* || die "Failed to delete slatex files"
