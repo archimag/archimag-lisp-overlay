@@ -104,7 +104,6 @@ src_compile() {
 	local bindir="${WORKDIR}"/sbcl-binary
 
 	strip-unsupported-flags ; filter-flags -fomit-frame-pointer
-	append-ldflags -Wl,--no-as-needed # see bug #132992
 
 	# To make the hardened compiler NOT compile with -fPIE -pie
 	if gcc-specs-pie ; then
