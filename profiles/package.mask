@@ -1,0 +1,10 @@
+# Cyprien Nicolas <c.nicolas+gentoo@gmail.com> (28 Apr 2011)
+# Masked for several reasons pointed out by Marijn:
+# Marijn Schouten <hkBst@gentoo.org> (07 April 2011)
+# Masked for number of issues, but can be used to
+# test against if people are impatient ;P
+# Known issues:
+# - Broken emacs support (ulm has promised to look)
+# - doesn't build when boehm-gc is built without threads
+# - no SLOTting yet!
+=dev-scheme/guile-2.0.1
