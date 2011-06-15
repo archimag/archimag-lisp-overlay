@@ -31,6 +31,7 @@ src_unpack() {
 	epatch "${FILESDIR}"/${PV}/gentoo-module-load.patch
 	epatch "${FILESDIR}"/${PV}/gentoo-dont-call-init.patch
 	epatch "${FILESDIR}"/${PV}/gentoo-changelog-date.patch
+	epatch "${FILESDIR}"/${PV}/fix-sbcl-syscall-error-not-compatibility.patch
 
 	# extract date of last update from ChangeLog, bug 233270
 	SLIME_CHANGELOG_DATE=$(awk '/^[-0-9]+ / { print $1; exit; }' ChangeLog)

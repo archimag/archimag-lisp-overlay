@@ -23,6 +23,13 @@ CLPACKAGE=swank
 CLSYSTEMS=swank
 SITEFILE=70${PN}-gentoo.el
 
+src_unpack() {
+	unpack ${A}
+	cd "${S}"
+
+	epatch "${FILESDIR}"/fix-sbcl-syscall-error-not-compatibility.patch
+}
+
 src_compile() {
 	elisp-compile *.el || die "Cannot compile core Elisp files"
 	BYTECOMPFLAGS="${BYTECOMPFLAGS} -L contrib -l slime" \
