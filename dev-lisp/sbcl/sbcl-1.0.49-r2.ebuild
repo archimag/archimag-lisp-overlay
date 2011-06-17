@@ -32,8 +32,8 @@ KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE="+asdf ldb source +threads +unicode debug doc cobalt"
 
 DEPEND="doc? ( sys-apps/texinfo >=media-gfx/graphviz-2.26.0 )"
-RDEPEND="elibc_glibc? ( >=sys-libs/glibc-2.3 || ( <sys-libs/glibc-2.6[nptl] >=sys-libs/glibc-2.6 ) )"
-PDEPEND="asdf? ( >=dev-lisp/gentoo-init-1.0 )"
+RDEPEND="elibc_glibc? ( >=sys-libs/glibc-2.3 || ( <sys-libs/glibc-2.6[nptl] >=sys-libs/glibc-2.6 ) )
+		asdf? ( >=dev-lisp/gentoo-init-1.0 )"
 
 # Disable warnings about executable stacks, as this won't be fixed soon by upstream
 QA_EXECSTACK="usr/bin/sbcl"
