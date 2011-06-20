@@ -1,8 +1,10 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-DESCRIPTION="Simple ASDF-BINARY-LOCATIONS configuration for Gentoo Common Lisp ports."
+EAPI=3
+
+DESCRIPTION="Simple ASDF2 configuration for Gentoo Common Lisp ports."
 HOMEPAGE="http://www.gentoo.org/proj/en/lisp/common-lisp/guide.xml"
 
 LICENSE="GPL-2"
@@ -10,11 +12,11 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
-RDEPEND=">=dev-lisp/asdf-binary-locations-0.2.3"
+RDEPEND=">=dev-lisp/asdf-2.0.0"
 
 S="${WORKDIR}"
 
 src_install() {
-	insinto /etc
-	doins "${FILESDIR}"/gentoo-init.lisp
+	insinto /etc/common-lisp
+	doins "${FILESDIR}"/gentoo-init.lisp "${FILESDIR}"/source-registry.conf
 }
