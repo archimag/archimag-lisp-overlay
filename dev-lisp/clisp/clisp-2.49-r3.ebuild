@@ -12,12 +12,13 @@ SRC_URI="mirror://sourceforge/clisp/${P}.tar.bz2"
 LICENSE="GPL-2"
 SLOT="2"
 KEYWORDS="~alpha ~amd64 ~ia64 ~ppc ~sparc ~x86"
-IUSE="hyperspec X berkdb dbus fastcgi gdbm gtk pari +pcre postgres +readline svm -threads +unicode +zlib"
+IUSE="+asdf hyperspec X berkdb dbus fastcgi gdbm gtk pari +pcre postgres +readline svm -threads +unicode +zlib"
 # "jit" disabled ATM
 
 RDEPEND="virtual/libiconv
 		 >=dev-libs/libsigsegv-2.4
 		 >=dev-libs/ffcall-1.10
+		 asdf? ( >=dev-lisp/gentoo-init-1.0 )
 		 dbus? ( sys-apps/dbus )
 		 fastcgi? ( dev-libs/fcgi )
 		 gdbm? ( sys-libs/gdbm )
@@ -35,8 +36,6 @@ RDEPEND="virtual/libiconv
 
 DEPEND="${RDEPEND}
 	X? ( x11-misc/imake x11-proto/xextproto )"
-
-PDEPEND="dev-lisp/gentoo-init"
 
 enable_modules() {
 	[[ $# = 0 ]] && die "${FUNCNAME[0]} must receive at least one argument"
