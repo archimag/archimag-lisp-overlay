@@ -147,7 +147,7 @@ src_install() {
 	  ("SYS:CONTRIB;**;*.*.*" #p"/usr/$(get_libdir)/sbcl/**/*.*")))
 EOF
 	if use asdf; then
-	cat >> "${D}"/etc/sbclrc <<EOF
+		cat >> "${D}"/etc/sbclrc <<EOF
 
 ;;; Setup ASDF2
 (load "/etc/common-lisp/gentoo-init.lisp")
