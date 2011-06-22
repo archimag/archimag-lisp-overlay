@@ -7,14 +7,15 @@
 
 ;;; Heavy modifications by Peter Van Eynde
 
-;;; More modifications for Gentoo by Matthew Kennedy
+;;; More modifications for Gentoo by Matthew Kennedy and Stelian Ionescu
 ;;; <mkennedy@gentoo.org>
 
 (in-package "SYSTEM")
 
-(if (probe-file "/etc/cmuclrc")
-    (load "/etc/cmuclrc")
-  (format t "~%;;; Warning: There is no /etc/cmuclrc file (which should have been created during emerge"))
+(if (probe-file "/etc/common-lisp/cmuclrc")
+    (load "/etc/common-lisp/cmuclrc")
+  (format t "~%;;; Warning: There is no /etc/common-lisp/cmuclrc file 
+\(which should have been created during emerge"))
 
 ;;; If you have sources installed on your system, un-comment the following form
 ;;; and change it to point to the source location.  This will allow the Hemlock

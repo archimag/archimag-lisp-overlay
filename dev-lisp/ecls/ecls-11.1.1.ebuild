@@ -1,4 +1,4 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -9,20 +9,23 @@ MY_P=ecl-${PV}
 
 DESCRIPTION="ECL is an embeddable Common Lisp implementation."
 HOMEPAGE="http://common-lisp.net/project/ecl/"
-SRC_URI="mirror://sourceforge/ecls/${MY_P}.tgz"
+SRC_URI="mirror://sourceforge/ecls/${MY_P}.tar.gz"
 RESTRICT="mirror"
 
 LICENSE="BSD LGPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
-IUSE="debug doc gengc precisegc +threads +unicode X"
+IUSE="+asdf debug doc gengc precisegc sse +threads +unicode X"
 
-RDEPEND="dev-libs/gmp
+CDEPEND="dev-libs/gmp
 		dev-libs/libffi
 		>=dev-libs/boehm-gc-7.1[threads?]"
-DEPEND="${RDEPEND}
+
+DEPEND="${CDEPEND}
 		app-text/texi2html"
-PDEPEND="dev-lisp/gentoo-init"
+
+RDEPEND="${CDEPEND}
+		asdf? ( >=dev-lisp/gentoo-init-1.0 )"
 
 S="${WORKDIR}"/${MY_P}
 
@@ -35,9 +38,11 @@ src_configure() {
 		--with-system-gmp \
 		--enable-boehm=system \
 		--enable-longdouble \
+		--with-dffi \
 		$(use_enable gengc) \
 		$(use_enable precisegc) \
 		$(use_with debug debug-cflags) \
+		$(use_with sse) \
 		$(use_enable threads) \
 		$(use_with threads __thread) \
 		$(use_enable unicode) \
