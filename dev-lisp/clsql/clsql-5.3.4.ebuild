@@ -1,9 +1,9 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
 EAPI=3
-inherit common-lisp-3 eutils multilib
+inherit common-lisp-3 eutils toolchain-funcs flag-o-matic multilib
 
 DESCRIPTION="A multi-platform SQL interface for Common Lisp"
 HOMEPAGE="http://clsql.b9.com/
@@ -20,8 +20,7 @@ DEPEND="mysql? ( virtual/mysql )"
 RDEPEND="${DEPEND}
 		!dev-lisp/cl-sql
 		dev-lisp/md5
-		>=dev-lisp/uffi-1.5.7
-		>=dev-lisp/uffi-0.10.5
+		>=dev-lisp/uffi-2.0.0
 		oracle? ( dev-db/oracle-instantclient-basic )
 		postgres? ( dev-db/postgresql-base )
 		sqlite? ( dev-db/sqlite:0 )
@@ -33,10 +32,23 @@ src_prepare() {
 	sed -i 's,"usr" "lib","usr" "'$(get_libdir)'",g' "${S}"/${PN}-{mysql,uffi}.asd
 }
 
+@cc() {
+	local cc=$(tc-getCC)
+	echo "${cc}" "${@}"
+	"${cc}" "${@}"
+}
+
 src_compile() {
-	make -C uffi || die "Cannot build UFFI helper library"
+	strip-flags
+	@cc uffi/clsql_uffi.c \
+		${CPPFLAGS} ${CFLAGS} ${LDFLAGS} -rdynamic \
+		-fPIC -DPIC -shared -Wl,-soname=clsql_uffi -o uffi/clsql_uffi.so \
+		|| die "Cannot build UFFI helper library"
 	if use mysql; then
-		make -C db-mysql || die "Cannot build foreign glue to libmysql"
+		@cc db-mysql/clsql_mysql.c \
+			${CPPFLAGS} ${CFLAGS} ${LDFLAGS} $(mysql_config --cflags) -rdynamic \
+			-fPIC -DPIC -shared -Wl,-soname=clsql_mysql -o db-mysql/clsql_mysql.so \
+			|| die "Cannot build foreign glue to libmysqlclient"
 	fi
 }
 
@@ -55,7 +67,7 @@ src_install() {
 
 	common-lisp-install-sources uffi/*.lisp
 	common-lisp-install-asdf ${PN}-{uffi,cffi}
-	exeinto /usr/$(get_libdir)/${PN} ; doexe uffi/${PN}_uffi*.so
+	exeinto /usr/$(get_libdir)/${PN} ; doexe uffi/${PN}_uffi.so
 
 	install_clsql_pkg postgresql-socket
 	use postgres && install_clsql_pkg postgresql
