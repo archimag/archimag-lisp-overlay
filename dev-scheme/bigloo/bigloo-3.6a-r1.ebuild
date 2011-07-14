@@ -1,8 +1,8 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="3"
+EAPI="4"
 
 inherit elisp-common multilib eutils flag-o-matic java-pkg-opt-2
 
@@ -16,10 +16,17 @@ DESCRIPTION="Bigloo is a Scheme implementation."
 HOMEPAGE="http://www-sop.inria.fr/indes/fp/Bigloo/bigloo.html"
 SRC_URI="ftp://ftp-sop.inria.fr/indes/fp/Bigloo/${MY_P}.tar.gz"
 
-LICENSE="GPL-2"
+LICENSE="GPL-2 LGPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~x86"
 IUSE="bglpkg calendar crypto debug doc emacs gmp gstreamer java mail multimedia openpgp packrat sqlite srfi1 srfi27 ssl text threads web"
+REQUIRED_USE="
+	bglpkg? ( web )
+	gstreamer? ( multimedia threads )
+	openpgp? ( crypto )
+	packrat? ( srfi1 )
+	srfi27? ( x86? ( gmp ) )
+"
 
 # bug 254916 for >=dev-libs/boehm-gc-7.1
 DEPEND=">=dev-libs/boehm-gc-7.1[threads?]
@@ -36,48 +43,20 @@ S=${WORKDIR}/${MY_P/-[ab]*/}
 
 SITEFILE="50bigloo-gentoo.el"
 
-pkg_setup() {
-	if use gstreamer; then
-		if ! use threads; then
-			die "USE Dependency: 'gstreamer' needs 'threads'. You may enable 'threads', or disable 'gstreamer'."
-		fi
-
-		if ! use multimedia; then
-			die "USE Dependency: 'gstreamer' needs 'multimedia'."
-		fi
+pkg_pretend() {
+	if use srfi27 && use amd64; then
+		#TODO: 'dev-scheme/bigloo srfi27' in arch/amd64/package.use.mask?
+		ewarn "srfi27 is known to only work on 32-bit architectures." \
+			"This IUSE is ignored on amd64."
 	fi
-
-	if use packrat && ! use srfi1; then
-		die "USE Dependency: 'packrat' needs 'srfi1'."
-	fi
-
-	if use srfi27; then
-		# 'dev-scheme/bigloo srfi27' should be added in arch/amd64/package.use.mask
-		if use amd64; then
-			ewarn "srfi27 is known to only work on 32-bit architectures." \
-				"The USE is ignored on amd64."
-		elif ! use gmp; then
-			die "USE Dependency: 'srfi27' needs 'gmp'."
-		fi
-	fi
-
-	if use bglpkg && ! use web; then
-		die "USE Dependency: 'bglpkg' needs 'web'."
-	fi
-
-	if use openpgp && ! use crypto; then
-		die "USE Dependency: 'openpgp' needs 'crypto'."
-	fi
-
-	java-pkg-opt-2_pkg_setup
 }
 
 src_prepare() {
-	# Allow the disabling of bglpkg
-	epatch "${FILESDIR}/${PN}-${BGL_RELEASE}-bglpkg.patch"
-
 	# Removing bundled boehm-gc
 	rm -rf gc || die
+
+	# Fix some printf format warnings
+	epatch "${FILESDIR}/${PN}-${BGL_RELEASE}-fix_printf_format_warnings.patch"
 
 	# bug 354751: Fix '[a-z]' sed range for non ascii LC_COLLATE order
 	sed 's/a-z/[:alpha:]/' -i configure autoconf/* || die 'sed s/a-z/[:alpha:]/ failed'
@@ -97,7 +76,8 @@ src_configure() {
 		myconf="--emacs=false"
 	fi
 
-	# api/{crypto,openpgp} jvm tests show failures.
+	# Add JCFLAGS to the configure script
+	# (api/{crypto,openpgp} jvm tests show failures)
 	if use java; then
 		sed -e "s/^\(jcflags=\)\(.*\)/\\1\"\\2 $(java-pkg_javac-args)\"/" \
 			-e 's/jcflags=$jcflags/jcflags="$jcflags"/'\
@@ -194,7 +174,6 @@ src_install() {
 	fi
 
 	dodoc ChangeLog README || die "dodoc failed"
-	newdoc LICENSE COPYING || die "newdoc failed"
 
 	pushd "${S}/manuals" &>/dev/null
 	if use doc; then

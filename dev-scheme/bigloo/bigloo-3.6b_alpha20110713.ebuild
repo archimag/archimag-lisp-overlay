@@ -4,23 +4,38 @@
 
 EAPI="4"
 
+Months=( "Dec" "Jan" "Feb" "Mar" "Apr" "May" "Jun" "Jul" "Aug" "Sep" "Oct" "Nov" "Dec" )
+
 inherit elisp-common multilib eutils flag-o-matic java-pkg-opt-2
 
 MY_P=${PN}${PV/_p/-}
 MY_P=${MY_P/_alpha*/-alpha}
 MY_P=${MY_P/_beta*/-beta}
 
+# Handling of alpha and beta releases
+if [[ $PV = *_alpha* ]] || [[ $PV = *_beta* ]]; then
+	date=${PV/*_alpha/}
+	date=${date/*_beta/}
+	year=${date:2:2}
+	month=${Months[${date:4:2}]}
+	day=${date:6:2}
+	MY_P="${MY_P}${day}${month}${year}"
+fi
+
 BGL_RELEASE=${PV/_*/}
 
 DESCRIPTION="Bigloo is a Scheme implementation."
 HOMEPAGE="http://www-sop.inria.fr/indes/fp/Bigloo/bigloo.html"
-SRC_URI="ftp://ftp-sop.inria.fr/indes/fp/Bigloo/${MY_P}.tar.gz"
+#SRC_URI="ftp://ftp-sop.inria.fr/indes/fp/Bigloo/${MY_P}.tar.gz"
+SRC_URI="ftp://ftp-sop.inria.fr/members/Cyprien.Nicolas/mirror/${MY_P}.tar.gz"
 
 LICENSE="GPL-2 LGPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~ppc ~x86"
-IUSE="bglpkg calendar crypto debug doc emacs gmp gstreamer java mail multimedia openpgp packrat sqlite srfi1 srfi27 ssl text threads web"
+#KEYWORDS="~amd64 ~ppc ~x86"
+KEYWORDS=""
+IUSE="alsa bglpkg calendar crypto debug doc emacs flac gmp gstreamer java mail mp3 multimedia openpgp packrat sqlite srfi1 srfi27 ssl text threads web"
 REQUIRED_USE="
+	alsa? ( multimedia )
 	bglpkg? ( web )
 	gstreamer? ( multimedia threads )
 	openpgp? ( crypto )
@@ -30,14 +45,19 @@ REQUIRED_USE="
 
 # bug 254916 for >=dev-libs/boehm-gc-7.1
 DEPEND=">=dev-libs/boehm-gc-7.1[threads?]
+	alsa? ( media-libs/alsa-lib )
 	emacs? ( virtual/emacs )
+	flac? ( media-libs/flac )
 	gmp? ( dev-libs/gmp )
 	gstreamer? ( media-libs/gstreamer media-libs/gst-plugins-base )
 	java? ( >=virtual/jdk-1.5 app-arch/zip )
+	mp3? ( media-sound/mpg123 )
 	sqlite? ( dev-db/sqlite:3 )
 	ssl? ( dev-libs/openssl )
 "
 RDEPEND="${DEPEND}"
+
+RESTRICT="mirror"
 
 S=${WORKDIR}/${MY_P/-[ab]*/}
 
@@ -54,9 +74,6 @@ pkg_pretend() {
 src_prepare() {
 	# Removing bundled boehm-gc
 	rm -rf gc || die
-
-	# Fix some printf format warnings
-	epatch "${FILESDIR}/${PN}-${BGL_RELEASE}-fix_printf_format_warnings.patch"
 
 	# bug 354751: Fix '[a-z]' sed range for non ascii LC_COLLATE order
 	sed 's/a-z/[:alpha:]/' -i configure autoconf/* || die 'sed s/a-z/[:alpha:]/ failed'
@@ -117,11 +134,14 @@ src_configure() {
 		--strip=no
 		$(use debug && echo --debug)
 		${myconf}
+		$(use_enable alsa)
 		$(use_enable calendar)
 		$(use_enable crypto)
+		$(use_enable flac)
 		$(use_enable gmp)
 		$(use_enable gstreamer)
 		$(use_enable mail)
+		$(use_enable mp3 mpg123)
 		$(use_enable multimedia)
 		$(use_enable openpgp)
 		$(use_enable packrat)
@@ -163,6 +183,8 @@ src_install() {
 	if use emacs; then
 		einfo "Installing bee..."
 		emake DESTDIR="${D}" install-bee || die "install-bee failed"
+		einfo "Installing API-specific emacs files"
+		cp -v "${S}"/api/*/emacs/*.el "${D}/${SITELISP}/${PN}"
 		elisp-site-file-install "${FILESDIR}/${SITEFILE}"
 	else
 		# Fix EMACS*=false in Makefile.config
