@@ -29,11 +29,11 @@ RESTRICT="mirror"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
-IUSE="ldb source +threads +unicode debug doc cobalt"
+IUSE="+asdf ldb source +threads +unicode debug doc cobalt"
 
 DEPEND="doc? ( sys-apps/texinfo >=media-gfx/graphviz-2.26.0 )"
-RDEPEND="elibc_glibc? ( >=sys-libs/glibc-2.3 || ( <sys-libs/glibc-2.6[nptl] >=sys-libs/glibc-2.6 ) )"
-PDEPEND="dev-lisp/gentoo-init"
+RDEPEND="elibc_glibc? ( >=sys-libs/glibc-2.3 || ( <sys-libs/glibc-2.6[nptl] >=sys-libs/glibc-2.6 ) )
+		asdf? ( >=dev-lisp/gentoo-init-1.0 )"
 
 # Disable warnings about executable stacks, as this won't be fixed soon by upstream
 QA_EXECSTACK="usr/bin/sbcl"
@@ -145,10 +145,14 @@ src_install() {
 (setf (logical-pathname-translations "SYS")
 	'(("SYS:SRC;**;*.*.*" #p"/usr/$(get_libdir)/sbcl/src/**/*.*")
 	  ("SYS:CONTRIB;**;*.*.*" #p"/usr/$(get_libdir)/sbcl/**/*.*")))
-
-;;; Setup ASDF
-(load "/etc/gentoo-init.lisp")
 EOF
+	if use asdf; then
+		cat >> "${D}"/etc/sbclrc <<EOF
+
+;;; Setup ASDF2
+(load "/etc/common-lisp/gentoo-init.lisp")
+EOF
+	fi
 
 	# Install documentation
 	unset SBCL_HOME

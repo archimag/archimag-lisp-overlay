@@ -1,4 +1,4 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -25,7 +25,6 @@ SITEFILE=70${PN}-gentoo.el
 
 src_prepare() {
 	epatch "${FILESDIR}"/${PV}/fix-inspect-presentations.patch
-	epatch "${FILESDIR}"/${PV}/fix-slime-indentation.patch
 	epatch "${FILESDIR}"/${PV}/gentoo-module-load.patch
 	epatch "${FILESDIR}"/${PV}/gentoo-dont-call-init.patch
 

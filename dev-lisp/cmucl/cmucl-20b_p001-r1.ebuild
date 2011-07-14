@@ -1,4 +1,4 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -16,12 +16,13 @@ RESTRICT="mirror"
 LICENSE="public-domain"
 SLOT="0"
 KEYWORDS="~x86"
-IUSE="X source sse2"
+IUSE="+asdf X source sse2"
 
-RDEPEND="x11-libs/openmotif"
-DEPEND="${RDEPEND}
+DEPEND="x11-libs/openmotif
 		sys-devel/bc"
-PDEPEND="dev-lisp/gentoo-init"
+
+RDEPEND="x11-libs/openmotif
+		asdf? ( >=dev-lisp/gentoo-init-1.0 )"
 
 S="${WORKDIR}"
 
@@ -67,6 +68,13 @@ src_install() {
 		< "${FILESDIR}"/site-init.lisp.in \
 		> "${D}"/usr/$(get_libdir)/cmucl/site-init.lisp \
 		|| die "Cannot fix site-init.lisp"
-	insinto /etc
-	doins "${FILESDIR}"/cmuclrc || die "Failed to install cmuclrc"
+	cp "${FILESDIR}"/cmuclrc .
+	if use asdf; then
+		cat >> cmuclrc <<EOF
+;;; Setup ASDF2
+(load "/etc/common-lisp/gentoo-init.lisp")
+EOF
+	fi
+	insinto /etc/common-lisp
+	doins cmuclrc || die "Failed to install cmuclrc"
 }
