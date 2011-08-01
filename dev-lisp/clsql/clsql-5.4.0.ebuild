@@ -9,7 +9,8 @@ DESCRIPTION="A multi-platform SQL interface for Common Lisp"
 HOMEPAGE="http://clsql.b9.com/
 		http://packages.debian.org/unstable/devel/cl-sql.html
 		http://www.cliki.net/CLSQL"
-SRC_URI="http://files.b9.com/clsql/${P}.tar.gz"
+SRC_URI="http://common-lisp.net/~sionescu/mirror/${P}.tar.gz"
+RESTRICT="mirror"
 
 LICENSE="LLGPL-2.1"
 SLOT="0"
