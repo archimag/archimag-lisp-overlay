@@ -1,8 +1,8 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit common-lisp-2
+inherit common-lisp-3
 
 DESCRIPTION="Usocket is a universal socket library for Common Lisp."
 HOMEPAGE="http://common-lisp.net/project/usocket/"
@@ -17,15 +17,11 @@ RDEPEND="!dev-lisp/cl-${PN}
 		dev-lisp/split-sequence
 		dev-lisp/rt"
 
-CLSYSTEMS="${PN} test/${PN}-test"
-
-src_unpack() {
-	unpack ${A}
-	rm "${S}"/Makefile
-}
+CLSYSTEMS="${PN} ${PN}-test"
 
 src_install() {
-	common-lisp-install *.{lisp,asd} backend test/*.{lisp,asd}
-	common-lisp-symlink-asdf
-	dodoc TODO README doc/*.txt notes/*.txt
+	common-lisp-install-sources .
+	common-lisp-install-asdf
+	dodoc TODO README doc/*.txt
+	docinto notes && dodoc notes/*.txt
 }
