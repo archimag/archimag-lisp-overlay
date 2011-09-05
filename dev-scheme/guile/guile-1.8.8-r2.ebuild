@@ -1,44 +1,37 @@
 # Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# $Header: /var/cvsroot/gentoo-x86/dev-scheme/guile/guile-1.8.8-r1.ebuild,v 1.10 2011/07/09 11:18:15 xarthisius Exp $
 
-EAPI=4
+EAPI=3
+inherit eutils autotools flag-o-matic elisp-common
 
-# for live ebuilds uncomment inherit git, comment SRC_URI and empty KEYWORDS
-
-inherit eutils flag-o-matic elisp-common
-inherit git
-
-DESCRIPTION="GNU Ubiquitous Intelligent Language for Extensions"
+DESCRIPTION="Scheme interpreter"
 HOMEPAGE="http://www.gnu.org/software/guile/"
-#SRC_URI="mirror://gnu/guile/${P}.tar.gz"
-EGIT_REPO_URI="git://git.sv.gnu.org/guile.git"
+SRC_URI="mirror://gnu/guile/${P}.tar.gz"
 
-LICENSE="LGPL-3"
-KEYWORDS=""
-IUSE="networking +regex +deprecated emacs nls debug-malloc debug +threads"
+LICENSE="LGPL-2.1"
+KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~x86 ~x86-fbsd ~x86-interix ~amd64-linux ~x86-linux ~ppc-macos ~x86-macos"
+IUSE="networking +regex discouraged +deprecated emacs nls debug-freelist debug-malloc debug +threads"
+RESTRICT="!regex? ( test )"
 
 DEPEND="
 	app-admin/eselect-guile
-	dev-libs/gmp
+	>=dev-libs/gmp-4.1
 	>=sys-devel/libtool-1.5.6
 	sys-devel/gettext
-	dev-util/pkgconfig
-	dev-libs/libunistring
-	>=dev-libs/boehm-gc-7.0[threads?]
-	dev-libs/libffi
 	emacs? ( virtual/emacs )"
 RDEPEND="${DEPEND}"
 
-# Not 2.2; File colisions with 2.0 on libguilereadline-v-18
-SLOT="2"
-MAJOR="2.2"
+# Guile seems to contain some slotting support, /usr/share/guile/ is slotted,
+# but there are lots of collisions. Most in /usr/share/libguile. Therefore
+# I'm slotting this in the same slot as guile-1.6* for now.
+SLOT="12"
+MAJOR="1.8"
 
 src_prepare() {
-	# for live ebuilds
-	if [ -x autogen.sh ]; then
-		./autogen.sh || die
-	fi
+	#
+	epatch "${FILESDIR}/${P}-fix_guile-config.patch"
+	eautoreconf
 }
 
 src_configure() {
@@ -54,14 +47,17 @@ src_configure() {
 		--enable-posix \
 		$(use_enable networking) \
 		$(use_enable regex) \
+		$(use deprecated || use_enable discouraged) \
 		$(use_enable deprecated) \
+		$(use_enable emacs elisp) \
 		$(use_enable nls) \
 		--disable-rpath \
+		$(use_enable debug-freelist) \
 		$(use_enable debug-malloc) \
 		$(use_enable debug guile-debug) \
 		$(use_with threads) \
-		--with-modules # \
-#		EMACS=no
+		--with-modules \
+		EMACS=no
 }
 
 src_compile()  {
@@ -69,11 +65,10 @@ src_compile()  {
 
 	# Above we have disabled the build system's Emacs support;
 	# for USE=emacs we compile (and install) the files manually
-	# if use emacs; then
-	# 	cd emacs
-	# 	make
-	# 	elisp-compile *.el || die
-	# fi
+	if use emacs; then
+		cd emacs
+		elisp-compile *.el || die
+	fi
 }
 
 src_install() {
@@ -84,7 +79,7 @@ src_install() {
 
 	dodoc AUTHORS ChangeLog GUILE-VERSION HACKING NEWS README THANKS || die
 
-	# Replaced by app-admin/eselect-guile
+	# Now handled by app-admin/eselect-guile
 	## texmacs needs this, closing bug #23493
 	#dodir /etc/env.d
 	#echo "GUILE_LOAD_PATH=\"${EPREFIX}/usr/share/guile/${MAJOR}\"" > "${ED}"/etc/env.d/50guile
@@ -92,10 +87,10 @@ src_install() {
 	# necessary for registering slib, see bug 206896
 	keepdir /usr/share/guile/site
 
-	# if use emacs; then
-	# 	elisp-install ${PN} emacs/*.{el,elc} || die
-	# 	elisp-site-file-install "${FILESDIR}/50${PN}-gentoo.el" || die
-	# fi
+	if use emacs; then
+		elisp-install ${PN} emacs/*.{el,elc} || die
+		elisp-site-file-install "${FILESDIR}/50${PN}-gentoo.el" || die
+	fi
 }
 
 pkg_postinst() {

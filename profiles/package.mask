@@ -12,6 +12,6 @@ dev-lisp/terminfo
 # Known issues:
 # - Broken emacs support (ulm has promised to look)
 # - doesn't build when boehm-gc is built without threads
-# - no SLOTting yet!
+=dev-scheme/guile-1.8.8-r2
 =dev-scheme/guile-2.0.1
 

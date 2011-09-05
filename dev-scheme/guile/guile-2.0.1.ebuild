@@ -14,6 +14,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE="networking +regex +deprecated emacs nls debug-malloc debug +threads"
 
 DEPEND="
+	app-admin/eselect-guile
 	dev-libs/gmp
 	>=sys-devel/libtool-1.5.6
 	sys-devel/gettext
@@ -33,6 +34,8 @@ src_configure() {
 
 	#will fail for me if posix is disabled or without modules -- hkBst
 	econf \
+		--program-suffix="-${MAJOR}" \
+		--infodir="${EPREFIX}"/usr/share/info/guile-${MAJOR} \
 		--disable-error-on-warning \
 		--disable-static \
 		--enable-posix \
@@ -61,13 +64,17 @@ src_compile()  {
 }
 
 src_install() {
-	einstall || die "install failed"
+	einstall infodir="${ED}"/usr/share/info/guile-${MAJOR} || die "install failed"
+
+	# Maybe there is a proper way to do this? Symlink handled by eselect
+	mv "${ED}"/usr/share/aclocal/guile.m4 "${ED}"/usr/share/aclocal/guile-${MAJOR}.m4 || die "rename of guile.m4 failed"
 
 	dodoc AUTHORS ChangeLog GUILE-VERSION HACKING NEWS README THANKS || die
 
-	# texmacs needs this, closing bug #23493
-	dodir /etc/env.d
-	echo "GUILE_LOAD_PATH=\"${EPREFIX}/usr/share/guile/${MAJOR}\"" > "${ED}"/etc/env.d/50guile
+	# Replaced by app-admin/eselect-guile
+	## texmacs needs this, closing bug #23493
+	#dodir /etc/env.d
+	#echo "GUILE_LOAD_PATH=\"${EPREFIX}/usr/share/guile/${MAJOR}\"" > "${ED}"/etc/env.d/50guile
 
 	# necessary for registering slib, see bug 206896
 	keepdir /usr/share/guile/site
@@ -81,10 +88,12 @@ src_install() {
 pkg_postinst() {
 	[ "${EROOT}" == "/" ] && pkg_config
 	use emacs && elisp-site-regen
+	eselect guile update ifunset
 }
 
 pkg_postrm() {
 	use emacs && elisp-site-regen
+	eselect guile update ifunset
 }
 
 pkg_config() {
