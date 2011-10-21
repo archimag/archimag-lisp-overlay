@@ -12,10 +12,10 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE="doc slime"
 
-RDEPEND="dev-lisp/asdf-system-connections
-		 >=dev-lisp/cl-routes-0.2.2
-		 >=dev-lisp/hunchentoot-1.1.0
-		 dev-lisp/garbage-pools
+RDEPEND=" >=dev-lisp/cl-routes-0.2.2
+         dev-lisp/data-sift
+         dev-lisp/alexandria
+		 =dev-lisp/hunchentoot-1.1.1_p20111021
 		 slime? ( app-emacs/slime-archimag dev-lisp/closer-mop )"
 
 CLSYSTEMS="${PN}"
@@ -39,12 +39,6 @@ src_install() {
 	fi
 
 	dodoc COPYING
-
-	if use doc; then
-		docinto example && dodoc example/* || die "Cannot install examples"
-		insinto /usr/share/doc/${PF}/html
-		doins -r docs/html/en/* || die "Cannot install HTML documentation"
-	fi
 }
 
 pkg_postinst() {
