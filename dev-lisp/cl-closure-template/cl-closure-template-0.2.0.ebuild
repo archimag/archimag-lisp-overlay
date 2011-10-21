@@ -14,11 +14,12 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE="doc emacs"
 
-RDEPEND=" dev-lisp/asdf-system-connections
-		dev-lisp/babel
-		>=dev-lisp/parenscript-2.1
-		dev-lisp/split-sequence
-		>=dev-lisp/wiki-parser-0.1.2
+RDEPEND=" dev-lisp/babel
+        >=dev-lisp/parenscript-2.1
+        dev-lisp/esrap
+        dev-lisp/iterate
+        dev-lisp/parse-number
+        dev-lisp/closer-mop        
 		dev-lisp/lift
 		emacs? ( virtual/emacs )"
 
