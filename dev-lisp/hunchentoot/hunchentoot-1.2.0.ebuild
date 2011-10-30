@@ -2,11 +2,12 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit common-lisp-2
+EAPI=3
+inherit common-lisp-3
 
 DESCRIPTION="Hunchentoot is a web server written in Common Lisp."
 HOMEPAGE="http://weitz.de/hunchentoot/"
-SRC_URI="http://common-lisp.net/~sionescu/files/${P}.tar.bz2"
+SRC_URI="https://github.com/downloads/edicl/hunchentoot/hunchentoot-1.2.0.tar.gz"
 
 LICENSE="BSD-2"
 SLOT="0"
@@ -29,15 +30,13 @@ RDEPEND=">=dev-lisp/chunga-0.5.0
 		>=dev-lisp/drakma-1.0.0"
 
 src_compile() {
-	if use doc ; then
-		cd doc
-		xsltproc clixdoc.xsl index.xml > index.html
-	fi
+	use doc && xsltproc doc/clixdoc.xsl doc/index.xml > doc/index.html
 }
 
 src_install() {
-	common-lisp-install *.{lisp,asd} url-rewrite/ test/
-	common-lisp-symlink-asdf
+	common-lisp-install-sources *.{lisp,asd} url-rewrite/ test/
+	common-lisp-install-sources -t all www/
+	common-lisp-install-asdf
 	dodoc CHANGELOG* README
 	use doc && dohtml -r doc/*
 }
