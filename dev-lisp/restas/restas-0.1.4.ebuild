@@ -15,7 +15,7 @@ IUSE="doc slime"
 RDEPEND=" >=dev-lisp/cl-routes-0.2.2
          dev-lisp/data-sift
          dev-lisp/alexandria
-		 =>dev-lisp/hunchentoot-1.2.0
+		 >=dev-lisp/hunchentoot-1.2.0
 		 slime? ( app-emacs/slime-archimag dev-lisp/closer-mop )"
 
 CLSYSTEMS="${PN}"
