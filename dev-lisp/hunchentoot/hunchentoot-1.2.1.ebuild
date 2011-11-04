@@ -34,7 +34,7 @@ src_compile() {
 }
 
 src_install() {
-	common-lisp-install-sources *.{lisp,asd} url-rewrite/ test/
+	common-lisp-install-sources *.lisp url-rewrite/ test/
 	common-lisp-install-sources -t all www/
 	common-lisp-install-asdf
 	dodoc CHANGELOG* README
