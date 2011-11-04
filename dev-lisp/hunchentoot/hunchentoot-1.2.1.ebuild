@@ -1,4 +1,4 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -7,7 +7,7 @@ inherit common-lisp-3
 
 DESCRIPTION="Hunchentoot is a web server written in Common Lisp."
 HOMEPAGE="http://weitz.de/hunchentoot/"
-SRC_URI="https://github.com/downloads/edicl/hunchentoot/hunchentoot-1.2.0.tar.gz"
+SRC_URI="https://github.com/downloads/edicl/${PN}/${P}.tar.gz"
 
 LICENSE="BSD-2"
 SLOT="0"
