@@ -6,7 +6,7 @@ EAPI="4"
 
 # for live ebuilds uncomment inherit git, comment SRC_URI and empty KEYWORDS
 
-inherit eutils autotools
+inherit eutils
 inherit git-2
 
 DESCRIPTION="Racket is a general-purpose programming language with strong support for domain-specific languages."
