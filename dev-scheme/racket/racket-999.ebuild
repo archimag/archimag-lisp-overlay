@@ -7,7 +7,7 @@ EAPI="4"
 # for live ebuilds uncomment inherit git, comment SRC_URI and empty KEYWORDS
 
 inherit eutils autotools
-inherit git
+inherit git-2
 
 DESCRIPTION="Racket is a general-purpose programming language with strong support for domain-specific languages."
 HOMEPAGE="http://racket-lang.org/"
@@ -15,7 +15,7 @@ HOMEPAGE="http://racket-lang.org/"
 #SRC_URI="http://pre.racket-lang.org/installers/plt-${PV}-src-unix.tgz"
 EGIT_REPO_URI="git://git.racket-lang.org/plt.git"
 
-LICENSE="LGPL-2"
+LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS=""
 IUSE="backtrace cairo doc futures jit places plot threads X"
@@ -24,7 +24,7 @@ RDEPEND="X? ( x11-libs/cairo[X] ) virtual/libffi"
 
 DEPEND="${RDEPEND} !dev-tex/slatex"
 
-EGIT_UNPACK_DIR="${WORKDIR}/${P}"
+EGIT_SOURCEDIR="${WORKDIR}/${P}"
 S="${WORKDIR}/${P}/src"
 
 src_prepare() {
