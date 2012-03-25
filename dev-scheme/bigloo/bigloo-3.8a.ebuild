@@ -1,4 +1,4 @@
-# Copyright 1999-2011 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -17,7 +17,12 @@ if [[ $PV = *_alpha* ]] || [[ $PV = *_beta* ]]; then
 	date=${PV/*_alpha/}
 	date=${date/*_beta/}
 	year=${date:2:2}
-	month=${Months[${date:4:2}]}
+	month=${date:4:2}
+	if [ ${month:0:1} = "0" ]; then
+		# Remove the initial "0" as 08 and 09 are considered as octal values
+		month=${month:1:1}
+	fi
+	month=${Months[$month]}
 	day=${date:6:2}
 	MY_P="${MY_P}${day}${month}${year}"
 fi
@@ -26,18 +31,20 @@ BGL_RELEASE=${PV/_*/}
 
 DESCRIPTION="Bigloo is a Scheme implementation."
 HOMEPAGE="http://www-sop.inria.fr/indes/fp/Bigloo/bigloo.html"
-#SRC_URI="ftp://ftp-sop.inria.fr/indes/fp/Bigloo/${MY_P}.tar.gz"
-SRC_URI="ftp://ftp-sop.inria.fr/members/Cyprien.Nicolas/mirror/${MY_P}.tar.gz"
+#SRC_URI="ftp://ftp-sop.inria.fr/members/Cyprien.Nicolas/mirror/${MY_P}.tar.gz"
+SRC_URI="ftp://ftp-sop.inria.fr/indes/fp/Bigloo/${MY_P}.tar.gz"
 
 LICENSE="GPL-2 LGPL-2"
 SLOT="0"
-#KEYWORDS="~amd64 ~ppc ~x86"
-KEYWORDS=""
-IUSE="alsa bglpkg calendar crypto debug doc emacs flac gmp gstreamer java mail mp3 multimedia openpgp packrat sqlite srfi1 srfi27 ssl text threads web"
+#KEYWORDS=""
+KEYWORDS="~amd64 ~ppc ~x86"
+IUSE="alsa avahi bglpkg calendar crypto csv debug doc emacs flac gmp gstreamer java mail mp3 multimedia openpgp packrat sqlite srfi1 srfi27 ssl text threads web"
 REQUIRED_USE="
 	alsa? ( multimedia )
 	bglpkg? ( web )
+	flac? ( alsa )
 	gstreamer? ( multimedia threads )
+	mp3? ( alsa )
 	openpgp? ( crypto )
 	packrat? ( srfi1 )
 	srfi27? ( x86? ( gmp ) )
@@ -46,6 +53,7 @@ REQUIRED_USE="
 # bug 254916 for >=dev-libs/boehm-gc-7.1
 DEPEND=">=dev-libs/boehm-gc-7.1[threads?]
 	alsa? ( media-libs/alsa-lib )
+	avahi? ( net-dns/avahi )
 	emacs? ( virtual/emacs )
 	flac? ( media-libs/flac )
 	gmp? ( dev-libs/gmp )
@@ -135,8 +143,10 @@ src_configure() {
 		$(use debug && echo --debug)
 		${myconf}
 		$(use_enable alsa)
+		$(use_enable avahi)
 		$(use_enable calendar)
 		$(use_enable crypto)
+		$(use_enable csv)
 		$(use_enable flac)
 		$(use_enable gmp)
 		$(use_enable gstreamer)
