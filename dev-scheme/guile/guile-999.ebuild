@@ -1,4 +1,4 @@
-# Copyright 1999-2011 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -7,7 +7,7 @@ EAPI=4
 # for live ebuilds uncomment inherit git, comment SRC_URI and empty KEYWORDS
 
 inherit eutils flag-o-matic elisp-common
-inherit git
+inherit git-2
 
 DESCRIPTION="GNU Ubiquitous Intelligent Language for Extensions"
 HOMEPAGE="http://www.gnu.org/software/guile/"
@@ -23,11 +23,11 @@ DEPEND="
 	dev-libs/gmp
 	>=sys-devel/libtool-1.5.6
 	sys-devel/gettext
-	dev-util/pkgconfig
 	dev-libs/libunistring
 	>=dev-libs/boehm-gc-7.0[threads?]
 	dev-libs/libffi
-	emacs? ( virtual/emacs )"
+	emacs? ( virtual/emacs )
+	virtual/pkgconfig"
 RDEPEND="${DEPEND}"
 
 # Not 2.2; File colisions with 2.0 on libguilereadline-v-18
