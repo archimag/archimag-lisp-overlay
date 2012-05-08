@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
+EAPI=4
 
 MY_P=${P/_/-}
 
@@ -15,16 +15,23 @@ SRC_URI="ftp://ftp-sop.inria.fr/indes/fp/Hop/${MY_P}.tar.gz"
 SLOT="0"
 LICENSE="GPL-2"
 KEYWORDS="~amd64 ~x86"
-IUSE="debug ssl threads"
+IUSE="avahi debug ssl threads"
 
-DEPEND="~dev-scheme/bigloo-3.6a[ssl?,threads?,multimedia,sqlite,web]"
+DEPEND=">=dev-scheme/bigloo-3.8a[avahi?,ssl?,threads?,multimedia,sqlite,web]"
 RDEPEND="${DEPEND}"
+
+RESTRICT="mirror"
 
 S="${WORKDIR}/${MY_P}"
 
 pkg_setup() {
 	enewgroup hop
 	enewuser hop -1 -1 /var/lib/hop hop
+}
+
+src_prepare() {
+	epatch "${FILESDIR}/${P}-enable-avahi-support.patch"
+	epatch_user
 }
 
 src_configure() {
@@ -36,6 +43,7 @@ src_configure() {
 		--libdir=/usr/$(get_libdir) \
 		--etcdir=/etc/hop \
 		--webletsdir="/usr/share/${PN}/weblets" \
+		$(use_enable avahi) \
 		$(use_enable ssl) \
 		$(use_enable threads) \
 		$(use debug && echo "--debug") \
@@ -48,6 +56,11 @@ src_compile () {
 
 src_install () {
 	emake DESTDIR="${D}" install || die "install failed"
+
+	# Create home dir
+	keepdir /var/lib/hop
+	fowners hop:hop /var/lib/hop
+	fperms 0750 /var/lib/hop
 
 	# Create log dir
 	keepdir /var/log/hop

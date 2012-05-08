@@ -13,14 +13,14 @@ start() {
     ebegin "Starting Hop Web Broker"
     start-stop-daemon --start --background \
 	--make-pidfile --pidfile ${PIDFILE} \
-        --exec ${HOPEXEC} --chuid ${HOPUSER} \
+        --exec ${HOPEXEC} --user ${HOPUSER} \
 	--env HOME=${HOPHOME} -- ${HOP_OPTS}
     eend $?
 }
 
 stop() {
     ebegin "Stopping Hop Web Broker"
-    start-stop-daemon --stop \
+    start-stop-daemon --signal 9 \
 	--exec ${HOPEXEC} --pidfile ${PIDFILE}
     eend $?
 }
