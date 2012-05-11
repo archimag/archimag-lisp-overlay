@@ -14,7 +14,7 @@ IUSE=""
 # Versions prior to guile-1.8.8-r2 aren't properly slotted
 DEPEND=""
 RDEPEND=">=app-admin/eselect-1.2.6
-	!<dev-scheme/guile-1.8.8-r1"
+	!<dev-scheme/guile-1.8.8-r2"
 
 src_install() {
 	insinto /usr/share/eselect/modules
