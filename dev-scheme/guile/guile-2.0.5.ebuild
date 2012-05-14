@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-scheme/guile/guile-2.0.0.ebuild,v 1.2 2011/04/12 18:20:24 mr_bones_ Exp $
 
-EAPI=3
-inherit eutils flag-o-matic elisp-common
+EAPI=4
+inherit autotools eutils flag-o-matic elisp-common
 
 DESCRIPTION="GNU Ubiquitous Intelligent Language for Extensions"
 HOMEPAGE="http://www.gnu.org/software/guile/"
@@ -27,6 +27,12 @@ RDEPEND="${DEPEND}"
 
 SLOT="2"
 MAJOR="2.0"
+
+src_prepare() {
+	epatch "${FILESDIR}/3742d778fbc6ea879437c19aeebe09179dceffdf.patch"
+	epatch_user
+	eautoreconf
+}
 
 src_configure() {
 	# see bug #178499
