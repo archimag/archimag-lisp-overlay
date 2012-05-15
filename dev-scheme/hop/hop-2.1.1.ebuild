@@ -1,4 +1,4 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -14,7 +14,7 @@ SLOT="0"
 LICENSE="GPL-2"
 KEYWORDS="~amd64 ~x86"
 
-DEPEND=">=dev-scheme/bigloo-3.4a[ssl?,threads?,multimedia,sqlite,web]"
+DEPEND="~dev-scheme/bigloo-3.4a_p3[ssl?,threads?,multimedia,sqlite,web]"
 
 RDEPEND="${DEPEND}"
 

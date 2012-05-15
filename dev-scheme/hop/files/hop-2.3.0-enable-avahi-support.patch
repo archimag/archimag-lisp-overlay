@@ -1,0 +1,12 @@
+--- hop-2.3.0-pre1/configure.orig	2012-03-19 18:52:12.000000000 +0100
++++ hop-2.3.0-pre1/configure	2012-03-22 11:03:05.000000000 +0100
+@@ -254,6 +254,9 @@
+     --disable-ssl)
+       ssl=no;;
+ 
++    --enable-avahi)
++      avahi=yes;;
++
+     --disable-avahi)
+       avahi=no;;
+ 
