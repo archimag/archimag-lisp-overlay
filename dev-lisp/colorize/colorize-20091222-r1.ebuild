@@ -6,7 +6,7 @@ inherit common-lisp-2 eutils
 
 DESCRIPTION="Colorize is a Common Lisp application for colorizing source code."
 HOMEPAGE="http://www.cliki.net/colorize"
-SRC_URI="http://cloud.github.com/downloads/archimag/colorize/${P}.tar.bz2"
+SRC_URI="http://github.com/downloads/archimag/colorize/${P}.tar.bz2"
 
 LICENSE="MIT"
 SLOT="0"
