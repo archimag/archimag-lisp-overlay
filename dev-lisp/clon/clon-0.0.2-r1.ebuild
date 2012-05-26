@@ -8,7 +8,7 @@ inherit common-lisp-2
 
 DESCRIPTION="A Common Lisp task scheduler library similar to Unix cron."
 HOMEPAGE="http://www.cliki.net/Clon"
-SRC_URI="http://quotenil.com/clon/${P}.tar.gz"
+SRC_URI="http://github.com/downloads/archimag/archimag-lisp-overlay/${P}.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
