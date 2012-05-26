@@ -1,13 +1,13 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=2
+EAPI=3
 inherit common-lisp-3 eutils
 
 DESCRIPTION="Drakma is a Common Lisp HTTP client."
 HOMEPAGE="http://weitz.de/drakma/"
-SRC_URI="http://common-lisp.net/~sionescu/files/${P}.tar.bz2"
+SRC_URI="https://github.com/downloads/archimag/archimag-lisp-overlay/${P}.tar.bz2"
 
 LICENSE="BSD-2"
 SLOT="0"
