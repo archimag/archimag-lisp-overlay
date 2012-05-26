@@ -6,7 +6,7 @@ inherit common-lisp-2
 
 DESCRIPTION="Common Lisp library for encoding text in various web-savvy formats."
 HOMEPAGE="http://www.cliki.net/html-encode"
-SRC_URI="http://www.unmutual.info/software/${P}.tar.gz"
+SRC_URI="https://github.com/downloads/archimag/archimag-lisp-overlay/${P}.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
