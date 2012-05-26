@@ -6,7 +6,7 @@ opts="nodaemon"
 LISP="/usr/share/common-lisp/source/restas/contrib/restas-daemon.lisp"
 
 NAME="${SVCNAME#*.}"
-CONF="/etc/conf.d/${NAME}.conf"
+CONF="/etc/restas/${NAME}.lisp"
 
 start () {
 	ebegin "Starting ${NAME}"
