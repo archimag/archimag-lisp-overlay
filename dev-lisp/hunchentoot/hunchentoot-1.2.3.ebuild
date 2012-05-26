@@ -7,7 +7,7 @@ inherit common-lisp-3
 
 DESCRIPTION="Hunchentoot is a web server written in Common Lisp."
 HOMEPAGE="http://weitz.de/hunchentoot/"
-SRC_URI="https://github.com/downloads/edicl/${PN}/${P}.tar.gz"
+SRC_URI="https://github.com/downloads/archimag/archimag-lisp-overlay/${P}.tar.bz2"
 
 LICENSE="BSD-2"
 SLOT="0"
@@ -35,6 +35,7 @@ src_compile() {
 
 src_install() {
 	common-lisp-install-sources *.lisp url-rewrite/ test/
+	common-lisp-install-sources -t all www/
 	common-lisp-install-asdf
 	dodoc CHANGELOG* README
 	use doc && dohtml -r doc/*
