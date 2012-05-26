@@ -11,8 +11,8 @@ DESCRIPTION="Common Lisp regression tester from MIT"
 HOMEPAGE="http://www-2.cs.cmu.edu/afs/cs/project/ai-repository/ai/lang/lisp/code/testing/rt/
 		http://packages.debian.org/unstable/devel/cl-rt.html
 		http://www.cliki.net/rt"
-SRC_URI="mirror://debian/pool/main/c/cl-${PN}/cl-${PN}_${PV}.orig.tar.gz
-		mirror://debian/pool/main/c/cl-${PN}/cl-${PN}_${PV}-${DEB_PV}.diff.gz"
+SRC_URI="https://github.com/downloads/archimag/archimag-lisp-overlay/cl-${PN}_${PV}.orig.tar.gz
+		https://github.com/downloads/archimag/archimag-lisp-overlay/cl-${PN}_${PV}-${DEB_PV}.diff.gz"
 
 LICENSE="MIT"
 SLOT="0"
