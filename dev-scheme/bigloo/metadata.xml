@@ -2,6 +2,10 @@
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
   <herd>scheme</herd>
+  <maintainer>
+    <email>c.nicolas+bugs@gmail.com</email>
+    <description>Upstream and Gentoo Lisp Project contributor</description>
+  </maintainer>
   <longdescription>
     Bigloo is a Scheme implementation devoted to one goal: enabling Scheme
     based programming style where C(++) is usually required. Bigloo attempts
@@ -13,7 +17,7 @@
     Scheme and C# programs.
   </longdescription>
   <use>
-    <flag name="bglpkg">Build bglpkg binary, which can be use to access scmpkg servers (requires web)</flag>
+    <flag name="bglpkg">Build the bglpkg tool to access scmpkg servers (requires web)</flag>
     <flag name="calendar">Build the embedded library for calendar programming</flag>
     <flag name="crypto">Build the embedded cryptographic library</flag>
     <flag name="csv">bigloo-csv is a library for parsing csv and csv-like data</flag>
@@ -30,7 +34,7 @@
     <flag name="srfi1">Build the srfi1 library: List library</flag>
     <flag name="srfi27">Build the srfi27 library: Source of Random Bits (32bit-arch only, requires gmp)</flag>
     <flag name="ssl">Adds support for SSL connections through <pkg>dev-libs/openssl</pkg></flag>
-    <flag name="threads">Enable thread support, it depends on <pkg>dev-libs/boehm-gc</pkg> built with threads use flag</flag>
+    <flag name="threads">Enable thread support; requires <pkg>dev-libs/boehm-gc</pkg> with threads support</flag>
     <flag name="text">Library for dealing with text (e.g. BibTeX parser)</flag>
     <flag name="web">Library for web programming (e.g. XML, CGI parsers). Needed for <pkg>dev-scheme/hop</pkg></flag>
   </use>
@@ -39,7 +43,7 @@
       <email>Manuel.Serrano@inria.fr</email>
       <name>Manuel Serrano</name>
     </maintainer>
-    <bugs-to>mailto:bigloo@lists-sop.inria.fr</bugs-to>
+    <bugs-to>mailto:bigloo@inria.fr</bugs-to>
     <changelog>http://www-sop.inria.fr/indes/fp/Bigloo/bigloo-4.html</changelog>
     <doc>http://www-sop.inria.fr/indes/fp/Bigloo/bigloo-3.html</doc>
   </upstream>
