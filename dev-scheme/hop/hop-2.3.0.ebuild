@@ -30,7 +30,6 @@ pkg_setup() {
 }
 
 src_prepare() {
-	epatch "${FILESDIR}/${P}-enable-avahi-support.patch"
 	epatch_user
 }
 
