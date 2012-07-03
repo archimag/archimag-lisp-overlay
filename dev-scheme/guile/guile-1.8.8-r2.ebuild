@@ -1,8 +1,8 @@
-# Copyright 1999-2011 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-scheme/guile/guile-1.8.8-r1.ebuild,v 1.10 2011/07/09 11:18:15 xarthisius Exp $
+# $Header: $
 
-EAPI=3
+EAPI=4
 inherit eutils autotools flag-o-matic elisp-common
 
 DESCRIPTION="Scheme interpreter"
@@ -29,8 +29,8 @@ SLOT="12"
 MAJOR="1.8"
 
 src_prepare() {
-	#
 	epatch "${FILESDIR}/${P}-fix_guile-config.patch"
+	epatch "${FILESDIR}/${P}-fix_stack-grow-direction-check.patch"
 	eautoreconf
 }
 
