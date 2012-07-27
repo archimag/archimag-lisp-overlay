@@ -8,28 +8,29 @@ MY_PV=${PV/_beta/b}
 MY_P=${PN}-${MY_PV}
 
 DESCRIPTION="Larceny is a Scheme Interpreter and a Scheme to IA32 and C Compiler"
-#SRC_URI="!binary? ( http://www.ccs.neu.edu/home/will/Larceny/LarcenyReleases/${MY_P}-src.tar.gz )
-#		  binary? ( x86? ( http://www.ccs.neu.edu/home/will/Larceny/LarcenyReleases/${MY_P}-bin-native-ia32-linux86.tar.gz )
-#				  amd64? ( http://www.ccs.neu.edu/home/will/Larceny/LarcenyReleases/${MY_P}-bin-native-ia32-linux86.tar.gz ) )"
-ESVN_REPO_URI="https://trac.ccs.neu.edu/svn/larceny/trunk/larceny_src"
+#SRC_URI="!binary? ( http://www.larcenists.org/LarcenyReleases/${MY_P}-src.tar.gz )
+#		  binary? ( x86? ( http://www.larcenists.org/LarcenyReleases/${MY_P}-bin-native-ia32-linux86.tar.gz )
+#				  amd64? ( http://www.larcenists.org/LarcenyReleases/${MY_P}-bin-native-ia32-linux86.tar.gz ) )"
+ESVN_REPO_URI="https://www.larcenists.org/svn/larceny/trunk/larceny_src"
 
-HOMEPAGE="http://www.ccs.neu.edu/home/will/Larceny/"
+HOMEPAGE="http://www.larcenists.org/"
 
-LICENSE="Larceny"
+LICENSE="LGPL-2.1" # or less restrictive
 SLOT="0"
 KEYWORDS=""
-IUSE=""
+IUSE="binary"
 
 DEPEND="!dev-scheme/larceny-petit
-		dev-lang/nasm
-		doc? ( app-text/asciidoc )"
+		dev-lang/nasm"
 RDEPEND=""
 
 S="${WORKDIR}"/${MY_P}-$(use binary && echo bin-native-ia32-linux86 || echo src)
 
 src_compile() {
 	# see doc/HOWTO-BUILD
-	cat > setupscript.gentoo <<EOF
+	if ! use binary; then
+
+		cat > setupscript.gentoo <<EOF
 (load "setup.sch")
 (setup 'scheme: 'larceny
 	   'host: 'linux86
@@ -44,13 +45,14 @@ src_compile() {
 (build-larceny-files)
 (exit)
 EOF
-	cat setupscript.gentoo | larceny ||	die "first install a binary larceny"
+		cat setupscript.gentoo | larceny ||	die "first install a binary larceny"
 
-	echo "(exit)" | ./larceny.bin -stopcopy -- src/Build/iasn-larceny-heap.fasl || die
-	echo "(exit)" | ./larceny.bin -stopcopy -- src/Build/iasn-twobit-heap.fasl || die
-	cp larceny twobit
+		echo "(exit)" | ./larceny.bin -stopcopy -- src/Build/iasn-larceny-heap.fasl || die
+		echo "(exit)" | ./larceny.bin -stopcopy -- src/Build/iasn-twobit-heap.fasl || die
+		cp larceny twobit
 
-	echo "(require 'r6rsmode) (larceny:compile-r6rs-runtime) (exit)" | ./larceny || die
+		echo "(require 'r6rsmode) (larceny:compile-r6rs-runtime) (exit)" | ./larceny || die
+	fi # ! use binary
 
 	# if use doc; then
 	# 	pushd doc
