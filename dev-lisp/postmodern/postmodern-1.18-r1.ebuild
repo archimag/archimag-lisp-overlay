@@ -1,12 +1,13 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit common-lisp-2 eutils
+EAPI=4
+inherit common-lisp-3 eutils
 
 DESCRIPTION="A Common Lisp library for interacting with PostgreSQL databases."
-HOMEPAGE="http://common-lisp.net/project/postmodern/"
-SRC_URI="http://common-lisp.net/project/${PN}/${P}.tgz"
+HOMEPAGE="http://marijnhaverbeke.nl/postmodern/"
+SRC_URI="http://marijnhaverbeke.nl/${PN}/${P}.tgz"
 
 LICENSE="ZLIB"
 SLOT="0"
@@ -24,7 +25,7 @@ RDEPEND="dev-lisp/md5
 CLSYSTEMS="cl-postgres postmodern simple-date s-sql"
 
 src_install() {
-	common-lisp-install *.asd ${CLSYSTEMS}
-	common-lisp-symlink-asdf
+	common-lisp-install-sources ${CLSYSTEMS}
+	common-lisp-install-asdf
 	dohtml doc/*
 }
