@@ -13,7 +13,7 @@ LICENSE="LGPL-3"
 KEYWORDS="~amd64 ~x86"
 IUSE="networking +regex +deprecated emacs nls debug-malloc debug +threads"
 
-DEPEND="
+RDEPEND="
 	app-admin/eselect-guile
 	dev-libs/gmp
 	>=sys-devel/libtool-1.5.6
@@ -21,9 +21,9 @@ DEPEND="
 	dev-libs/libunistring
 	>=dev-libs/boehm-gc-7.0[threads?]
 	dev-libs/libffi
-	emacs? ( virtual/emacs )
+	emacs? ( virtual/emacs )"
+DEPEND="${RDEPEND}
 	virtual/pkgconfig"
-RDEPEND="${DEPEND}"
 
 SLOT="2"
 MAJOR="2.0"

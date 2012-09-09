@@ -1,4 +1,4 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -7,21 +7,20 @@ inherit eutils
 MY_PV=${PV/_beta/b}
 MY_P=${PN}-${MY_PV}
 
-DESCRIPTION="Larceny is a Scheme Interpreter and a Scheme to IA32 and C Compiler"
-SRC_URI="!binary? ( http://www.ccs.neu.edu/home/will/Larceny/LarcenyReleases/${MY_P}-src.tar.gz )
-		  binary? ( x86? ( http://www.ccs.neu.edu/home/will/Larceny/LarcenyReleases/${MY_P}-bin-native-ia32-linux86.tar.gz )
-				  amd64? ( http://www.ccs.neu.edu/home/will/Larceny/LarcenyReleases/${MY_P}-bin-native-ia32-linux86.tar.gz ) )"
+DESCRIPTION="Larceny is a simple and efficient implementation of the Scheme programming language."
+SRC_URI="!binary? ( http://www.larcenists.org/LarcenyReleases/${MY_P}-src.tar.gz )
+		  binary? ( x86? ( http://www.larcenists.org/LarcenyReleases/${MY_P}-bin-native-ia32-linux86.tar.gz )
+				  amd64? ( http://www.larcenists.org/LarcenyReleases/${MY_P}-bin-native-ia32-linux86.tar.gz ) )"
 
-HOMEPAGE="http://www.ccs.neu.edu/home/will/Larceny/"
+HOMEPAGE="http://www.larcenists.org/"
 
-LICENSE="Larceny"
+LICENSE="LGPL-2.1" # or less restrictive
 SLOT="0"
-KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
+KEYWORDS="~amd64"
 IUSE="binary"
 
 DEPEND="!dev-scheme/larceny-petit
-		dev-lang/nasm
-		doc? ( app-text/asciidoc )"
+		dev-lang/nasm"
 RDEPEND=""
 
 S="${WORKDIR}"/${MY_P}-$(use binary && echo bin-native-ia32-linux86 || echo src)

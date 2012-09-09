@@ -1,11 +1,11 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
 EAPI=2
 inherit common-lisp-3
 
-DESCRIPTION="Common Lisp docuwiki parser."
+DESCRIPTION="Common Lisp dokuwiki parser."
 HOMEPAGE="http://github.com/archimag/wiki-parser"
 SRC_URI="http://cl-closure-template.googlecode.com/files/${P}.tar.bz2"
 

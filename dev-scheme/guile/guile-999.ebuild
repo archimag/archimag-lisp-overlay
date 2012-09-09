@@ -4,8 +4,6 @@
 
 EAPI=4
 
-# for live ebuilds uncomment inherit git, comment SRC_URI and empty KEYWORDS
-
 inherit eutils flag-o-matic elisp-common
 inherit git-2
 
@@ -18,17 +16,17 @@ LICENSE="LGPL-3"
 KEYWORDS=""
 IUSE="networking +regex +deprecated emacs nls debug-malloc debug +threads"
 
-DEPEND="
+RDEPEND="
 	app-admin/eselect-guile
-	dev-libs/gmp
-	>=sys-devel/libtool-1.5.6
-	sys-devel/gettext
-	dev-libs/libunistring
 	>=dev-libs/boehm-gc-7.0[threads?]
+	dev-libs/gmp
 	dev-libs/libffi
-	emacs? ( virtual/emacs )
+	dev-libs/libunistring
+	sys-devel/gettext
+	>=sys-devel/libtool-1.5.6
+	emacs? ( virtual/emacs )"
+DEPEND="${RDEPEND}
 	virtual/pkgconfig"
-RDEPEND="${DEPEND}"
 
 # Not 2.2; File colisions with 2.0 on libguilereadline-v-18
 SLOT="2"

@@ -4,7 +4,7 @@
 
 EAPI="2"
 
-inherit multilib eutils
+inherit multilib eutils user
 
 DESCRIPTION="Hop is a higher-order language for programming interactive web applications"
 HOMEPAGE="http://hop.inria.fr/"

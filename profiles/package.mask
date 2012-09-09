@@ -1,8 +1,13 @@
-
 =dev-lisp/cl-gtk2-9999-r1
 
 dev-lisp/linedit
 dev-lisp/terminfo
+
+# Cyprien Nicolas (fulax) <c.cnicolas+gentoo@gmail.com> (24 Aug 2012)
+# Mask app-admin/eselect-guile and dev-scheme/guile-2.0.6 as well, for
+# the same reasons as below, wrt Bug #432526 by Juergen Rose and zmedico
+app-admin/eselect-guile
+=dev-scheme/guile-2.0.6
 
 # Cyprien Nicolas <c.nicolas+gentoo@gmail.com> (28 Apr 2011)
 # Masked for several reasons pointed out by Marijn:

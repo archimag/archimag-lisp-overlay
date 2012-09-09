@@ -5,7 +5,7 @@
 EAPI=2
 inherit common-lisp-3 eutils
 
-DEB_PV=3
+DEB_PV=4
 
 DESCRIPTION="Common Lisp regression tester from MIT"
 HOMEPAGE="http://www-2.cs.cmu.edu/afs/cs/project/ai-repository/ai/lang/lisp/code/testing/rt/

@@ -1,4 +1,4 @@
-# Copyright 2005-2011 Gentoo Foundation
+# Copyright 2005-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id: $
 #
@@ -27,7 +27,7 @@ MAINTAINER="scheme@gentoo.org"
 SVN_DATE='$Date: $'
 VERSION=$(svn_date_to_version "${SVN_DATE}")
 
-BINARYLIST="guile-snarf guile-config guile-tools guile"
+BINARYLIST="guile-snarf guile-config guile-tools guile guild"
 MANPAGELIST="guile"
 
 find_targets() {

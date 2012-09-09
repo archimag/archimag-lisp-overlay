@@ -18,16 +18,17 @@ fi
 
 DESCRIPTION="Simplified Wrapper and Interface Generator"
 HOMEPAGE="http://www.swig.org/"
+
 LICENSE="GPL-3 as-is"
 SLOT="0"
 IUSE="ccache doc pcre"
-
 RESTRICT="test"
 
 DEPEND="pcre? ( dev-libs/libpcre )
-		ccache? ( sys-libs/zlib )"
-
+	ccache? ( sys-libs/zlib )"
 RDEPEND="${DEPEND}"
+
+DOCS=( ANNOUNCE CHANGES CHANGES.current README TODO )
 
 src_configure() {
 	econf \
@@ -36,9 +37,8 @@ src_configure() {
 }
 
 src_install() {
-	emake DESTDIR="${D}" install || die
-	dodoc ANNOUNCE CHANGES CHANGES.current README TODO || die
+	default
 	if use doc; then
-		dohtml -r Doc/{Devel,Manual} || die
+		dohtml -r Doc/{Devel,Manual}
 	fi
 }
