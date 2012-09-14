@@ -56,7 +56,7 @@ DEPEND=">=dev-libs/boehm-gc-7.1[threads?]
 	emacs? ( virtual/emacs )
 	flac? ( media-libs/flac )
 	gmp? ( dev-libs/gmp )
-	gstreamer? ( media-libs/gstreamer media-libs/gst-plugins-base )
+	gstreamer? ( media-libs/gstreamer:0.10 media-libs/gst-plugins-base:0.10 )
 	java? ( >=virtual/jdk-1.5 app-arch/zip )
 	mp3? ( media-sound/mpg123 )
 	sqlite? ( dev-db/sqlite:3 )
