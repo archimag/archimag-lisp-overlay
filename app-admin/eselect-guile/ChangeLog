@@ -1,0 +1,12 @@
+# ChangeLog for app-admin/eselect-guile
+# Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*eselect-guile-1.2 (02 Oct 2012)
+
+  02 Oct 2012; Cyprien Nicolas <c.nicolas+bugs@gmail.com> +files/1.2/guile.eselect,
+  +files/1.2/guile.eselect.5, +eselect-guile-1.2.ebuild:
+  version bump: EAPI 4, fix 'update ifunset' bug (it was ignored currently).
+  Remove 'GUILE_LOAD_PATH' from env.d file, as it breaks the not eselect'd
+  guile version. Drop pkg_prerm phase.
+
