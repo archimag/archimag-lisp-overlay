@@ -15,9 +15,7 @@ app-admin/eselect-guile
 # Masked for number of issues, but can be used to
 # test against if people are impatient ;P
 # Known issues:
-# - Broken emacs support (ulm has promised to look)
 # - doesn't build when boehm-gc is built without threads
 =dev-scheme/guile-1.8.8-r2
 =dev-scheme/guile-2.0.1
 =dev-scheme/guile-2.0.5
-

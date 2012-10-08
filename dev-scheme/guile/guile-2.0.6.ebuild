@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI=4
-inherit autotools eutils flag-o-matic elisp-common
+inherit autotools eutils flag-o-matic
 
 DESCRIPTION="GNU Ubiquitous Intelligent Language for Extensions"
 HOMEPAGE="http://www.gnu.org/software/guile/"
@@ -11,7 +11,7 @@ SRC_URI="mirror://gnu/guile/${P}.tar.gz"
 
 LICENSE="LGPL-3"
 KEYWORDS="~amd64 ~x86"
-IUSE="networking +regex +deprecated emacs nls debug-malloc debug +threads"
+IUSE="networking +regex +deprecated nls debug-malloc debug +threads"
 
 RDEPEND="
 	app-admin/eselect-guile
@@ -20,8 +20,7 @@ RDEPEND="
 	dev-libs/libffi
 	dev-libs/libunistring
 	sys-devel/gettext
-	>=sys-devel/libtool-1.5.6
-	emacs? ( virtual/emacs )"
+	>=sys-devel/libtool-1.5.6"
 DEPEND="${RDEPEND}
 	virtual/pkgconfig"
 
@@ -52,20 +51,11 @@ src_configure() {
 		$(use_enable debug-malloc) \
 		$(use_enable debug guile-debug) \
 		$(use_with threads) \
-		--with-modules # \
-#		EMACS=no
+		--with-modules
 }
 
 src_compile()  {
 	emake || die "make failed"
-
-	# Above we have disabled the build system's Emacs support;
-	# for USE=emacs we compile (and install) the files manually
-	# if use emacs; then
-	# 	cd emacs
-	# 	make
-	# 	elisp-compile *.el || die
-	# fi
 }
 
 src_install() {
@@ -76,28 +66,16 @@ src_install() {
 
 	dodoc AUTHORS ChangeLog GUILE-VERSION HACKING NEWS README THANKS || die
 
-	# Replaced by app-admin/eselect-guile
-	## texmacs needs this, closing bug #23493
-	#dodir /etc/env.d
-	#echo "GUILE_LOAD_PATH=\"${EPREFIX}/usr/share/guile/${MAJOR}\"" > "${ED}"/etc/env.d/50guile
-
 	# necessary for registering slib, see bug 206896
 	keepdir /usr/share/guile/site
-
-	# if use emacs; then
-	# 	elisp-install ${PN} emacs/*.{el,elc} || die
-	# 	elisp-site-file-install "${FILESDIR}/50${PN}-gentoo.el" || die
-	# fi
 }
 
 pkg_postinst() {
 	[ "${EROOT}" == "/" ] && pkg_config
-	use emacs && elisp-site-regen
 	eselect guile update ifunset
 }
 
 pkg_postrm() {
-	use emacs && elisp-site-regen
 	eselect guile update ifunset
 }
 
