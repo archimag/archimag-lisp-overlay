@@ -11,8 +11,8 @@ inherit eutils
 
 DESCRIPTION="Racket is a general-purpose programming language with strong support for domain-specific languages."
 HOMEPAGE="http://racket-lang.org/"
-#SRC_URI="http://download.racket-lang.org/installers/${PV}/${PN}/${P}-src-unix.tgz"
-SRC_URI="http://pre.racket-lang.org/installers/plt-${PV}-src-unix.tgz"
+SRC_URI="http://download.racket-lang.org/installers/${PV}/${PN}/${P}-src-unix.tgz"
+#SRC_URI="http://pre.racket-lang.org/installers/plt-${PV}-src-unix.tgz"
 EGIT_REPO_URI="git://git.racket-lang.org/plt.git"
 
 LICENSE="LGPL-2.1"
