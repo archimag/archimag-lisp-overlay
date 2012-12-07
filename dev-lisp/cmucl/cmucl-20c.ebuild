@@ -18,10 +18,10 @@ SLOT="0"
 KEYWORDS="~x86"
 IUSE="+asdf X source sse2"
 
-DEPEND="x11-libs/openmotif
+DEPEND="x11-libs/motif:0
 		sys-devel/bc"
 
-RDEPEND="x11-libs/openmotif
+RDEPEND="x11-libs/motif:0
 		asdf? ( >=dev-lisp/gentoo-init-1.0 )"
 
 S="${WORKDIR}"
