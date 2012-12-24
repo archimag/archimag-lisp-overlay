@@ -1,8 +1,0 @@
-#unmask the packages agrozin hard masked in the main tree in 14Dec12
-#not the best solution, but it will work, temporarily.
-#pchrist, 24Dec12
-#Carlos Konstanski reported this and he is right.
-
-=dev-lisp/gentoo-init-1.0-r1
-=dev-lisp/sbcl-1.0.58
-=dev-lisp/asdf-2.016
