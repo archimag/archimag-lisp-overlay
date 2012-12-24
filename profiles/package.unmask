@@ -3,6 +3,6 @@
 #pchrist, 24Dec12
 #Carlos Konstanski reported this and he is right.
 
-dev-lisp/gentoo-init
-dev-lisp/sbcl
-dev-lisp/asdf
+=dev-lisp/gentoo-init-1.0-r1
+=dev-lisp/sbcl-1.0.58
+=dev-lisp/asdf-2.016
