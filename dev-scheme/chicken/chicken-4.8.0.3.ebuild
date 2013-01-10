@@ -27,7 +27,7 @@ src_prepare() {
 	fi
 
 	#Fix Bug #462458
-	epatch "${FILESDIR}"/${P}-csirc-inclusion-vuln.patch
+	cp "${FILESDIR}"/${P}-csirc-inclusion-vuln.csi.c csi.c
 
 	#Because chicken's Upstream is in the habit of using variables that
 	#portage also uses :( eg. $ARCH and $A
