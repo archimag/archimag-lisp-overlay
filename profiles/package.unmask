@@ -1,0 +1,6 @@
+#Panagiotis Christopoulos <pchrist@gentoo.org> (25 Dec 2012)
+#unmask this so that it can be used by overlay users
+#Now that a newer asdf and sbcl versions are in the main tree
+#we should take extra care 
+
+=dev-lisp/gentoo-init-1.0
