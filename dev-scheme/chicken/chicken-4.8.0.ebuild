@@ -28,14 +28,21 @@ src_prepare() {
 
 	#Because chicken's Upstream is in the habit of using variables that
 	#portage also uses :( eg. $ARCH and $A
-	unset A ARCH
+	sed 's,A\(\s?=\|)\),chicken&,p' -i Makefile.cross-linux-mingw \
+		defaults.make rules.make \
+		|| die "sed failed"
+
+	sed "s,ARCH,zARCH," -i Makefile.bsd Makefile.cross-linux-mingw \
+		Makefile.cygwin Makefile.haiku Makefile.linux Makefile.macosx \
+		Makefile.mingw Makefile.mingw-msys Makefile.solaris \
+		defaults.make rules.make \
+		|| die "sed failed"
 
 	sed "s,\$(PREFIX)/lib,\$(PREFIX)/$(get_libdir)," -i defaults.make || die "sed failed"
 	sed "s,\$(DATADIR)/doc,\$(SHAREDIR)/doc/${P}," -i defaults.make || die "sed failed"
 }
 
 src_compile() {
-	unset A ARCH
 	OPTIONS="PLATFORM=linux PREFIX=/usr"
 	if use "parallel-build"
 	then
@@ -54,7 +61,6 @@ src_compile() {
 RESTRICT=test
 
 src_install() {
-	unset A ARCH
 	# still can't run make in parallel for the install target
 	emake -j1 ${OPTIONS} DESTDIR="${D}" HOSTSYSTEM="${CBUILD}" \
 		LINKER_OPTIONS="${LDFLAGS}" \
