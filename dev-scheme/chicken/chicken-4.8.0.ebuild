@@ -14,7 +14,7 @@ SRC_URI="http://code.call-cc.org/releases/${PV}/${P}.tar.gz"
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~x86"
-IUSE="emacs parallel-build"
+IUSE="emacs parallel-build doc"
 
 DEPEND="sys-apps/texinfo
 		emacs? ( virtual/emacs )"
@@ -28,7 +28,7 @@ src_prepare() {
 
 	#Because chicken's Upstream is in the habit of using variables that
 	#portage also uses :( eg. $ARCH and $A
-	sed 's,A\(\s?=\|)\),chicken&,p' -i Makefile.cross-linux-mingw \
+	sed 's,A\(\s?=\|)\),chicken&,' -i Makefile.cross-linux-mingw \
 		defaults.make rules.make \
 		|| die "sed failed"
 
@@ -68,4 +68,10 @@ src_install() {
 
 	rm "${D}"/usr/share/doc/${P}/LICENSE || die
 	dodoc NEWS || die
+
+	# remove HTML documentation if the user doesn't USE=doc
+	if ! use "doc"
+	then
+		rm -rf "${D}"/usr/share/doc/${P}/manual || die
+	fi
 }
