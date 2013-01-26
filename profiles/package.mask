@@ -1,3 +1,7 @@
+# Cyprien Nicolas (fulax) <gentoo@fulax.fr> (26 Jan 2013)
+# Mask texmacs imported in the overlay to test buildtime patches
+=app-office/texmacs-1.0.7.16-r2
+
 # Cyprien Nicolas (fulax) <c.cnicolas+gentoo@gmail.com> (24 Aug 2012)
 # Mask app-admin/eselect-guile and dev-scheme/guile-2.0.6 as well, for
 # the same reasons as below, wrt Bug #432526 by Juergen Rose and zmedico
