@@ -1,4 +1,4 @@
-# Copyright 1999-2012 Gentoo Foundation
+# Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -31,12 +31,11 @@ BGL_RELEASE=${PV/_*/}
 
 DESCRIPTION="Bigloo is a Scheme implementation."
 HOMEPAGE="http://www-sop.inria.fr/indes/fp/Bigloo/bigloo.html"
-#SRC_URI="ftp://ftp-sop.inria.fr/members/Cyprien.Nicolas/mirror/${MY_P}.tar.gz"
-SRC_URI="ftp://ftp-sop.inria.fr/indes/fp/Bigloo/${MY_P}.tar.gz"
+SRC_URI="ftp://ftp-sop.inria.fr/indes/fp/Bigloo/${MY_P}.tar.gz
+		ftp://ftp.cnic.fr/gentoo-lisp-overlay/${MY_P}.tar.gz"
 
 LICENSE="GPL-2 LGPL-2"
 SLOT="0"
-#KEYWORDS=""
 KEYWORDS="~amd64 ~ppc ~x86"
 IUSE="alsa avahi bglpkg calendar crypto csv debug doc emacs flac gmp gstreamer java mail mp3 multimedia openpgp packrat sqlite srfi1 srfi27 ssl text threads web"
 REQUIRED_USE="
@@ -67,7 +66,7 @@ RDEPEND="${DEPEND}"
 
 RESTRICT="mirror"
 
-S=${WORKDIR}/${MY_P/-*/}
+S=${WORKDIR}/${MY_P/-[ab]*/}
 
 SITEFILE="50bigloo-gentoo.el"
 
