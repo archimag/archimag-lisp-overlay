@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="4"
+EAPI="5"
 
 Months=( "Dec" "Jan" "Feb" "Mar" "Apr" "May" "Jun" "Jul" "Aug" "Sep" "Oct" "Nov" "Dec" )
 
@@ -35,7 +35,7 @@ SRC_URI="ftp://ftp-sop.inria.fr/indes/fp/Bigloo/${MY_P}.tar.gz
 		ftp://ftp.cnic.fr/gentoo-lisp-overlay/${MY_P}.tar.gz"
 
 LICENSE="GPL-2 LGPL-2"
-SLOT="0"
+SLOT="0/${BGL_RELEASE}"
 KEYWORDS="~amd64 ~ppc ~x86"
 IUSE="alsa avahi bglpkg calendar crypto csv debug doc emacs flac gmp gstreamer java mail mp3 multimedia openpgp packrat sqlite srfi1 srfi27 ssl text threads web"
 REQUIRED_USE="
