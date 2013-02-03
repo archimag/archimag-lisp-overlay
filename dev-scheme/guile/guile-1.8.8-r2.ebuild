@@ -1,4 +1,4 @@
-# Copyright 1999-2012 Gentoo Foundation
+# Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -11,7 +11,7 @@ SRC_URI="mirror://gnu/guile/${P}.tar.gz"
 
 LICENSE="LGPL-2.1"
 KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~x86 ~x86-fbsd ~x86-interix ~amd64-linux ~x86-linux ~ppc-macos ~x86-macos"
-IUSE="networking +regex discouraged +deprecated emacs nls debug-freelist debug-malloc debug +threads"
+IUSE="networking +regex discouraged +deprecated emacs nls debug-freelist debug-malloc debug +threads +readline"
 RESTRICT="!regex? ( test )"
 
 DEPEND="
@@ -19,7 +19,9 @@ DEPEND="
 	>=dev-libs/gmp-4.1
 	>=sys-devel/libtool-1.5.6
 	sys-devel/gettext
-	emacs? ( virtual/emacs )"
+	emacs? ( virtual/emacs )
+	readline? ( sys-libs/readline )
+"
 RDEPEND="${DEPEND}"
 
 # Guile seems to contain some slotting support, /usr/share/guile/ is slotted,
@@ -31,6 +33,7 @@ MAJOR="1.8"
 src_prepare() {
 	epatch "${FILESDIR}/${P}-fix_guile-config.patch"
 	epatch "${FILESDIR}/${P}-fix_stack-grow-direction-check.patch"
+	epatch "${FILESDIR}/${P}-config-with-readline.patch"
 	eautoreconf
 }
 
@@ -56,6 +59,7 @@ src_configure() {
 		$(use_enable debug-malloc) \
 		$(use_enable debug guile-debug) \
 		$(use_with threads) \
+		$(use_with readline) \
 		--with-modules \
 		EMACS=no
 }

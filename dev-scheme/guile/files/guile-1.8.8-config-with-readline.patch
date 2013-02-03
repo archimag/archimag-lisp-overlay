@@ -1,0 +1,30 @@
+diff -Nur guile-1.8.8.orig/configure.in guile-1.8.8/configure.in
+--- guile-1.8.8.orig/configure.in	2013-02-03 19:54:05.000000000 +0100
++++ guile-1.8.8/configure.in	2013-02-03 19:56:37.000000000 +0100
+@@ -57,7 +57,13 @@
+ #
+ #--------------------------------------------------------------------
+ 
+-AC_CONFIG_SUBDIRS(guile-readline)
++GUILE_READLINE
++if test "x$with_readline" = xyes; then
++  AC_CONFIG_SUBDIRS(guile-readline)
++  GUILE_READLINE="guile-readline"
++fi
++
++AC_SUBST([GUILE_READLINE])
+ 
+ #--------------------------------------------------------------------
+ 
+diff -Nur guile-1.8.8.orig/Makefile.am guile-1.8.8/Makefile.am
+--- guile-1.8.8.orig/Makefile.am	2013-02-03 19:54:06.000000000 +0100
++++ guile-1.8.8/Makefile.am	2013-02-03 19:55:14.000000000 +0100
+@@ -24,7 +24,7 @@
+ #
+ AUTOMAKE_OPTIONS = 1.10
+ 
+-SUBDIRS = oop libguile ice-9 guile-config guile-readline emacs \
++SUBDIRS = oop libguile ice-9 guile-config @GUILE_READLINE@ emacs \
+ 	  scripts srfi doc examples test-suite benchmark-suite lang am
+ 
+ bin_SCRIPTS = guile-tools
