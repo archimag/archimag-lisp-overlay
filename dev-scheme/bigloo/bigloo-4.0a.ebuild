@@ -36,7 +36,7 @@ SRC_URI="ftp://ftp-sop.inria.fr/indes/fp/Bigloo/${MY_P}.tar.gz
 
 LICENSE="GPL-2 LGPL-2"
 SLOT="0/${BGL_RELEASE}"
-KEYWORDS="~amd64 ~ppc ~x86"
+KEYWORDS="~amd64 ~ppc ~x86 ~amd64-linux"
 IUSE="alsa avahi bglpkg calendar crypto csv debug doc emacs flac gmp gstreamer java mail mp3 multimedia openpgp packrat sqlite srfi1 srfi27 ssl text threads web"
 REQUIRED_USE="
 	alsa? ( multimedia )
@@ -76,6 +76,11 @@ pkg_pretend() {
 		ewarn "srfi27 is known to only work on 32-bit architectures." \
 			"This IUSE is ignored on amd64."
 	fi
+
+	if use java && use prefix; then
+		die "Bigloo's JVM backend won't build on prefix." \
+			"Please remove 'java' from bigloo USE flags."
+	fi
 }
 
 src_prepare() {
@@ -95,7 +100,7 @@ src_configure() {
 
 	# Filter Zile emacs replacement. Bug #336717
 	if use emacs; then
-		myconf="--bee=full --emacs=${EMACS} --lispdir=${SITELISP}/${PN}"
+		myconf="--bee=full --emacs=${EMACS} --lispdir=${EPREFIX}${SITELISP}/${PN}"
 	else
 		myconf="--emacs=false"
 	fi
@@ -131,8 +136,8 @@ src_configure() {
 
 	# Put every non quoted configure opt into myconf, for the einfo below
 	myconf="
-		--prefix=/usr
-		--libdir=/usr/$(get_libdir)
+		--prefix=\"${EPREFIX}\"/usr
+		--libdir=\"${EPREFIX}\"/usr/$(get_libdir)
 		--benchmark=yes
 		--coflags=
 		--customgc=no
@@ -172,54 +177,54 @@ src_configure() {
 }
 
 src_compile() {
-	emake EFLAGS='-ldopt "$(LDFLAGS)"' || die "emake failed"
+	emake EFLAGS='-ldopt "$(LDFLAGS)"'
 
 	if use emacs; then
 		einfo "Compiling bee..."
-		emake compile-bee EFLAGS='-ldopt "$(LDFLAGS)"' || die "compiling bee failed"
+		emake compile-bee EFLAGS='-ldopt "$(LDFLAGS)"'
 	fi
 }
 
 # default thinks that target doesn't exist
 src_test() {
-	emake -j1 test || die "emake test failed"
+	emake -j1 test
 }
 
 src_install() {
 	# Makefile:671:install: install-progs install-docs
-	emake DESTDIR="${D}" install-progs || die "install failed"
+	emake DESTDIR="${D}" install-progs
 
 	if use emacs; then
 		einfo "Installing bee..."
-		emake DESTDIR="${D}" install-bee || die "install-bee failed"
-		einfo "Installing API-specific emacs files"
-		cp -v "${S}"/api/*/emacs/*.el "${D}/${SITELISP}/${PN}"
+		emake DESTDIR="${D}" install-bee
+		#einfo "Installing API-specific emacs files"
+		#cp -v "${S}"/api/*/emacs/*.el "${ED}/${SITELISP}/${PN}"
 		elisp-site-file-install "${FILESDIR}/${SITEFILE}"
 	else
 		# Fix EMACS*=false in Makefile.config
 		sed -i \
 			-e 's:^\(EMACS=\).*$:\1:' \
 			-e 's:^\(EMACSBRAND=\).*$:\1:' \
-			"${D}"/usr/$(get_libdir)/bigloo/${BGL_RELEASE}/Makefile.config \
-			|| die "sed !emacs in Makefile.config failed"
+			"${ED}"/usr/$(get_libdir)/bigloo/${BGL_RELEASE}/Makefile.config \
+			|| die "sed emacs in Makefile.config failed"
 	fi
 
-	dodoc ChangeLog README || die "dodoc failed"
-	newdoc LICENSE COPYING || die "newdoc failed"
+	dodoc ChangeLog README
+	newdoc LICENSE COPYING
 
 	pushd "${S}/manuals" &>/dev/null
 	if use doc; then
-		dohtml -r  . || die "dohtml failed"
-		doinfo *.info* || die "doinfo failed"
+		dohtml -r  .
+		doinfo *.info*
 	fi
 
 	for man in *.man; do
-		newman ${man} ${man/.man/.1} || die "newman ${man} ${man/.man/.1} failed"
+		newman ${man} ${man/.man/.1}
 	done
 	popd &>/dev/null
 
 	# Remove created directories which remains empty
-	pushd "${D}/usr" &>/dev/null
+	pushd "${ED}/usr" &>/dev/null
 	rmdir -p doc/bigloo-${BGL_RELEASE} info man/man1 || die "rm empty dirs failed"
 	popd &>/dev/null
 }
