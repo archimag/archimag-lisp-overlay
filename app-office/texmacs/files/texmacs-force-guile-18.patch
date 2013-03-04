@@ -1,0 +1,217 @@
+diff --git a/Makefile.in b/Makefile.in
+index 5037c6a..d2c2846 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -266,7 +266,7 @@ COPY_SOURCES_TGZ: COPY_SOURCES
+ 	cd ../distr/build; tar -czf $(tm_devel).tar.gz $(tm_devel) 
+ 
+ COPY_GUILE:
+-	GUILE_DATA_PATH=`guile-config info pkgdatadir`; \
++	GUILE_DATA_PATH=`guile-config-1.8 info pkgdatadir`; \
+ 	export GUILE_DATA_PATH; \
+ 	GUILE_LOAD_PATH=`find $$GUILE_DATA_PATH -type d | grep ice-9`; \
+ 	export GUILE_LOAD_PATH; \
+@@ -521,7 +521,7 @@ WINDOWS_BUNDLE: TEXMACS
+ 	$(MV) $(WINDOWS_BUILD_DIR)/bin/texmacs.bin \
+ 	$(WINDOWS_BUILD_DIR)/bin/texmacs.exe
+ 	$(RM) -r $(WINDOWS_BUILD_DIR)/bin/texmacs
+-	GUILE_DATA_PATH=`guile-config info pkgdatadir`; \
++	GUILE_DATA_PATH=`guile-config-1.8 info pkgdatadir`; \
+ 	export GUILE_DATA_PATH; \
+ 	GUILE_LOAD_PATH=`find $$GUILE_DATA_PATH -type d | grep ice-9`; \
+ 	export GUILE_LOAD_PATH; \
+diff --git a/aclocal.m4 b/aclocal.m4
+index e994b4f..edb8f08 100644
+--- a/aclocal.m4
++++ b/aclocal.m4
+@@ -8,15 +8,15 @@ AC_DEFUN([GUILE_FLAGS],[
+ ## The GUILE_FLAGS macro.
+   ## First, let's just see if we can find Guile at all.
+   AC_MSG_CHECKING(for Guile)
+-  guile-config link > /dev/null || {
+-    echo "configure: cannot find guile-config; is Guile installed?" 1>&2
++  guile-config-1.8 link > /dev/null || {
++    echo "configure: cannot find guile-config-1.8; is Guile installed?" 1>&2
+     exit 1
+   }
+-  GUILE_ORIGINAL_CFLAGS="`guile-config compile`"
++  GUILE_ORIGINAL_CFLAGS="`guile-config-1.8 compile`"
+   GUILE_CFLAGS="$GUILE_ORIGINAL_CFLAGS"
+   GUILE_VARIANT_CFLAGS="$GUILE_ORIGINAL_CFLAGS $GUILE_ORIGINAL_CFLAGS/guile $GUILE_ORIGINAL_CFLAGS/libguile"
+-  GUILE_LDFLAGS="`guile-config link`"
+-  GUILE_VARIANT_LDFLAGS="-L`guile-config info libdir` -lguile -lreadline -ltermcap"
++  GUILE_LDFLAGS="`guile-config-1.8 link`"
++  GUILE_VARIANT_LDFLAGS="-L`guile-config-1.8 info libdir` -lguile -lreadline -ltermcap"
+   AC_SUBST(GUILE_CFLAGS)
+   AC_SUBST(GUILE_LDFLAGS)
+   AC_MSG_RESULT(yes)
+diff --git a/cmake/FindGuile.cmake b/cmake/FindGuile.cmake
+index b2e9a30..da7fdb7 100644
+--- a/cmake/FindGuile.cmake
++++ b/cmake/FindGuile.cmake
+@@ -6,15 +6,15 @@
+ #  Guile_LIBRARIES - link these to use Freetype
+ #  Guile_VERSION_STRING - version of Guile
+ 
+-FIND_PROGRAM(GUILECONFIG_EXECUTABLE NAMES guile-config )
++FIND_PROGRAM(GUILECONFIG_EXECUTABLE NAMES guile-config-1.8 )
+ 
+-# if guile-config has been found
++# if guile-config-1.8 has been found
+ IF(GUILECONFIG_EXECUTABLE)
+ 
+   EXECUTE_PROCESS(COMMAND ${GUILECONFIG_EXECUTABLE} link 
+     OUTPUT_VARIABLE _guileconfigDevNull RESULT_VARIABLE _return_VALUE  )
+ 
+-  # and if the package of interest also exists for guile-config, then get the information
++  # and if the package of interest also exists for guile-config-1.8, then get the information
+   IF(NOT _return_VALUE)
+ 
+     EXECUTE_PROCESS(COMMAND ${GUILECONFIG_EXECUTABLE}  link 
+@@ -80,13 +80,13 @@ IF(GUILECONFIG_EXECUTABLE)
+     
+   ELSE( NOT _return_VALUE)
+ 
+-    MESSAGE(STATUS "guile-config not working; I assume guile is not installed.")
++    MESSAGE(STATUS "guile-config-1.8 not working; I assume guile is not installed.")
+ 
+   ENDIF(NOT _return_VALUE)
+ 
+ ELSE(GUILECONFIG_EXECUTABLE)
+ 
+-    MESSAGE(STATUS "guile-config not found; I assume guile is not installed.")
++    MESSAGE(STATUS "guile-config-1.8 not found; I assume guile is not installed.")
+ 
+ 
+ ENDIF(GUILECONFIG_EXECUTABLE)
+diff --git a/configure b/configure
+index 5cde705..6b19305 100755
+--- a/configure
++++ b/configure
+@@ -3941,15 +3941,15 @@ if test -z "$GUILE_CFLAGS" -a -z "$GUILE_LDFLAGS"; then
+   ## First, let's just see if we can find Guile at all.
+   { $as_echo "$as_me:${as_lineno-$LINENO}: checking for Guile" >&5
+ $as_echo_n "checking for Guile... " >&6; }
+-  guile-config link > /dev/null || {
+-    echo "configure: cannot find guile-config; is Guile installed?" 1>&2
++  guile-config-1.8 link > /dev/null || {
++    echo "configure: cannot find guile-config-1.8; is Guile installed?" 1>&2
+     exit 1
+   }
+-  GUILE_ORIGINAL_CFLAGS="`guile-config compile`"
++  GUILE_ORIGINAL_CFLAGS="`guile-config-1.8 compile`"
+   GUILE_CFLAGS="$GUILE_ORIGINAL_CFLAGS"
+   GUILE_VARIANT_CFLAGS="$GUILE_ORIGINAL_CFLAGS $GUILE_ORIGINAL_CFLAGS/guile $GUILE_ORIGINAL_CFLAGS/libguile"
+-  GUILE_LDFLAGS="`guile-config link`"
+-  GUILE_VARIANT_LDFLAGS="-L`guile-config info libdir` -lguile -lreadline -ltermcap"
++  GUILE_LDFLAGS="`guile-config-1.8 link`"
++  GUILE_VARIANT_LDFLAGS="-L`guile-config-1.8 info libdir` -lguile -lreadline -ltermcap"
+ 
+ 
+   { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+@@ -3966,7 +3966,7 @@ $as_echo "$GUILE_VERSION" >&6; }
+ { $as_echo "$as_me:${as_lineno-$LINENO}: checking guile data path" >&5
+ $as_echo_n "checking guile data path... " >&6; }
+ if test -z "$GUILE_DATA_PATH" ; then
+-  GUILE_DATA_PATH=`guile-config info pkgdatadir`
++  GUILE_DATA_PATH=`guile-config-1.8 info pkgdatadir`
+ fi
+ { $as_echo "$as_me:${as_lineno-$LINENO}: result: $GUILE_DATA_PATH" >&5
+ $as_echo "$GUILE_DATA_PATH" >&6; }
+@@ -6139,7 +6139,7 @@ fi
+ { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether ... arguments behave correctly" >&5
+ $as_echo_n "checking whether ... arguments behave correctly... " >&6; }
+ if test -z "$GUILE_CFLAGS"; then
+-  CXXFLAGS="`guile-config compile`"
++  CXXFLAGS="`guile-config-1.8 compile`"
+ else
+   CXXFLAGS="$GUILE_CFLAGS"
+ fi
+@@ -6181,7 +6181,7 @@ CXXFLAGS=""
+ { $as_echo "$as_me:${as_lineno-$LINENO}: checking the size_t of guile strings" >&5
+ $as_echo_n "checking the size_t of guile strings... " >&6; }
+ if test -z "$GUILE_CFLAGS"; then
+-  CXXFLAGS="`guile-config compile`"
++  CXXFLAGS="`guile-config-1.8 compile`"
+ else
+   CXXFLAGS="$GUILE_CFLAGS"
+ fi
+diff --git a/configure.in b/configure.in
+index 522098b..8daafa6 100644
+--- a/configure.in
++++ b/configure.in
+@@ -76,7 +76,7 @@ fi
+ AC_MSG_RESULT($GUILE_VERSION)
+ AC_MSG_CHECKING(guile data path)
+ if test -z "$GUILE_DATA_PATH" ; then
+-  GUILE_DATA_PATH=`guile-config info pkgdatadir`
++  GUILE_DATA_PATH=`guile-config-1.8 info pkgdatadir`
+ fi
+ AC_MSG_RESULT($GUILE_DATA_PATH)
+ 
+@@ -445,7 +445,7 @@ fi
+ 
+ AC_MSG_CHECKING(whether ... arguments behave correctly)
+ if test -z "$GUILE_CFLAGS"; then
+-  CXXFLAGS="`guile-config compile`"
++  CXXFLAGS="`guile-config-1.8 compile`"
+ else
+   CXXFLAGS="$GUILE_CFLAGS"
+ fi
+@@ -466,7 +466,7 @@ CXXFLAGS=""
+ 
+ AC_MSG_CHECKING(the size_t of guile strings)
+ if test -z "$GUILE_CFLAGS"; then
+-  CXXFLAGS="`guile-config compile`"
++  CXXFLAGS="`guile-config-1.8 compile`"
+ else
+   CXXFLAGS="$GUILE_CFLAGS"
+ fi
+diff --git a/packages/redhat/TeXmacs.spec b/packages/redhat/TeXmacs.spec
+index 586dd47..750a474 100644
+--- a/packages/redhat/TeXmacs.spec
++++ b/packages/redhat/TeXmacs.spec
+@@ -43,7 +43,7 @@ make STATIC_TEXMACS
+ 
+ %install
+ make DESTDIR=$RPM_BUILD_ROOT install
+-export GUILE_DATA_PATH=`guile-config info pkgdatadir`
++export GUILE_DATA_PATH=`guile-config-1.8 info pkgdatadir`
+ export GUILE_LOAD_PATH=`find $GUILE_DATA_PATH -type d | grep ice-9`
+ cp -r -f $GUILE_LOAD_PATH $RPM_BUILD_ROOT%{_datadir}/TeXmacs/progs
+ chmod -f 644 $RPM_BUILD_ROOT%{_datadir}/TeXmacs/progs/ice-9/*
+diff --git a/packages/redhat/TeXmacs.spec.in b/packages/redhat/TeXmacs.spec.in
+index 695c8a8..aa0e5f7 100644
+--- a/packages/redhat/TeXmacs.spec.in
++++ b/packages/redhat/TeXmacs.spec.in
+@@ -43,7 +43,7 @@ make STATIC_TEXMACS
+ 
+ %install
+ make DESTDIR=$RPM_BUILD_ROOT install
+-export GUILE_DATA_PATH=`guile-config info pkgdatadir`
++export GUILE_DATA_PATH=`guile-config-1.8 info pkgdatadir`
+ export GUILE_LOAD_PATH=`find $GUILE_DATA_PATH -type d | grep ice-9`
+ cp -r -f $GUILE_LOAD_PATH $RPM_BUILD_ROOT%{_datadir}/TeXmacs/progs
+ chmod -f 644 $RPM_BUILD_ROOT%{_datadir}/TeXmacs/progs/ice-9/*
+diff --git a/src/System/Boot/init_texmacs.cpp b/src/System/Boot/init_texmacs.cpp
+index 32e66a5..669db24 100644
+--- a/src/System/Boot/init_texmacs.cpp
++++ b/src/System/Boot/init_texmacs.cpp
+@@ -168,7 +168,7 @@ init_guile () {
+   /*
+   if (!exists ("$GUILE_LOAD_PATH/ice-9/boot-9.scm")) {
+     int i;
+-    string guile_data    = var_eval_system ("guile-config info datadir");
++    string guile_data    = var_eval_system ("guile-config-1.8 info datadir");
+     string guile_version = var_eval_system ("guile --version");
+     for (i=0; i<N(guile_version); i++)
+       if (guile_version[i] == '\n') break;
+@@ -177,7 +177,7 @@ init_guile () {
+       if (guile_version[i-1] == ' ') break;
+     guile_version= guile_version (i, N (guile_version));
+     if (guile_version == "") {
+-      var_eval_system ("guile-config info top_srcdir");
++      var_eval_system ("guile-config-1.8 info top_srcdir");
+       for (i=N(guile_version); i>0; i--)
+ 	if (guile_version[i-1] == '-') break;
+       guile_version= guile_version (i, N (guile_version));
