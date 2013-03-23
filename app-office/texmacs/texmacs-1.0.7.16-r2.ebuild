@@ -1,6 +1,6 @@
-# Copyright 1999-2012 Gentoo Foundation
+# Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/app-office/texmacs/texmacs-1.0.7.16-r1.ebuild,v 1.1 2012/09/16 04:52:45 grozin Exp $
+# $Header: $
 
 EAPI=4
 
@@ -23,7 +23,7 @@ RDEPEND=">=dev-scheme/guile-1.8.8-r2:12[deprecated]
 	media-libs/freetype
 	x11-libs/libXext
 	x11-apps/xmodmap
-	qt4? ( x11-libs/qt-gui:4 )
+	qt4? ( dev-qt/qtgui:4 )
 	imlib? ( media-libs/imlib2 )
 	jpeg? ( || ( media-gfx/imagemagick media-gfx/jpeg2ps ) )
 	svg? ( || ( media-gfx/inkscape gnome-base/librsvg:2 ) )
