@@ -1,4 +1,4 @@
-# Copyright 1999-2011 Gentoo Foundation
+# Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -16,11 +16,18 @@ IUSE=""
 
 RDEPEND="!dev-lisp/cl-${PN}
 		!dev-lisp/asdf-binary-locations"
+PDEPEND="~dev-lisp/uiop-${PV}
+		 >=dev-lisp/gentoo-init-1.1"
 
-S="${WORKDIR}/${PN}"
+S="${WORKDIR}"
+
+src_compile() {
+	make
+}
 
 src_install() {
-	common-lisp-install-sources {asdf,asdf-ecl,wild-modules}.lisp
-	common-lisp-install-asdf asdf.asd
-	dodoc README
+	common-lisp-install-sources -t all build contrib test *.lisp version.lisp-expr
+	common-lisp-install-asdf asdf.asd asdf-driver.asd
+	dodoc README TODO
+	dohtml doc/*.{html,css,ico,png}
 }

@@ -4,8 +4,5 @@
       (*compile-verbose* nil)
       #+cmu (ext:*gc-verbose* nil))
   (handler-bind ((warning #'muffle-warning))
-    (load #p"/usr/share/common-lisp/source/asdf/asdf.lisp"
-          :print nil :verbose nil)
-    #+ecl
-    (load #p"/usr/share/common-lisp/source/asdf/asdf-ecl.lisp"
+    (load #p"/usr/share/common-lisp/source/asdf/build/asdf.lisp"
           :print nil :verbose nil)))
