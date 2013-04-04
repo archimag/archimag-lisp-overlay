@@ -1,8 +1,8 @@
-# Copyright 1999-2012 Gentoo Foundation
+# Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=3
+EAPI=5
 inherit eutils glo-utils toolchain-funcs
 
 MY_PV=${PV:0:3}
@@ -16,19 +16,21 @@ RESTRICT="mirror"
 LICENSE="public-domain"
 SLOT="0"
 KEYWORDS="~x86"
-IUSE="+asdf X source sse2"
+IUSE="X source sse2"
 
 DEPEND="x11-libs/motif:0
-		sys-devel/bc"
+		sys-devel/bc
+		>=dev-lisp/asdf-2.33-r1:="
 
-RDEPEND="x11-libs/motif:0
-		asdf? ( >=dev-lisp/gentoo-init-1.0 )"
+RDEPEND="x11-libs/motif:0"
 
 S="${WORKDIR}"
 
 src_prepare() {
 	epatch "${FILESDIR}"/${MY_PV}-execstack-fixes.patch
 	epatch "${FILESDIR}"/${MY_PV}-customize-lisp-implementation-version.patch
+
+	cp /usr/share/common-lisp/source/asdf/build/asdf.lisp src/contrib/asdf/ || die
 }
 
 src_compile() {
@@ -65,13 +67,6 @@ src_install() {
 		< "${FILESDIR}"/site-init.lisp.in \
 		> "${D}"/usr/$(get_libdir)/cmucl/site-init.lisp \
 		|| die "Cannot fix site-init.lisp"
-	cp "${FILESDIR}"/cmuclrc .
-	if use asdf; then
-		cat >> cmuclrc <<EOF
-;;; Setup ASDF2
-(load "/etc/common-lisp/gentoo-init.lisp")
-EOF
-	fi
 	insinto /etc/common-lisp
-	doins cmuclrc || die "Failed to install cmuclrc"
+	doins "${FILESDIR}"/cmuclrc || die "Failed to install cmuclrc"
 }
