@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=3
+EAPI=5
 
 DESCRIPTION="Simple ASDF2 configuration for Gentoo Common Lisp ports."
 HOMEPAGE="http://www.gentoo.org/proj/en/lisp/common-lisp/guide.xml"

@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=3
+EAPI=5
 inherit multilib eutils flag-o-matic pax-utils
 
 #same order as http://www.sbcl.org/platform-table.html
@@ -31,7 +31,8 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE="+asdf cobalt debug doc ldb source +threads +unicode"
 
-DEPEND="doc? ( sys-apps/texinfo >=media-gfx/graphviz-2.26.0 )"
+DEPEND="doc? ( sys-apps/texinfo >=media-gfx/graphviz-2.26.0 )
+		dev-lisp/asdf:="
 RDEPEND="elibc_glibc? ( >=sys-libs/glibc-2.3 || ( <sys-libs/glibc-2.6[nptl] >=sys-libs/glibc-2.6 ) )
 		asdf? ( >=dev-lisp/gentoo-init-1.1 )"
 
@@ -84,6 +85,8 @@ src_prepare() {
 		einfo "Disabling PIE..."
 		epatch "${FILESDIR}"/gentoo-fix_nopie_for_hardened_toolchain.patch
 	fi
+
+	cp /usr/share/common-lisp/source/asdf/build/asdf.lisp contrib/asdf/ || die
 
 	use source && sed 's%"$(BUILD_ROOT)%$(MODULE).lisp "$(BUILD_ROOT)%' -i contrib/vanilla-module.mk
 

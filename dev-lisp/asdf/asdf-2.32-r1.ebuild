@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=3
+EAPI=5
 inherit eutils common-lisp-3
 
 DESCRIPTION="ASDF is Another System Definition Facility for Common Lisp"
@@ -13,6 +13,8 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
+
+SLOT="2/${PVR}"
 
 RDEPEND="!dev-lisp/cl-${PN}
 		!dev-lisp/asdf-binary-locations"
