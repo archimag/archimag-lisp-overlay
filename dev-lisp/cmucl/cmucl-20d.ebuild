@@ -37,7 +37,7 @@ src_compile() {
 	local cmufpu=$(glo_usev sse2 sse2 x87)
 	local cmuopts="$(glo_usev !X -u) -f ${cmufpu}"
 	local buildimage="bin/lisp -core lib/cmucl/lib/lisp-${cmufpu}.core -noinit -nositeinit -batch"
-	env CC="$(tc-getCC)" src/tools/build.sh -v "-gentoo-${PR}" -C "" -o "${buildimage}" ${cmuopts} || die "Cannot build the compiler"
+	env CC="$(tc-getCC)" bin/build.sh -v "-gentoo-${PR}" -C "" -o "${buildimage}" ${cmuopts} || die "Cannot build the compiler"
 }
 
 src_install() {
