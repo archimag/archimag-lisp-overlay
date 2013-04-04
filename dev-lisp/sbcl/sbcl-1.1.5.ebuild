@@ -1,4 +1,4 @@
-# Copyright 1999-2012 Gentoo Foundation
+# Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -6,8 +6,8 @@ EAPI=3
 inherit multilib eutils flag-o-matic pax-utils
 
 #same order as http://www.sbcl.org/platform-table.html
-BV_X86=1.0.37
-BV_AMD64=1.0.37
+BV_X86=1.0.58
+BV_AMD64=1.1.5
 BV_PPC=1.0.28
 BV_SPARC=1.0.28
 BV_ALPHA=1.0.28
@@ -29,11 +29,11 @@ RESTRICT="mirror"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
-IUSE="+asdf ldb source +threads +unicode debug doc cobalt"
+IUSE="+asdf cobalt debug doc ldb source +threads +unicode"
 
 DEPEND="doc? ( sys-apps/texinfo >=media-gfx/graphviz-2.26.0 )"
 RDEPEND="elibc_glibc? ( >=sys-libs/glibc-2.3 || ( <sys-libs/glibc-2.6[nptl] >=sys-libs/glibc-2.6 ) )
-		asdf? ( >=dev-lisp/gentoo-init-1.0 )"
+		asdf? ( >=dev-lisp/gentoo-init-1.1 )"
 
 # Disable warnings about executable stacks, as this won't be fixed soon by upstream
 QA_EXECSTACK="usr/bin/sbcl"
@@ -71,7 +71,7 @@ EOF
 
 src_unpack() {
 	unpack ${A}
-	mv sbcl-*-linux sbcl-binary
+	mv sbcl-*-linux sbcl-binary || die
 	cd "${S}"
 }
 
@@ -89,9 +89,10 @@ src_prepare() {
 
 	# Some shells(such as dash) don't have "time" as builtin
 	# and we don't want to DEPEND on sys-process/time
-	sed "s,^time ,," -i make.sh
-	sed "s,/lib,/$(get_libdir),g" -i install.sh
-	sed "s,/usr/local/lib,/usr/$(get_libdir),g" -i src/runtime/runtime.c # #define SBCL_HOME ...
+	sed "s,^time ,," -i make.sh || die
+	sed "s,/lib,/$(get_libdir),g" -i install.sh || die
+	# #define SBCL_HOME ...
+	sed "s,/usr/local/lib,/usr/$(get_libdir),g" -i src/runtime/runtime.c || die
 
 	find . -type f -name .cvsignore -delete
 }
@@ -178,15 +179,15 @@ EOF
 		doinfo doc/internals/sbcl-internals.info
 		docinto internals-notes && dodoc doc/internals-notes/*
 	else
-		rm -Rv "${D}/usr/share/doc/${PF}"
+		rm -Rv "${D}/usr/share/doc/${PF}" || die
 	fi
 
-	dodoc BUGS CREDITS INSTALL NEWS OPTIMIZATIONS PRINCIPLES README STYLE TLA TODO
+	dodoc BUGS CREDITS INSTALL NEWS OPTIMIZATIONS PRINCIPLES README TLA TODO
 
 	# install the SBCL source
 	if use source; then
 		./clean.sh
-		cp -av src "${D}/usr/$(get_libdir)/sbcl/"
+		cp -av src "${D}/usr/$(get_libdir)/sbcl/" || die
 	fi
 
 	# necessary for running newly-saved images
