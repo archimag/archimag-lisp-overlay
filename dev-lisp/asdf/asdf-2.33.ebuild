@@ -29,7 +29,7 @@ src_compile() {
 
 src_install() {
 	common-lisp-install-sources -t all build contrib test *.lisp version.lisp-expr
-	common-lisp-install-asdf asdf.asd asdf-driver.asd
+	common-lisp-install-asdf asdf.asd
 	dodoc README TODO
 	dohtml doc/*.{html,css,ico,png}
 }

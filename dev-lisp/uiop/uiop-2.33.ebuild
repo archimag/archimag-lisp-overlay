@@ -16,11 +16,9 @@ IUSE=""
 
 RDEPEND="~dev-lisp/asdf-${PV}"
 
-S="${WORKDIR}"
+S="${WORKDIR}/${PN}"
 
 src_install() {
-	common-lisp-install-sources contrib/debug.lisp
-	cd ${PN}
-	common-lisp-install-sources -t all *.lisp version.lisp-expr
-	common-lisp-install-asdf uiop.asd
+	common-lisp-install-sources -t all contrib *.lisp version.lisp-expr
+	common-lisp-install-asdf uiop.asd asdf-driver.asd
 }
