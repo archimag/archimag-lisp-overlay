@@ -37,12 +37,25 @@ src_compile() {
 	local cmufpu=$(glo_usev sse2 sse2 x87)
 	local cmuopts="$(glo_usev !X -u) -f ${cmufpu}"
 	local buildimage="bin/lisp -core lib/cmucl/lib/lisp-${cmufpu}.core -noinit -nositeinit -batch"
+
 	env CC="$(tc-getCC)" bin/build.sh -v "-gentoo-${PR}" -C "" -o "${buildimage}" ${cmuopts} || die "Cannot build the compiler"
+
+	# Compile up the asdf and defsystem modules
+	$TARGET/lisp/lisp -noinit -nositeinit -batch "$@" << EOF || die
+(in-package :cl-user)
+(setf (ext:search-list "target:")
+	  '("$TARGET/" "src/"))
+(setf (ext:search-list "modules:")
+	  '("target:contrib/"))
+
+(compile-file "modules:asdf/asdf")
+(compile-file "modules:defsystem/defsystem")
+EOF
 }
 
 src_install() {
 	env MANDIR=share/man/man1 DOCDIR=share/doc/${PF} \
-		bin/make-dist.sh -S -g -G root -O root build-4 ${MY_PV} x86 linux \
+		bin/make-dist.sh -S -g -G root -O root linux-4 ${MY_PV} x86 linux \
 		|| die "Cannot build installation archive"
 	# Necessary otherwise tar will fail
 	dodir /usr
