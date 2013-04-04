@@ -17,9 +17,9 @@ IUSE=""
 SLOT="2/${PVR}"
 
 RDEPEND="!dev-lisp/cl-${PN}
-		!dev-lisp/asdf-binary-locations"
-PDEPEND="~dev-lisp/uiop-${PV}
-		 >=dev-lisp/gentoo-init-1.1"
+		 !dev-lisp/asdf-binary-locations
+		 !<dev-lisp/gentoo-init-1.1-r2"
+PDEPEND="~dev-lisp/uiop-${PV}"
 
 S="${WORKDIR}"
 
@@ -32,4 +32,7 @@ src_install() {
 	common-lisp-install-asdf asdf.asd
 	dodoc README TODO
 	dohtml doc/*.{html,css,ico,png}
+
+	insinto /etc/common-lisp
+	doins "${FILESDIR}"/gentoo-init.lisp "${FILESDIR}"/source-registry.conf
 }

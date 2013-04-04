@@ -12,11 +12,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
-RDEPEND=">=dev-lisp/asdf-2.32"
+RDEPEND=">=dev-lisp/asdf-2.32-r1"
 
-S="${WORKDIR}"
-
-src_install() {
-	insinto /etc/common-lisp
-	doins "${FILESDIR}"/gentoo-init.lisp "${FILESDIR}"/source-registry.conf
-}
+# Dummy ebuild. All functionality has been moved to ASDF
+# Remove as soon as all CL implementations are migrated to ASDF3 directly
