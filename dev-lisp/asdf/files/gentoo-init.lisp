@@ -1,6 +1,6 @@
 (in-package #:cl-user)
 
-#-(or sbcl)
+#-(or cmu ccl ecl sbcl)
 (let ((*compile-print* nil)
       (*compile-verbose* nil)
       #+cmu (ext:*gc-verbose* nil))
@@ -8,5 +8,5 @@
     (load #p"/usr/share/common-lisp/source/asdf/build/asdf.lisp"
           :print nil :verbose nil)))
 
-#+(or sbcl)
+#+(or cmu ccl ecl sbcl)
 (require :asdf)
