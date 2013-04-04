@@ -42,7 +42,7 @@ src_compile() {
 
 src_install() {
 	env MANDIR=share/man/man1 DOCDIR=share/doc/${PF} \
-		src/tools/make-dist.sh -S -g -G root -O root build-4 ${MY_PV} x86 linux \
+		bin/make-dist.sh -S -g -G root -O root build-4 ${MY_PV} x86 linux \
 		|| die "Cannot build installation archive"
 	# Necessary otherwise tar will fail
 	dodir /usr
