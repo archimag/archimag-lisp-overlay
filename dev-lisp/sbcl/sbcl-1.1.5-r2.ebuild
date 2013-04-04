@@ -29,12 +29,11 @@ RESTRICT="mirror"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
-IUSE="+asdf cobalt debug doc ldb source +threads +unicode"
+IUSE="cobalt debug doc source +threads +unicode"
 
 DEPEND="doc? ( sys-apps/texinfo >=media-gfx/graphviz-2.26.0 )
-		dev-lisp/asdf:="
-RDEPEND="elibc_glibc? ( >=sys-libs/glibc-2.3 || ( <sys-libs/glibc-2.6[nptl] >=sys-libs/glibc-2.6 ) )
-		asdf? ( >=dev-lisp/gentoo-init-1.1 )"
+		>=dev-lisp/asdf-2.33-r1:="
+RDEPEND="elibc_glibc? ( >=sys-libs/glibc-2.3 || ( <sys-libs/glibc-2.6[nptl] >=sys-libs/glibc-2.6 ) )"
 
 # Disable warnings about executable stacks, as this won't be fixed soon by upstream
 QA_EXECSTACK="usr/bin/sbcl"
@@ -59,7 +58,7 @@ EOF
 	if use x86 || use amd64; then
 		sbcl_feature "$(usep threads)" ":sb-thread"
 	fi
-	sbcl_feature "$(usep ldb)" ":sb-ldb"
+	sbcl_feature "true" ":sb-ldb"
 	sbcl_feature "false" ":sb-test"
 	sbcl_feature "$(usep unicode)" ":sb-unicode"
 	sbcl_feature "$(usep debug)" ":sb-xref-for-internals"
@@ -158,14 +157,10 @@ src_install() {
 (setf (logical-pathname-translations "SYS")
 	'(("SYS:SRC;**;*.*.*" #p"/usr/$(get_libdir)/sbcl/src/**/*.*")
 	  ("SYS:CONTRIB;**;*.*.*" #p"/usr/$(get_libdir)/sbcl/**/*.*")))
-EOF
-	if use asdf; then
-		cat >> "${D}"/etc/sbclrc <<EOF
 
 ;;; Setup ASDF2
 (load "/etc/common-lisp/gentoo-init.lisp")
 EOF
-	fi
 
 	# Install documentation
 	unset SBCL_HOME
