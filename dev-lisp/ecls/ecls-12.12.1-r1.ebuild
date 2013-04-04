@@ -15,7 +15,7 @@ RESTRICT="mirror"
 LICENSE="BSD LGPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
-IUSE="debug doc emacs gengc precisegc sse +threads +unicode X"
+IUSE="debug emacs gengc precisegc sse +threads +unicode X"
 
 CDEPEND="dev-libs/gmp
 		virtual/libffi
@@ -72,12 +72,6 @@ src_compile() {
 
 	#parallel make fails
 	emake -j1 || die "Compilation failed"
-
-	if use doc; then
-		pushd build/doc
-		emake || die "Building docs failed"
-		popd
-	fi
 }
 
 src_install () {
@@ -88,8 +82,5 @@ src_install () {
 	pushd build/doc
 	newman ecl.man ecl.1
 	newman ecl-config.man ecl-config.1
-	if use doc; then
-		doinfo ecl{,dev}.info || die "Installing info docs failed"
-	fi
 	popd
 }
