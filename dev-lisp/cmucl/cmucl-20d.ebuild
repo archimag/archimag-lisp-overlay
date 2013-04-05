@@ -26,6 +26,8 @@ RDEPEND="x11-libs/motif:0"
 
 S="${WORKDIR}"
 
+TARGET=linux-4
+
 src_prepare() {
 	epatch "${FILESDIR}"/${MY_PV}-execstack-fixes.patch
 	epatch "${FILESDIR}"/${MY_PV}-customize-lisp-implementation-version.patch
@@ -41,7 +43,7 @@ src_compile() {
 	env CC="$(tc-getCC)" bin/build.sh -v "-gentoo-${PR}" -C "" -o "${buildimage}" ${cmuopts} || die "Cannot build the compiler"
 
 	# Compile up the asdf and defsystem modules
-	$TARGET/lisp/lisp -noinit -nositeinit -batch "$@" << EOF || die
+	${TARGET}/lisp/lisp -noinit -nositeinit -batch "$@" << EOF || die
 (in-package :cl-user)
 (setf (ext:search-list "target:")
 	  '("$TARGET/" "src/"))
@@ -55,7 +57,7 @@ EOF
 
 src_install() {
 	env MANDIR=share/man/man1 DOCDIR=share/doc/${PF} \
-		bin/make-dist.sh -S -g -G root -O root linux-4 ${MY_PV} x86 linux \
+		bin/make-dist.sh -S -g -G root -O root ${TARGET} ${MY_PV} x86 linux \
 		|| die "Cannot build installation archive"
 	# Necessary otherwise tar will fail
 	dodir /usr
