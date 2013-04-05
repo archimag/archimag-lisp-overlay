@@ -78,6 +78,7 @@ src_unpack() {
 src_prepare() {
 	epatch "${FILESDIR}"/gentoo-fix_install_man.patch
 	epatch "${FILESDIR}"/gentoo-fix_linux-os-c.patch
+	epatch "${FILESDIR}"/1.1.6-fix-svref.patch
 
 	# To make the hardened compiler NOT compile with -fPIE -pie
 	if gcc-specs-pie ; then
