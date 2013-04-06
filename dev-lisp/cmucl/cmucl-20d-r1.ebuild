@@ -18,11 +18,11 @@ SLOT="0"
 KEYWORDS="~x86"
 IUSE="X source sse2"
 
-DEPEND="x11-libs/motif:0
-		sys-devel/bc
-		>=dev-lisp/asdf-2.33-r1:="
-
-RDEPEND="x11-libs/motif:0"
+CDEPEND=">=dev-lisp/asdf-2.33-r2:=
+		 x11-libs/motif:0"
+DEPEND="${CDEPEND}
+		sys-devel/bc"
+RDEPEND="${CDEPEND}"
 
 S="${WORKDIR}"
 

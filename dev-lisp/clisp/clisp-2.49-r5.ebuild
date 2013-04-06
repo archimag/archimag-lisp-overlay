@@ -15,7 +15,7 @@ KEYWORDS="~alpha ~amd64 ~ia64 ~ppc ~sparc ~x86"
 IUSE="hyperspec X berkdb dbus fastcgi gdbm gtk pari +pcre postgres +readline svm -threads +unicode +zlib"
 # "jit" disabled ATM
 
-RDEPEND=">=dev-lisp/asdf-2.33-r1
+RDEPEND=">=dev-lisp/asdf-2.33-r2
 		 virtual/libiconv
 		 >=dev-libs/libsigsegv-2.4
 		 >=dev-libs/ffcall-1.10

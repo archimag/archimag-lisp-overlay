@@ -21,9 +21,11 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="doc"
 
-DEPEND="!dev-lisp/openmcl
-		dev-vcs/subversion
-		>=dev-lisp/asdf-2.33-r1:="
+CDEPEND=">=dev-lisp/asdf-2.33-r2:="
+DEPEND="${CDEPEND}
+		!dev-lisp/openmcl
+		dev-vcs/subversion"
+RDEPEND="${CDEPEND}"
 
 S="${WORKDIR}"/${MY_PN}
 

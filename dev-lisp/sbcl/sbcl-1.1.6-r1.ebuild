@@ -31,15 +31,21 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE="cobalt debug doc source +threads +unicode"
 
-DEPEND="doc? ( sys-apps/texinfo >=media-gfx/graphviz-2.26.0 )
-		>=dev-lisp/asdf-2.33-r1:="
-RDEPEND="elibc_glibc? ( >=sys-libs/glibc-2.3 || ( <sys-libs/glibc-2.6[nptl] >=sys-libs/glibc-2.6 ) )"
+CDEPEND=">=dev-lisp/asdf-2.33-r2:="
+DEPEND="${CDEPEND}
+		doc? ( sys-apps/texinfo >=media-gfx/graphviz-2.26.0 )"
+RDEPEND="${CDEPEND}
+		 elibc_glibc? ( >=sys-libs/glibc-2.3 || ( <sys-libs/glibc-2.6[nptl] >=sys-libs/glibc-2.6 ) )"
 
 # Disable warnings about executable stacks, as this won't be fixed soon by upstream
 QA_EXECSTACK="usr/bin/sbcl"
 
 CONFIG="${S}/customize-target-features.lisp"
 ENVD="${T}/50sbcl"
+
+# Prevent ASDF from using the system libraries
+CL_SOURCE_REGISTRY="(:source-registry :ignore-inherited-configuration)"
+ASDF_OUTPUT_TRANSLATIONS=""
 
 usep() {
 	use ${1} && echo "true" || echo "false"
@@ -135,8 +141,14 @@ src_compile() {
 
 	# need to set HOME because libpango(used by graphviz) complains about it
 	if use doc; then
-		env - HOME="${T}" make -C doc/manual info html || die "Cannot build manual"
-		env - HOME="${T}" make -C doc/internals info html || die "Cannot build internal docs"
+		env - HOME="${T}" \
+			CL_SOURCE_REGISTRY="(:source-registry :ignore-inherited-configuration)" \
+			ASDF_OUTPUT_TRANSLATIONS="" \
+			make -C doc/manual info html || die "Cannot build manual"
+		env - HOME="${T}" \
+			CL_SOURCE_REGISTRY="(:source-registry :ignore-inherited-configuration)" \
+			ASDF_OUTPUT_TRANSLATIONS="" \
+			make -C doc/internals info html || die "Cannot build internal docs"
 	fi
 }
 
