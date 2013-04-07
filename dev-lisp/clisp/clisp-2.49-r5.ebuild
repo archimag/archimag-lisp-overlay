@@ -59,6 +59,7 @@ src_prepare() {
 	if use alpha || use ia64; then
 		sed -i -e 's/-O2//g' src/makemake.in || die
 	fi
+	epatch "${FILESDIR}/${P}-bits_ipctypes_to_sys_ipc.patch"
 }
 
 src_configure() {
