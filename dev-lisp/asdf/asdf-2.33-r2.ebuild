@@ -18,7 +18,7 @@ SLOT="2/${PVR}"
 
 RDEPEND="!dev-lisp/cl-${PN}
 		 !dev-lisp/asdf-binary-locations
-		 !<dev-lisp/gentoo-init-1.1-r2"
+		 !dev-lisp/gentoo-init"
 PDEPEND="~dev-lisp/uiop-${PV}"
 
 S="${WORKDIR}"
