@@ -16,9 +16,10 @@ IUSE=""
 
 SLOT="2/${PVR}"
 
-RDEPEND="!dev-lisp/cl-${PN}
-		 !dev-lisp/asdf-binary-locations
-		 !dev-lisp/gentoo-init"
+DEPEND="!dev-lisp/cl-${PN}
+		!dev-lisp/asdf-binary-locations
+		!dev-lisp/gentoo-init"
+RDEPEND="${DEPEND}"
 PDEPEND="~dev-lisp/uiop-${PV}"
 
 S="${WORKDIR}"
