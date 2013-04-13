@@ -14,11 +14,12 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
-SLOT="2/${PVR}"
+SLOT="0/${PVR}"
 
 DEPEND="!dev-lisp/cl-${PN}
 		!dev-lisp/asdf-binary-locations
-		!dev-lisp/gentoo-init"
+		!dev-lisp/gentoo-init
+		!<dev-lisp/asdf-2.33-r3"
 RDEPEND="${DEPEND}"
 PDEPEND="~dev-lisp/uiop-${PV}"
 
