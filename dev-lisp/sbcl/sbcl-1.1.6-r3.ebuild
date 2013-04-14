@@ -41,7 +41,7 @@ ENVD="${T}/50sbcl"
 
 # Prevent ASDF from using the system libraries
 CL_SOURCE_REGISTRY="(:source-registry :ignore-inherited-configuration)"
-ASDF_OUTPUT_TRANSLATIONS=""
+ASDF_OUTPUT_TRANSLATIONS="(:output-translations :ignore-inherited-configuration)"
 
 usep() {
 	use ${1} && echo "true" || echo "false"
@@ -140,11 +140,11 @@ src_compile() {
 	if use doc; then
 		env - HOME="${T}" \
 			CL_SOURCE_REGISTRY="(:source-registry :ignore-inherited-configuration)" \
-			ASDF_OUTPUT_TRANSLATIONS="" \
+			ASDF_OUTPUT_TRANSLATIONS="(:output-translations :ignore-inherited-configuration)" \
 			make -C doc/manual info html || die "Cannot build manual"
 		env - HOME="${T}" \
 			CL_SOURCE_REGISTRY="(:source-registry :ignore-inherited-configuration)" \
-			ASDF_OUTPUT_TRANSLATIONS="" \
+			ASDF_OUTPUT_TRANSLATIONS="(:output-translations :ignore-inherited-configuration)" \
 			make -C doc/internals info html || die "Cannot build internal docs"
 	fi
 }
