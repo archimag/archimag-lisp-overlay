@@ -20,7 +20,7 @@ IUSE="debug emacs gengc precisegc sse +threads +unicode X"
 CDEPEND="dev-libs/gmp
 		virtual/libffi
 		>=dev-libs/boehm-gc-7.1[threads?]
-		>=dev-lisp/asdf-2.33-r2:="
+		>=dev-lisp/asdf-2.33-r3:="
 DEPEND="${CDEPEND}
 		app-text/texi2html
 		emacs? ( virtual/emacs >=app-admin/eselect-emacs-1.12 )"
