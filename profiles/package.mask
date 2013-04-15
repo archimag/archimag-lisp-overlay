@@ -6,7 +6,7 @@
 # Mask app-admin/eselect-guile and dev-scheme/guile-2.0.6 as well, for
 # the same reasons as below, wrt Bug #432526 by Juergen Rose and zmedico
 app-admin/eselect-guile
-=dev-scheme/guile-2.0.7
+=dev-scheme/guile-2.0.9
 
 # Cyprien Nicolas <c.nicolas+gentoo@gmail.com> (28 Apr 2011)
 # Masked for several reasons pointed out by Marijn:
