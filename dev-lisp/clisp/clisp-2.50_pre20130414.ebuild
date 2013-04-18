@@ -75,7 +75,7 @@ src_configure() {
 	append-flags -Wa,--noexecstack
 
 	# built-in features
-	local myconf="--with-ffcall --without-dynamic-modules"
+	local myconf="--with-ffcall --with-dynamic-modules"
 #    There's a problem with jit_allocai function
 #    if use jit; then
 #        myconf+=" --with-jitc=lightning"
