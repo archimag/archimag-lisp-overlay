@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
-inherit autotools eutils flag-o-matic
+EAPI=5
+inherit flag-o-matic
 
 WANT_AUTOMAKE=1.12
 
@@ -13,14 +13,14 @@ SRC_URI="mirror://gnu/guile/${P}.tar.gz"
 
 LICENSE="LGPL-3"
 KEYWORDS="~amd64 ~x86"
-IUSE="networking +regex +deprecated nls debug-malloc debug +threads"
+IUSE="debug debug-malloc +deprecated +networking nls +regex +threads"
 
 RDEPEND="
 	app-admin/eselect-guile
 	>=dev-libs/boehm-gc-7.0[threads?]
 	dev-libs/gmp
 	dev-libs/libffi
-	dev-libs/libunistring
+	>=dev-libs/libunistring-0.9.3
 	sys-devel/gettext
 	>=sys-devel/libtool-1.5.6"
 DEPEND="${RDEPEND}
@@ -28,11 +28,6 @@ DEPEND="${RDEPEND}
 
 SLOT="2"
 MAJOR="2.0"
-
-src_prepare() {
-	epatch_user
-	eautoreconf
-}
 
 src_configure() {
 	# see bug #178499
