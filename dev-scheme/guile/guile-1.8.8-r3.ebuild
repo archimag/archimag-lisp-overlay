@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI=5
 inherit eutils autotools flag-o-matic elisp-common
 
 DESCRIPTION="Scheme interpreter"
@@ -11,7 +11,7 @@ SRC_URI="mirror://gnu/guile/${P}.tar.gz"
 
 LICENSE="LGPL-2.1"
 KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~x86 ~x86-fbsd ~x86-interix ~amd64-linux ~x86-linux ~ppc-macos ~x86-macos"
-IUSE="networking +regex discouraged +deprecated emacs nls debug-freelist debug-malloc debug +threads +readline"
+IUSE="debug debug-freelist debug-malloc +deprecated discouraged emacs +networking nls +readline +regex +threads"
 RESTRICT="!regex? ( test )"
 
 DEPEND="
@@ -34,6 +34,7 @@ src_prepare() {
 	epatch "${FILESDIR}/${P}-fix_guile-config.patch"
 	epatch "${FILESDIR}/${P}-fix_stack-grow-direction-check.patch"
 	epatch "${FILESDIR}/${P}-config-with-readline.patch"
+	epatch "${FILESDIR}/${P}-makeinfo-5.patch"
 	eautoreconf
 }
 
@@ -82,11 +83,6 @@ src_install() {
 	mv "${ED}"/usr/share/aclocal/guile.m4 "${ED}"/usr/share/aclocal/guile-${MAJOR}.m4 || die "rename of guile.m4 failed"
 
 	dodoc AUTHORS ChangeLog GUILE-VERSION HACKING NEWS README THANKS || die
-
-	# Now handled by app-admin/eselect-guile
-	## texmacs needs this, closing bug #23493
-	#dodir /etc/env.d
-	#echo "GUILE_LOAD_PATH=\"${EPREFIX}/usr/share/guile/${MAJOR}\"" > "${ED}"/etc/env.d/50guile
 
 	# necessary for registering slib, see bug 206896
 	keepdir /usr/share/guile/site
