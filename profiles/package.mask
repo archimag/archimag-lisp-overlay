@@ -18,4 +18,4 @@ app-admin/eselect-guile
 =dev-scheme/guile-1.8.8-r2
 
 # ASDF doesn't compile as built-in module
-=dev-lisp/clisp-2.50_pre20132618
+=dev-lisp/clisp-2.50_pre20130414
