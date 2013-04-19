@@ -1,25 +1,25 @@
-# Copyright 2005-2012 Gentoo Foundation
+# Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id: $
 #
 # DOCUMENTATION
 # Following actions possible
-# * show		do_show()
-# * list		do_list()
-# * set			do_set()
-# * update		do_update()
+# * show        do_show()
+# * list        do_list()
+# * set         do_set()
+# * update      do_update()
 # * clean       do_clean()
 #
 # Behaviour:
 # do_show():
-#	Checks if /usr/bin/guile is a link and if the target exists,
-#	if yes, it outputs the currently linked Guile version.
-#	If it is no symlink, the user is told so, the same if there is
-#	no /usr/bin/guile or the target does not exist.
+#   Checks if /usr/bin/guile is a link and if the target exists,
+#   if yes, it outputs the currently linked Guile version.
+#   If it is no symlink, the user is told so, the same if there is
+#   no /usr/bin/guile or the target does not exist.
 # do_list(): List all available versions of GNU Guile
 # do_set(): Set a version to be target of the symlink.
 # do_update(): Set the target to the highest version available
-#	(optionally: only if not set)
+#   (optionally: only if not set)
 # do_clean(): Remove all set symlinks (for pkg_prerm)
 
 DESCRIPTION="Manage /usr/bin/guile* versions"
@@ -43,11 +43,10 @@ remove_envfile() {
 	rm -f "${EROOT}/etc/env.d/50guile"
 }
 
-# Define GUILE_LOAD_PATH environment variable in env file
 set_envfile() {
-	echo "GUILE_LOAD_PATH=${EPREFIX}/usr/share/guile/$1" >"${EROOT}/etc/env.d/50guile"
+	# Define INFOPATH environment variable in env file
 	[[ -d ${EROOT}/usr/share/info/guile-$1 ]] || return 1
-	echo "INFOPATH=${EPREFIX}/usr/share/info/guile-$1" >>"${EROOT}/etc/env.d/50guile"
+	echo "INFOPATH=${EPREFIX}/usr/share/info/guile-$1" >"${EROOT}/etc/env.d/50guile"
 }
 
 remove_symlinks() {
@@ -218,6 +217,9 @@ describe_update_options() {
 do_update() {
 	[[ -z $1 || $1 = ifunset || $1 = --if-unset ]] || die -q "Usage error"
 	[[ $# -gt 1 ]] && die -q "Too many parameters"
+
+	[[ $# -eq 1 && -L ${EROOT}/usr/bin/guile ]] && return 0
+
 	test_for_root
 
 	if [[ -L ${EROOT}/usr/bin/guile ]]; then

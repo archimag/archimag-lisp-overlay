@@ -1,6 +1,14 @@
 # ChangeLog for app-admin/eselect-guile
-# Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2013 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+*eselect-guile-1.2-r1 (19 Apr 2013)
+
+  19 Apr 2013; Cyprien Nicolas (fulax) <c.nicolas+gentoo@gmail.com>
+  +eselect-guile-1.2-r1.ebuild, -eselect-guile-1.1.ebuild,
+  -eselect-guile-1.2.ebuild, -files/1.2/guile.eselect,
+  -files/1.2/guile.eselect.5, files/guile.eselect, files/guile.eselect.5:
+  app-admin/eselect-guile-1.2-r1: Add a call to 'clean' on pkg_prerm
 
 *eselect-guile-1.2 (02 Oct 2012)
 
@@ -9,4 +17,3 @@
   version bump: EAPI 4, fix 'update ifunset' bug (it was ignored currently).
   Remove 'GUILE_LOAD_PATH' from env.d file, as it breaks the not eselect'd
   guile version. Drop pkg_prerm phase.
-

@@ -1,6 +1,8 @@
-# Copyright 1999-2012 Gentoo Foundation
+# Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
+
+EAPI=5
 
 DESCRIPTION="Manage multiple Guile versions on one system"
 HOMEPAGE="http://www.gentoo.org/proj/en/lisp/scheme/"
@@ -14,17 +16,19 @@ IUSE=""
 # Versions prior to guile-1.8.8-r2 aren't properly slotted
 DEPEND=""
 RDEPEND=">=app-admin/eselect-1.2.6
-	!<dev-scheme/guile-1.8.8-r2"
+	!<dev-scheme/guile-1.8.8-r3"
+
+# We don't have any source directory to work on.
+S="${T}"
 
 src_install() {
 	insinto /usr/share/eselect/modules
-	doins "${FILESDIR}"/guile.eselect || die
-	doman "${FILESDIR}"/guile.eselect.5 || die
-	#dodoc ChangeLog || die
+	doins "${FILESDIR}"/guile.eselect
+	doman "${FILESDIR}"/guile.eselect.5
+	#dodoc ChangeLog
 }
 
-src_test() { :; }
-
 pkg_prerm() {
+	# Cleanup remaining symlinks
 	eselect guile clean
 }
