@@ -43,7 +43,7 @@ src_compile() {
 	env CC="$(tc-getCC)" bin/build.sh -v "-gentoo-${PR}" -C "" -o "${buildimage}" ${cmuopts} || die "Cannot build the compiler"
 
 	# Compile up the asdf and defsystem modules
-	${TARGET}/lisp/lisp -noinit -nositeinit -batch "$@" << EOF || die
+	${TARGET}/lisp/lisp -noinit -nositeinit -batch << EOF || die
 (in-package :cl-user)
 (setf (ext:search-list "target:")
 	  '("$TARGET/" "src/"))
