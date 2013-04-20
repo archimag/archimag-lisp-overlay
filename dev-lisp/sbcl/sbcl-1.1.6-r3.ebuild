@@ -29,7 +29,7 @@ IUSE="debug doc source +threads +unicode zlib"
 
 CDEPEND=">=dev-lisp/asdf-2.33-r3:="
 DEPEND="${CDEPEND}
-		doc? ( <sys-apps/texinfo-5 >=media-gfx/graphviz-2.26.0 )"
+		doc? ( <sys-apps/texinfo-5.0 >=media-gfx/graphviz-2.26.0 )"
 RDEPEND="${CDEPEND}
 		 elibc_glibc? ( >=sys-libs/glibc-2.3 || ( <sys-libs/glibc-2.6[nptl] >=sys-libs/glibc-2.6 ) )"
 
