@@ -3,6 +3,7 @@
 # $Header: $
 
 EAPI=5
+WANT_AUTOMAKE=1.12
 inherit eutils autotools flag-o-matic elisp-common
 
 DESCRIPTION="Scheme interpreter"
