@@ -3,7 +3,6 @@
 # $Header: $
 
 EAPI=5
-WANT_AUTOMAKE=1.12
 inherit eutils autotools flag-o-matic elisp-common
 
 DESCRIPTION="Scheme interpreter"
@@ -36,6 +35,8 @@ src_prepare() {
 	epatch "${FILESDIR}/${P}-fix_stack-grow-direction-check.patch"
 	epatch "${FILESDIR}/${P}-config-with-readline.patch"
 	epatch "${FILESDIR}/${P}-makeinfo-5.patch"
+	epatch "${FILESDIR}/0001-Fix-configure.in-macro-for-automake-1.13.patch"
+	epatch "${FILESDIR}/0002-Rename-guile-readline-configure-from-.in-to-.ac.patch"
 	eautoreconf
 }
 

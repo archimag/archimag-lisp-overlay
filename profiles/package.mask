@@ -15,7 +15,7 @@ app-admin/eselect-guile
 # test against if people are impatient ;P
 # Known issues:
 # - doesn't build when boehm-gc is built without threads
-=dev-scheme/guile-1.8.8-r2
+=dev-scheme/guile-1.8.8-r3
 
 # ASDF doesn't compile as built-in module
 =dev-lisp/clisp-2.50_pre20130414
