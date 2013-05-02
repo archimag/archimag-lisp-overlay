@@ -38,7 +38,7 @@ pkg_setup () {
 }
 
 src_prepare() {
-	epatch "${FILESDIR}"/${PV}/headers-gentoo.patch
+	epatch "${FILESDIR}"/${PV}-headers-gentoo.patch
 	cp /usr/share/common-lisp/source/asdf/build/asdf.lisp contrib/asdf/ || die
 }
 
