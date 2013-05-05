@@ -19,3 +19,9 @@ IUSE=""
 
 RDEPEND="!dev-lisp/cl-${PN}
 		dev-lisp/fiveam"
+
+src_install() {
+	common-lisp-install-sources -t all *.lisp version.lisp-expr
+	common-lisp-install-asdf
+	dodoc README.md
+}
