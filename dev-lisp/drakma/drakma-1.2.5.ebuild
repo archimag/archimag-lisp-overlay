@@ -3,11 +3,14 @@
 # $Header: $
 
 EAPI=3
+
 inherit common-lisp-3 eutils
+
+MY_P="v${PV}"
 
 DESCRIPTION="Drakma is a Common Lisp HTTP client."
 HOMEPAGE="http://weitz.de/drakma/"
-SRC_URI="https://github.com/downloads/edicl/${PN}/${P}.tar.gz"
+SRC_URI="https://github.com/edicl/${PN}/archive/${MY_P}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="BSD-2"
 SLOT="0"
