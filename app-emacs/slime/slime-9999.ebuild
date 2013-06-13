@@ -48,9 +48,9 @@ src_unpack() {
 }
 
 src_prepare() {
-	epatch "${FILESDIR}"/2.0_p20110617/fix-inspect-presentations.patch
+	epatch "${FILESDIR}"/2.0_p20110509/fix-inspect-presentations.patch
 	epatch "${FILESDIR}"/2.0_p20130214/gentoo-module-load.patch
-	epatch "${FILESDIR}"/2.0_p20110617/gentoo-dont-call-init.patch
+	epatch "${FILESDIR}"/2.0_p20110509/gentoo-dont-call-init.patch
 
 	# Eliminate Debian-specific rule
 	sed -i '/^section :=/d' doc/Makefile || die "sed doc/Makefile failed"
@@ -81,10 +81,10 @@ src_install() {
 	## install core
 	elisp-install ${PN} *.el "${FILESDIR}"/swank-loader.lisp \
 		|| die "Cannot install SLIME core"
-	sed "s:/usr/:${EPREFIX}&:g" "${FILESDIR}"/2.0_p20110617/${SITEFILE} \
+	sed "s:/usr/:${EPREFIX}&:g" "${FILESDIR}"/2.0_p20110509/${SITEFILE} \
 		>"${T}"/${SITEFILE} || die "sed failed"
 	elisp-site-file-install "${T}"/${SITEFILE} || die
-	cp "${FILESDIR}"/2.0_p20110617/swank.asd "${S}"
+	cp "${FILESDIR}"/2.0_p20110509/swank.asd "${S}"
 	# remove upstream swank-loader, since it won't be used
 	rm "${S}"/swank-loader.lisp
 	common-lisp-install-sources *.lisp

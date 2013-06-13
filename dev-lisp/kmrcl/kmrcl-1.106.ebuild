@@ -1,8 +1,9 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=3
+EAPI=5
+
 inherit common-lisp-3
 
 DESCRIPTION="General Utilities for Common Lisp Programs from Kevin Rosenberg"
@@ -19,4 +20,17 @@ RDEPEND="!dev-lisp/cl-${PN}
 
 CLSYSTEMS="${PN} ${PN}-tests"
 
+run_test() {
+	local lisp="${1}"
+	if has_version "dev-lisp/${lisp}" ; then
+		emake test-"${lisp}"
+	fi
+}
+
 src_compile() { :; }
+
+src_test() {
+	for l in sbcl cmucl clisp ; do
+		run_test "${l}"
+	done
+}

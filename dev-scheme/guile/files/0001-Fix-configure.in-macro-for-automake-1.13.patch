@@ -1,0 +1,38 @@
+From 80a8464c41ca1f30a19936d5524104c5297cc95b Mon Sep 17 00:00:00 2001
+From: Cyprien Nicolas <cyprien@nicolas.tf>
+Date: Thu, 25 Apr 2013 00:15:40 +0200
+Subject: [PATCH 1/2] Fix configure.in macro for automake-1.13
+
+Reported through https://bugs.gentoo.org/show_bug.cgi?id=467064
+Fix by Arfrever Frehtes Taifersar Arahesis
+
+* Replace AM_CONFIG_HEADER by AC_CONFIG_HEADERS, the former
+  being deprecated since automake-1.13
+
+---
+ guile-readline/configure.in | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/guile-readline/configure.in b/guile-readline/configure.in
+index 7c9d3d9..c17bee6 100644
+--- a/guile-readline/configure.in
++++ b/guile-readline/configure.in
+@@ -9,14 +9,13 @@ AC_INIT(guile-readline,
+ 
+ AC_CONFIG_AUX_DIR([.])
+ AC_CONFIG_SRCDIR(readline.c)
+-AM_CONFIG_HEADER([guile-readline-config.h])
++AC_CONFIG_HEADERS([guile-readline-config.h])
+ AM_INIT_AUTOMAKE([foreign no-define])
+ 
+ . $srcdir/../GUILE-VERSION
+ 
+ AC_PROG_INSTALL
+ AC_PROG_CC
+-AM_PROG_CC_STDC
+ AC_LIBTOOL_WIN32_DLL
+ AC_PROG_LIBTOOL
+ 
+-- 
+1.7.11.7
+
